@@ -6,9 +6,9 @@ NOTE: English database is not completely populated. Talents in this database are
 
 # Requirements
 
-Base application only requires Windows 7.
+Base application only requires Windows 7 or better.
 
-It requires Norbyte LSlib to load and modify savegames. 
+It requires Norbyte LSlib to load and modify savegames (included in binaries/C/)
 
 Links:
 
