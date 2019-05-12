@@ -8,4 +8,9 @@ NOTE: English database is not completely populated. Talents in this database are
 
 Base application only requires Windows 7.
 
-In order to modify the savegame, it uses Norbyte LSlib. See: https://github.com/Norbyte/lslib
+It requires Norbyte LSlib to load and modify savegames. 
+
+Links:
+
+https://github.com/Norbyte/lslib
+http://larian.com/forums/ubbthreads.php?ubb=showflat&Number=636561
