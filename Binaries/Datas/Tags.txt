@@ -1,0 +1,33 @@
+#
+# KNOWN TAGS
+#
+# * means the tag is protected (can't be modified or removed)
+# - means the tag is hidden (it is also protected)
+# Tags not in this list are hidden and can't be translated.
+#
+
+MYSTIC
+JESTER
+NOBLE
+SCHOLAR
+OUTLAW
+BARBARIAN
+SOLDIER
+
+-AVATAR
+-GENERIC
+-HENCHMAN
+-PETPAL
+-SQUIRRELKNIGHT_PLAYER
+
+*REALLY_HUMAN
+*REALLY_ELF
+*REALLY_DWARF
+*REALLY_LIZARD
+*VEILED_UNDEAD
+*ELF-FRIEND
+*DWARF-FRIEND
+*CHAMPION_FTJ
+*CHAMPION_DW
+*THE_ONE
+*HERO

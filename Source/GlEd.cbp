@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GlEd" />
+		<Option pch_mode="2" />
+		<Option compiler="gnu_gcc_64_compiler" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Test/GlEd - Debug" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="Test" />
+				<Option object_output="Compiler/Debug/" />
+				<Option type="0" />
+				<Option compiler="gnu_gcc_64_compiler" />
+				<Compiler>
+					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="Test/GlEd" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="Test" />
+				<Option object_output="Compiler/Release/" />
+				<Option type="0" />
+				<Option compiler="gnu_gcc_64_compiler" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-m64" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m64" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-m64" />
+			<Add directory="Includes" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="Includes" />
+		</ResourceCompiler>
+		<Linker>
+			<Add option="-m64" />
+			<Add library="gdi32" />
+			<Add library="user32" />
+			<Add library="kernel32" />
+			<Add library="comctl32" />
+			<Add library="msimg32" />
+			<Add library="Shlwapi" />
+			<Add library="ole32" />
+		</Linker>
+		<Unit filename="Application.manifest" />
+		<Unit filename="Includes/AppWindows.h" />
+		<Unit filename="Includes/Application.h" />
+		<Unit filename="Includes/Config.h" />
+		<Unit filename="Includes/Dialogs.h" />
+		<Unit filename="Includes/Divine.h" />
+		<Unit filename="Includes/Font.h" />
+		<Unit filename="Includes/Game.h" />
+		<Unit filename="Includes/GameEdit.h" />
+		<Unit filename="Includes/LastFiles.h" />
+		<Unit filename="Includes/Lists.h" />
+		<Unit filename="Includes/Locale.h" />
+		<Unit filename="Includes/Menus.h" />
+		<Unit filename="Includes/Requests.h" />
+		<Unit filename="Includes/SQLite3.h" />
+		<Unit filename="Includes/Startup.h" />
+		<Unit filename="Includes/Texts.h" />
+		<Unit filename="Includes/Utils.h" />
+		<Unit filename="Includes/XML.h" />
+		<Unit filename="Includes/XMLTree.h" />
+		<Unit filename="Includes/_Global.h" />
+		<Unit filename="Resources/Application.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="Sources/Application.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Datas/Datas_Texts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Abilities.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Bonuses.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_SetValue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Synchronize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Tags.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Talents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Datas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Display.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Divine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Edit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Manager.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_XML.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_Config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_Locale.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_SQLite3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_Startup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Dialogs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Font.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_LastFiles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Lists.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Menus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Requests.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Misc/Misc_Utils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Windows/Windows_Status.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Windows/Windows_TreeView.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Windows/Windows_Windows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,193 @@
+#
+# ITEM DEFINITIONS
+# Used to display an icon next to the item in the character's inventory.
+# Also used in some dialogs.
+#
+#	iconName	itemType		namePattern
+#
+# iconName:
+# Name of the icon in Icons\Items.icl or none (use default icon, only bags have default icon for now)
+#
+# itemType
+# Can be one of the following:
+#	ARMOR any armor item BUT rings and amulets
+#	ACCESSORY rings and amulets
+#	WEAPON any weapon
+#	ITEM everything else
+# Can be mixed (using |) with:
+#	AMULET amulets
+#	RING rings
+#	HELMET helmets
+#	CHEST chests
+#	GLOVES gloves
+#	BELT belts
+#	LEGGINGS leggings
+#	BOOTS boots
+#	SHIELD shields
+# itemType is used to select default filter options or to display infos about the item.
+# Therefore, setting the wrong type is not really a problem.
+#
+# namePattern:
+#	 |?|string
+# |?| can be:
+# 	|f| > Full string
+# 	|b| > Begin
+# 	|e| > End
+#	|c| > Content
+#
+# /!\ Comparison is case sensitive
+# /!\ Whitespaces are ignored
+# /!\ Order IS important
+#
+
+armor_helmet		ARMOR|HELMET		|f|ARM_ShapeshifterMask
+armor_amulet		ACCESSORY|AMULET	|f|ARM_SourceCollar
+armor_belt		ARMOR|BELT		|f|ARM_WithermooreGirdle
+armor_ring		ACCESSORY|RING		|f|ARM_UNIQUE_ArxRingOfHealing
+armor_helmet		ARMOR|HELMET		|f|ARM_UNIQUE_DispelCowl
+armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_LoneWolfMark
+armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SaheilaSignet
+armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet
+weapon_staff		WEAPON			|f|ARX_UNIQUE_Staff_Divine
+weapon_wand		WEAPON|WAND		|b|ARX_UNIQUE_Wand_
+item_aug		ITEM			|b|CON_Herb_Augmentor_
+item_mushroom		ITEM			|f|CON_Herb_Mushroom_A
+none			ITEM			|f|CONT_Backpack_A
+none			ITEM			|f|CONT_Backpack_A_SourceHunter
+container_junk		ITEM			|f|CONT_Backpack_Junk
+container		ITEM			|f|FUR_Blacksmith_Crate
+container		ITEM			|f|FUR_Chest
+item_sleepbag		ITEM			|f|FUR_Humans_Camping_Sleepingbag_B
+weapon_spear		WEAPON			|f|GLO_Malady_Spear
+item_key		ITEM			|f|ITEM_Key
+item_nails		ITEM			|f|ITEM_Nails
+source_orb		ITEM			|f|LOOT_Source_Orb
+container_box		ITEM			|f|QUEST_DeadTrader_GarvanSupplies
+container		ITEM			|f|Rendal_CONT_Dyebox
+item			ITEM			|f|RC_FTJ_ScavengerSeeds
+scroll_resurrect	ITEM			|f|SCROLL_Resurrect
+armor_body		ARMOR|CHEST		|f|S_RC_OIL_EQ_Armor_Mage_WallBoss
+item_glass		ITEM			|f|TOOL_IdentifyingGlass
+item_lockpick		ITEM			|f|TOOL_Lockpick
+item_dust_bone		ITEM			|b|TOOL_Pouch_Dust_Bone_
+item_dust_pixie		ITEM			|b|TOOL_Pouch_Dust_Pixie_
+item_dust_star		ITEM			|b|TOOL_Pouch_Dust_Star_
+item_shovel		ITEM			|f|TOOL_Shovel_A
+item_disarm		ITEM			|f|TOOL_Trap_DisarmToolkit
+item			ITEM			|f|UNIQUE_ARX_ToyScenery_Barrel
+item_pyramid		ITEM			|f|UNIQUE_Pyramid
+
+gold_large		ITEM			|f|Trader_Bank_Gold
+gold_large		ITEM			|f|InBetween_Gold
+gold_large		ITEM			|f|Pile_Of_Gold_Big_B
+gold_large		ITEM			|f|Pile_Of_Gold_D
+gold_medium		ITEM			|f|Trader_DragonsLair_Gold
+gold_medium		ITEM			|f|Larger_Gold_Big
+gold_medium		ITEM			|f|Pile_Of_Gold_C
+gold_small		ITEM			|f|Small_Gold
+gold_small		ITEM			|f|Tiny_Gold
+gold_small		ITEM			|f|Tiny_Gold_2
+
+potion_heal_giant	ITEM			|f|POTION_Giant_Healing_Potion
+potion_heal_huge	ITEM			|f|POTION_Huge_Healing_Potion
+potion_heal_large	ITEM			|f|POTION_Large_Healing_Potion
+potion_heal_medium	ITEM			|f|POTION_Medium_Healing_Potion
+potion_heal_minor	ITEM			|f|POTION_Minor_Healing_Potion
+potion_poison_giant	ITEM			|f|CON_Potion_Poison_Giant_A
+potion_poison_huge	ITEM			|f|CON_Potion_Poison_Huge_A
+potion_poison_large	ITEM			|f|CON_Potion_Poison_Large_A
+potion_poison_medium	ITEM			|f|CON_Potion_Poison_Medium_A
+potion_poison_minor	ITEM			|f|CON_Potion_Poison_A
+
+rune_frame_power	ITEM			|f|LOOT_Rune_Frame_Power
+rune_frame_trans	ITEM			|f|LOOT_Rune_Frame_Transform
+
+book			ITEM			|f|Gen_Book
+book			ITEM			|f|Gen_Letter
+weapon_axe		WEAPON			|f|WPN_Axe_1H
+weapon_axe		WEAPON			|f|WPN_Axe_2H
+weapon_bow		WEAPON			|f|WPN_Bow
+weapon_cleaver		WEAPON			|f|WPN_Cleaver
+weapon_crossbow		WEAPON			|f|WPN_Crossbow
+weapon_dagger		WEAPON			|f|WPN_Dagger
+weapon_mace		WEAPON			|f|WPN_Mace_1H
+weapon_mace		WEAPON			|f|WPN_Mace_2H
+weapon_spear		WEAPON			|f|WPN_Spear
+weapon_sword		WEAPON			|f|WPN_Sword_1H
+weapon_sword		WEAPON			|f|WPN_Sword_2H
+
+armor_belt		ARMOR|BELT		|b|ARM_ |e|Belt
+armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Boots
+armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Boots_A
+armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves
+armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves_Fin
+armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet
+armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet_Str
+armor_pants		ARMOR|LEGGINGS		|b|ARM_ |e|LowerBody
+armor_pants		ARMOR|LEGGINGS		|b|ARM_ |e|Pants_A
+armor_body		ARMOR|CHEST		|b|ARM_ |e|UpperBody
+armor_body		ARMOR|CHEST		|b|ARM_ |e|UpperBody_Eternal_Crafted
+armor_ring		ACCESSORY|RING		|b|ARM_ |e|Ring
+armor_ring		ACCESSORY|RING		|b|ARM_ |e|Ring_Int
+armor_boots		ARMOR|BOOTS		|b|ARM_ClothBoots_
+armor_helmet		ARMOR|HELMET		|b|ARM_HeavyHelmet_
+armor_amulet		ACCESSORY|AMULET	|b|ARM_UNIQUE_ |e|Amulet
+armor_body		ARMOR|CHEST		|b|ARM_UNIQUE_ |e|Armor
+armor_body		ARMOR|CHEST		|b|ARM_UNIQUE_ |e|Armour
+armor_pants		ARMOR|LEGGINGS		|b|ARM_UNIQUE_ |e|Pantaloons
+armor_amulet		ACCESSORY|AMULET	|b|ARM_UNIQUE_ArxAmulet
+armor_boots		ARMOR|BOOTS		|b|ARM_UNIQUE_ArxBoots
+armor_helmet		ARMOR|HELMET		|b|ARM_UNIQUE_ArxHelmet
+weapon_bow		WEAPON			|b|ARM_UNIQUE_Bow_
+weapon_bow		WEAPON			|b|ARX_UNIQUE_Bow_
+weapon_sword		WEAPON			|b|ARM_UNIQUE_Sword_
+weapon_sword		WEAPON			|b|ARX_UNIQUE_Sword_
+skillbook		ITEM			|b|BOOK_Skill_
+book			ITEM			|b|BOOK_
+food			ITEM			|b|CON_
+container		ITEM			|b|CONT_
+food			ITEM			|b|FOOD_
+furniture		ITEM			|b|FUR_
+gen			ITEM			|b|Gen_
+grenade			ITEM			|b|GRN_Grenade_
+item			ITEM			|b|GRN_Ingredient_
+item			ITEM			|b|HAR_
+item			ITEM			|b|ITEM_
+item			ITEM			|b|JUNK_
+item			ITEM			|b|LAB_
+item			ITEM			|b|LOOT_
+potion			ITEM			|b|POTION_
+scroll			ITEM			|b|SCROLL_
+skillbook		ITEM			|b|SKILLBOOK_
+quest			ITEM			|b|STORY_
+item			ITEM			|b|TOOL_
+quest			ITEM			|b|QUEST_
+weapon_arrow		ITEM			|b|WPN_Arrow_
+weapon_arrow		ITEM			|b|WPN_ArrowHead_
+weapon_arrow		ITEM			|b|WPN_ArrowShaft_
+weapon_staff		WEAPON			|b|WPN_Staff_
+weapon_wand		WEAPON			|b|WPN_Wand_
+armor_amulet		ACCESSORY|AMULET	|e|Amulet
+weapon_axe		WEAPON			|e|Axe
+weapon_bow		WEAPON			|e|Bow
+weapon_crossbow		WEAPON			|e|Crossbow
+weapon_dagger		WEAPON			|e|Dagger
+weapon_mace		WEAPON			|e|Hammer
+weapon_shield		ARMOR|SHIELD		|e|Shield
+weapon_spear		WEAPON			|e|Spear
+weapon_staff		WEAPON			|e|Staff
+weapon_sword		WEAPON			|e|Sword
+weapon_sword		WEAPON			|e|Sword_2H
+weapon_wand		WEAPON			|e|Wand
+weapon_wand		WEAPON			|e|Wand_Poison
+
+armor_ring		ARMOR|RING		|f|Vanity_Ring_Armor
+container		ITEM			|b|Rendal_CONT_
+item			ITEM			|b|Rendal_TOOL_DyeSet_
+item			ITEM			|b|Rendal_TOOL_Dyeset_
+armor_gloves		ARMOR|GLOVES		|b|Rendal_EQ_Fullset_ |e|_Arms
+armor_gloves		ARMOR|GLOVES		|b|Rendal_EQ_Fullset_ |e|_Arms_Fane
+armor_helmet		ARMOR|HELMET		|b|Rendal_EQ_Fullset_ |e|_Helmet
+armor_boots		ARMOR|BOOTS		|b|Rendal_EQ_Fullset_ |e|_Legs
+armor_body		ARMOR|CHEST		|b|Rendal_EQ_Fullset_ |e|_UpperBody
+armor_pants		ARMOR|LEGGINGS		|b|Rendal_EQ_Fullset_ |e|_LowerBody
