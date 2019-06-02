@@ -28,6 +28,96 @@ extern WCHAR*		TextsIds[];
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Énumération des langues disponibles «««««««««««««««««««««««««««««»
+
+int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
+{
+	WIN32_FIND_DATA		Find;
+	HANDLE			FileHandle;
+	LOCALE_MISC*		pLocale;
+	LOCALE_ENUM*		pEnum;
+	WCHAR*			pszExt;
+	WCHAR*			pszSearchPath;
+	DWORD_PTR		vl[1];
+
+	ZeroMemory(pRoot,sizeof(NODE));
+
+	//--- Création du chemin de recherche ---
+
+	vl[0] = (DWORD_PTR)L"*";
+	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszPathFmt,0,0,(WCHAR *)&pszSearchPath,1,(va_list *)vl))
+		{
+		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
+		return(0);
+		}
+
+	//--- Obtention de la liste des fichiers ---
+
+	FileHandle = FindFirstFile(pszSearchPath,&Find);
+	if (FileHandle == INVALID_HANDLE_VALUE)
+		{
+		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
+		LocalFree(pszSearchPath);
+		return(0);
+		}
+
+	LocalFree(pszSearchPath);
+
+	do {
+
+		if (Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) continue;
+		if (wcslen(Find.cFileName) > LOCALE_LANG_MAX_LENGTH) continue;
+
+		pszExt = StrRChr(Find.cFileName,NULL,L'.');
+		if (!pszExt) continue;
+
+		pEnum = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LOCALE_ENUM));
+		if (!pEnum)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			break;
+			}
+		wcsncpy(pEnum->szLang,Find.cFileName,pszExt-Find.cFileName);
+
+		if (!Locale_Load(hWnd,pszPathFmt,pEnum->szLang,LOCALE_TYPE_MISC,(void **)&pLocale,&pEnum->pszName))
+			{
+			FindClose(FileHandle);
+			Locale_EnumRelease(pRoot);
+			return(0);
+			}
+		Locale_Unload(LOCALE_TYPE_MISC,(void **)&pLocale,NULL);
+		List_AddEntry((NODE *)pEnum,pRoot);
+
+	} while (FindNextFile(FileHandle,&Find));
+
+	if (GetLastError() != ERROR_NO_MORE_FILES)
+		{
+		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
+		FindClose(FileHandle);
+		Locale_EnumRelease(pRoot);
+		return(0);
+		}
+
+	FindClose(FileHandle);
+	return(1);
+}
+
+//--- Libération de la structure ---
+
+void Locale_EnumRelease(NODE *pRoot)
+{
+	LOCALE_ENUM*	pEnum;
+
+	for (pEnum = (LOCALE_ENUM *)pRoot->next; pEnum != NULL; pEnum = (LOCALE_ENUM *)pEnum->node.next)
+		{
+		if (pEnum->hIcon) DestroyIcon(pEnum->hIcon);
+		if (pEnum->pszName) HeapFree(App.hHeap,0,pEnum->pszName);
+		}
+	List_ReleaseMemory(pRoot);
+	return;
+}
+
+
 // «»»» Chargement des textes «««««««««««««««««««««««««««««««««««««««««««»
 
 int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void **pLocalePtr, WCHAR **pszLocaleNamePtr)

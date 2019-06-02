@@ -74,6 +74,7 @@ WCHAR	szIconsPath[]			= L"Icons\\Items.icl";
 WCHAR	szSkillsIconsPath[]		= L"Icons\\Skills.icl";
 WCHAR	szRunesIconsPath[]		= L"Icons\\Runes.icl";
 WCHAR	szLangPath[]			= L"Locales\\%1.db";
+WCHAR	szLangIcoPath[]			= L"Locales\\%1.ico";
 WCHAR	szLangDefault[]			= L"eng";
 WCHAR	szConfigErr[]			= L"Unable to set configuration's default values.";
 WCHAR	szConfigLoadErr[]		= L"An error occurs while loading the configuration.\nConfiguration will use default values.";

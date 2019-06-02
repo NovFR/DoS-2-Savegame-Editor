@@ -586,19 +586,19 @@ int Game_TagsPopulateList(HWND hDlg, UINT uCtrlId, NODE *pTags, BOOL bIgnoreProt
 
 //--- Mesure la hauteur d'une entrée ---
 
-void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pDraw)
+void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pMeasure)
 {
 	GAMEDATA*	pData;
 	HDC		hDC;
 
-	pData = (GAMEDATA *)pDraw->itemData;
-	pDraw->itemWidth = 0;
-	pDraw->itemHeight = 0;
+	pData = (GAMEDATA *)pMeasure->itemData;
+	pMeasure->itemWidth = 0;
+	pMeasure->itemHeight = 0;
 	hDC = GetDC(hDlg);
 	if (hDC)
 		{
 		// Base height
-		pDraw->itemHeight = 28+App.Font.uFontHeight;
+		pMeasure->itemHeight = 28+App.Font.uFontHeight;
 		if (pData->tag.pszDescription)
 			{
 			HFONT		hDefFont;
@@ -608,8 +608,8 @@ void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pDraw)
 			rcText.left += 16;
 			rcText.right -= 16;
 			hDefFont = SelectObject(hDC,App.Font.hFont);
-			pDraw->itemHeight += DrawText(hDC,pData->tag.pszDescription,-1,&rcText,DT_CALCRECT|DT_LEFT|DT_END_ELLIPSIS|DT_NOPREFIX|DT_WORDBREAK);
-			pDraw->itemHeight += 20;
+			pMeasure->itemHeight += DrawText(hDC,pData->tag.pszDescription,-1,&rcText,DT_CALCRECT|DT_LEFT|DT_END_ELLIPSIS|DT_NOPREFIX|DT_WORDBREAK);
+			pMeasure->itemHeight += 20;
 			SelectObject(hDC,hDefFont);
 			}
 		ReleaseDC(hDlg,hDC);

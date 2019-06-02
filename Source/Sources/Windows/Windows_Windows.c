@@ -72,7 +72,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 		case WM_KEYDOWN:
 			if (wParam != VK_F1) break;
 			//Game_Talents();
-			Game_Bonus(hWnd,NULL,NULL);
+			//Game_Bonus(hWnd,NULL,NULL);
 			break;
 		#endif
 
@@ -343,6 +343,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					if (App.Config.bSaveOnExit) App.Config.bSaveOnExit = FALSE;
 					else App.Config.bSaveOnExit = TRUE;
 					Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
+					break;
+				case IDM_CONFIGLANGUAGE:
+					Config_SelectLanguage();
 					break;
 				case CTLID_CHARACTERS_LIST:
 					Game_SaveTopIndex();

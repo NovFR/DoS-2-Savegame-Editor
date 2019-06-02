@@ -72,6 +72,7 @@ extern WCHAR	szIconsPath[];
 extern WCHAR	szSkillsIconsPath[];
 extern WCHAR	szRunesIconsPath[];
 extern WCHAR	szLangPath[];
+extern WCHAR	szLangIcoPath[];
 extern WCHAR	szLangDefault[];
 extern WCHAR	szConfigErr[];
 extern WCHAR	szConfigLoadErr[];

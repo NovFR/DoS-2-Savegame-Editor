@@ -50,17 +50,22 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 	if (uMsgId == WM_INITDIALOG)
 		{
 		RECT	rcDialog;
-		int	Height;
+		int	Height = 0;
 
 		SetWindowLongPtr(hDlg,GWLP_USERDATA,(LONG_PTR)lParam);
 		pDialog = (DIALOG *)lParam;
 
-		Height = Dialog_GetInfoHeight(hDlg,100,pDialog->pszText);
-		GetWindowRect(hDlg,&rcDialog);
-		SetWindowPos(hDlg,NULL,0,0,rcDialog.right-rcDialog.left,rcDialog.bottom-rcDialog.top+Height,SWP_NOZORDER|SWP_NOMOVE);
-		GetWindowRect(GetDlgItem(hDlg,100),&rcDialog);
-		SetWindowPos(GetDlgItem(hDlg,100),NULL,0,0,rcDialog.right-rcDialog.left,Height,SWP_NOZORDER|SWP_NOMOVE);
+		if (IsWindow(GetDlgItem(hDlg,100)))
+			{
+			Height = Dialog_GetInfoHeight(hDlg,100,pDialog->pszText);
+			GetWindowRect(hDlg,&rcDialog);
+			SetWindowPos(hDlg,NULL,0,0,rcDialog.right-rcDialog.left,rcDialog.bottom-rcDialog.top+Height,SWP_NOZORDER|SWP_NOMOVE);
+			GetWindowRect(GetDlgItem(hDlg,100),&rcDialog);
+			SetWindowPos(GetDlgItem(hDlg,100),NULL,0,0,rcDialog.right-rcDialog.left,Height,SWP_NOZORDER|SWP_NOMOVE);
+			}
+
 		if (pDialog->fnInit) { if (!pDialog->fnInit(hDlg,&rcDialog,Height,pDialog)) { EndDialog(hDlg,-1); return(FALSE); } }
+
 		if (IsWindow(GetDlgItem(hDlg,IDOK)))
 			{
 			Dialog_OffsetY(hDlg,IDOK,Height);

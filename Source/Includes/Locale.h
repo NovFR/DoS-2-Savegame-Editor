@@ -20,6 +20,8 @@ enum {
 	LOCALE_TYPE_MISC,
 };
 
+#include "Lists.h"
+
 #define LOCALE_LANG_MAX_LENGTH			16	// ISO 639-2 length is 9 (rounded to 16)
 
 #define FOREACH_AppText(LOCALE) \
@@ -377,6 +379,8 @@ enum {
 		LOCALE(TEXT_ERR_LOCALE_MISC), \
 		LOCALE(TEXT_ERR_LOCALE_MISSINGAPP), \
 		LOCALE(TEXT_ERR_LOCALE_LANG), \
+		LOCALE(TEXT_ERR_LOCALE_ENUM), \
+		LOCALE(TEXT_ERR_LOCALE_SELECT), \
 		LOCALE(TEXT_ERR_GENBOOSTUNKNOWNNODE), \
 		LOCALE(TEXT_ERR_GENBOOSTEMPTY), \
 		LOCALE(TEXT_ERR_GENBOOSTTOOMANYATTR), \
@@ -427,12 +431,22 @@ typedef struct LOCALE_TEXT {
 	WCHAR*		pszText;
 } LOCALE_TEXT;
 
+typedef struct LOCALE_ENUM {
+	NODE		node;
+	HICON		hIcon;
+	WCHAR*		pszName;
+	WCHAR		szLang[LOCALE_LANG_MAX_LENGTH];
+} LOCALE_ENUM;
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤ Prototypes							  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+int			Locale_Enum(HWND,WCHAR *,NODE *);
+void			Locale_EnumRelease(NODE *);
 
 int			Locale_Load(HWND,WCHAR *,WCHAR *,LONG,void **,WCHAR **);
 void			Locale_Unload(LONG,void **,WCHAR **);

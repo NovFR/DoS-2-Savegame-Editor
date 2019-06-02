@@ -86,6 +86,13 @@ void			Config_Load(CONFIG *);
 BOOL			Config_Save(BOOL,CONFIG *);
 int			Config_WriteEntry(HANDLE,UINT,UINT,void *);
 
+void			Config_SelectLanguage(void);
+INT_PTR CALLBACK	Config_SelectLanguageProc(HWND,UINT,WPARAM,LPARAM);
+BOOL			Config_SelectLanguageDrawItem(DRAWITEMSTRUCT *);
+int			Config_SelectLanguageSet(HWND);
+
+int			Config_SetLanguage(HWND,WCHAR *);
+
 int			Config_Defaults(CONFIG *);
 void			Config_Release(CONFIG *);
 

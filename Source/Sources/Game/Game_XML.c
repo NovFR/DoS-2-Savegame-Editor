@@ -321,7 +321,7 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 		if (pParser->pFileBuffer[dwCursor] != '"') break;
 		dwValLen = dwCursor-dwValBegin;
 
-		//--- Création de la struction ---
+		//--- Création de la structure ---
 
 		pxaNew = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_ATTR)+sizeof(WCHAR)*dwAttrLen+sizeof(WCHAR));
 		if (!pxaNew)
