@@ -119,6 +119,7 @@ weapon_sword		WEAPON			|f|WPN_Sword_2H
 armor_belt		ARMOR|BELT		|b|ARM_ |e|Belt
 armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Boots
 armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Boots_A
+armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Legs
 armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves
 armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves_Fin
 armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet
@@ -142,6 +143,7 @@ weapon_bow		WEAPON			|b|ARM_UNIQUE_Bow_
 weapon_bow		WEAPON			|b|ARX_UNIQUE_Bow_
 weapon_sword		WEAPON			|b|ARM_UNIQUE_Sword_
 weapon_sword		WEAPON			|b|ARX_UNIQUE_Sword_
+armor_body		ARMOR|CHEST		|b|FTJ_ |e|Armour
 skillbook		ITEM			|b|BOOK_Skill_
 book			ITEM			|b|BOOK_
 food			ITEM			|b|CON_
@@ -167,6 +169,7 @@ weapon_arrow		ITEM			|b|WPN_ArrowHead_
 weapon_arrow		ITEM			|b|WPN_ArrowShaft_
 weapon_staff		WEAPON			|b|WPN_Staff_
 weapon_wand		WEAPON			|b|WPN_Wand_
+armor_belt		ARMOR|BELT		|e|_Belt
 armor_amulet		ACCESSORY|AMULET	|e|Amulet
 weapon_axe		WEAPON			|e|Axe
 weapon_bow		WEAPON			|e|Bow
