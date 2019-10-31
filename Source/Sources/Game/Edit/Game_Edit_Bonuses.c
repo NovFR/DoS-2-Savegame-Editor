@@ -1079,7 +1079,7 @@ LONG_PTR Game_BonusSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *ctx)
 							WCHAR*	pszName;
 							pszId = Misc_StrCpyAlloc(((GAMESKILL *)lvItem.lParam)->pszId);
 							pszName = Misc_StrCpyAlloc(((GAMESKILL *)lvItem.lParam)->pszName);
-							if (!pszId || !pszName)
+							if (!pszId)
 								{
 								if (pszId) HeapFree(App.hHeap,0,pszId);
 								if (pszName) HeapFree(App.hHeap,0,pszName);
@@ -1115,7 +1115,7 @@ LONG_PTR Game_BonusSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *ctx)
 							WCHAR*	pszName;
 							pszId = Misc_StrCpyAlloc(((GAMEITEMCOLORS *)lvItem.lParam)->pszId);
 							pszName = Misc_StrCpyAlloc(((GAMEITEMCOLORS *)lvItem.lParam)->pszName);
-							if (!pszId || !pszName)
+							if (!pszId)
 								{
 								if (pszId) HeapFree(App.hHeap,0,pszId);
 								if (pszName) HeapFree(App.hHeap,0,pszName);
@@ -2187,7 +2187,6 @@ void Game_BonusRelease(GAMEEDITBONUS *pEditBonus, BOOL bCleanUpOnly)
 				pEditBonus->colors.pszId = NULL;
 				pEditBonus->colors.pszName = NULL;
 				}
-			break;
 			break;
 		}
 
