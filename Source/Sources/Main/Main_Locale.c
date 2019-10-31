@@ -33,7 +33,7 @@ extern WCHAR*		TextsIds[];
 int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 {
 	WIN32_FIND_DATA		Find;
-	HANDLE			FileHandle;
+	HANDLE			hFile;
 	LOCALE_MISC*		pLocale;
 	LOCALE_ENUM*		pEnum;
 	WCHAR*			pszExt;
@@ -53,8 +53,8 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 
 	//--- Obtention de la liste des fichiers ---
 
-	FileHandle = FindFirstFile(pszSearchPath,&Find);
-	if (FileHandle == INVALID_HANDLE_VALUE)
+	hFile = FindFirstFile(pszSearchPath,&Find);
+	if (hFile == INVALID_HANDLE_VALUE)
 		{
 		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
 		LocalFree(pszSearchPath);
@@ -81,24 +81,24 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 
 		if (!Locale_Load(hWnd,pszPathFmt,pEnum->szLang,LOCALE_TYPE_MISC,(void **)&pLocale,&pEnum->pszName))
 			{
-			FindClose(FileHandle);
+			FindClose(hFile);
 			Locale_EnumRelease(pRoot);
 			return(0);
 			}
 		Locale_Unload(LOCALE_TYPE_MISC,(void **)&pLocale,NULL);
 		List_AddEntry((NODE *)pEnum,pRoot);
 
-	} while (FindNextFile(FileHandle,&Find));
+	} while (FindNextFile(hFile,&Find));
 
 	if (GetLastError() != ERROR_NO_MORE_FILES)
 		{
 		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
-		FindClose(FileHandle);
+		FindClose(hFile);
 		Locale_EnumRelease(pRoot);
 		return(0);
 		}
 
-	FindClose(FileHandle);
+	FindClose(hFile);
 	return(1);
 }
 
@@ -113,6 +113,7 @@ void Locale_EnumRelease(NODE *pRoot)
 		if (pEnum->hIcon) DestroyIcon(pEnum->hIcon);
 		if (pEnum->pszName) HeapFree(App.hHeap,0,pEnum->pszName);
 		}
+
 	List_ReleaseMemory(pRoot);
 	return;
 }

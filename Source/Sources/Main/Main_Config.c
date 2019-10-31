@@ -484,14 +484,16 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			App.hShortcuts = NULL;
 			Initialise_Accelerators();
 
-			//--- Update everything else ---
+			//--- Append last files ---
 			LastFiles_AppendItems();
 
+			//--- Update buttons texts ---
 			SetWindowText(App.Game.Layout.hwndAbilitiesBtn,Locale_GetText(TEXT_BUTTON_ABILITIES));
 			SetWindowText(App.Game.Layout.hwndTagsBtn,Locale_GetText(TEXT_BUTTON_TAGS));
 			SetWindowText(App.Game.Layout.hwndTalentsBtn,Locale_GetText(TEXT_BUTTON_TALENTS));
 			SetWindowText(App.Game.Layout.hwndMenuBtn,Locale_GetText(TEXT_BUTTON_MENU));
 
+			//--- Update inventory list groups names ---
 			lvGroup.cbSize = sizeof(LVGROUP);
 			lvGroup.mask = LVGF_HEADER;
 			lvGroup.pszHeader = Locale_GetText(TEXT_INV_NAV);
@@ -503,6 +505,7 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			lvGroup.pszHeader = Locale_GetText(TEXT_INV_ITEMS);
 			SendMessage(App.Game.Layout.hwndInventory,LVM_SETGROUPINFO,(WPARAM)3,(LPARAM)&lvGroup);
 
+			//--- Update window ---
 			InvalidateRect(App.Game.Layout.hwndList,NULL,FALSE);
 			InvalidateRect(App.hWnd,NULL,FALSE);
 			UpdateWindow(App.hWnd);
@@ -515,6 +518,7 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 		}
 	else
 		{
+		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_SELECT),NULL,MB_ICONERROR);
 		return(0);
 		}
