@@ -855,6 +855,7 @@ int CALLBACK Game_EditValueCmp(GAMEDATA *pData1, GAMEDATA *pData2, GAMEEDITVALUE
 	switch(pValue->uSort)
 		{
 		case DATA_SORT_ID:
+		case DATA_SORT_RUNE:
 			pszText1 = pData1->pszId;
 			pszText2 = pData2->pszId;
 			break;
@@ -862,26 +863,6 @@ int CALLBACK Game_EditValueCmp(GAMEDATA *pData1, GAMEDATA *pData2, GAMEEDITVALUE
 			pszText1 = pData1->pszText;
 			pszText2 = pData2->pszText;
 			break;
-		case DATA_SORT_RUNE: {
-			UINT	uLen;
-			int	iSize1;
-			int	iSize2;
-			uLen = wcslen(pData1->pszId);
-			if (Game_CompareStrings(L"_Giant",pData1->pszId,uLen,CMP_TYPE_CONTENT)) iSize1 = 3;
-			else if (Game_CompareStrings(L"_Large",pData1->pszId,uLen,CMP_TYPE_CONTENT)) iSize1 = 2;
-			else if (Game_CompareStrings(L"_Medium",pData1->pszId,uLen,CMP_TYPE_CONTENT)) iSize1 = 1;
-			else if (Game_CompareStrings(L"_Small",pData1->pszId,uLen,CMP_TYPE_CONTENT)) iSize1 = 0;
-			else iSize1 = -1;
-			uLen = wcslen(pData2->pszId);
-			if (Game_CompareStrings(L"_Giant",pData2->pszId,uLen,CMP_TYPE_CONTENT)) iSize2 = 3;
-			else if (Game_CompareStrings(L"_Large",pData2->pszId,uLen,CMP_TYPE_CONTENT)) iSize2 = 2;
-			else if (Game_CompareStrings(L"_Medium",pData2->pszId,uLen,CMP_TYPE_CONTENT)) iSize2 = 1;
-			else if (Game_CompareStrings(L"_Small",pData2->pszId,uLen,CMP_TYPE_CONTENT)) iSize2 = 0;
-			else iSize2 = -1;
-			if (iSize1 != -1 && iSize2 != -1 && iSize1 != iSize2) return(iSize2-iSize1);
-			pszText1 = pData1->pszText;
-			pszText2 = pData2->pszText;
-			} break;
 		case DATA_SORT_RUNE_BONUS1:
 			pszText1 = pData1->rune.pszBonus1;
 			pszText2 = pData2->rune.pszBonus1;
