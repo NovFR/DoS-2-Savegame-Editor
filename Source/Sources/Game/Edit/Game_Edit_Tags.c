@@ -597,21 +597,20 @@ void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pMeasure)
 	hDC = GetDC(hDlg);
 	if (hDC)
 		{
-		// Base height
-		pMeasure->itemHeight = 28+App.Font.uFontHeight;
+		pMeasure->itemHeight = 2+(2+App.Font.uFontHeight+16)+30+2; // Base height
 		if (pData->tag.pszDescription)
 			{
 			HFONT		hDefFont;
 			RECT		rcText;
 
 			GetClientRect(GetDlgItem(hDlg,300),&rcText);
-			rcText.left += 16;
-			rcText.right -= 16;
+			rcText.right -= (2+20)*2;
 			hDefFont = SelectObject(hDC,App.Font.hFont);
 			pMeasure->itemHeight += DrawText(hDC,pData->tag.pszDescription,-1,&rcText,DT_CALCRECT|DT_LEFT|DT_END_ELLIPSIS|DT_NOPREFIX|DT_WORDBREAK);
-			pMeasure->itemHeight += 20;
+			//!\ Bug: Last line is sometimes truncated :/
 			SelectObject(hDC,hDefFont);
 			}
+		else pMeasure->itemHeight += App.Font.uFontHeight; // Empty description
 		ReleaseDC(hDlg,hDC);
 		}
 	return;
@@ -799,9 +798,9 @@ void Game_TagsDrawItem(DRAWITEMSTRUCT *pDraw)
 
 		CopyRect(&rcText,&rcClient);
 		rcText.top += 2+App.Font.uFontHeight+16;
-		rcText.bottom -= 16;
-		rcText.left += 16;
-		rcText.right -= 16;
+		rcText.bottom -= 30;
+		rcText.left += 20;
+		rcText.right -= 20;
 		SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
 		DrawText(pDraw->hDC,pData->tag.pszDescription,-1,&rcText,DT_LEFT|DT_END_ELLIPSIS|DT_NOPREFIX|DT_WORDBREAK);
 		}
