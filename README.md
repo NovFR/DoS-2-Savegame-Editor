@@ -5,13 +5,13 @@ This program allows you to modify various things in a Divinity Original Sin II s
 It is technically, more a front end for Norbyte's LSlib than a real savegame editor for now.
 
 
-# Language
+## Language
 
 Only English and French languages are available at this time.
 
 You can create more translations by adding new databases in the Locales folder.
 
-Databases use SQLite format. I personnaly use [DB Browser for SQLite](https://sqlitebrowser.org/)
+Databases use SQLite format. I personnaly use [DB Browser for SQLite](https://sqlitebrowser.org/).
 
 It is highly suggested (but not required) to use [ISO 639-2 format](https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-2) for databases filenames.
 
