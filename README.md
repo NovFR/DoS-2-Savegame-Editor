@@ -28,7 +28,7 @@ Use a special save to make your modifications. Save your game once then a second
 
 ## Known issues
 
-- You can only select the amount of an item if the <amount> tag exists in the XML structure.
+- You can only select the amount of an item if the \<amount\> tag exists in the XML structure.
 - Using keyboard to (un)select Talents may be messy sometimes.
 - Last line of Tags description may be truncated.
 
