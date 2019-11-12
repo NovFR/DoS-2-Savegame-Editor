@@ -13,7 +13,7 @@ You can create more translations by adding new databases in the Locales folder.
 
 Databases use SQLite format. I personnaly use [DB Browser for SQLite](https://sqlitebrowser.org/).
 
-It is highly suggested (but not required) to use [ISO 639-2 format](https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-2) for databases filenames.
+It is highly suggested (but not required) to use [ISO 639-2 format](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) for databases filenames.
 
 
 ## Savegame corruption
