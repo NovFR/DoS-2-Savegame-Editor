@@ -107,6 +107,7 @@ void			xml_FreeParser(XML_PARSER *);
 XML_NODE*		xml_GetNodeFromPath(XML_NODE *,WCHAR *[]);
 XML_NODE*		xml_GetNodeFromPathFirstChild(XML_NODE *,WCHAR *[]);
 XML_NODE*		xml_GetNode(XML_NODE *,WCHAR *,WCHAR *,WCHAR *);
+XML_NODE*		xml_GetNextNode(XML_NODE *);
 XML_ATTR*		xml_GetAttr(XML_NODE *,WCHAR *);
 XML_ATTR*		xml_GetXMLValueAttr(XML_NODE *,WCHAR *,WCHAR *,WCHAR *);
 WCHAR*			xml_GetAttrValue(XML_NODE *,WCHAR *);
@@ -116,6 +117,7 @@ UINT			xml_TotalNodesCount(XML_NODE *);
 
 XML_NODE*		xml_CreateNode(WCHAR *,XML_NODE *,UINT,...);
 XML_NODE*		xml_CreateNodeArray(WCHAR ***,XML_NODE *);
+XML_ATTR*		xml_CreateAttr(WCHAR *,XML_NODE *);
 BOOL			xml_SetAttrValue(XML_ATTR *,WCHAR *);
 BOOL			xml_SetAttrValueNumber(XML_ATTR *,UINT);
 WCHAR*			xml_BuildWideCharPath(XML_NODE *);

@@ -814,6 +814,7 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 
 		lvTileView.cbSize = sizeof(LVTILEVIEWINFO);
 		lvTileView.dwMask = LVTVIM_COLUMNS;
+		lvTileView.dwFlags = LVTVIF_AUTOSIZE;
 		lvTileView.cLines = ++uNumColumns;
 		SendDlgItemMessage(hDlg,300,LVM_SETIMAGELIST,(WPARAM)LVSIL_NORMAL,(LPARAM)hImageList);
 		SendDlgItemMessage(hDlg,300,LVM_SETTILEVIEWINFO,0,(LPARAM)&lvTileView);

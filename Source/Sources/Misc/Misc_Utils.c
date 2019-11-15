@@ -384,6 +384,26 @@ void Misc_SetWindowText(HWND hWnd, WCHAR **pszTitlePtr, WCHAR *pszDefault, WCHAR
 
 // л╗╗╗ Conversion d'un texte UTF-8 en WCHAR лллллллллллллллллллллллллллл╗
 
+WCHAR* Misc_UTF8ToWideCharNZ(const char *pszText, const int iLen)
+{
+	WCHAR*	pszResult;
+	int	iSize;
+
+	if (!pszText) return(NULL);
+	iSize = MultiByteToWideChar(CP_UTF8,0,pszText,iLen,NULL,0);
+	if (!iSize) return(NULL);
+	pszResult = HeapAlloc(App.hHeap,0,iSize*sizeof(WCHAR)+sizeof(WCHAR));
+	if (!pszResult) return(NULL);
+	iSize = MultiByteToWideChar(CP_UTF8,0,pszText,iLen,pszResult,iSize);
+	if (iSize)
+		{
+		pszResult[iSize] = 0;
+		return(pszResult);
+		}
+	HeapFree(App.hHeap,0,pszResult);
+	return(NULL);
+}
+
 WCHAR* Misc_UTF8ToWideChar(const char *pszText)
 {
 	WCHAR*	pszResult;

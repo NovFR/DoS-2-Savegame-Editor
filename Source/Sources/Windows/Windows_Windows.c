@@ -14,6 +14,8 @@
 #include "Application.h"
 #include "Texts.h"
 #include "Menus.h"
+#include "Files.h"
+#include "Infos.h"
 #include "LastFiles.h"
 #include "Requests.h"
 #include "Divine.h"
@@ -310,6 +312,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_RECENTREMOVEALL:
 					LastFiles_RemoveAll();
+					break;
+				case IDM_INFOS:
+					Infos_Show();
 					break;
 				case IDM_WRITESAVEGAME:
 					Divine_Write();

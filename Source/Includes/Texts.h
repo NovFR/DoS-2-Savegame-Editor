@@ -58,9 +58,11 @@ extern WCHAR	szGameNameEE[];
 extern WCHAR	szPlayerProfiles[];
 extern WCHAR	szSavegames[];
 extern WCHAR	szStory[];
+extern WCHAR	szMetaLSF[];
 extern WCHAR	szGlobalsLSF[];
 extern WCHAR	szGlobalsLSX[];
 extern WCHAR	szLSVext[];
+extern WCHAR	szPNGext[];
 
 extern WCHAR	szLastFilesPath[];
 extern WCHAR	szConfigPath[];
@@ -73,6 +75,8 @@ extern WCHAR	szSkillsIconsPath[];
 extern WCHAR	szRunesIconsPath[];
 extern WCHAR	szLangPath[];
 extern WCHAR	szLangIcoPath[];
+extern WCHAR	szDOS2PNGPath[];
+extern WCHAR	szDOS2EEPNGPath[];
 extern WCHAR	szLangDefault[];
 extern WCHAR	szConfigErr[];
 extern WCHAR	szConfigLoadErr[];
@@ -100,6 +104,7 @@ extern WCHAR	szXMLAttr[];
 extern WCHAR	szXMLAttrId[];
 extern WCHAR	szXMLSeparator[];
 
+extern WCHAR	szXMLregion[];
 extern WCHAR	szXMLnode[];
 extern WCHAR	szXMLid[];
 extern WCHAR	szXMLvalue[];
@@ -126,5 +131,13 @@ extern WCHAR*	szItemCustomDescriptionPath[];
 extern WCHAR*	szItemBonusesPath[];
 extern WCHAR*	szItemReflectionPath[];
 extern WCHAR*	szItemReflectionMapPath[];
+
+extern WCHAR*	szInfoMetaDataPath[];
+extern WCHAR*	szInfoGameModdedPath[];
+extern WCHAR*	szInfoGameDifficultyPath[];
+extern WCHAR*	szInfoGameModsPath[];
+extern WCHAR*	szInfoGameVersionPath[];
+extern WCHAR*	szInfoGamePartyPath[];
+extern WCHAR*	szInfoGameDatePath[];
 
 #endif

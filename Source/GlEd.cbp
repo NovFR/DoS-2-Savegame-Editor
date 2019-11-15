@@ -54,6 +54,7 @@
 			<Add library="msimg32" />
 			<Add library="Shlwapi" />
 			<Add library="ole32" />
+			<Add library="libz.a" />
 		</Linker>
 		<Unit filename="Application.manifest" />
 		<Unit filename="Includes/AppWindows.h" />
@@ -61,13 +62,18 @@
 		<Unit filename="Includes/Config.h" />
 		<Unit filename="Includes/Dialogs.h" />
 		<Unit filename="Includes/Divine.h" />
+		<Unit filename="Includes/Files.h" />
 		<Unit filename="Includes/Font.h" />
 		<Unit filename="Includes/Game.h" />
 		<Unit filename="Includes/GameEdit.h" />
+		<Unit filename="Includes/Infos.h" />
+		<Unit filename="Includes/LZ4.h" />
+		<Unit filename="Includes/LZ4frame.h" />
 		<Unit filename="Includes/LastFiles.h" />
 		<Unit filename="Includes/Lists.h" />
 		<Unit filename="Includes/Locale.h" />
 		<Unit filename="Includes/Menus.h" />
+		<Unit filename="Includes/PNG.h" />
 		<Unit filename="Includes/Requests.h" />
 		<Unit filename="Includes/SQLite3.h" />
 		<Unit filename="Includes/Startup.h" />
@@ -83,6 +89,72 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Datas/Datas_Texts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/Files_LSF.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/Files_LSV.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/Files_Misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/Files_PNG.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/LZ4/lz4.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/LZ4/lz4frame.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/LZ4/lz4hc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/LZ4/xxhash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/png.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngerror.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngget.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngrio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngrtran.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngrutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngtrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngwio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngwrite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngwtran.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Files/PNG/pngwutil.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Edit/Game_Edit_Abilities.c">
@@ -113,6 +185,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_Edit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Infos.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_Manager.c">

@@ -833,6 +833,7 @@ void Game_Lock(DWORD uFlags)
 		}
 	if (uFlags & GAME_LOCK_FILE)
 		{
+		EnableMenuItem(App.hMenu,IDM_INFOS,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CLOSE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_WRITESAVEGAME,uEnable);
 		}

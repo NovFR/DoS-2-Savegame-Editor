@@ -52,6 +52,9 @@ typedef struct DIVINESGCONTEXT {
 	WCHAR*		pszSaveName;
 	NODE		Profiles;
 	NODE		Savegames;
+	NODE		GameFiles;
+	UINT		uGameImg;
+	HBITMAP		hBitmap;
 } DIVINESGCONTEXT;
 
 typedef struct DIVINECONTEXT {
@@ -81,6 +84,7 @@ typedef struct DIVINELOG {
 typedef struct DIVINEITEM {
 	NODE		node;
 	WCHAR*		name;
+	FILETIME	time;
 } DIVINEITEM;
 
 
@@ -97,6 +101,10 @@ LONG_PTR		Divine_SelectSetPrevPage(HWND,GAMEEDITPAGECONTEXT *);
 LONG_PTR		Divine_SelectSetNextPage(HWND,BOOL,GAMEEDITPAGECONTEXT *);
 void			Divine_SelectDrawGame(DRAWITEMSTRUCT *);
 void			Divine_SelectDrawItem(DRAWITEMSTRUCT *);
+void			Divine_SelectDrawSeparator(DRAWITEMSTRUCT *);
+void			Divine_SelectDrawGameImage(DRAWITEMSTRUCT *,DIVINESGCONTEXT *);
+void			Divine_SelectLoadImage(HWND,DIVINESGCONTEXT *);
+void			Divine_SelectLoadGameInfos(HWND,DIVINESGCONTEXT *);
 int			Divine_SelectCreateList(HWND,UINT,DIVINESGCONTEXT *);
 void			Divine_SelectReleaseList(NODE *);
 

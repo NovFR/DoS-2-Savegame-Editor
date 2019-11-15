@@ -60,9 +60,11 @@ WCHAR	szGameNameEE[]			= L"Divinity Original Sin 2 Definitive Edition";
 WCHAR	szPlayerProfiles[]		= L"PlayerProfiles";
 WCHAR	szSavegames[]			= L"Savegames";
 WCHAR	szStory[]			= L"Story";
+WCHAR	szMetaLSF[]			= L"meta.lsf";
 WCHAR	szGlobalsLSF[]			= L"globals.lsf";
 WCHAR	szGlobalsLSX[]			= L"globals.lsx";
 WCHAR	szLSVext[]			= L".lsv";
+WCHAR	szPNGext[]			= L".png";
 
 WCHAR	szLastFilesPath[]		= L"Prefs\\GlEd.recents";
 WCHAR	szConfigPath[]			= L"Prefs\\GlEd.config";
@@ -75,6 +77,8 @@ WCHAR	szSkillsIconsPath[]		= L"Icons\\Skills.icl";
 WCHAR	szRunesIconsPath[]		= L"Icons\\Runes.icl";
 WCHAR	szLangPath[]			= L"Locales\\%1.db";
 WCHAR	szLangIcoPath[]			= L"Locales\\%1.ico";
+WCHAR	szDOS2PNGPath[]			= L"Images\\DOS2.png";
+WCHAR	szDOS2EEPNGPath[]		= L"Images\\DOS2EE.png";
 WCHAR	szLangDefault[]			= L"eng";
 WCHAR	szConfigErr[]			= L"Unable to set configuration's default values.";
 WCHAR	szConfigLoadErr[]		= L"An error occurs while loading the configuration.\nConfiguration will use default values.";
@@ -102,6 +106,7 @@ WCHAR	szXMLAttr[]			= L"%1";
 WCHAR	szXMLAttrId[]			= L"%1[id=%2]";
 WCHAR	szXMLSeparator[]		= L"\\";
 
+WCHAR	szXMLregion[]			= L"region";
 WCHAR	szXMLnode[]			= L"node";
 WCHAR	szXMLid[]			= L"id";
 WCHAR	szXMLvalue[]			= L"value";
@@ -127,3 +132,11 @@ WCHAR*	szItemCustomDescriptionPath[]	= { L"children",NULL, L"node",L"CustomDescr
 WCHAR*	szItemBonusesPath[]		= { L"children",NULL, L"node",L"Stats", L"children",NULL, L"node",L"PermanentBoost", NULL };
 WCHAR*	szItemReflectionPath[]		= { L"children",NULL, L"node",L"Reflection", NULL };
 WCHAR*	szItemReflectionMapPath[]	= { L"children",NULL, L"node",L"Reflection", L"children",NULL, L"node",L"MapValue", NULL };
+
+WCHAR*	szInfoMetaDataPath[]		= { L"save",NULL, L"region",L"MetaData", L"node",L"MetaData", NULL };
+WCHAR*	szInfoGameModdedPath[]		= { L"attribute",L"Modded", NULL };
+WCHAR*	szInfoGameDifficultyPath[]	= { L"attribute",L"Difficulty", NULL };
+WCHAR*	szInfoGameModsPath[]		= { L"children",NULL, L"node",L"ModuleSettings", L"children",NULL, L"node",L"Mods", L"children",NULL, L"node",L"ModuleShortDesc", NULL };
+WCHAR*	szInfoGameVersionPath[]		= { L"children",NULL, L"node",L"GameVersions", L"children",NULL, L"node",L"GameVersion", L"attribute",L"Object", NULL };
+WCHAR*	szInfoGamePartyPath[]		= { L"children",NULL, L"node",L"PartyMetaData", L"children",NULL, NULL };
+WCHAR*	szInfoGameDatePath[]		= { L"children",NULL, L"node",L"SaveTime", NULL };

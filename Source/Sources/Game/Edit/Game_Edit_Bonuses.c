@@ -1576,6 +1576,7 @@ int Game_BonusInitSkills(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 
 	lvTileView.cbSize = sizeof(LVTILEVIEWINFO);
 	lvTileView.dwMask = LVTVIM_COLUMNS;
+	lvTileView.dwFlags = LVTVIF_AUTOSIZE;
 	lvTileView.cLines = 3;
 	SendDlgItemMessage(hDlg,uCtlID,LVM_SETTILEVIEWINFO,0,(LPARAM)&lvTileView);
 

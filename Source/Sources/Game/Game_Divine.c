@@ -16,6 +16,8 @@
 #include "Texts.h"
 #include "Divine.h"
 #include "Game.h"
+#include "Files.h"
+#include "Infos.h"
 #include "LastFiles.h"
 #include "Dialogs.h"
 #include "Utils.h"
@@ -140,6 +142,8 @@ Done:	if (psh) HeapFree(App.hHeap,0,psh);
 		{
 		if (pContext->pszProfile) HeapFree(App.hHeap,0,pContext->pszProfile);
 		if (pContext->pszSaveName) HeapFree(App.hHeap,0,pContext->pszSaveName);
+		if (pContext->hBitmap) DeleteObject(pContext->hBitmap);
+		lsv_Release(&pContext->GameFiles);
 		Divine_SelectReleaseList(&pContext->Profiles);
 		Divine_SelectReleaseList(&pContext->Savegames);
 		HeapFree(App.hHeap,0,pContext);
@@ -221,8 +225,14 @@ BOOL CALLBACK Divine_SelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lP
 				case 200:
 					Divine_SelectDrawItem((DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
+				case 300:
+					Divine_SelectDrawSeparator((DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
+				case 301:
+					Divine_SelectDrawGameImage((DRAWITEMSTRUCT *)lParam,((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext);
+					return(TRUE);
 				}
-			break;
+			return(Infos_Draw(hDlg,wParam,(DRAWITEMSTRUCT *)lParam,&((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext->GameFiles));
 
 		case WM_COMMAND:
 			switch(HIWORD(wParam))
@@ -249,6 +259,7 @@ BOOL CALLBACK Divine_SelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lP
 									Divine_SelectReleaseList(&((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext->Profiles);
 									Divine_SelectReleaseList(&((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext->Savegames);
 									Divine_SelectCreateList(hDlg,DIVINE_PROFILE_LIST,((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext);
+									Divine_SelectLoadImage(hDlg,((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext);
 									return(TRUE);
 								case 200:
 									PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)Divine_SelectSetNextPage(hDlg,FALSE,(GAMEEDITPAGECONTEXT *)psp->lParam) != -1?PSWIZB_NEXT:0);
@@ -259,6 +270,7 @@ BOOL CALLBACK Divine_SelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lP
 							switch(LOWORD(wParam))
 								{
 								case 200:
+									Divine_SelectLoadGameInfos(hDlg,((GAMEEDITPAGECONTEXT *)psp->lParam)->savegame.pContext);
 									PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_BACK|(Divine_SelectSetNextPage(hDlg,FALSE,(GAMEEDITPAGECONTEXT *)psp->lParam) != -1?PSWIZB_FINISH:PSWIZB_DISABLEDFINISH));
 									return(TRUE);
 								}
@@ -312,12 +324,14 @@ int Divine_SelectActivate(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 				ctx->bPageSet = TRUE;
 				}
 			if (!Divine_SelectCreateList(hDlg,DIVINE_PROFILE_LIST,ctx->savegame.pContext)) return(0);
+			Divine_SelectLoadImage(hDlg,ctx->savegame.pContext);
 			PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)Divine_SelectSetNextPage(hDlg,FALSE,ctx) != -1?PSWIZB_NEXT:0);
 			break;
 
 		case GAME_PAGE_SAVEGAME_LIST:
 			if (!ctx->bPageSet)
 				{
+				if (!Infos_Initialise(hDlg)) return(0);
 				ctx->bPageSet = TRUE;
 				}
 			if (!Divine_SelectCreateList(hDlg,DIVINE_SAVEGAMES_LIST,ctx->savegame.pContext)) return(0);
@@ -480,6 +494,105 @@ void Divine_SelectDrawItem(DRAWITEMSTRUCT *pDraw)
 }
 
 
+// «»»» Affichage de la ligne de séparation «««««««««««««««««««««««««««««»
+
+void Divine_SelectDrawSeparator(DRAWITEMSTRUCT *pDraw)
+{
+	RECT	rcItem;
+
+	CopyRect(&rcItem,&pDraw->rcItem);
+	rcItem.left = (rcItem.right-rcItem.left-2)/2;
+	rcItem.right = rcItem.left+2;
+	DrawEdge(pDraw->hDC,&rcItem,BDR_SUNKENOUTER,BF_LEFT|BF_RIGHT);
+	return;
+}
+
+
+// «»»» Affichage de l'image du jeu «««««««««««««««««««««««««««««««««««««»
+
+void Divine_SelectDrawGameImage(DRAWITEMSTRUCT *pDraw, DIVINESGCONTEXT *pContext)
+{
+	HDC	hDC;
+	BITMAP	bm;
+
+	if (pContext->hBitmap)
+		{
+		GetObject(pContext->hBitmap,sizeof(BITMAP),&bm);
+		hDC = CreateCompatibleDC(pDraw->hDC);
+		if (hDC)
+			{
+			HBITMAP hDefBitmap = SelectObject(hDC,pContext->hBitmap);
+			BitBlt(pDraw->hDC,pDraw->rcItem.left,pDraw->rcItem.top,pDraw->rcItem.right-pDraw->rcItem.left,pDraw->rcItem.bottom-pDraw->rcItem.top,hDC,bm.bmWidth/2-(pDraw->rcItem.right-pDraw->rcItem.left)/2,bm.bmHeight-(pDraw->rcItem.bottom-pDraw->rcItem.top),SRCCOPY);
+			SelectObject(hDC,hDefBitmap);
+			DeleteDC(hDC);
+			}
+		}
+
+	return;
+}
+
+
+// «»»» Chargement de l'image du jeu ««««««««««««««««««««««««««««««««««««»
+
+void Divine_SelectLoadImage(HWND hDlg, DIVINESGCONTEXT *pContext)
+{
+	UINT	uGame;
+
+	uGame = SendDlgItemMessage(hDlg,190,CB_GETCURSEL,0,0);
+	if (uGame == CB_ERR) return;
+
+	if (pContext->uGameImg != ++uGame)
+		{
+		WCHAR*	pszImage;
+
+		switch(uGame)
+			{
+			case DIVINE_DOS_2:
+				pszImage = szDOS2PNGPath;
+				break;
+			case DIVINE_DOS_2EE:
+				pszImage = szDOS2EEPNGPath;
+				break;
+			default:return;
+			}
+
+		if (pContext->hBitmap) DeleteObject(pContext->hBitmap);
+		pContext->uGameImg = uGame;
+		pContext->hBitmap = png_LoadImage(pszImage);
+		InvalidateRect(GetDlgItem(hDlg,301),NULL,FALSE);
+		}
+
+	return;
+}
+
+
+// «»»» Chargement des informations sur la sauvegarde sélectionnée ««««««»
+
+void Divine_SelectLoadGameInfos(HWND hDlg, DIVINESGCONTEXT *pContext)
+{
+	DIVINEITEM*	pItem;
+	WCHAR*		pszPath;
+	LRESULT		lResult;
+
+	lResult = SendDlgItemMessage(hDlg,200,LB_GETCURSEL,0,0);
+	if (lResult == LB_ERR) return;
+
+	pItem = (DIVINEITEM *)SendDlgItemMessage(hDlg,200,LB_GETITEMDATA,(WPARAM)lResult,0);
+	if (pItem == (DIVINEITEM *)LB_ERR) return;
+	pszPath = Divine_GetSaveGamePath(pContext->uGame,pContext->pszProfile,pItem->name);
+	if (!pszPath) return;
+
+	lsv_Release(&pContext->GameFiles);
+	lResult = lsv_Load(hDlg,pszPath,&pContext->GameFiles,LS_MODE_QUIET|LS_MODE_SAVEINFO);
+	if (!lResult) return;
+
+	Infos_PrepareAndUpdate(hDlg,pItem->name,&pContext->GameFiles);
+
+	HeapFree(App.hHeap,0,pszPath);
+	return;
+}
+
+
 // «»»» Création d'une liste ««««««««««««««««««««««««««««««««««««««««««««»
 
 int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
@@ -494,6 +607,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 	UINT			uLen;
 	LRESULT			lResult;
 	int			iResult;
+	int			iIndex;
 
 	//--- Sélection du répertoire ---
 
@@ -627,6 +741,8 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				}
 			List_AddEntry((NODE *)pItem,pRoot);
 			pItem->node.type = uType;
+			pItem->time.dwLowDateTime = Find.ftLastWriteTime.dwLowDateTime;
+			pItem->time.dwHighDateTime = Find.ftLastWriteTime.dwHighDateTime;
 			pItem->name = Misc_StrCpyAlloc(Find.cFileName);
 			if (!pItem->name)
 				{
@@ -634,8 +750,26 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				goto Done;
 				}
 
+			//--- Tente d'insérer le dossier en fonction de la date de modification
+			if (SendDlgItemMessage(hDlg,200,LB_GETCOUNT,0,0) > 1)
+				{
+				DIVINEITEM*	pListItem;
+				long		lResult;
+
+				iIndex = 0;
+				while (1)
+					{
+					pListItem = (DIVINEITEM *)SendDlgItemMessage(hDlg,200,LB_GETITEMDATA,(WPARAM)iIndex,0);
+					if (pListItem == (DIVINEITEM *)LB_ERR) { iIndex = -1; break; }
+					lResult = CompareFileTime(&pListItem->time,&pItem->time);
+					if (lResult == -1) break;
+					iIndex++;
+					}
+				}
+			else iIndex = -1;
+
 			//--- Ajoute le dossier à la liste visuelle
-			lResult = SendDlgItemMessage(hDlg,200,LB_ADDSTRING,0,(LPARAM)pItem);
+			lResult = SendDlgItemMessage(hDlg,200,LB_INSERTSTRING,(WPARAM)iIndex,(LPARAM)pItem);
 			if (lResult == LB_ERR || lResult == LB_ERRSPACE)
 				{
 				Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
@@ -654,6 +788,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 					if (wcscmp(pItem->name,pContext->pszSaveName)) break;
 					SendDlgItemMessage(hDlg,200,LB_SETCURSEL,(WPARAM)lResult,0);
 					PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_FINISH);
+					Divine_SelectLoadGameInfos(hDlg,pContext);
 					break;
 				}
 			}
@@ -1159,6 +1294,7 @@ void Divine_Close()
 	Game_ReleasePlayers();
 	xml_ReleaseAll(&App.Game.Save.nodeXMLRoot);
 	Divine_Cleanup();
+	lsv_Release(&App.Game.Save.nodeFiles);
 
 	if (App.Game.Save.pszSaveName) HeapFree(App.hHeap,0,App.Game.Save.pszSaveName);
 	App.Game.Save.pszSaveName = NULL;

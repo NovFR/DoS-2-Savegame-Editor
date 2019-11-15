@@ -734,6 +734,16 @@ XML_NODE* xml_GetNode(XML_NODE *pxnRoot, WCHAR *pszNodeName, WCHAR *pszAttrName,
 	return(pxn);
 }
 
+
+// л╗╗╗ Retrouve l'entrщe suivante лллллллллллллллллллллллллллллллллллллл╗
+
+XML_NODE* xml_GetNextNode(XML_NODE *pxnRoot)
+{
+	if (!pxnRoot) return(NULL);
+	return((XML_NODE *)pxnRoot->node.next);
+}
+
+
 // л╗╗╗ Retrouve une valeur par son nom ллллллллллллллллллллллллллллллллл╗
 
 XML_ATTR* xml_GetAttr(XML_NODE *pxn, WCHAR *pszAttrName)
@@ -981,6 +991,25 @@ XML_NODE* xml_CreateNodeArray(WCHAR ***pArray, XML_NODE *pxnParent)
 		}
 
 	return((XML_NODE *)nodeRoot.next);
+}
+
+
+// л╗╗╗ Crщation d'un attribut лллллллллллллллллллллллллллллллллллллллллл╗
+
+XML_ATTR* xml_CreateAttr(WCHAR *pszName, XML_NODE *pxnOwner)
+{
+	XML_ATTR*	pxaNew;
+	DWORD		dwAttrLen;
+
+	dwAttrLen = wcslen(pszName);
+	pxaNew = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_ATTR)+sizeof(WCHAR)*dwAttrLen+sizeof(WCHAR));
+	if (!pxaNew) return(NULL);
+	pxaNew->node.type = XML_TYPE_ATTR;
+	pxaNew->parent = pxnOwner;
+	wcscpy(pxaNew->name,pszName);
+
+	List_AddEntry((NODE *)pxaNew,&pxnOwner->attributes);
+	return(pxaNew);
 }
 
 

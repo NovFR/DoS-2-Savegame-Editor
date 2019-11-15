@@ -2,7 +2,7 @@
 
 This program allows you to modify various things in a Divinity Original Sin II savegame.
 
-It is technically, more a front end for Norbyte's LSlib than a real savegame editor for now.
+It is technically, more a front end for Norbyte's LSlib than a real savegame editor.
 
 
 ## Language
@@ -18,7 +18,7 @@ It is highly suggested (but not required) to use [ISO 639-2 format](https://en.w
 
 ## Savegame corruption
 
-If the game complain about savegame corruption, disable Cloud storage before saving and modifying your savegames.
+If the game complain about savegame corruption, disable cloud storage before saving and modifying your savegames.
 
 
 ## Better be safe than sorry
