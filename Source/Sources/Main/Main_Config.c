@@ -18,6 +18,7 @@
 #include "Menus.h"
 #include "Startup.h"
 #include "LastFiles.h"
+#include "Game.h"
 #include "Dialogs.h"
 #include "Requests.h"
 #include "Utils.h"
@@ -477,6 +478,10 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 				{
 				SetMenu(App.hWnd,App.hMenu);
 				DrawMenuBar(App.hWnd);
+				}
+			if (App.Game.Save.pszSaveName)
+				{
+				Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE|GAME_LOCK_TREE);
 				}
 
 			//--- Update the accelerators ---

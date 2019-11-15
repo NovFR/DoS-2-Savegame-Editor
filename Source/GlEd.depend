@@ -572,8 +572,9 @@
 	<string.h>
 	<stdint.h>
 
-1573793542 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_infos.c
+1573794076 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_infos.c
 	"Application.h"
+	"Divine.h"
 	"Files.h"
 	"Infos.h"
 	"Locale.h"
