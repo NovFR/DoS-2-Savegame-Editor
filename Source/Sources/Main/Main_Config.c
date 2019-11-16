@@ -465,6 +465,9 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			Menu_Release(App.hMenu,&MainMenu);
 			App.hMenu = NULL;
 
+			//--- Destroy the XML view ---
+			Tree_Destroy();
+
 			//--- Apply the new language ---
 			Locale_Unload(LOCALE_TYPE_APPLICATION,(void **)&App.pLocaleTexts,&App.pszLocaleName);
 			if (App.Config.pszLocaleName) HeapFree(App.hHeap,0,App.Config.pszLocaleName);
@@ -481,7 +484,8 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 				}
 			if (App.Game.Save.pszSaveName)
 				{
-				Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE|GAME_LOCK_TREE);
+				Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
+				if (App.Game.pdcCurrent) Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_TREE);
 				}
 
 			//--- Update the accelerators ---

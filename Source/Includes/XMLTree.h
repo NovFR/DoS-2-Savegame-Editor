@@ -18,8 +18,11 @@
 typedef struct XMLTREE {
 	HWND		hWnd;
 	HWND		hwndTree;
+	HWND		hwndSave;
+	HWND		hwndHelp;
+	HWND		hwndClose;
 	WCHAR*		pszWindowTitle;
-	XML_NODE*	pxnRoot;
+	XML_NODE*	pxn;
 } XMLTREE;
 
 

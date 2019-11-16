@@ -46,6 +46,8 @@ enum {
 void			Infos_Show(void);
 INT_PTR CALLBACK	Infos_Proc(HWND,UINT,WPARAM,LPARAM);
 
+void			Infos_Tree(void);
+int			Infos_LoadMetaDatas(HWND);
 int			Infos_Initialise(HWND);
 void			Infos_PrepareAndUpdate(HWND,WCHAR *,NODE *);
 WCHAR*			Infos_Get(UINT,UINT,WCHAR **,XML_NODE *);

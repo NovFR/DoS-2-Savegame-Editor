@@ -325,7 +325,14 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case IDM_QUIT:
 					PostMessage(hWnd,WM_CLOSE,0,0);
 					break;
-				case IDM_TREE:
+				case IDM_SHOWSAVETREE:
+					if (MessageBox(hWnd,Locale_GetText(TEXT_BIGTREE_WARNING),Locale_GetText(TEXT_TITLE_WARNING),MB_ICONWARNING|MB_OKCANCEL) != IDOK) break;
+					Tree_Open((XML_NODE *)App.Game.Save.nodeXMLRoot.next);
+					break;
+				case IDM_SHOWMETATREE:
+					Infos_Tree();
+					break;
+				case IDM_SHOWCHARTREE:
 					Tree_Open(App.Game.pdcCurrent->pxnXML);
 					break;
 				case IDM_CONVERTER:

@@ -29,7 +29,7 @@ extern APPLICATION		App;
 
 // л╗╗╗ Crщation de la fenъtre лллллллллллллллллллллллллллллллллллллллллл╗
 
-void Tree_Open(XML_NODE *pxnRoot)
+void Tree_Open(XML_NODE *pxn)
 {
 	HWND		hWnd;
 	HMONITOR	hMonitor;
@@ -37,7 +37,7 @@ void Tree_Open(XML_NODE *pxnRoot)
 	int		X,Y;
 
 	Tree_Destroy();
-	App.xmlTree.pxnRoot = pxnRoot;
+	App.xmlTree.pxn = pxn;
 
 	hMonitor = MonitorFromWindow(NULL,MONITOR_DEFAULTTOPRIMARY);
 	Info.cbSize = sizeof(MONITORINFO);
@@ -48,7 +48,7 @@ void Tree_Open(XML_NODE *pxnRoot)
 	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,800,700,NULL,NULL,App.hInstance,(void *)WINDOW_TREE);
 	if (!hWnd)
 		{
-		App.xmlTree.pxnRoot = NULL;
+		App.xmlTree.pxn = NULL;
 		App.xmlTree.hWnd = NULL;
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_WINDOW_CREATE),NULL,MB_ICONERROR);
 		return;
@@ -64,17 +64,39 @@ void Tree_Open(XML_NODE *pxnRoot)
 LRESULT Tree_Create(HWND hWnd)
 {
 	RECT	rcClient;
+	int	X,Y,W,H;
 
 	App.xmlTree.hWnd = hWnd;
+
+	W = 150;
+	H = App.Font.uFontHeight+16;
+
 	GetClientRect(hWnd,&rcClient);
 	rcClient.left += 16;
 	rcClient.right -= 16;
 	rcClient.top += 16;
-	rcClient.bottom -= 16;
+	rcClient.bottom -= 16+H+14;
 
 	App.xmlTree.hwndTree = CreateWindowEx(WS_EX_STATICEDGE,WC_TREEVIEW,NULL,WS_CHILD|TVS_DISABLEDRAGDROP|TVS_HASBUTTONS|TVS_HASLINES|TVS_LINESATROOT|TVS_SHOWSELALWAYS|TVS_EDITLABELS,rcClient.left,rcClient.top,rcClient.right-rcClient.left,rcClient.bottom-rcClient.top,hWnd,(HMENU)CTLID_TREEVIEW,App.hInstance,NULL);
 	if (!App.xmlTree.hwndTree) return(0);
-	if (!Tree_CreateTreeView(App.xmlTree.pxnRoot)) return(0);
+	if (!Tree_CreateTreeView(App.xmlTree.pxn)) return(0);
+
+	X = rcClient.right-W-4;
+	Y = rcClient.bottom+14;
+
+	App.xmlTree.hwndClose = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREECLOSE,App.hInstance,NULL);
+	if (!App.xmlTree.hwndClose) return(0);
+	App.xmlTree.hwndHelp = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREEHELP,App.hInstance,NULL);
+	if (!App.xmlTree.hwndHelp) return(0);
+	App.xmlTree.hwndSave = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREESAVE,App.hInstance,NULL);
+	if (!App.xmlTree.hwndSave) return(0);
+
+	SendMessage(App.xmlTree.hwndClose,WM_SETFONT,(WPARAM)App.Font.hFont,0);
+	SendMessage(App.xmlTree.hwndClose,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_CLOSE));
+	SendMessage(App.xmlTree.hwndHelp,WM_SETFONT,(WPARAM)App.Font.hFont,0);
+	SendMessage(App.xmlTree.hwndHelp,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_HELP));
+	SendMessage(App.xmlTree.hwndSave,WM_SETFONT,(WPARAM)App.Font.hFont,0);
+	SendMessage(App.xmlTree.hwndSave,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_SAVE));
 
 	ShowWindow(App.xmlTree.hwndTree,SW_SHOWNORMAL);
 	return(1);
@@ -92,49 +114,52 @@ void Tree_Destroy()
 
 // л╗╗╗ Crщation de la liste лллллллллллллллллллллллллллллллллллллллллллл╗
 
-int Tree_CreateTreeView(XML_NODE *pxnRoot)
+int Tree_CreateTreeView(XML_NODE *pxn)
 {
-	if (!Tree_CreateNodeTree(pxnRoot,NULL))
+	if (!pxn) return(1);
+
+	if (!Tree_CreateNodeTree(pxn,NULL))
 		{
 		Tree_DestroyTreeView();
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_TREE_CREATE),NULL,MB_ICONERROR);
 		return(0);
 		}
 
-	if (pxnRoot->parent)
+	if (pxn->parent)
 		{
 		WCHAR*	Text;
-		Text = xml_AttrToWideChar((XML_NODE *)pxnRoot->parent);
+		Text = xml_AttrToWideChar((XML_NODE *)pxn->parent);
 		if (Text)
 			{
-			Misc_SetWindowText(App.xmlTree.hWnd,&App.xmlTree.pszWindowTitle,szTitle,szTitleFmt,szTitle,Text);
+			Misc_SetWindowText(App.xmlTree.hWnd,&App.xmlTree.pszWindowTitle,szTitle,szTitleFmtLong,szTitle,Locale_GetText(TEXT_TITLE_TREE),Text);
 			LocalFree(Text);
 			}
 		}
+	else Misc_SetWindowText(App.xmlTree.hWnd,&App.xmlTree.pszWindowTitle,szTitle,szTitleFmt,szTitle,Locale_GetText(TEXT_TITLE_TREE));
 
 	return(1);
 }
 
 //--- Crщation d'un noeud ---
 
-int Tree_CreateNodeTree(XML_NODE *pxnRoot, HTREEITEM hParent)
+int Tree_CreateNodeTree(XML_NODE *pxn, HTREEITEM hParent)
 {
-	XML_NODE*	Node;
+	XML_NODE*	pxnCurrent;
 	TV_INSERTSTRUCT	tvItem;
 	HTREEITEM	hItem;
 
-	for (Node = pxnRoot; Node != NULL; Node = (XML_NODE *)Node->node.next)
+	for (pxnCurrent = pxn; pxnCurrent != NULL; pxnCurrent = (XML_NODE *)pxnCurrent->node.next)
 		{
 		tvItem.hParent = hParent?hParent:TVI_ROOT;
 		tvItem.hInsertAfter = TVI_LAST;
 		tvItem.itemex.mask = TVIF_CHILDREN|TVIF_PARAM|TVIF_TEXT;
 		tvItem.itemex.pszText = LPSTR_TEXTCALLBACK;
-		tvItem.itemex.cChildren = (Node->children.next || Node->attributes.next)?1:0;
-		tvItem.itemex.lParam = (LPARAM)Node;
+		tvItem.itemex.cChildren = (pxnCurrent->children.next || pxnCurrent->attributes.next)?1:0;
+		tvItem.itemex.lParam = (LPARAM)pxnCurrent;
 		hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
 		if (!hItem) return(0);
-		if (Node->attributes.next) Tree_CreateAttrTree(Node,hItem);
-		if (Node->children.next) { if (!Tree_CreateNodeTree((XML_NODE *)Node->children.next,hItem)) return(0); }
+		if (pxnCurrent->attributes.next) Tree_CreateAttrTree(pxnCurrent,hItem);
+		if (pxnCurrent->children.next) { if (!Tree_CreateNodeTree((XML_NODE *)pxnCurrent->children.next,hItem)) return(0); }
 		}
 
 	return(1);
@@ -373,6 +398,20 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 			break;
 
 		case WM_COMMAND:
+			switch(HIWORD(wParam))
+				{
+				case BN_CLICKED:
+					switch(LOWORD(wParam))
+						{
+						case CTLID_TREEHELP:
+							MessageBox(hWnd,Locale_GetText(TEXT_TREE_HELP),Locale_GetText(TEXT_TITLE_INFO),MB_ICONINFORMATION|MB_OK);
+							break;
+						case CTLID_TREECLOSE:
+							PostMessage(App.xmlTree.hWnd,WM_CLOSE,0,0);
+							break;
+						}
+					break;
+				}
 			break;
 
 		case WM_CLOSE:

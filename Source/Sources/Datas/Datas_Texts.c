@@ -13,6 +13,7 @@ WCHAR	szTitle[]			= L"GlEd - Debug";
 WCHAR	szTitle[]			= L"GlEd";
 #endif
 WCHAR	szTitleFmt[]			= L"%2 - %1";
+WCHAR	szTitleFmtLong[]		= L"%3 - %2 - %1";
 
 WCHAR	szWindowClass[]			= L"GlEdWindowClass32";
 WCHAR	szDialogClass[]			= L"GlEdDialog32";

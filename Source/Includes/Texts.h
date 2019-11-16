@@ -10,6 +10,7 @@
 
 extern WCHAR	szTitle[];
 extern WCHAR	szTitleFmt[];
+extern WCHAR	szTitleFmtLong[];
 
 extern WCHAR	szWindowClass[];
 extern WCHAR	szDialogClass[];
