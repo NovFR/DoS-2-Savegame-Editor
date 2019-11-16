@@ -58,6 +58,29 @@ none			ITEM			|f|CONT_Backpack_A_SourceHunter
 container_junk		ITEM			|f|CONT_Backpack_Junk
 container		ITEM			|f|FUR_Blacksmith_Crate
 container		ITEM			|f|FUR_Chest
+bag_accessories		ITEM			|f|CONT_IO_Accessories
+bag_arrows		ITEM			|f|CONT_IO_Arrows
+bag_bladedweapons	ITEM			|f|CONT_IO_BladedWeapons
+bag_bluntweapons	ITEM			|f|CONT_IO_BluntWeapons
+bag_bombs		ITEM			|f|CONT_IO_Bombs
+bag_books		ITEM			|f|CONT_IO_Books
+bag_bootsandbelts	ITEM			|f|CONT_IO_BootsAndBelts
+bag_chestandpants	ITEM			|f|CONT_IO_ChestAndPants
+bag_essence		ITEM			|f|CONT_IO_Essence
+bag_food		ITEM			|f|CONT_IO_Food
+bag_gems		ITEM			|f|CONT_IO_Gems
+bag_helmetsandgloves	ITEM			|f|CONT_IO_HelmetsAndGloves
+bag_keys		ITEM			|f|CONT_IO_Keys
+bag_magicweapons	ITEM			|f|CONT_IO_MagicWeapons
+bag_materials		ITEM			|f|CONT_IO_Materials
+bag_potions		ITEM			|f|CONT_IO_Potions
+bag_purseandwares	ITEM			|f|CONT_IO_PurseAndWares
+bag_questitems		ITEM			|f|CONT_IO_QuestItems
+bag_rangedweapons	ITEM			|f|CONT_IO_RangedWeapons
+bag_runes		ITEM			|f|CONT_IO_Runes
+bag_scrolls		ITEM			|f|CONT_IO_Scrolls
+bag_shields		ITEM			|f|CONT_IO_Shields
+bag_skillbooks		ITEM			|f|CONT_IO_SkillBooks
 item_sleepbag		ITEM			|f|FUR_Humans_Camping_Sleepingbag_B
 weapon_spear		WEAPON			|f|GLO_Malady_Spear
 item_key		ITEM			|f|ITEM_Key
@@ -77,6 +100,7 @@ item_shovel		ITEM			|f|TOOL_Shovel_A
 item_disarm		ITEM			|f|TOOL_Trap_DisarmToolkit
 item			ITEM			|f|UNIQUE_ARX_ToyScenery_Barrel
 item_pyramid		ITEM			|f|UNIQUE_Pyramid
+item_clawpoison		ITEM			|f|LOOT_ClawFinger_A
 
 gold_large		ITEM			|f|Trader_Bank_Gold
 gold_large		ITEM			|f|InBetween_Gold
