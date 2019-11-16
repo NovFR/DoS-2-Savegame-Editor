@@ -247,7 +247,7 @@ LSFILE*			lsv_FindFile(NODE *,WCHAR *,WCHAR *);
 BOOL			lsf_Create(LSFREADER *,LSFILE *);
 BOOL			lsf_CreateNode(LSFREADER *,UINT,XML_NODE *,NODE *);
 WCHAR*			lsf_GetName(LSFREADER *,UINT,UINT);
-WCHAR*			lsf_ReadAttribute(UINT,void *,UINT);
+WCHAR*			lsf_ReadAttribute(UINT,void *,UINT,UINT *);
 
 BOOL			lsf_Unpack(HWND,LSFILE *,DWORD);
 BOOL			lsf_UnpackList(LSFREADER *,DWORD,DWORD,DWORD);

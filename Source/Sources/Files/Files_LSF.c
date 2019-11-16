@@ -94,8 +94,10 @@ Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_MODE_QUIET)) Request_Pr
 BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 {
 	LFSNODES*	pNodes;
-	XML_NODE*	pxnRoot;
+	XML_NODE*	pxnFirst;
 	XML_NODE*	pxnNew;
+	static WCHAR*	pszEngineVersions[] = { L"major", L"minor", L"revision", L"build" };
+	int		i;
 
 	pNodes = (LFSNODES *)pReader->nodeNodes.next;
 	if (pNodes->nodeInfos[0].ParentIndex != -1)
@@ -109,29 +111,59 @@ BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 
 	pReader->uLastError = 0;
 
-	pxnRoot = xml_CreateNode(L"save",NULL,0);
-	if (!pxnRoot)
+	pxnFirst = xml_CreateNode(L"save",NULL,0);
+	if (!pxnFirst)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		return(FALSE);
 		}
-	List_AddEntry((NODE *)pxnRoot,&pFile->nodeXMLRoot);
+	List_AddEntry((NODE *)pxnFirst,&pFile->nodeXMLRoot);
 
-	pxnNew = xml_CreateNode(L"header",pxnRoot,2,L"version",L"2",L"time",L"0");
+	pxnNew = xml_CreateNode(L"header",pxnFirst,2,L"version",L"2",L"time",L"0");
 	if (!pxnNew)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		return(FALSE);
 		}
-	List_AddEntry((NODE *)pxnNew,&pxnRoot->children);
+	List_AddEntry((NODE *)pxnNew,&pxnFirst->children);
 
-	pxnNew = xml_CreateNode(L"version",pxnRoot,4,L"major",L"54",L"minor",L"2",L"revision",L"0",L"build",L"0");
+	pxnNew = xml_CreateNode(L"version",pxnFirst,0);
 	if (!pxnNew)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		return(FALSE);
 		}
-	List_AddEntry((NODE *)pxnNew,&pxnRoot->children);
+	List_AddEntry((NODE *)pxnNew,&pxnFirst->children);
+
+	for (i = 0; i != 4; i++)
+		{
+		XML_ATTR*	pxa;
+		UINT		uValue;
+
+		pxa = xml_CreateAttr(pszEngineVersions[i],pxnNew);
+		if (!pxa)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			return(FALSE);
+			}
+
+		switch(i)
+			{
+			case 0:	uValue = (pReader->pHeader->EngineVersion&0xff000000)>>24;
+				break;
+			case 1:	uValue = (pReader->pHeader->EngineVersion&0xff0000)>>16;
+				break;
+			case 2:	uValue = (pReader->pHeader->EngineVersion&0xff00)>>8;
+				break;
+			case 3:	uValue = (pReader->pHeader->EngineVersion&0xff);
+				break;
+			}
+		if (!xml_SetAttrValueNumber(pxa,uValue))
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			return(FALSE);
+			}
+		}
 
 	//--- Création des autres balises ---
 
@@ -139,7 +171,7 @@ BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 
 	while (pReader->uIndex < pNodes->uNumNodes)
 		{
-		if (!lsf_CreateNode(pReader,-1,pxnRoot,&pxnRoot->children)) return(FALSE);
+		if (!lsf_CreateNode(pReader,-1,pxnFirst,&pxnFirst->children)) return(FALSE);
 		}
 
 	return(TRUE);
@@ -198,11 +230,33 @@ BOOL lsf_CreateNode(LSFREADER *pReader, UINT uParentIndex, XML_NODE *pxnParent, 
 
 			pxaNew = xml_CreateAttr(szXMLvalue,pxnAttr);
 			if (!pxaNew) goto No_Memory;
-			pxaNew->value = lsf_ReadAttribute(pAttrs->attrInfos[uAttrIndex].TypeId,pReader->pValues+pAttrs->attrInfos[uAttrIndex].DataOffset,pAttrs->attrInfos[uAttrIndex].Length);
+			pxaNew->value = lsf_ReadAttribute(pAttrs->attrInfos[uAttrIndex].TypeId,pReader->pValues+pAttrs->attrInfos[uAttrIndex].DataOffset,pAttrs->attrInfos[uAttrIndex].Length,&pReader->uLastError);
+			if (pReader->uLastError) return(FALSE);
 
 			pxaNew = xml_CreateAttr(szXMLtype,pxnAttr);
 			if (!pxaNew) goto No_Memory;
 			if (!xml_SetAttrValueNumber(pxaNew,pAttrs->attrInfos[uAttrIndex].TypeId)) goto No_Memory;
+
+			// handle="[handle]" for Translated Strings
+			if (pAttrs->attrInfos[uAttrIndex].TypeId == DT_TranslatedString)
+				{
+				UINT	uLength;
+				void*	pValue;
+
+				pxaNew = xml_CreateAttr(L"handle",pxnAttr);
+				if (!pxaNew) goto No_Memory;
+
+				pValue = pReader->pValues+pAttrs->attrInfos[uAttrIndex].DataOffset;
+				uLength = pAttrs->attrInfos[uAttrIndex].Length;
+
+				uLength = *(DWORD *)pValue;
+				pValue += 4;
+				pValue += uLength;
+				uLength = *(DWORD *)pValue;
+				pValue += 4;
+				pxaNew->value = Misc_UTF8ToWideCharNZ((char *)pValue,uLength);
+				if (!pxaNew->value) goto No_Memory;
+				}
 
 			uAttrIndex = pAttrs->attrInfos[uAttrIndex].NextAttributeIndex;
 			}
@@ -260,60 +314,62 @@ WCHAR* lsf_GetName(LSFREADER *pReader, UINT uNameIndex, UINT uNameOffset)
 
 //!\ Partial implementation, should be ok for meta.lsf
 
-WCHAR* lsf_ReadAttribute(UINT uTypeId, void *pValue, UINT uLength)
+WCHAR* lsf_ReadAttribute(UINT uTypeId, void *pValue, UINT uLength, UINT *uError)
 {
 	WCHAR*	pszResult = NULL;
-	WCHAR	szBuffer[64];
+	WCHAR	szBuffer[41];
+
+	*uError = 0;
 
 	switch(uTypeId)
 		{
 		case DT_None:
 			break;
 		case DT_Byte:
-			swprintf(szBuffer,64,L"%u",(unsigned int)*(unsigned char *)pValue);
+			swprintf(szBuffer,40,L"%u",(unsigned int)*(unsigned char *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_Short:
-			swprintf(szBuffer,64,L"%hi",*(short int *)pValue);
+			swprintf(szBuffer,40,L"%hi",*(short int *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_UShort:
-			swprintf(szBuffer,64,L"%hu",*(unsigned short int *)pValue);
+			swprintf(szBuffer,40,L"%hu",*(unsigned short int *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_Int:
-			swprintf(szBuffer,64,L"%i",*(int *)pValue);
+			swprintf(szBuffer,40,L"%i",*(int *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_Int8:
-			swprintf(szBuffer,64,L"%i",(int)*(char *)pValue);
+			swprintf(szBuffer,40,L"%i",(int)*(char *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_UInt:
-			swprintf(szBuffer,64,L"%u",*(unsigned int *)pValue);
+			swprintf(szBuffer,40,L"%u",*(unsigned int *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_Float:
-			swprintf(szBuffer,64,L"%f",*(float *)pValue);
+			swprintf(szBuffer,40,L"%f",*(float *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
 		case DT_Double:
-			swprintf(szBuffer,64,L"%f",*(double *)pValue);
+			swprintf(szBuffer,40,L"%f",*(double *)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
-		case DT_Vec3:
-			break;
-		case DT_Vec4:
-			break;
+//		case DT_Vec3:
+//			break;
+//		case DT_Vec4:
+//			break;
 		case DT_Bool:
 			pszResult = Misc_StrCpyAlloc(*(unsigned char *)pValue?L"True":L"False");
 			break;
 		case DT_ULongLong:
-			swprintf(szBuffer,64,L"%llu",*(unsigned long long int*)pValue);
+			swprintf(szBuffer,40,L"%llu",*(unsigned long long int*)pValue);
 			pszResult = Misc_StrCpyAlloc(szBuffer);
 			break;
-		case DT_ScratchBuffer:
-			break;
+//		case DT_ScratchBuffer:
+//			break;
 		case DT_String:
 		case DT_Path:
 		case DT_FixedString:
@@ -326,21 +382,16 @@ WCHAR* lsf_ReadAttribute(UINT uTypeId, void *pValue, UINT uLength)
 			uLength = *(DWORD *)pValue;
 			pValue += 4;
 			pszResult = Misc_UTF8ToWideCharNZ((char *)pValue,uLength);
-			// uLength = *(DWORD *)pValue;
-			// pValue += 4;
-			// Handle = str of uLength in pValue
 			break;
-		case DT_UUID:
-			break;
-		case DT_TranslatedFSString:
-			break;
-		default:// Unknown or not supported type
-			#if _DEBUG
-			Request_MessageBoxEx(App.hWnd,L"Unsupported DataType: %1!i!",L"Info",MB_ICONINFORMATION|MB_OK,uTypeId);
-			#endif
+//		case DT_UUID:
+//			break;
+//		case DT_TranslatedFSString:
+//			break;
+		default:*uError = TEXT_ERR_LSF_ATTRIBUTE;
 			break;
 		}
 
+	if (!*uError && !pszResult) *uError = TEXT_ERR_NOMEMORY;
 	return(pszResult);
 }
 

@@ -33,12 +33,19 @@ extern APPLICATION		App;
 BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 {
 	LSVREADER*	pReader;
+	WCHAR*		pszArchiveName;
 	BOOL		bIsDone = FALSE;
 
 	//--- Création de la structure de travail ---
 
+	pszArchiveName = PathFindFileName(pszArchivePath);
+
 	pReader = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LSVREADER));
-	if (!pReader) goto Done;
+	if (!pReader)
+		{
+		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+		goto Done;
+		}
 
 	//--- Chargement du fichier ---
 
@@ -172,11 +179,11 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 
 	//--- Terminé ---
 
-Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_MODE_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOAD),NULL,MB_ICONHAND,pszArchivePath);
+Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_MODE_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOAD),NULL,MB_ICONHAND,pszArchiveName);
 
 	if (pReader)
 		{
-		if (pReader->uLastError && !(dwMode&LS_MODE_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOADEX),NULL,MB_ICONHAND,pszArchivePath,Locale_GetText(pReader->uLastError));
+		if (pReader->uLastError && !(dwMode&LS_MODE_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOADEX),NULL,MB_ICONHAND,pszArchiveName,Locale_GetText(pReader->uLastError));
 		if (pReader->pFileListBuffer) HeapFree(App.hHeap,0,pReader->pFileListBuffer);
 		if (pReader->pFileBuffer) HeapFree(App.hHeap,0,pReader->pFileBuffer);
 		if (pReader->hFile != INVALID_HANDLE_VALUE) CloseHandle(pReader->hFile);
