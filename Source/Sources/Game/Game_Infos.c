@@ -23,6 +23,26 @@
 
 extern APPLICATION	App;
 
+static WCHAR*		ModsIgnore[] = {
+					L"1301db3d-1f54-4e98-9be5-5094030916e4", // Divinity: Original Sin 2
+					L"2bd9bdbe-22ae-4aa2-9c93-205880fc6564", // Shared
+					L"eedf7638-36ff-4f26-a50a-076b87d53ba0", // Shared_DOS
+					NULL };
+static WCHAR*		ModsLarian[] = {
+					L"9b45f7e5-d4e2-4fc2-8ef7-3b8e90a5256c", // 8 Action Points
+					L"015de505-6e7f-460c-844c-395de6c2ce34", // AS_BlackCatPlus
+					L"38608c30-1658-4f6a-8adf-e826a5295808", // AS_GrowYourHerbs
+					L"423fae51-61e3-469a-9c1f-8ad3fd349f02", // Animal Empathy
+					L"f33ded5d-23ab-4f0c-b71e-1aff68eee2cd", // CMP_BarterTweaks
+					L"f30953bb-10d3-4ba4-958c-0f38d4906195", // Combat Randomizer
+					L"68a99fef-d125-4ed0-893f-bb6751e52c5e", // Crafter's Kit
+					L"2d42113c-681a-47b6-96a1-d90b3b1b07d3", // Fort Joy Magic Mirror
+					L"f243c84f-9322-43ac-96b7-7504f990a8f0", // Improved Organisation
+					L"d2507d43-efce-48b8-ba5e-5dd136c715a7", // Pet Power
+					L"a945eefa-530c-4bca-a29c-a51450f8e181", // Shiny Gear
+					L"ec27251d-acc0-4ab8-920e-dbc851e79bb4", // ToggleSpeedAddon
+					NULL };
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
@@ -34,27 +54,10 @@ extern APPLICATION	App;
 
 void Infos_Show()
 {
-	if (App.Game.Save.pszSaveName)
+	if (Infos_LoadMetaDatas(App.hWnd))
 		{
-		WCHAR*	pszPath;
-		int	iResult;
-
-		pszPath = Divine_GetSaveGamePath(App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName);
-		if (!pszPath)
-			{
-			Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
-			return;
-			}
-		if (!lsv_Load(App.hWnd,pszPath,&App.Game.Save.nodeFiles,LS_MODE_SAVEINFO))
-			{
-			HeapFree(App.hHeap,0,pszPath);
-			return;
-			}
-		HeapFree(App.hHeap,0,pszPath);
-
-		iResult = DialogBox(App.hInstance,MAKEINTRESOURCE(1010),App.hWnd,Infos_Proc);
+		int iResult = DialogBox(App.hInstance,MAKEINTRESOURCE(1010),App.hWnd,Infos_Proc);
 		if (iResult == -1) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
-		lsv_Release(&App.Game.Save.nodeFiles);
 		}
 
 	return;
@@ -114,6 +117,66 @@ INT_PTR CALLBACK Infos_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 // ¤¤¤ Fonctions							  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// «»»» Arborescence des métadonnées ««««««««««««««««««««««««««««««««««««»
+
+void Infos_Tree()
+{
+	if (Infos_LoadMetaDatas(App.hWnd))
+		{
+		LSFILE *pFile = lsv_FindFile(&App.Game.Save.nodeFiles,szMetaLSF,NULL);
+		if (pFile) Tree_Open((XML_NODE *)pFile->nodeXMLRoot.next);
+		}
+	return;
+}
+
+
+// «»»» Chargement des métadonnées ««««««««««««««««««««««««««««««««««««««»
+
+int Infos_LoadMetaDatas(HWND hWnd)
+{
+	WCHAR*		pszPath;
+	LSFILE*		pFile;
+
+	if (!App.Game.Save.pszSaveName) return(0);
+	if (App.Game.Save.nodeFiles.next) return(1);
+
+	//--- Unpack LSV ---
+
+	pszPath = Divine_GetSaveGamePath(App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName);
+	if (!pszPath)
+		{
+		Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_METADATAS),NULL,MB_ICONERROR,Locale_GetText(TEXT_ERR_NOMEMORY));
+		return(0);
+		}
+
+	if (!lsv_Load(hWnd,pszPath,&App.Game.Save.nodeFiles,LS_MODE_SAVEINFO))
+		{
+		HeapFree(App.hHeap,0,pszPath);
+		return(0);
+		}
+
+	HeapFree(App.hHeap,0,pszPath);
+
+	//--- Unpack metadatas ---
+
+	pFile = lsv_FindFile(&App.Game.Save.nodeFiles,szMetaLSF,NULL);
+	if (!pFile)
+		{
+		Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_METADATAS),NULL,MB_ICONERROR,Locale_GetText(TEXT_ERR_NOMETAFILE));
+		lsv_Release(&App.Game.Save.nodeFiles);
+		return(0);
+		}
+
+	if (!lsf_Unpack(hWnd,pFile,0))
+		{
+		lsv_Release(&App.Game.Save.nodeFiles);
+		return(0);
+		}
+
+	return(1);
+}
+
 
 // «»»» Initialisations «««««««««««««««««««««««««««««««««««««««««««««««««»
 
@@ -199,10 +262,10 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 	//--- Chargement des fichiers ---
 
 	pMetaFile = lsv_FindFile(pRoot,szMetaLSF,NULL);
-	if (pMetaFile) lsf_Unpack(hDlg,pMetaFile,LS_MODE_QUIET);
+	if (pMetaFile && !pMetaFile->nodeXMLRoot.next) lsf_Unpack(hDlg,pMetaFile,LS_MODE_QUIET);
 
 	pPNGFile = lsv_FindFile(pRoot,NULL,szPNGext);
-	if (pPNGFile) pPNGFile->hBitmap = png_Load(pPNGFile->pData);
+	if (pPNGFile && !pPNGFile->hBitmap) pPNGFile->hBitmap = png_Load(pPNGFile->pData);
 
 	if (!pMetaFile) goto Error;
 	if (!pMetaFile->nodeXMLRoot.next) goto Error;
@@ -408,8 +471,6 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 
 		//--- Liste des mods
 		case INFOS_GROUP_MODS: {
-			static WCHAR*	Ignore[] = { L"1301db3d-1f54-4e98-9be5-5094030916e4", L"2bd9bdbe-22ae-4aa2-9c93-205880fc6564", L"eedf7638-36ff-4f26-a50a-076b87d53ba0", NULL };
-			static WCHAR*	Larian[] = { L"9b45f7e5-d4e2-4fc2-8ef7-3b8e90a5256c", L"38608c30-1658-4f6a-8adf-e826a5295808", L"423fae51-61e3-469a-9c1f-8ad3fd349f02", L"68a99fef-d125-4ed0-893f-bb6751e52c5e", L"2d42113c-681a-47b6-96a1-d90b3b1b07d3", L"ec27251d-acc0-4ab8-920e-dbc851e79bb4", NULL };
 			WCHAR*		UUID;
 
 			if (*pszTemp)
@@ -423,11 +484,11 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 				{
 				int	i;
 
-				for (i = 0; Ignore[i] != NULL; i++)
-					if (!wcscmp(Ignore[i],UUID)) return(NULL);
+				for (i = 0; ModsIgnore[i] != NULL; i++)
+					if (!wcscmp(ModsIgnore[i],UUID)) return(NULL);
 
-				for (i = 0; Larian[i] != NULL; i++)
-					if (!wcscmp(Larian[i],UUID))
+				for (i = 0; ModsLarian[i] != NULL; i++)
+					if (!wcscmp(ModsLarian[i],UUID))
 						{
 						*pszTemp = Misc_StrCpyAlloc(Locale_GetText(TEXT_INFOS_LARIANMOD));
 						break;
