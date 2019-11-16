@@ -106,6 +106,7 @@ typedef struct DOS2CHARACTER {
 typedef struct DOS2ITEM {
 	NODE		node;
 	BOOL		bIsBackPack;
+	UINT		uNumItems;
 	//--- References
 	XML_NODE*	pxnXML;
 	XML_ATTR*	pxaName;
@@ -252,6 +253,7 @@ void			Game_Setup(DOS2CHARACTER *,BOOL,BOOL);
 int			Game_BuildPlayers(void);
 void			Game_ReleasePlayers(void);
 DOS2INVENTORY*		Game_BuildInventory(XML_ATTR *,XML_ATTR *,XML_ATTR *,NODE *);
+UINT			Game_GetInventoryItemsCount(XML_NODE *,WCHAR *);
 void			Game_ReleaseInventory(DOS2INVENTORY *);
 void			Game_CharacterChanged(BOOL);
 void			Game_SaveTopIndex(void);

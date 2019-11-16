@@ -329,6 +329,28 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 					}
 				}
 
+			//--- NumItems (bags) ---
+
+			if (pItem->bIsBackPack)
+				{
+				WCHAR*		Text;
+				SIZE		Size;
+
+				Text = Locale_GetText(pItem->uNumItems?TEXT_OBJ_ITEMS:TEXT_OBJ_EMPTY);
+				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
+				if (pItem->uNumItems)
+					{
+					WCHAR		szBuffer[11];
+
+					rcDraw.left += Size.cx+2;
+					swprintf(szBuffer,10,L"%u",pItem->uNumItems);
+					DrawText(pDraw->hDC,szBuffer,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+					GetTextExtentPoint32(pDraw->hDC,szBuffer,wcslen(szBuffer),&Size);
+					}
+				rcDraw.left += Size.cx+8;
+				}
+
 			//--- Quality ---
 
 			if (pItem->pxaType)

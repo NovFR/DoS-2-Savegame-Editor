@@ -618,6 +618,9 @@ DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentD
 		pxnTemp = xml_GetNodeFromPathFirstChild((XML_NODE *)pxnItem->children.next,szItemCustomDescriptionPath);
 		if (pxnTemp) pItem->pxaDescription = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"CustomDescription");
 
+		// Nombre d'objets (sac)
+		if (pItem->bIsBackPack && pItem->pxaInventory && pItem->pxaInventory->value) pItem->uNumItems = Game_GetInventoryItemsCount(pxnItemsList,pItem->pxaInventory->value);
+
 		// Statistiques
 		pxnTemp = xml_GetNodeFromPathFirstChild((XML_NODE *)pxnItem->children.next,szItemStatsPath);
 		if (pxnTemp)
@@ -647,6 +650,30 @@ DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentD
 	//--- Terminé ! ---
 
 	return(pInventory);
+}
+
+//--- Compte le nombre d'objet dans un sac --
+
+UINT Game_GetInventoryItemsCount(XML_NODE *pxnItemsList, WCHAR *pszInventoryId)
+{
+	XML_NODE*	pxnItem;
+	XML_NODE*	pxnTemp;
+	WCHAR*		pszValue;
+	UINT		uNumItems;
+
+	for (uNumItems = 0, pxnItem = pxnItemsList; pxnItem != NULL; pxnItem = (XML_NODE *)pxnItem->node.next)
+		{
+		if (!pxnItem->children.next) continue;
+		pszValue = xml_GetAttrValue(pxnItem,szXMLid);
+		if (wcscmp(pszValue,L"Item")) continue;
+		pxnTemp = xml_GetNode((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Parent");
+		if (!pxnTemp) continue;
+		pszValue = xml_GetAttrValue(pxnTemp,szXMLvalue);
+		if (wcscmp(pszValue,pszInventoryId)) continue;
+		uNumItems++;
+		}
+
+	return(uNumItems);
 }
 
 
@@ -714,19 +741,12 @@ void Game_CharacterChanged(BOOL bRefresh)
 
 	if (pdc->pdiInventory)
 		{
-		if (pdc->pdiInventory->iTopIndex > 0)
-			{
-			int lvTopIndex = pdc->pdiInventory->iTopIndex-1;
-			int lvItemsPerPage = SendMessage(App.Game.Layout.hwndInventory,LVM_GETCOUNTPERPAGE,0,0);
-			int lvItemsCount = SendMessage(App.Game.Layout.hwndInventory,LVM_GETITEMCOUNT,0,0);
-			if (lvTopIndex+lvItemsPerPage > lvItemsCount) SendMessage(App.Game.Layout.hwndInventory,LVM_ENSUREVISIBLE,(WPARAM)lvItemsCount,(LPARAM)FALSE);
-			else SendMessage(App.Game.Layout.hwndInventory,LVM_ENSUREVISIBLE,(WPARAM)lvTopIndex+lvItemsPerPage,(LPARAM)FALSE);
-			}
+		SendMessage(App.Game.Layout.hwndInventory,LVM_SCROLL,0,(LPARAM)pdc->pdiInventory->iTopIndex);
 		if (pdc->pdiInventory->iSelected != -1)
 			{
 			lvItem.mask = LVIF_STATE;
-			lvItem.stateMask = LVIS_SELECTED;
-			lvItem.state = LVIS_SELECTED;
+			lvItem.stateMask = LVIS_SELECTED|LVIS_FOCUSED;
+			lvItem.state = LVIS_SELECTED|LVIS_FOCUSED;
 			SendMessage(App.Game.Layout.hwndInventory,LVM_SETITEMSTATE,(WPARAM)pdc->pdiInventory->iSelected,(LPARAM)&lvItem);
 			}
 		}
@@ -799,7 +819,7 @@ void Game_SaveTopIndex()
 	if (!App.Game.pdcCurrent) return;
 	if (App.Game.pdcCurrent->pdiInventory)
 		{
-		App.Game.pdcCurrent->pdiInventory->iTopIndex = SendMessage(App.Game.Layout.hwndInventory,LVM_GETTOPINDEX,0,0);
+		App.Game.pdcCurrent->pdiInventory->iTopIndex = GetScrollPos(App.Game.Layout.hwndInventory,SB_VERT);
 		if (!SendMessage(App.Game.Layout.hwndInventory,LVM_GETSELECTEDCOUNT,0,0)) return;
 		App.Game.pdcCurrent->pdiInventory->iSelected = SendMessage(App.Game.Layout.hwndInventory,LVM_GETNEXTITEM,-1,LVNI_SELECTED);
 		}
@@ -833,13 +853,16 @@ void Game_Lock(DWORD uFlags)
 		}
 	if (uFlags & GAME_LOCK_FILE)
 		{
+		EnableMenuItem(App.hMenu,IDM_SHOWMETATREE,uEnable);
+		EnableMenuItem(App.hMenu,IDM_SHOWSAVETREE,uEnable);
+		EnableMenuItem(App.hMenu,IDM_REMOVEMODS,uEnable);
 		EnableMenuItem(App.hMenu,IDM_INFOS,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CLOSE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_WRITESAVEGAME,uEnable);
 		}
 	if (uFlags & GAME_LOCK_TREE)
 		{
-		EnableMenuItem(App.hMenu,IDM_TREE,uEnable);
+		EnableMenuItem(App.hMenu,IDM_SHOWCHARTREE,uEnable);
 		}
 
 	if (uFlags & GAME_LOCK_SETUP) Game_Setup(NULL,TRUE,(uFlags & GAME_LOCK_ENABLED)?TRUE:FALSE);
