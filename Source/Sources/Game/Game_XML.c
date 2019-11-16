@@ -670,18 +670,18 @@ void xml_ReleaseAttr(XML_ATTR *pxa)
 // Le premier WCHAR* est le nom du noeud
 // Le second WCHAR* est la valeur de l'attribut id du noeud (peut ъtre nul)
 
-XML_NODE* xml_GetNodeFromPath(XML_NODE *pxnRoot, WCHAR *pszPath[])
+XML_NODE* xml_GetNodeFromPath(XML_NODE *pxnBegin, WCHAR *pszPath[])
 {
 	XML_NODE*	pxnResult;
 	WCHAR*		pszNodeName;
 	WCHAR*		pszNodeId;
 	int		i;
 
-	if (!pxnRoot) return(NULL);
+	if (!pxnBegin) return(NULL);
 	if (!pszPath) return(NULL);
 	if (!pszPath[0]) return(NULL);
 
-	for (pxnResult = pxnRoot, i = 0;;)
+	for (pxnResult = pxnBegin, i = 0;;)
 		{
 		pszNodeName = pszPath[i++];
 		pszNodeId = pszPath[i++];
@@ -698,11 +698,11 @@ XML_NODE* xml_GetNodeFromPath(XML_NODE *pxnRoot, WCHAR *pszPath[])
 
 // л╗╗╗ Retrouve le premier enfant d'une entrщe р la fin d'un chemin лллл╗
 
-XML_NODE* xml_GetNodeFromPathFirstChild(XML_NODE *pxnRoot, WCHAR *pszPath[])
+XML_NODE* xml_GetNodeFromPathFirstChild(XML_NODE *pxnBegin, WCHAR *pszPath[])
 {
 	XML_NODE*	pxnResult;
 
-	pxnResult = xml_GetNodeFromPath(pxnRoot,pszPath);
+	pxnResult = xml_GetNodeFromPath(pxnBegin,pszPath);
 	if (!pxnResult) return(NULL);
 	return((XML_NODE *)pxnResult->children.next);
 }
@@ -714,12 +714,12 @@ XML_NODE* xml_GetNodeFromPathFirstChild(XML_NODE *pxnRoot, WCHAR *pszPath[])
 // > pszAttrName peut ъtre nul (pas de recherche par attribut)
 // > pszAttrValue peut ъtre nulle (l'attribut n'a pas de valeur)
 
-XML_NODE* xml_GetNode(XML_NODE *pxnRoot, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
+XML_NODE* xml_GetNode(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
 {
 	XML_NODE*	pxn;
 	XML_ATTR*	pxa;
 
-	for (pxn = pxnRoot; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
+	for (pxn = pxnBegin; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
 		{
 		if (wcscmp(pxn->name,pszNodeName)) continue;
 		if (!pszAttrName) break;
@@ -737,10 +737,10 @@ XML_NODE* xml_GetNode(XML_NODE *pxnRoot, WCHAR *pszNodeName, WCHAR *pszAttrName,
 
 // л╗╗╗ Retrouve l'entrщe suivante лллллллллллллллллллллллллллллллллллллл╗
 
-XML_NODE* xml_GetNextNode(XML_NODE *pxnRoot)
+XML_NODE* xml_GetNextNode(XML_NODE *pxn)
 {
-	if (!pxnRoot) return(NULL);
-	return((XML_NODE *)pxnRoot->node.next);
+	if (!pxn) return(NULL);
+	return((XML_NODE *)pxn->node.next);
 }
 
 
@@ -766,11 +766,11 @@ XML_ATTR* xml_GetAttr(XML_NODE *pxn, WCHAR *pszAttrName)
 
 // л╗╗╗ Retrouve la valeur d'une entrщe ллллллллллллллллллллллллллллллллл╗
 
-XML_ATTR* xml_GetXMLValueAttr(XML_NODE *pxnRoot, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
+XML_ATTR* xml_GetXMLValueAttr(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
 {
 	XML_NODE*	pxn;
 
-	pxn = xml_GetNode(pxnRoot,pszNodeName,pszAttrName,pszAttrValue);
+	pxn = xml_GetNode(pxnBegin,pszNodeName,pszAttrName,pszAttrValue);
 	if (!pxn) return(NULL);
 	return(xml_GetAttr(pxn,szXMLvalue));
 }
@@ -818,12 +818,12 @@ BOOL xml_IsTrue(XML_ATTR *pxa)
 
 // л╗╗╗ Calcul le nombre total de noeuds лллллллллллллллллллллллллллллллл╗
 
-UINT xml_TotalNodesCount(XML_NODE *pxnRoot)
+UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
 {
 	XML_NODE*	pxn;
 	UINT		uTotal;
 
-	for (uTotal = 0, pxn = pxnRoot; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
+	for (uTotal = 0, pxn = pxnBegin; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
 		{
 		uTotal++;
 		if (!pxn->children.next) continue;

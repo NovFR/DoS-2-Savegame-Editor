@@ -1293,8 +1293,8 @@ void Divine_Close()
 
 	Game_ReleasePlayers();
 	xml_ReleaseAll(&App.Game.Save.nodeXMLRoot);
-	Divine_Cleanup();
 	lsv_Release(&App.Game.Save.nodeFiles);
+	Divine_Cleanup();
 
 	if (App.Game.Save.pszSaveName) HeapFree(App.hHeap,0,App.Game.Save.pszSaveName);
 	App.Game.Save.pszSaveName = NULL;
