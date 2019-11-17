@@ -254,7 +254,7 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 	LSFILE*		pPNGFile;
 	LVITEM		lvItem;
 	LVTILEINFO	lvTileInfo;
-	UINT		uColumns[1];
+	UINT		uColumns[1] = { 1 };
 	WCHAR*		pszTemp = NULL;
 	static UINT	uItems[] = { TEXT_INFOS_SAVEGAME, TEXT_INFOS_VERSION, TEXT_INFOS_MODDED, TEXT_INFOS_DIFFICULTY, TEXT_INFOS_DATE, 0 };
 	int		i,j = 0;
@@ -311,7 +311,6 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 		if (lvItem.pszText == (WCHAR *)-1) lvItem.pszText = pszSaveName;
 		if (lvItem.pszText == NULL) goto Error;
 		if (SendDlgItemMessage(hDlg,801,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == -1) goto Error;
-		uColumns[0] = 1;
 		lvTileInfo.cbSize = sizeof(LVTILEINFO);
 		lvTileInfo.iItem = lvItem.iItem;
 		lvTileInfo.cColumns = 1;
@@ -332,7 +331,6 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 		lvItem.iImage = lvItem.pszText?INFOS_ICON_CHARACTER:INFOS_ICON_NOTCHARACTER;
 		if (lvItem.pszText == NULL) lvItem.pszText = Locale_GetText(TEXT_UNKNOWN);
 		if (SendDlgItemMessage(hDlg,801,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) goto Error;
-		uColumns[0] = 1;
 		lvTileInfo.cbSize = sizeof(LVTILEINFO);
 		lvTileInfo.iItem = lvItem.iItem;
 		lvTileInfo.cColumns = 1;
@@ -350,15 +348,14 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 		lvItem.iItem = j;
 		lvItem.iSubItem = 0;
 		lvItem.iGroupId = 2;
-		lvItem.pszText = Infos_Get(INFOS_GROUP_MODS,0,&pszTemp,pxnMeta);
+		lvItem.pszText = Infos_Get(INFOS_GROUP_MODS,INFOS_MODS_NAME,&pszTemp,pxnMeta);
 		lvItem.iImage = pszTemp?INFOS_ICON_LARIANMOD:INFOS_ICON_PLAYERMOD;
 		if (lvItem.pszText != NULL)
 			{
 			if (SendDlgItemMessage(hDlg,801,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) goto Error;
-			lvItem.pszText = pszTemp?pszTemp:Locale_GetText(TEXT_INFOS_PLAYERMOD);
+			lvItem.pszText = Infos_Get(INFOS_GROUP_MODS,INFOS_MODS_VERSION,&pszTemp,pxnMeta);
 			lvItem.iSubItem = 1;
 			if (SendDlgItemMessage(hDlg,801,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == -1) goto Error;
-			uColumns[0] = 1;
 			lvTileInfo.cbSize = sizeof(LVTILEINFO);
 			lvTileInfo.iItem = lvItem.iItem;
 			lvTileInfo.cColumns = 1;
@@ -470,33 +467,64 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 			} return(xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pxnInfo->children.next,szXMLattribute,szXMLid,L"CharacterName")));
 
 		//--- Liste des mods
-		case INFOS_GROUP_MODS: {
-			WCHAR*		UUID;
-
-			if (*pszTemp)
+		case INFOS_GROUP_MODS:
+			switch(uID)
 				{
-				HeapFree(App.hHeap,0,*pszTemp);
-				*pszTemp = NULL;
-				}
+				case INFOS_MODS_NAME: {
+					WCHAR*		UUID;
 
-			UUID = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"UUID"));
-			if (UUID)
-				{
-				int	i;
-
-				for (i = 0; ModsIgnore[i] != NULL; i++)
-					if (!wcscmp(ModsIgnore[i],UUID)) return(NULL);
-
-				for (i = 0; ModsLarian[i] != NULL; i++)
-					if (!wcscmp(ModsLarian[i],UUID))
+					if (*pszTemp)
 						{
-						*pszTemp = Misc_StrCpyAlloc(Locale_GetText(TEXT_INFOS_LARIANMOD));
-						break;
+						HeapFree(App.hHeap,0,*pszTemp);
+						*pszTemp = NULL;
 						}
+
+					UUID = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"UUID"));
+					if (UUID)
+						{
+						int	i;
+
+						for (i = 0; ModsIgnore[i] != NULL; i++)
+							if (!wcscmp(ModsIgnore[i],UUID)) return(NULL);
+
+						for (i = 0; ModsLarian[i] != NULL; i++)
+							if (!wcscmp(ModsLarian[i],UUID))
+								{
+								*pszTemp = Misc_StrCpyAlloc(Locale_GetText(TEXT_INFOS_LARIANMOD));
+								break;
+								}
+						}
+
+					} return(xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"Name")));
+
+				case INFOS_MODS_VERSION: {
+					WCHAR*		pszVersion;
+					LONG		lVersion;
+
+					pszVersion = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"Version"));
+					if (pszVersion)
+						{
+						DWORD_PTR	vl[5];
+						WCHAR*		pszString;
+
+						pszString = NULL;
+						lVersion = wcstol(pszVersion,NULL,10);
+						vl[0] = (DWORD_PTR)((lVersion&0xF0000000)>>28);
+						vl[1] = (DWORD_PTR)((lVersion&0x0F000000)>>24);
+						vl[2] = (DWORD_PTR)((lVersion&0x00FF0000)>>16);
+						vl[3] = (DWORD_PTR)((lVersion&0x0000FFFF));
+						vl[4] = (DWORD_PTR)(*pszTemp?*pszTemp:Locale_GetText(TEXT_INFOS_PLAYERMOD));
+						if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,L"%1!i!.%2!i!.%3!i!.%4!i!%5",0,0,(WCHAR *)&pszString,1,(va_list *)&vl))
+							{
+							if (*pszTemp) HeapFree(App.hHeap,0,*pszTemp);
+							*pszTemp = Misc_StrCpyAlloc(pszString);
+							LocalFree(pszString);
+							return(*pszTemp);
+							}
+						}
+					} break;
 				}
-
-			} return(xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"Name")));
-
+			break;
 		}
 
 	return(NULL);
