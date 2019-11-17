@@ -600,6 +600,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 	WIN32_FIND_DATA		Find;
 	HANDLE			hFile;
 	DIVINEITEM*		pItem;
+	DIVINEITEM*		pSelected;
 	WCHAR*			pszPath;
 	WCHAR*			pszSearch;
 	NODE*			pRoot;
@@ -695,6 +696,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 		}
 
 	iResult = 0;
+	pSelected = NULL;
 
 	do {
 
@@ -775,25 +777,30 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 				goto Done;
 				}
+
 			switch(uType)
 				{
 				case DIVINE_PROFILE_LIST:
 					if (!pContext->pszProfile) break;
 					if (wcscmp(pItem->name,pContext->pszProfile)) break;
-					SendDlgItemMessage(hDlg,200,LB_SETCURSEL,(WPARAM)lResult,0);
-					PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_NEXT);
+					pSelected = pItem;
 					break;
 				case DIVINE_SAVEGAMES_LIST:
 					if (!pContext->pszSaveName) break;
 					if (wcscmp(pItem->name,pContext->pszSaveName)) break;
-					SendDlgItemMessage(hDlg,200,LB_SETCURSEL,(WPARAM)lResult,0);
-					PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_FINISH);
-					Divine_SelectLoadGameInfos(hDlg,pContext);
+					pSelected = pItem;
 					break;
 				}
 			}
 
 	} while (FindNextFile(hFile,&Find));
+
+	if (pSelected)
+		{
+		SendDlgItemMessage(hDlg,200,LB_SELECTSTRING,(WPARAM)-1,(LPARAM)pSelected);
+		PostMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)uType == DIVINE_PROFILE_LIST?PSWIZB_NEXT:PSWIZB_FINISH);
+		if (uType == DIVINE_SAVEGAMES_LIST) Divine_SelectLoadGameInfos(hDlg,pContext);
+		}
 
 	iResult = 1;
 
