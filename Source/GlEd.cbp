@@ -73,6 +73,7 @@
 		<Unit filename="Includes/Lists.h" />
 		<Unit filename="Includes/Locale.h" />
 		<Unit filename="Includes/Menus.h" />
+		<Unit filename="Includes/Mods.h" />
 		<Unit filename="Includes/PNG.h" />
 		<Unit filename="Includes/Requests.h" />
 		<Unit filename="Includes/SQLite3.h" />
@@ -191,6 +192,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_Manager.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Mods.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_XML.c">
