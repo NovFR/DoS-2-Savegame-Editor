@@ -72,11 +72,11 @@ BOOL lsf_Unpack(HWND hWnd, LSFILE *pFile, DWORD dwMode)
 
 	//--- Terminé ! ---
 
-Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_MODE_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSF_LOAD),NULL,MB_ICONHAND,pFile->pszName);
+Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_LOAD_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSF_LOAD),NULL,MB_ICONHAND,pFile->pszName);
 
 	if (pReader)
 		{
-		if (pReader->uLastError && !(dwMode&LS_MODE_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSF_LOADEX),NULL,MB_ICONHAND,pFile->pszName,Locale_GetText(pReader->uLastError));
+		if (pReader->uLastError && !(dwMode&LS_LOAD_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSF_LOADEX),NULL,MB_ICONHAND,pFile->pszName,Locale_GetText(pReader->uLastError));
 		lsf_ReleaseNames(&pReader->nodeNames);
 		lsf_ReleaseNodes(&pReader->nodeNodes);
 		lsf_ReleaseAttrs(&pReader->nodeAttrs);

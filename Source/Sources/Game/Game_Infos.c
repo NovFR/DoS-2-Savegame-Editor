@@ -132,7 +132,7 @@ int Infos_LoadMetaDatas(HWND hWnd)
 		return(0);
 		}
 
-	if (!lsv_Load(hWnd,pszPath,&App.Game.Save.nodeFiles,LS_MODE_SAVEINFO))
+	if (!lsv_Load(hWnd,pszPath,&App.Game.Save.nodeFiles,LS_LOAD_META|LS_LOAD_PNG))
 		{
 		HeapFree(App.hHeap,0,pszPath);
 		return(0);
@@ -244,7 +244,7 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 	//--- Chargement des fichiers ---
 
 	pMetaFile = lsv_FindFile(pRoot,szMetaLSF,NULL);
-	if (pMetaFile && !pMetaFile->nodeXMLRoot.next) lsf_Unpack(hDlg,pMetaFile,LS_MODE_QUIET);
+	if (pMetaFile && !pMetaFile->nodeXMLRoot.next) lsf_Unpack(hDlg,pMetaFile,LS_LOAD_QUIET);
 
 	pPNGFile = lsv_FindFile(pRoot,NULL,szPNGext);
 	if (pPNGFile && !pPNGFile->hBitmap) pPNGFile->hBitmap = png_Load(pPNGFile->pData);

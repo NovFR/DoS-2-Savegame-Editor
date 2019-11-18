@@ -114,14 +114,16 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		{
 		LSFILE*		pFile;
 		ULONG		crc;
+		BOOL		bSkip;
+		char*		pszName;
 		int		iSize;
 
-		//--- Ne charge que les informations de la sauvegarde ?
-		if (dwMode&LS_MODE_SAVEINFO)
-			{
-			char* pszName = pReader->pFileListBuffer[pReader->iNumFiles].Name;
-			if (strcmp("meta.lsf",pszName) && strncmp(".png",pszName+strlen(pszName)-4,4)) continue;
-			}
+		//--- Vérifie les fichiers à charger
+		bSkip = TRUE;
+		pszName = pReader->pFileListBuffer[pReader->iNumFiles].Name;
+		if (dwMode&LS_LOAD_META && !strcmp("meta.lsf",pszName)) bSkip = FALSE;
+		else if (dwMode&LS_LOAD_PNG && !strncmp(".png",pszName+strlen(pszName)-4,4)) bSkip = FALSE;
+		if (bSkip) continue;
 
 		//--- Structure du fichier
 		pFile = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LSFILE));
@@ -179,11 +181,11 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 
 	//--- Terminé ---
 
-Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_MODE_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOAD),NULL,MB_ICONHAND,pszArchiveName);
+Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_LOAD_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOAD),NULL,MB_ICONHAND,pszArchiveName);
 
 	if (pReader)
 		{
-		if (pReader->uLastError && !(dwMode&LS_MODE_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOADEX),NULL,MB_ICONHAND,pszArchiveName,Locale_GetText(pReader->uLastError));
+		if (pReader->uLastError && !(dwMode&LS_LOAD_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOADEX),NULL,MB_ICONHAND,pszArchiveName,Locale_GetText(pReader->uLastError));
 		if (pReader->pFileListBuffer) HeapFree(App.hHeap,0,pReader->pFileListBuffer);
 		if (pReader->pFileBuffer) HeapFree(App.hHeap,0,pReader->pFileBuffer);
 		if (pReader->hFile != INVALID_HANDLE_VALUE) CloseHandle(pReader->hFile);
