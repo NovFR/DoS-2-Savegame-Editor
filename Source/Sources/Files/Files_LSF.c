@@ -590,6 +590,7 @@ BOOL lsf_UnpackList(LSFREADER *pReader, DWORD dwSizeOnDisk, DWORD dwUncompressed
 					pAttributes->attrInfos[uNumAttrs].Length = (unsigned int)(pAttrV3->TypeAndLength >> 6);
 					pAttributes->attrInfos[uNumAttrs].DataOffset = pAttrV3->Offset;
 					pAttributes->attrInfos[uNumAttrs].NextAttributeIndex = pAttrV3->NextAttributeIndex;
+					pWork += sizeof(ATTRIBUTEENTRYV3);
 					}
 				}
 			else
