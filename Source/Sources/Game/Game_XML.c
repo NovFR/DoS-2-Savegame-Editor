@@ -15,6 +15,7 @@
 #include "XML.h"
 #include "XMLTree.h"
 #include "Game.h"
+#include "Files.h"
 #include "Texts.h"
 #include "Requests.h"
 #include "LastFiles.h"
@@ -35,7 +36,7 @@ int xml_LoadFile(WCHAR *pszFilePath)
 {
 	XML_PARSER*	pParser;
 
-	Status_SetText(Locale_GetText(TEXT_LOADING),pszFilePath);
+	Status_SetText(Locale_GetText(TEXT_LOADING),PathFindFileName(pszFilePath));
 
 	pParser = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_PARSER));
 	if (!pParser)
@@ -368,7 +369,7 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 
 // л╗╗╗ Initie la sauvegarde d'un fichier XML ллллллллллллллллллллллллллл╗
 
-int xml_SaveFile(WCHAR *pszFilePath)
+int xml_SaveFile(WCHAR *pszFilePath, UINT uTarget, XML_NODE *pxn)
 {
 	XML_PARSER*	pParser;
 
@@ -384,8 +385,22 @@ int xml_SaveFile(WCHAR *pszFilePath)
 
 	//--- Sauvegarde ---
 
-	Status_SetText(Locale_GetText(TEXT_SAVING),pszFilePath);
+	Status_SetText(Locale_GetText(TEXT_SAVING),PathFindFileName(pszFilePath));
 	pParser->pszFilePath = pszFilePath;
+
+	switch(uTarget)
+		{
+		case XML_TARGET_GLOBALS:
+			pParser->pxnBegin = (XML_NODE *)App.Game.Save.nodeXMLRoot.next;
+			break;
+		case XML_TARGET_META:
+			pParser->pxnBegin = (XML_NODE *)(lsv_GetMetaXML(&App.Game.Save.nodeFiles))->next;
+			break;
+		case XML_TARGET_CUSTOM:
+			pParser->pxnBegin = pxn;
+			break;
+		}
+
 	pParser->iResult = xml_WriteFile(pParser);
 	xml_UpdateProgress(-1,-1);
 
@@ -417,10 +432,10 @@ int xml_WriteFile(XML_PARSER *pParser)
 
 	pParser->uTabsToAllocate = XML_TABS_BUFFER_LEN;
 	pParser->uWriteBufferSize = XML_WRITE_BUFFER_LEN;
-	pParser->uNodesTotal = xml_TotalNodesCount((XML_NODE *)App.Game.Save.nodeXMLRoot.next);
+	pParser->uNodesTotal = xml_TotalNodesCount((XML_NODE *)pParser->pxnBegin);
 	pParser->uNodesCount = 0;
 
-	dwLastError = xml_WriteNodes(pParser,(XML_NODE *)App.Game.Save.nodeXMLRoot.next);
+	dwLastError = xml_WriteNodes(pParser,(XML_NODE *)pParser->pxnBegin);
 	if (pParser->pszTabsBuffer) HeapFree(App.hHeap,0,pParser->pszTabsBuffer);
 	if (pParser->pWriteBuffer) HeapFree(App.hHeap,0,pParser->pWriteBuffer);
 	if (dwLastError != XML_ERROR_NONE) goto Error;

@@ -240,7 +240,9 @@ typedef struct LFSATTRS {
 
 BOOL			lsv_Load(HWND,WCHAR *,NODE *,DWORD);
 void			lsv_Release(NODE *);
+
 LSFILE*			lsv_FindFile(NODE *,WCHAR *,WCHAR *);
+NODE*			lsv_GetMetaXML(NODE *);
 
 // л╗╗╗ LSF ллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл╗
 

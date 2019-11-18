@@ -27,6 +27,12 @@ enum {
 };
 
 enum {
+	XML_TARGET_GLOBALS = 0,
+	XML_TARGET_META,
+	XML_TARGET_CUSTOM
+};
+
+enum {
 	XML_ERROR_NONE = 0,
 	XML_ERROR_EOF,
 	XML_ERROR_FROM_SYSTEM,
@@ -70,6 +76,7 @@ typedef struct XML_PARSER {
 	DWORD		dwTagSize;
 	//--- Save
 	WCHAR*		pszTabsBuffer;
+	XML_NODE*	pxnBegin;
 	UINT		uTabsCount;
 	UINT		uTabsToAllocate;
 	UINT		uNodesCount;
@@ -92,7 +99,7 @@ int			xml_ReadTag(XML_PARSER *);
 int			xml_ParseNodes(XML_PARSER *,XML_NODE *,NODE *);
 int			xml_ParseAttributes(XML_PARSER *,XML_NODE *);
 
-int			xml_SaveFile(WCHAR *);
+int			xml_SaveFile(WCHAR *,UINT,XML_NODE *);
 int			xml_WriteFile(XML_PARSER *);
 DWORD			xml_WriteNodes(XML_PARSER *,XML_NODE *);
 BOOL			xml_WriteTabs(XML_PARSER *);

@@ -17,16 +17,19 @@
 
 #include "GameEdit.h"
 
+#define DIVINE_SIMULATION	0 // If == 1 then files are written in TEMP folder but savegame is not changed
+
 #define DIVINE_ICON_SIZE	24
 
 #define DIVINE_DOS_2		1 // Don't change
 #define DIVINE_DOS_2EE		2 // Don't change
 
 enum {
-	DIVINE_EXTRACT = 0,
-	DIVINE_CREATE,
-	DIVINE_CONVERTLSF,
-	DIVINE_CONVERTLSX,
+	DIVINE_EXTRACTARCHIVE = 0,
+	DIVINE_CREATEARCHIVE,
+	DIVINE_GLOBALSLSFTOLSX,
+	DIVINE_GLOBALSLSXTOLSF,
+	DIVINE_METALSXTOLSF
 };
 
 enum {

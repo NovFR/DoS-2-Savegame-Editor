@@ -46,14 +46,13 @@
 50 ICON "Icons\\Infos\\Empty.ico"
 51 ICON "Icons\\Infos\\Savegame.ico"
 52 ICON "Icons\\Infos\\Version.ico"
-53 ICON "Icons\\Infos\\Modified.ico"
-54 ICON "Icons\\Infos\\NotModified.ico"
-55 ICON "Icons\\Infos\\Difficulty.ico"
-56 ICON "Icons\\Infos\\Date.ico"
-57 ICON "Icons\\Infos\\Character.ico"
-58 ICON "Icons\\Infos\\NotCharacter.ico"
-59 ICON "Icons\\Infos\\Larian.ico"
-60 ICON "Icons\\Infos\\Mod.ico"
+53 ICON "Icons\\Infos\\Difficulty.ico"
+54 ICON "Icons\\Infos\\Time.ico"
+55 ICON "Icons\\Infos\\Date.ico"
+56 ICON "Icons\\Infos\\Character.ico"
+57 ICON "Icons\\Infos\\NotCharacter.ico"
+58 ICON "Icons\\Infos\\Larian.ico"
+59 ICON "Icons\\Infos\\Mod.ico"
 
 80 ICON "Icons\\Portraits\\Ifan.ico"
 81 ICON "Icons\\Portraits\\Lohse.ico"
@@ -351,6 +350,19 @@ FONT 8, L"MS Shell Dlg"
 	LISTBOX		200,	    4,   4, 228, 156, WS_VSCROLL|LBS_NOINTEGRALHEIGHT|LBS_OWNERDRAWVARIABLE
 	DEFPUSHBUTTON	L"",	IDOK,	   12, 166,  64,  16, WS_DISABLED
 	PUSHBUTTON	L"",	IDCANCEL, 160, 166,  64,  16
+}
+
+//--- Mods ---
+
+1200 DIALOGEX 0, 0, 400, 300
+STYLE DS_MODALFRAME|WS_BORDER|WS_VISIBLE|WS_CAPTION|WS_SYSMENU|DS_SHELLFONT
+CLASS L"GlEdDialog32"
+FONT 8, L"MS Shell Dlg"
+{
+	CONTROL 	L"",	100, L"STATIC", WS_CHILD|WS_VISIBLE|SS_OWNERDRAW,   0,   0, 400,   0
+	CONTROL		L"",	200, L"SysListView32", WS_CHILD|WS_BORDER|WS_VISIBLE|WS_TABSTOP|LVS_REPORT|LVS_NOCOLUMNHEADER|LVS_SINGLESEL|LVS_SHOWSELALWAYS, 4, 4, 392, 264
+	DEFPUSHBUTTON	L"",	IDOK,	  254, 276,  64,  16
+	PUSHBUTTON	L"",	IDCANCEL, 324, 276,  64,  16
 }
 
 

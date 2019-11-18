@@ -244,3 +244,18 @@ LSFILE* lsv_FindFile(NODE *pRoot, WCHAR *pszName, WCHAR *pszExt)
 
 	return(NULL);
 }
+
+
+// «»»» Retrouve la structure XML des métadonnées «««««««««««««««««««««««»
+
+NODE* lsv_GetMetaXML(NODE *pRoot)
+{
+	if (pRoot)
+		{
+		LSFILE*	pFile = lsv_FindFile(pRoot,szMetaLSF,NULL);
+		if (!pFile) return(NULL);
+		return(&pFile->nodeXMLRoot);
+		}
+
+	return(NULL);
+}

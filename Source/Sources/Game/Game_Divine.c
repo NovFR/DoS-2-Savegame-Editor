@@ -908,10 +908,10 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 	ctx->uDebugLevel = DIVINE_DEBUG_ERROR;
 	#endif
 
-	ctx->dwResult = Divine_Execute(DIVINE_EXTRACT,ctx);
+	ctx->dwResult = Divine_Execute(DIVINE_EXTRACTARCHIVE,ctx);
 	if (ctx->dwResult != ERROR_SUCCESS) goto Done;
 
-	ctx->dwResult = Divine_Execute(DIVINE_CONVERTLSF,ctx);
+	ctx->dwResult = Divine_Execute(DIVINE_GLOBALSLSFTOLSX,ctx);
 	if (ctx->dwResult != ERROR_SUCCESS) goto Done;
 
 	ctx->pszPath = Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSX);
@@ -1025,21 +1025,49 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 	ctx->uDebugLevel = DIVINE_DEBUG_ERROR;
 	#endif
 
+	//--- globals.lsx > globals.lsf ---
+
 	ctx->pszPath = Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSX);
 	if (ctx->pszPath)
 		{
-		if (!xml_SaveFile(ctx->pszPath)) goto Done;
+		if (!xml_SaveFile(ctx->pszPath,XML_TARGET_GLOBALS,NULL)) goto Done;
 		}
 	else
 		{
 		xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
 		goto Done;
 		}
-
-	ctx->dwResult = Divine_Execute(DIVINE_CONVERTLSX,ctx);
+	ctx->dwResult = Divine_Execute(DIVINE_GLOBALSLSXTOLSF,ctx);
 	if (ctx->dwResult != ERROR_SUCCESS) goto Done;
 
-	ctx->dwResult = Divine_Execute(DIVINE_CREATE,ctx);
+	//--- meta.lsx > meta.lsf ---
+
+	if (lsv_GetMetaXML(&App.Game.Save.nodeFiles))
+		{
+		HeapFree(App.hHeap,0,ctx->pszPath);
+		ctx->pszPath = Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szMetaLSX);
+		if (ctx->pszPath)
+			{
+			if (!xml_SaveFile(ctx->pszPath,XML_TARGET_META,NULL)) goto Done;
+			}
+		else
+			{
+			xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+			goto Done;
+			}
+		ctx->dwResult = Divine_Execute(DIVINE_METALSXTOLSF,ctx);
+		if (ctx->dwResult != ERROR_SUCCESS) goto Done;
+		}
+
+	//--- Create archive.lsv and replace savegame ---
+
+	#if !_DEBUG || !DIVINE_SIMULATION
+	ctx->dwResult = Divine_Execute(DIVINE_CREATEARCHIVE,ctx);
+	#else
+	#warning Save routine in simulation mode !
+	#endif
+
+	//--- Done ---
 
 Done:	Status_SetText(Locale_GetText(TEXT_DONE));
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_ALL);
@@ -1089,7 +1117,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 
 	switch(uType)
 		{
-		case DIVINE_EXTRACT:
+		case DIVINE_EXTRACTARCHIVE:
 			pszFmt = szDivineExtract;
 
 			vl[1] = (DWORD_PTR)Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName);
@@ -1115,7 +1143,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 			Status_SetText(Locale_GetText(TEXT_LOADING_EXTRACT),ctx->pszSaveName);
 			break;
 
-		case DIVINE_CREATE:
+		case DIVINE_CREATEARCHIVE:
 			pszFmt = szDivineCreate;
 
 			vl[1] = (DWORD_PTR)Divine_GetTempPath(3,szTempPath,szSavegames,ctx->pszSaveName);
@@ -1145,7 +1173,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 			Status_SetText(Locale_GetText(TEXT_SAVING_CREATE),ctx->pszSaveName);
 			break;
 
-		case DIVINE_CONVERTLSF:
+		case DIVINE_GLOBALSLSFTOLSX:
 			pszFmt = szDivineConvertLSF;
 
 			vl[1] = (DWORD_PTR)Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSF);
@@ -1165,7 +1193,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 			Status_SetText(Locale_GetText(TEXT_LOADING_CONVERTLSF),ctx->pszSaveName,szGlobalsLSF);
 			break;
 
-		case DIVINE_CONVERTLSX:
+		case DIVINE_GLOBALSLSXTOLSF:
 			pszFmt = szDivineConvertLSX;
 
 			vl[1] = (DWORD_PTR)Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSX);
@@ -1176,6 +1204,26 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 				}
 
 			vl[2] = (DWORD_PTR)Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSF);
+			if (!vl[2])
+				{
+				dwLastError = GetLastError();
+				goto Done;
+				}
+
+			Status_SetText(Locale_GetText(TEXT_SAVING_CONVERTLSX),ctx->pszSaveName,szGlobalsLSX);
+			break;
+
+		case DIVINE_METALSXTOLSF:
+			pszFmt = szDivineConvertLSX;
+
+			vl[1] = (DWORD_PTR)Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szMetaLSX);
+			if (!vl[1])
+				{
+				dwLastError = GetLastError();
+				goto Done;
+				}
+
+			vl[2] = (DWORD_PTR)Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szMetaLSF);
 			if (!vl[2])
 				{
 				dwLastError = GetLastError();
@@ -1253,11 +1301,14 @@ Done:	if (dwLastError == ERROR_SUCCESS)
 		{
 		switch (uType)
 			{
-			case DIVINE_CONVERTLSX:
+			case DIVINE_METALSXTOLSF:
+			case DIVINE_GLOBALSLSXTOLSF:
+				#if !_DEBUG || !DIVINE_SIMULATION
 				if (!DeleteFile((WCHAR *)vl[1])) dwLastError = GetLastError();
+				#endif
 				break;
 
-			case DIVINE_CREATE:
+			case DIVINE_CREATEARCHIVE:
 				pszTemp = Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName);
 				if (pszTemp)
 					{

@@ -28,5 +28,8 @@ void			Misc_SetWindowText(HWND,WCHAR **,WCHAR *,WCHAR *,...);
 WCHAR*			Misc_UTF8ToWideCharNZ(const char *, const int);
 WCHAR*			Misc_UTF8ToWideChar(const char *);
 char*			Misc_WideCharToUTF8(const WCHAR *);
+#if _DEBUG
+void			Misc_DebugOut(const WCHAR *, ...);
+#endif
 
 #endif

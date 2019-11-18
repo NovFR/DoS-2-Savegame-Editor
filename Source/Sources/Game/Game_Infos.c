@@ -22,26 +22,8 @@
 #include "Requests.h"
 
 extern APPLICATION	App;
-
-static WCHAR*		ModsIgnore[] = {
-					L"1301db3d-1f54-4e98-9be5-5094030916e4", // Divinity: Original Sin 2
-					L"2bd9bdbe-22ae-4aa2-9c93-205880fc6564", // Shared
-					L"eedf7638-36ff-4f26-a50a-076b87d53ba0", // Shared_DOS
-					NULL };
-static WCHAR*		ModsLarian[] = {
-					L"9b45f7e5-d4e2-4fc2-8ef7-3b8e90a5256c", // 8 Action Points
-					L"015de505-6e7f-460c-844c-395de6c2ce34", // AS_BlackCatPlus
-					L"38608c30-1658-4f6a-8adf-e826a5295808", // AS_GrowYourHerbs
-					L"423fae51-61e3-469a-9c1f-8ad3fd349f02", // Animal Empathy
-					L"f33ded5d-23ab-4f0c-b71e-1aff68eee2cd", // CMP_BarterTweaks
-					L"f30953bb-10d3-4ba4-958c-0f38d4906195", // Combat Randomizer
-					L"68a99fef-d125-4ed0-893f-bb6751e52c5e", // Crafter's Kit
-					L"2d42113c-681a-47b6-96a1-d90b3b1b07d3", // Fort Joy Magic Mirror
-					L"f243c84f-9322-43ac-96b7-7504f990a8f0", // Improved Organisation
-					L"d2507d43-efce-48b8-ba5e-5dd136c715a7", // Pet Power
-					L"a945eefa-530c-4bca-a29c-a51450f8e181", // Shiny Gear
-					L"ec27251d-acc0-4ab8-920e-dbc851e79bb4", // ToggleSpeedAddon
-					NULL };
+extern WCHAR*		ModsIgnore[];
+extern WCHAR*		ModsLarian[];
 
 
 // いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい //
@@ -124,8 +106,8 @@ void Infos_Tree()
 {
 	if (Infos_LoadMetaDatas(App.hWnd))
 		{
-		LSFILE *pFile = lsv_FindFile(&App.Game.Save.nodeFiles,szMetaLSF,NULL);
-		if (pFile) Tree_Open((XML_NODE *)pFile->nodeXMLRoot.next);
+		NODE* node = lsv_GetMetaXML(&App.Game.Save.nodeFiles);
+		if (node) Tree_Open((XML_NODE *)node->next);
 		}
 	return;
 }
@@ -188,8 +170,8 @@ int Infos_Initialise(HWND hDlg)
 	LVGROUP		lvGroup;
 	LVTILEVIEWINFO	lvTileView;
 	static UINT	uGroupsTitles[] = { TEXT_INFOS_MISC, TEXT_INFOS_TEAM, TEXT_INFOS_MODS, 0 };
-	static UINT	uInfosIconsAPP[] = { APP_ICON_INFO_EMPTY, APP_ICON_INFO_SAVEGAME, APP_ICON_INFO_VERSION, APP_ICON_INFO_MODDED, APP_ICON_INFO_NOTMODDED, APP_ICON_INFO_DIFFICULTY, APP_ICON_INFO_DATE, APP_ICON_INFO_CHARACTER, APP_ICON_INFO_NOTCHARACTER,  APP_ICON_INFO_LARIAN, APP_ICON_INFO_MOD};
-	static UINT	uInfosIconsIDS[] = { INFOS_ICON_EMPTY,    INFOS_ICON_SAVEGAME,    INFOS_ICON_VERSION,    INFOS_ICON_MODDED,    INFOS_ICON_NOTMODDED,    INFOS_ICON_DIFFICULTY,    INFOS_ICON_DATE,    INFOS_ICON_CHARACTER,    INFOS_ICON_NOTCHARACTER,     INFOS_ICON_LARIANMOD, INFOS_ICON_PLAYERMOD };
+	static UINT	uInfosIconsAPP[] = { APP_ICON_INFO_EMPTY, APP_ICON_INFO_SAVEGAME, APP_ICON_INFO_VERSION, APP_ICON_INFO_DIFFICULTY, APP_ICON_INFO_GAMETIME, APP_ICON_INFO_DATE, APP_ICON_INFO_CHARACTER, APP_ICON_INFO_NOTCHARACTER,  APP_ICON_INFO_LARIAN, APP_ICON_INFO_MOD};
+	static UINT	uInfosIconsIDS[] = { INFOS_ICON_EMPTY,    INFOS_ICON_SAVEGAME,    INFOS_ICON_VERSION,    INFOS_ICON_DIFFICULTY,    INFOS_ICON_GAMETIME,    INFOS_ICON_DATE,    INFOS_ICON_CHARACTER,    INFOS_ICON_NOTCHARACTER,     INFOS_ICON_LARIANMOD, INFOS_ICON_PLAYERMOD };
 	HICON		hInfosIcons[INFOS_ICON_LAST];
 	int		i;
 
@@ -256,7 +238,7 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 	LVTILEINFO	lvTileInfo;
 	UINT		uColumns[1] = { 1 };
 	WCHAR*		pszTemp = NULL;
-	static UINT	uItems[] = { TEXT_INFOS_SAVEGAME, TEXT_INFOS_VERSION, TEXT_INFOS_MODDED, TEXT_INFOS_DIFFICULTY, TEXT_INFOS_DATE, 0 };
+	static UINT	uItems[] = { TEXT_INFOS_SAVEGAME, TEXT_INFOS_VERSION, TEXT_INFOS_DIFFICULTY, TEXT_INFOS_GAMETIME, TEXT_INFOS_DATE, 0 };
 	int		i,j = 0;
 
 	//--- Chargement des fichiers ---
@@ -295,11 +277,11 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 			case TEXT_INFOS_VERSION:
 				lvItem.iImage = INFOS_ICON_VERSION;
 				break;
-			case TEXT_INFOS_MODDED:
-				lvItem.iImage = Infos_Get(INFOS_GROUP_MISC,uItems[i],&pszTemp,pxnMeta) == Locale_GetText(TEXT_INFOS_YES)?INFOS_ICON_MODDED:INFOS_ICON_NOTMODDED;
-				break;
 			case TEXT_INFOS_DIFFICULTY:
 				lvItem.iImage = INFOS_ICON_DIFFICULTY;
+				break;
+			case TEXT_INFOS_GAMETIME:
+				lvItem.iImage = INFOS_ICON_GAMETIME;
 				break;
 			case TEXT_INFOS_DATE:
 				lvItem.iImage = INFOS_ICON_DATE;
@@ -395,20 +377,73 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 					return((WCHAR *)-1);
 
 				case TEXT_INFOS_VERSION:
-					pxnInfo = xml_GetNodeFromPath(pRoot,szInfoGameVersionPath);
-					if (!pxnInfo) break;
-					return(xml_GetAttrValue(pxnInfo,szXMLvalue));
+					pxnInfo = xml_GetNodeFromPathFirstChild(pRoot,szInfoGameVersionsPath);
+					if (pxnInfo)
+						{
+						XML_NODE*	pxn;
 
-				case TEXT_INFOS_MODDED:
-					pxnInfo = xml_GetNodeFromPath(pRoot,szInfoGameModdedPath);
-					if (!pxnInfo) break;
-					return(Locale_GetText(xml_IsTrue(xml_GetAttr(pxnInfo,szXMLvalue))?TEXT_INFOS_YES:TEXT_INFOS_NO));
+						// Displays only the latest game version
+						for (pxn = pxnInfo; pxn->node.next != NULL; pxn = (XML_NODE *)pxn->node.next);
+						return(xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pxn->children.next,szXMLattribute,szXMLid,szXMLObject)));
+						}
 					break;
 
 				case TEXT_INFOS_DIFFICULTY:
 					pxnInfo = xml_GetNodeFromPath(pRoot,szInfoGameDifficultyPath);
 					if (!pxnInfo) break;
 					return(xml_GetAttrValue(pxnInfo,szXMLvalue));
+
+				case TEXT_INFOS_GAMETIME:
+					pxnInfo = xml_GetNodeFromPath(pRoot,szInfoGameTimePath);
+					if (pxnInfo)
+						{
+						WCHAR*		pszTime;
+						UINT		uTime;
+						UINT		uTotalLen;
+						UINT		uHMS[4];
+						WCHAR		szBuffer[6];
+						static UINT	uHMSLocales[] = { TEXT_INFOS_HOURS, TEXT_INFOS_MINUTES, TEXT_INFOS_SECONDS };
+						int		i;
+
+						pszTime = xml_GetAttrValue(pxnInfo,szXMLvalue);
+						if (pszTime)
+							{
+							uTotalLen = 0;
+							uTime = wcstoul(pszTime,NULL,10);
+							if (uTime < 5770) uTime = 5770;
+							uTime -= 5770;
+							uHMS[0] = uTime/3600;
+							uHMS[1] = (uTime%3600)/60;
+							uHMS[2] = (uTime%60);
+							for (i = 0; i != 3; i++)
+								{
+								if (!uHMS[i]) continue;
+								if (uTotalLen) uTotalLen++;
+								swprintf(szBuffer,5,L"%u",uHMS[i]);
+								uTotalLen += wcslen(Locale_GetText(uHMSLocales[i]));
+								uTotalLen += wcslen(szSpace);
+								uTotalLen += wcslen(szBuffer);
+								}
+							if (*pszTemp) HeapFree(App.hHeap,0,*pszTemp);
+							*pszTemp = HeapAlloc(App.hHeap,0,uTotalLen*sizeof(WCHAR)+sizeof(WCHAR));
+							if (*pszTemp)
+								{
+								*pszTemp[0] = 0;
+								for (i = 0, uTotalLen = 0; i != 3; i++)
+									{
+									if (!uHMS[i]) continue;
+									if (uTotalLen) wcscat(*pszTemp,szSpace);
+									swprintf(szBuffer,5,L"%u",uHMS[i]);
+									wcscat(*pszTemp,szBuffer);
+									wcscat(*pszTemp,szSpace);
+									wcscat(*pszTemp,Locale_GetText(uHMSLocales[i]));
+									uTotalLen++;
+									}
+								return(*pszTemp);
+								}
+							}
+						}
+					break;
 
 				case TEXT_INFOS_DATE: {
 					static WCHAR*	pszPattern[6] = { L"YYYY", L"MM", L"DD", L"hh", L"mm", L"ss" };
@@ -490,7 +525,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 						for (i = 0; ModsLarian[i] != NULL; i++)
 							if (!wcscmp(ModsLarian[i],UUID))
 								{
-								*pszTemp = Misc_StrCpyAlloc(Locale_GetText(TEXT_INFOS_LARIANMOD));
+								*pszTemp = Misc_StrCpyAlloc(szLarianStudios);
 								break;
 								}
 						}
@@ -499,32 +534,44 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 
 				case INFOS_MODS_VERSION: {
 					WCHAR*		pszVersion;
-					LONG		lVersion;
 
-					pszVersion = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"Version"));
-					if (pszVersion)
+					if ((pszVersion = Infos_GetVersionString(xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pRoot->children.next,szXMLattribute,szXMLid,L"Version")),*pszTemp)) != NULL)
 						{
-						DWORD_PTR	vl[5];
-						WCHAR*		pszString;
-
-						pszString = NULL;
-						lVersion = wcstol(pszVersion,NULL,10);
-						vl[0] = (DWORD_PTR)((lVersion&0xF0000000)>>28);
-						vl[1] = (DWORD_PTR)((lVersion&0x0F000000)>>24);
-						vl[2] = (DWORD_PTR)((lVersion&0x00FF0000)>>16);
-						vl[3] = (DWORD_PTR)((lVersion&0x0000FFFF));
-						vl[4] = (DWORD_PTR)(*pszTemp?*pszTemp:Locale_GetText(TEXT_INFOS_PLAYERMOD));
-						if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,L"%1!i!.%2!i!.%3!i!.%4!i!%5",0,0,(WCHAR *)&pszString,1,(va_list *)&vl))
-							{
-							if (*pszTemp) HeapFree(App.hHeap,0,*pszTemp);
-							*pszTemp = Misc_StrCpyAlloc(pszString);
-							LocalFree(pszString);
-							return(*pszTemp);
-							}
+						if (*pszTemp) HeapFree(App.hHeap,0,*pszTemp);
+						*pszTemp = Misc_StrCpyAlloc(pszVersion);
+						LocalFree(pszVersion);
+						return(*pszTemp);
 						}
+
 					} break;
 				}
 			break;
+		}
+
+	return(NULL);
+}
+
+//--- Conversion de la version ---
+
+WCHAR* Infos_GetVersionString(WCHAR *pszVersion, WCHAR *pszExtra)
+{
+	if (pszVersion)
+		{
+		DWORD_PTR	vl[5];
+		WCHAR*		pszFmt;
+		WCHAR*		pszString;
+		LONG		lVersion;
+
+		pszString = NULL;
+		lVersion = wcstol(pszVersion,NULL,10);
+		vl[0] = (DWORD_PTR)((lVersion&0xF0000000)>>28);
+		vl[1] = (DWORD_PTR)((lVersion&0x0F000000)>>24);
+		vl[2] = (DWORD_PTR)((lVersion&0x00FF0000)>>16);
+		vl[3] = (DWORD_PTR)((lVersion&0x0000FFFF));
+		vl[4] = (DWORD_PTR)pszExtra;
+		if (pszExtra) pszFmt = L"%1!i!.%2!i!.%3!i!.%4!i! [%5]";
+		else pszFmt = L"%1!i!.%2!i!.%3!i!.%4!i!";
+		if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszFmt,0,0,(WCHAR *)&pszString,1,(va_list *)&vl)) return(pszString);
 		}
 
 	return(NULL);

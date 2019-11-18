@@ -438,3 +438,34 @@ char* Misc_WideCharToUTF8(const WCHAR *pszText)
 	HeapFree(App.hHeap,0,pszResult);
 	return(NULL);
 }
+
+
+// л╗╗╗ Donnщes de debug dans un fichier лллллллллллллллллллллллллллллллл╗
+
+#if _DEBUG
+void Misc_DebugOut(const WCHAR *pszFmt, ...)
+{
+	HANDLE	hFile;
+	WCHAR*	pszBuffer;
+	DWORD	dwBytes;
+	va_list	vl;
+
+	va_start(vl,pszFmt);
+	pszBuffer = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,65535);
+	if (pszBuffer)
+		{
+		wvsprintf(pszBuffer,pszFmt,vl);
+		hFile = CreateFile(L"debug.txt",FILE_APPEND_DATA,0,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+		if (hFile != INVALID_HANDLE_VALUE)
+			{
+			SetEndOfFile(hFile);
+			WriteFile(hFile,pszBuffer,wcslen(pszBuffer)*sizeof(WCHAR),&dwBytes,NULL);
+			WriteFile(hFile,szLF,wcslen(szLF)*sizeof(WCHAR),&dwBytes,NULL);
+			CloseHandle(hFile);
+			}
+		HeapFree(App.hHeap,0,pszBuffer);
+		}
+	va_end(vl);
+	return;
+}
+#endif

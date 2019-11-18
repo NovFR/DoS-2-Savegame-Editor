@@ -60,14 +60,13 @@ APPICON			AppIcons[APP_MAX_ICONS] = {
 				{ APP_ICON_INFO_EMPTY, 50, 48, 48 },
 				{ APP_ICON_INFO_SAVEGAME, 51, 48, 48 },
 				{ APP_ICON_INFO_VERSION, 52, 48, 48 },
-				{ APP_ICON_INFO_MODDED, 53, 48, 48 },
-				{ APP_ICON_INFO_NOTMODDED, 54, 48, 48 },
-				{ APP_ICON_INFO_DIFFICULTY, 55, 48, 48 },
-				{ APP_ICON_INFO_DATE, 56, 48, 48 },
-				{ APP_ICON_INFO_CHARACTER, 57, 48, 48 },
-				{ APP_ICON_INFO_NOTCHARACTER, 58, 48, 48 },
-				{ APP_ICON_INFO_LARIAN, 59, 48, 48 },
-				{ APP_ICON_INFO_MOD, 60, 48, 48 },
+				{ APP_ICON_INFO_DIFFICULTY, 53, 48, 48 },
+				{ APP_ICON_INFO_GAMETIME, 54, 48, 48 },
+				{ APP_ICON_INFO_DATE, 55, 48, 48 },
+				{ APP_ICON_INFO_CHARACTER, 56, 48, 48 },
+				{ APP_ICON_INFO_NOTCHARACTER, 57, 48, 48 },
+				{ APP_ICON_INFO_LARIAN, 58, 48, 48 },
+				{ APP_ICON_INFO_MOD, 59, 48, 48 },
 				{ APP_ICON_PORTRAIT_IFAN, 80, 80, 100 },
 				{ APP_ICON_PORTRAIT_LOHSE, 81, 80, 100 },
 				{ APP_ICON_PORTRAIT_REDPRINCE, 82, 80, 100 },
@@ -99,11 +98,10 @@ CUSTOMMENUTEMPLATE	MainMenu[] = {
 					{ MENU_ITEM, IDM_QUIT, 0, MENUKEY_QUIT },
 					{ MENU_STOP },
 				{ MENU_POPUP, MENU_EDIT, 0 },
-					{ MENU_ITEM, IDM_SHOWCHARTREE, MFS_GRAYED, MENUKEY_SHOWCHARTREE },
-					{ MENU_SEPARATOR },
 					{ MENU_ITEM, IDM_CONVERTER, 0, MENUKEY_CONVERTER },
 					{ MENU_STOP },
 				{ MENU_POPUP, MENU_ADVANCED, 0 },
+					{ MENU_ITEM, IDM_SHOWCHARTREE, MFS_GRAYED, MENUKEY_SHOWCHARTREE },
 					{ MENU_ITEM, IDM_SHOWMETATREE, MFS_GRAYED },
 					{ MENU_ITEM, IDM_SHOWSAVETREE, MFS_GRAYED },
 					{ MENU_SEPARATOR },
@@ -204,5 +202,32 @@ GAMEORIGIN		Origins[] = {
 				{ L"Beast", TEXT_ORIGIN_BEAST },
 				{ L"Fane", TEXT_ORIGIN_FANE },
 				{ NULL }
+
+			};
+
+WCHAR*		ModsIgnore[] = {
+
+				L"1301db3d-1f54-4e98-9be5-5094030916e4", // Divinity: Original Sin 2
+				L"2bd9bdbe-22ae-4aa2-9c93-205880fc6564", // Shared
+				L"eedf7638-36ff-4f26-a50a-076b87d53ba0", // Shared_DOS
+				NULL
+
+			};
+
+WCHAR*		ModsLarian[] = {
+
+				L"9b45f7e5-d4e2-4fc2-8ef7-3b8e90a5256c", // 8 Action Points
+				L"015de505-6e7f-460c-844c-395de6c2ce34", // AS_BlackCatPlus
+				L"38608c30-1658-4f6a-8adf-e826a5295808", // AS_GrowYourHerbs
+				L"423fae51-61e3-469a-9c1f-8ad3fd349f02", // Animal Empathy
+				L"f33ded5d-23ab-4f0c-b71e-1aff68eee2cd", // CMP_BarterTweaks
+				L"f30953bb-10d3-4ba4-958c-0f38d4906195", // Combat Randomizer
+				L"68a99fef-d125-4ed0-893f-bb6751e52c5e", // Crafter's Kit
+				L"2d42113c-681a-47b6-96a1-d90b3b1b07d3", // Fort Joy Magic Mirror
+				L"f243c84f-9322-43ac-96b7-7504f990a8f0", // Improved Organisation
+				L"d2507d43-efce-48b8-ba5e-5dd136c715a7", // Pet Power
+				L"a945eefa-530c-4bca-a29c-a51450f8e181", // Shiny Gear
+				L"ec27251d-acc0-4ab8-920e-dbc851e79bb4", // ToggleSpeedAddon
+				NULL
 
 			};

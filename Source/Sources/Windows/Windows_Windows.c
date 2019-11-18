@@ -14,6 +14,7 @@
 #include "Application.h"
 #include "Texts.h"
 #include "Menus.h"
+#include "Mods.h"
 #include "Files.h"
 #include "Infos.h"
 #include "LastFiles.h"
@@ -75,6 +76,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			if (wParam != VK_F1) break;
 			//Game_Talents();
 			//Game_Bonus(hWnd,NULL,NULL);
+			Mods_Dialog();
 			break;
 		#endif
 
@@ -334,6 +336,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_SHOWCHARTREE:
 					Tree_Open(App.Game.pdcCurrent->pxnXML);
+					break;
+				case IDM_REMOVEMODS:
+					Mods_Dialog();
 					break;
 				case IDM_CONVERTER:
 					Divine_RunConverter();
