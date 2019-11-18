@@ -32,6 +32,7 @@ Use a special save to make your modifications. Save your game once then a second
 - Using keyboard to (un)select Talents may be messy sometimes.
 - Last line of Tags description may be truncated.
 - Modifying the original savegame during edition may leads to unpredicable results if metadatas are loaded after (either by displaying informations, removing mods, or opening the tree view)
+- Savegames are sorted by system time, not by savegame time (order may differs from the game selection)
 
 
 ## Requirements
