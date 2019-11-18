@@ -149,13 +149,13 @@ BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 
 		switch(i)
 			{
-			case 0:	uValue = (pReader->pHeader->EngineVersion&0xff000000)>>24;
+			case 0:	uValue = (pReader->pHeader->EngineVersion&0xFF000000)>>24;
 				break;
-			case 1:	uValue = (pReader->pHeader->EngineVersion&0xff0000)>>16;
+			case 1:	uValue = (pReader->pHeader->EngineVersion&0x00FF0000)>>16;
 				break;
-			case 2:	uValue = (pReader->pHeader->EngineVersion&0xff00)>>8;
+			case 2:	uValue = (pReader->pHeader->EngineVersion&0x0000FF00)>>8;
 				break;
-			case 3:	uValue = (pReader->pHeader->EngineVersion&0xff);
+			case 3:	uValue = (pReader->pHeader->EngineVersion&0x000000FF);
 				break;
 			}
 		if (!xml_SetAttrValueNumber(pxa,uValue))
@@ -198,8 +198,17 @@ BOOL lsf_CreateNode(LSFREADER *pReader, UINT uParentIndex, XML_NODE *pxnParent, 
 		return(FALSE);
 		}
 
+	//--- Create XML region structure
+	if (pNodes->nodeInfos[uThisIndex].ParentIndex == -1)
+		{
+		pxnParent = xml_CreateNode(szXMLregion,pxnParent,1,szXMLid,pszName);
+		if (!pxnParent) goto No_Memory;
+		List_AddEntry((NODE *)pxnParent,pRoot);
+		pRoot = &pxnParent->children;
+		}
+
 	//--- Create XML node structure
-	pxnNew = xml_CreateNode(pNodes->nodeInfos[uThisIndex].ParentIndex == -1?szXMLregion:szXMLnode,pxnParent,1,szXMLid,pszName);
+	pxnNew = xml_CreateNode(szXMLnode,pxnParent,1,szXMLid,pszName);
 	if (!pxnNew) goto No_Memory;
 
 	List_AddEntry((NODE *)pxnNew,pRoot);
@@ -267,7 +276,7 @@ BOOL lsf_CreateNode(LSFREADER *pReader, UINT uParentIndex, XML_NODE *pxnParent, 
 	if (pReader->uIndex >= pNodes->uNumNodes) return(TRUE);
 
 	//--- Add a <children> tag for child nodes
-	if (pNodes->nodeInfos[pReader->uIndex].ParentIndex == uThisIndex && uParentIndex != -1)
+	if (pNodes->nodeInfos[pReader->uIndex].ParentIndex == uThisIndex)
 		{
 		XML_NODE *pxnTmp;
 		pxnTmp = pxnNew;
