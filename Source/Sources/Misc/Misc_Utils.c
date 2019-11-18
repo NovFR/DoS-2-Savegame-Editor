@@ -24,6 +24,28 @@ extern APPLICATION	App;
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Récupération des dates d'un fichier «««««««««««««««««««««««««««««»
+
+int Misc_GetFileTime(const WCHAR *pszPath, FILETIME *pCreationTime, FILETIME *pLastAccessTime, FILETIME *pLastWriteTime)
+{
+	HANDLE	hFile;
+
+	if (!pszPath) return(0);
+
+	hFile = CreateFile(pszPath,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,0,NULL);
+	if (hFile == INVALID_HANDLE_VALUE) return(0);
+
+	if (!GetFileTime(hFile,pCreationTime,pLastAccessTime,pLastWriteTime))
+		{
+		CloseHandle(hFile);
+		return(0);
+		}
+
+	CloseHandle(hFile);
+	return(1);
+}
+
+
 // «»»» Conversion d'un nombre ««««««««««««««««««««««««««««««««««««««««««»
 
 //!\ The function returns NULL in case of error but also when the string does not need to be modified

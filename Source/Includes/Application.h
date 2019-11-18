@@ -146,6 +146,7 @@ typedef struct APPLICATION {
 		} Layout;
 		struct {
 			WCHAR*		pszSaveName;
+			FILETIME	ftLastWrite;
 			NODE		nodeFiles;
 			NODE		nodeXMLRoot;
 		} Save;

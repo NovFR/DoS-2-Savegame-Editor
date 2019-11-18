@@ -926,6 +926,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 			Misc_SetWindowText(App.hWnd,&App.pszWindowTitle,szTitle,szTitleFmt,szTitle,ctx->pszSaveName);
 
 			if (App.Config.pszProfile) HeapFree(App.hHeap,0,App.Config.pszProfile);
+			CopyMemory(&App.Game.Save.ftLastWrite,&ctx->ftLastWrite,sizeof(FILETIME));
 			App.Config.uGame = ctx->uGame;
 			App.Config.pszProfile = ctx->pszProfile;
 			App.Game.Save.pszSaveName = ctx->pszSaveName;
@@ -1001,6 +1002,12 @@ void Divine_Write()
 		return;
 		}
 
+	if (Divine_IsSaveGameChanged(App.hWnd,Locale_GetText(TEXT_MODIFIED_SAVEGAME),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,&App.Game.Save.ftLastWrite))
+		{
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
 	App.hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Divine_SaveThread,ctx,0,NULL);
 	if (!App.hThread)
 		{
@@ -1063,6 +1070,7 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 
 	#if !_DEBUG || !DIVINE_SIMULATION
 	ctx->dwResult = Divine_Execute(DIVINE_CREATEARCHIVE,ctx);
+	if (ctx->dwResult == ERROR_SUCCESS) CopyMemory(&App.Game.Save.ftLastWrite,&ctx->ftLastWrite,sizeof(FILETIME));
 	#else
 	#warning Save routine in simulation mode !
 	#endif
@@ -1135,6 +1143,12 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 
 			vl[2] = (DWORD_PTR)Divine_CreateTempPath(3,szTempPath,szSavegames,ctx->pszSaveName);
 			if (!vl[2])
+				{
+				dwLastError = GetLastError();
+				goto Done;
+				}
+
+			if (!Misc_GetFileTime((WCHAR *)vl[1],NULL,NULL,&ctx->ftLastWrite))
 				{
 				dwLastError = GetLastError();
 				goto Done;
@@ -1313,6 +1327,7 @@ Done:	if (dwLastError == ERROR_SUCCESS)
 				if (pszTemp)
 					{
 					if (!MoveFileEx((WCHAR *)vl[2],pszTemp,MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING)) dwLastError = GetLastError();
+					else if (!Misc_GetFileTime(pszTemp,NULL,NULL,&ctx->ftLastWrite)) dwLastError = GetLastError();
 					HeapFree(App.hHeap,0,pszTemp);
 					}
 				else dwLastError = GetLastError();
@@ -1657,6 +1672,34 @@ void Divine_DrawLogLine(DRAWITEMSTRUCT *pDraw)
 // ¤¤¤ Sous-routines							  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// «»»» Vérifie que la sauvegarde n'a pas été modifiée ««««««««««««««««««»
+
+int Divine_IsSaveGameChanged(HWND hWnd, WCHAR *pszText, UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, FILETIME *pLastWrite)
+{
+	FILETIME	ftLastWrite;
+	WCHAR*		pszPath;
+	int		iResult;
+
+	iResult = 1;
+	pszPath = Divine_GetSaveGamePath(uGame,pszProfile,pszSaveName);
+	if (pszPath)
+		{
+		if (Misc_GetFileTime(pszPath,NULL,NULL,&ftLastWrite))
+			{
+			if (CompareFileTime(&ftLastWrite,pLastWrite))
+				{
+				if (MessageBox(hWnd,pszText,Locale_GetText(TEXT_TITLE_REQUEST),MB_ICONQUESTION|MB_YESNO) == IDYES)
+					iResult = 0;
+				}
+			else iResult = 0;
+			}
+		HeapFree(App.hHeap,0,pszPath);
+		}
+
+	return(iResult);
+}
+
 
 // «»»» Création du répertoire temporaire «««««««««««««««««««««««««««««««»
 

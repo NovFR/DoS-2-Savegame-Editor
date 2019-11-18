@@ -67,6 +67,7 @@ typedef struct DIVINECONTEXT {
 	WCHAR*		pszSaveName;
 	WCHAR*		pszPath;
 	char*		pszLog;
+	FILETIME	ftLastWrite;
 	DWORD		dwResult;
 	BOOL		bNoErrorMsg;
 	NODE		Log;
@@ -129,6 +130,7 @@ void			Divine_ShowLog(DIVINECONTEXT *);
 INT_PTR CALLBACK	Divine_LogProc(HWND,UINT,WPARAM,LPARAM);
 void			Divine_DrawLogLine(DRAWITEMSTRUCT *);
 
+int			Divine_IsSaveGameChanged(HWND,WCHAR *,UINT,WCHAR *,WCHAR *,FILETIME *);
 WCHAR*			Divine_CreateTempPath(UINT,...);
 WCHAR*			Divine_GetTempPath(UINT,...);
 WCHAR*			Divine_GetSaveGamePath(UINT,WCHAR *,WCHAR *);

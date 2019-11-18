@@ -123,6 +123,11 @@ int Infos_LoadMetaDatas(HWND hWnd)
 	if (!App.Game.Save.pszSaveName) return(0);
 	if (App.Game.Save.nodeFiles.next) return(1);
 
+	//--- Vérifie si la sauvegarde a été modifiée ---
+
+	if (Divine_IsSaveGameChanged(hWnd,Locale_GetText(TEXT_MODIFIED_SGMETA),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,&App.Game.Save.ftLastWrite))
+		return(0);
+
 	//--- Unpack LSV ---
 
 	pszPath = Divine_GetSaveGamePath(App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName);
