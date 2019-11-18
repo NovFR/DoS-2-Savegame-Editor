@@ -583,7 +583,7 @@ void Divine_SelectLoadGameInfos(HWND hDlg, DIVINESGCONTEXT *pContext)
 	if (!pszPath) return;
 
 	lsv_Release(&pContext->GameFiles);
-	lResult = lsv_Load(hDlg,pszPath,&pContext->GameFiles,LS_MODE_QUIET|LS_MODE_SAVEINFO);
+	lResult = lsv_Load(hDlg,pszPath,&pContext->GameFiles,LS_LOAD_QUIET|LS_LOAD_META|LS_LOAD_PNG);
 	if (!lResult) return;
 
 	Infos_PrepareAndUpdate(hDlg,pItem->name,&pContext->GameFiles);
@@ -743,8 +743,8 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				}
 			List_AddEntry((NODE *)pItem,pRoot);
 			pItem->node.type = uType;
-			pItem->time.dwLowDateTime = Find.ftLastWriteTime.dwLowDateTime;
-			pItem->time.dwHighDateTime = Find.ftLastWriteTime.dwHighDateTime;
+			pItem->time.dwLowDateTime = Find.ftCreationTime.dwLowDateTime;
+			pItem->time.dwHighDateTime = Find.ftCreationTime.dwHighDateTime;
 			pItem->name = Misc_StrCpyAlloc(Find.cFileName);
 			if (!pItem->name)
 				{
@@ -752,7 +752,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				goto Done;
 				}
 
-			//--- Tente d'insérer le dossier en fonction de la date de modification
+			//--- Tente d'insérer le dossier en fonction de la date de création
 			if (SendDlgItemMessage(hDlg,200,LB_GETCOUNT,0,0) > 1)
 				{
 				DIVINEITEM*	pListItem;
