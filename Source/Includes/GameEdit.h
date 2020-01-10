@@ -333,6 +333,7 @@ BOOL CALLBACK		Game_EditProc(HWND,UINT,WPARAM,LPARAM);
 BOOL			Game_EditInit(HWND,GAMEEDITPAGECONTEXT *);
 int			Game_EditActivate(HWND,GAMEEDITPAGECONTEXT *);
 int			Game_EditApply(HWND,GAMEEDITPAGECONTEXT *);
+void			Game_EditShowList(HWND,NODE *);
 
 BOOL			Game_EditNameCopy(XML_ATTR *,WCHAR **);
 BOOL			Game_EditNameSet(DOS2ITEM *,XML_ATTR **,WCHAR *,WCHAR *);

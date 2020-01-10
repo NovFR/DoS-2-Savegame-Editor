@@ -304,10 +304,12 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				break;
 			case GAME_PAGE_BOOSTERS:
 			case GAME_PAGE_BONUSES:
+				Dialog_OffsetY(hDlg,101,Height);
 				Dialog_OffsetY(hDlg,200,Height);
 				GetWindowRect(GetDlgItem(hDlg,200),&rcDialog);
 				MapWindowPoints(NULL,hDlg,(POINT *)&rcDialog,2);
 				rcDialog.bottom -= Height;
+				SetWindowPos(GetDlgItem(hDlg,101),NULL,0,0,rcDialog.right-rcDialog.left,rcDialog.bottom-rcDialog.top,SWP_NOZORDER|SWP_NOMOVE);
 				SetWindowPos(GetDlgItem(hDlg,200),NULL,0,0,rcDialog.right-rcDialog.left,rcDialog.bottom-rcDialog.top,SWP_NOZORDER|SWP_NOMOVE);
 				SendDlgItemMessage(hDlg,201,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_BUTTON_ADD));
 				SendDlgItemMessage(hDlg,202,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_BUTTON_EDIT));
@@ -366,6 +368,9 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				case GAME_PAGE_BOOSTERS:
 					switch(wParam)
 						{
+						case 101:
+							Dialog_DrawInfo(Locale_GetText(TEXT_DIALOG_INFO_EMPTYBOOSTERS),(DRAWITEMSTRUCT *)lParam,BF_TOP|BF_BOTTOM);
+							return(TRUE);
 						case 200:
 							Game_EditBoostersDraw((DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
@@ -374,6 +379,9 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				case GAME_PAGE_BONUSES:
 					switch(wParam)
 						{
+						case 101:
+							Dialog_DrawInfo(Locale_GetText(TEXT_DIALOG_INFO_EMPTYBONUSES),(DRAWITEMSTRUCT *)lParam,BF_TOP|BF_BOTTOM);
+							return(TRUE);
 						case 200:
 							Game_EditBonusDraw((DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
@@ -581,6 +589,7 @@ BOOL Game_EditInit(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 					}
 				}
 
+			Game_EditShowList(hDlg,&ctx->item.pContext->nodeBoosters);
 			EnableWindow(GetDlgItem(hDlg,200),ctx->item.pContext->bIsGenerated);
 			EnableWindow(GetDlgItem(hDlg,201),ctx->item.pContext->bIsGenerated);
 			} break;
@@ -600,6 +609,7 @@ BOOL Game_EditInit(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 					}
 				}
 
+			Game_EditShowList(hDlg,&ctx->item.pContext->nodeBonuses);
 			EnableWindow(GetDlgItem(hDlg,200),ctx->item.pContext->bBonuses);
 			EnableWindow(GetDlgItem(hDlg,201),ctx->item.pContext->bBonuses);
 			} break;
@@ -720,6 +730,25 @@ int Game_EditApply(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 		}
 
 	return(1);
+}
+
+
+// л╗╗╗ Affichage en cas de liste vide лллллллллллллллллллллллллллллллллл╗
+
+void Game_EditShowList(HWND hDlg, NODE *pRoot)
+{
+	if (!List_EntryCount(pRoot))
+		{
+		ShowWindow(GetDlgItem(hDlg,200),SW_HIDE);
+		ShowWindow(GetDlgItem(hDlg,101),SW_SHOW);
+		}
+	else
+		{
+		ShowWindow(GetDlgItem(hDlg,101),SW_HIDE);
+		ShowWindow(GetDlgItem(hDlg,200),SW_SHOW);
+		}
+
+	return;
 }
 
 
@@ -1115,6 +1144,7 @@ void Game_EditBoostersChange(HWND hDlg, BOOL bAdd, GAMEEDITITEMCONTEXT *pItemCon
 		HeapFree(App.hHeap,0,pEditBooster);
 		return;
 		}
+	Game_EditShowList(hDlg,&pItemContext->nodeBoosters);
 	SendDlgItemMessage(hDlg,200,LB_SETCURSEL,(WPARAM)uSelected,0);
 	Game_EditBoostersSelected(hDlg,pItemContext);
 	return;
@@ -1138,6 +1168,7 @@ void Game_EditBoostersRemove(HWND hDlg, GAMEEDITITEMCONTEXT *pItemContext)
 	if (pEditBooster->pszId) HeapFree(App.hHeap,0,pEditBooster->pszId);
 	if (pEditBooster->pszName) HeapFree(App.hHeap,0,pEditBooster->pszName);
 	HeapFree(App.hHeap,0,pEditBooster);
+	Game_EditShowList(hDlg,&pItemContext->nodeBoosters);
 	Game_EditBoostersSelected(hDlg,pItemContext);
 	return;
 }
@@ -1653,6 +1684,7 @@ void Game_EditBonusChange(HWND hDlg, BOOL bAdd, GAMEEDITITEMCONTEXT *pItemContex
 		Game_BonusRelease(pEditBonusNew,FALSE);
 		return;
 		}
+	Game_EditShowList(hDlg,&pItemContext->nodeBonuses);
 	SendDlgItemMessage(hDlg,200,LB_SETCURSEL,(WPARAM)uSelected,0);
 	Game_EditBonusSelected(hDlg,pItemContext);
 	return;
@@ -1674,6 +1706,7 @@ void Game_EditBonusRemove(HWND hDlg, GAMEEDITITEMCONTEXT *pItemContext)
 	SendDlgItemMessage(hDlg,200,LB_DELETESTRING,(WPARAM)uSelected,0);
 	List_RemEntry((NODE *)pEditBonus);
 	Game_BonusRelease(pEditBonus,FALSE);
+	Game_EditShowList(hDlg,&pItemContext->nodeBonuses);
 	Game_EditBonusSelected(hDlg,pItemContext);
 	return;
 }
