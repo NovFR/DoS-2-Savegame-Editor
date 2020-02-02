@@ -134,21 +134,26 @@ int xml_ReadTag(XML_PARSER *pParser)
 {
 	DWORD	dwCursor = pParser->dwCursor;
 
+	if (dwCursor >= pParser->dwFileSize) return(XML_ERROR_EOF);
+
 	pParser->dwTagBegin = 0;
 	pParser->dwTagEnd = 0;
+
 	while(pParser->pFileBuffer[dwCursor] != '<')
 		if (dwCursor++ >= pParser->dwFileSize)
 			return(XML_ERROR_EOF);
+
 	pParser->dwTagBegin = ++dwCursor;
+
 	while(pParser->pFileBuffer[dwCursor] != '>')
 		if (dwCursor++ >= pParser->dwFileSize)
 			{
 			pParser->dwLastErrorMsg = TEXT_ERR_XML_UNEXPECTED_EOF;
 			return(XML_ERROR_FROM_LOCALE);
 			}
+
 	pParser->dwTagEnd = dwCursor;
 	pParser->dwTagSize = pParser->dwTagEnd-pParser->dwTagBegin;
-
 	pParser->dwCursor = dwCursor+1;
 
 	xml_UpdateProgress(pParser->dwCursor,pParser->dwFileSize);
