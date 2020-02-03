@@ -101,7 +101,7 @@ WCHAR* Misc_FormatNumber(WCHAR *pszText)
 
 UINT Misc_HtmlSpecialCharsDecode(WCHAR *pszCopy, WCHAR *pszText)
 {
-	static WCHAR*	htmlEntities[] = { L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", NULL };
+	static WCHAR*	htmlEntities[] = { L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };
 	UINT		i,j,k,l;
 	UINT		uLen;
 
