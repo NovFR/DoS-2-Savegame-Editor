@@ -176,6 +176,8 @@ LRESULT Window_Create(HWND hWnd)
 	if (!Game_CreateLayout()) goto Error_0;
 
 	Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
+	Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+
 	LastFiles_LoadList();
 	return(0);
 
@@ -352,6 +354,12 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case IDM_INVNODES:
 					Game_InventoryMenu(NULL,IDM_INVNODES);
 					break;
+				case IDM_CONFIGCAPOVERRIDE:
+					App.Config.bCapOverride = Menu_GetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE);
+					if (App.Config.bCapOverride) App.Config.bCapOverride = FALSE;
+					else App.Config.bCapOverride = TRUE;
+					Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+					break;
 				case IDM_CONFIGSAVE:
 					Config_Save(FALSE,&App.Config);
 					break;
@@ -384,7 +392,15 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					if (idCtrl >= IDM_LASTFILES) LastFiles_Reload(idCtrl);
 					else if (idCtrl >= CTLID_ATTRIBUTES && idCtrl <= CTLID_ATTRIBUTES+6)
 						{
-						if (Game_EditSetValue(hWnd,Locale_GetText(TextsAttr[idCtrl-CTLID_ATTRIBUTES]),App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES],GAME_ATTRIBUTE_MIN,GAME_ATTRIBUTE_MAX))
+						if (wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES]),NULL,10) > GAME_ATTRIBUTE_MAX && !App.Config.bCapOverride)
+							{
+							if (MessageBox(hWnd,Locale_GetText(TEXT_OVERRIDE_ATTRIBUTE),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES)
+								{
+								App.Config.bCapOverride = TRUE;
+								Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+								}
+							}
+						if (Game_EditSetValue(hWnd,Locale_GetText(TextsAttr[idCtrl-CTLID_ATTRIBUTES]),App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES],GAME_ATTRIBUTE_MIN,App.Config.bCapOverride?GAME_ATTRIBUTE_OVERRIDE:GAME_ATTRIBUTE_MAX))
 							InvalidateRect(App.hWnd,NULL,FALSE);
 						}
 					else if (idCtrl >= CTLID_POINTS && idCtrl <= CTLID_POINTS+4)

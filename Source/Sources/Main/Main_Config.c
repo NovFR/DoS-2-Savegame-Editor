@@ -148,6 +148,9 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_BOOSTERSGROUPS_V1:
 				pData = &pConfig->bBoostersGroups;
 				break;
+			case CONFIG_IDENT_CAPOVERRIDE_V1:
+				pData = &pConfig->bCapOverride;
+				break;
 			default:pData = NULL;
 			}
 
@@ -211,6 +214,7 @@ BOOL Config_Save(BOOL bQuiet, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_SKILLSGROUPS_V1,&pConfig->bSkillsGroups)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_SKILLSVIEW_V1,&pConfig->uSkillsView)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_BOOSTERSGROUPS_V1,&pConfig->bBoostersGroups)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_CAPOVERRIDE_V1,&pConfig->bCapOverride)) goto Done;
 	bCompleted = TRUE;
 
 Done:	if (!bCompleted) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITE),NULL,MB_ICONERROR);
@@ -487,6 +491,8 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 				Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
 				if (App.Game.pdcCurrent) Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_TREE);
 				}
+			Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+			Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
 
 			//--- Update the accelerators ---
 			if (App.hShortcuts) DestroyAcceleratorTable(App.hShortcuts);

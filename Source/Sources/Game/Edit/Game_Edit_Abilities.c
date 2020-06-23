@@ -15,6 +15,7 @@
 #include "GameEdit.h"
 #include "Locale.h"
 #include "Dialogs.h"
+#include "Menus.h"
 #include "Requests.h"
 
 extern APPLICATION	App;
@@ -65,6 +66,7 @@ void Game_Abilities()
 	GAMEABILITY*	Abilities;
 	INT_PTR		iResult;
 	UINT		uCount;
+	BOOL		bAlreadyAsked;
 
 	for (uCount = 0; GameAbilities[uCount].uIndex != -2; uCount++);
 
@@ -77,10 +79,20 @@ void Game_Abilities()
 		}
 	CopyMemory(Abilities,GameAbilities,uCount*sizeof(GAMEABILITY));
 
-	for (uCount = 0; Abilities[uCount].uIndex != -2; uCount++)
+	for (bAlreadyAsked = FALSE, uCount = 0; Abilities[uCount].uIndex != -2; uCount++)
 		{
 		if (Abilities[uCount].uIndex == -1) continue;
 		Abilities[uCount].uValue = wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAbilities[Abilities[uCount].uIndex]),NULL,10);
+		//--- Cap check
+		if (Abilities[uCount].uValue > Abilities[uCount].uMax && !App.Config.bCapOverride && !bAlreadyAsked)
+			{
+			bAlreadyAsked = TRUE;
+			if (MessageBox(App.hWnd,Locale_GetText(TEXT_OVERRIDE_ABILITIES),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES)
+				{
+				App.Config.bCapOverride = TRUE;
+				Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+				}
+			}
 		}
 
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1007),App.hWnd,Game_AbilitiesProc,(LPARAM)Abilities);
@@ -125,7 +137,7 @@ INT_PTR CALLBACK Game_AbilitiesProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 				{
 				SetDlgItemInt(hDlg,Abilities[i].uCtlID+1,Abilities[i].uValue,FALSE);
 				SendDlgItemMessage(hDlg,Abilities[i].uCtlID+1,EM_LIMITTEXT,2,0);
-				SendDlgItemMessage(hDlg,Abilities[i].uCtlID+2,UDM_SETRANGE32,0,(LPARAM)Abilities[i].uMax);
+				SendDlgItemMessage(hDlg,Abilities[i].uCtlID+2,UDM_SETRANGE32,0,(LPARAM)App.Config.bCapOverride?GAME_ABILITIES_OVERRIDE:Abilities[i].uMax);
 				SendDlgItemMessage(hDlg,Abilities[i].uCtlID+2,UDM_SETPOS32,0,(LPARAM)Abilities[i].uValue);
 				}
 			}
@@ -177,12 +189,15 @@ INT_PTR CALLBACK Game_AbilitiesProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 void Game_AbilitiesSaveValues(HWND hDlg, GAMEABILITY *Abilities)
 {
 	UINT		uIndex;
+	UINT		uMax;
 
 	for (uIndex = 0; Abilities[uIndex].uIndex != -2; uIndex++)
 		{
 		if (Abilities[uIndex].uIndex == -1) continue;
 		Abilities[uIndex].uValue = GetDlgItemInt(hDlg,Abilities[uIndex].uCtlID+1,NULL,FALSE);
-		if (Abilities[uIndex].uValue > Abilities[uIndex].uMax) Abilities[uIndex].uValue = Abilities[uIndex].uMax;
+		uMax = Abilities[uIndex].uMax;
+		if (App.Config.bCapOverride) uMax = GAME_ABILITIES_OVERRIDE;
+		if (Abilities[uIndex].uValue > uMax) Abilities[uIndex].uValue = uMax;
 		}
 
 	return;

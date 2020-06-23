@@ -639,8 +639,8 @@ CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Application.manifest"
 
 VS_VERSION_INFO VERSIONINFO
 
-	FILEVERSION	1,0,0,0
-	PRODUCTVERSION	1,0,0,0
+	FILEVERSION	1,0,0,1
+	PRODUCTVERSION	1,0,0,1
 	FILEFLAGSMASK	VS_FF_DEBUG|VS_FF_PRERELEASE
 	#if _DEBUG
 	FILEFLAGS	VS_FF_DEBUG|VS_FF_PRERELEASE
@@ -655,9 +655,9 @@ VS_VERSION_INFO VERSIONINFO
 		BLOCK "00000000"
 			{
 			VALUE "OriginalFilename", "GlEd.exe\0"
-			VALUE "FileVersion", "1.0.0.0\0"
+			VALUE "FileVersion", "1.0.0.1\0"
 			VALUE "ProductName", "GlEd\0"
-			VALUE "ProductVersion", "1.0.0.0\0"
+			VALUE "ProductVersion", "1.0.0.1\0"
 			VALUE "FileDescription", "GlEd\0"
 			VALUE "LegalCopyright", "Nov'\0"
 			}

@@ -36,6 +36,7 @@ enum {
 	CONFIG_IDENT_SKILLSGROUPS_V1,
 	CONFIG_IDENT_SKILLSVIEW_V1,
 	CONFIG_IDENT_BOOSTERSGROUPS_V1,
+	CONFIG_IDENT_CAPOVERRIDE_V1,
 };
 
 
@@ -63,6 +64,7 @@ typedef struct CONFIG {
 	BOOL			bSkillsGroups;
 	UINT			uSkillsView;
 	BOOL			bBoostersGroups;
+	BOOL			bCapOverride;
 } CONFIG;
 
 typedef struct CONFIGENTRY {
