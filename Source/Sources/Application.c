@@ -44,7 +44,6 @@ APPICON			AppIcons[APP_MAX_ICONS] = {
 				{ APP_ICON_BACKGROUND, 20, 52, 52 },
 				{ APP_ICON_FRAME, 21, 48, 48 },
 				{ APP_ICON_EMPTY, 22, 48, 48 },
-				{ APP_ICON_EDIT, 23, 16, 16 },
 				{ APP_ICON_BACKPACK, 24, 48, 48 },
 				{ APP_ICON_BACK, 25, 48, 48 },
 				{ APP_ICON_MODIFY, 26, 16, 16 },

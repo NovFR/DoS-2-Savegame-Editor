@@ -51,13 +51,13 @@ int Game_CreateLayout()
 	if (!App.Game.Layout.hwndList) return(0);
 
 	X = 378;
-	Y = 210;
+	Y = 212;
 	W = 20;
-	H = App.Font.uFontHeight+6;
+	H = App.Font.uFontHeight+12;
 
 	// Attributs & points
-	for (i = 0; i != 6; i++, Y += H+16) if (!Game_CreateButton(X,Y,W,H,NULL,CTLID_ATTRIBUTES+i,&App.Game.Layout.hwndAttrBtn[i],BS_OWNERDRAW)) return(0);
-	for (Y += 16, i = 0; i != 4; i++, Y += H+16) if (!Game_CreateButton(X,Y,W,H,NULL,CTLID_POINTS+i,&App.Game.Layout.hwndPointsBtn[i],BS_OWNERDRAW)) return(0);
+	for (i = 0; i != 6; i++, Y += H+10) if (!Game_CreateButton(X,Y,W,H,NULL,CTLID_ATTRIBUTES+i,&App.Game.Layout.hwndAttrBtn[i],BS_OWNERDRAW)) return(0);
+	for (Y += 16, i = 0; i != 4; i++, Y += H+10) if (!Game_CreateButton(X,Y,W,H,NULL,CTLID_POINTS+i,&App.Game.Layout.hwndPointsBtn[i],BS_OWNERDRAW)) return(0);
 
 	// Boutons
 	if (!Game_CreateButton(30,-54,120,0,Locale_GetText(TEXT_BUTTON_ABILITIES),CTLID_ABILITIES,&App.Game.Layout.hwndAbilitiesBtn,0)) return(0);

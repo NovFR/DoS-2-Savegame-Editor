@@ -29,6 +29,7 @@ extern WCHAR	szSpace[];
 extern WCHAR	szBlank[];
 extern WCHAR	sSourcePoint;
 extern WCHAR	sActionPoint;
+extern WCHAR	szEdit[];
 
 extern WCHAR	szPlayerName[];
 extern WCHAR	szLevelFmt[];

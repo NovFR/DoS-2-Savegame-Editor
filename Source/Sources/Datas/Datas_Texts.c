@@ -32,6 +32,7 @@ WCHAR	szSpace[]			= L" ";
 WCHAR	szBlank[]			= L"";
 WCHAR	sSourcePoint			= L'◈';
 WCHAR	sActionPoint			= L'●';
+WCHAR	szEdit[]			= L">";
 
 WCHAR	szPlayerName[]			= L"%1 (%2) (%3)";
 WCHAR	szLevelFmt[]			= L"%u";

@@ -581,6 +581,8 @@ void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *
 
 	GetWindowRect(hButton,&rcArea);
 	MapWindowPoints(NULL,App.hWnd,(POINT *)&rcArea,2);
+	rcArea.top += 4;
+	rcArea.bottom -= 6;
 	CopyRect(&rcEdge,&rcArea);
 
 	rcArea.right = rcArea.left-8-60;
@@ -610,9 +612,23 @@ void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *
 
 void Game_PaintButton(DRAWITEMSTRUCT *pDraw)
 {
+	SIZE		Size;
+	COLORREF	crText;
+	int		iBkMode;
+
+	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
+	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_BTNFACE));
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)App.hIcons[APP_ICON_EDIT],0,pDraw->rcItem.left+(pDraw->rcItem.right-pDraw->rcItem.left-16)/2,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-16)/2,16,16,DST_ICON|((pDraw->itemState&ODS_DISABLED)?DSS_DISABLED:0));
+
+	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_ETCHED,BF_RECT);
+	GetTextExtentPoint32(pDraw->hDC,szEdit,wcslen(szEdit),&Size);
+	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)szEdit,0,pDraw->rcItem.left+(pDraw->rcItem.right-pDraw->rcItem.left-Size.cx)/2,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-Size.cy)/2,Size.cx,Size.cy,DST_TEXT|((pDraw->itemState&ODS_DISABLED)?DSS_DISABLED:0));
+
 	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&pDraw->rcItem);
+
+	SetTextColor(pDraw->hDC,crText);
+	SetBkMode(pDraw->hDC,iBkMode);
 	return;
 }
 
