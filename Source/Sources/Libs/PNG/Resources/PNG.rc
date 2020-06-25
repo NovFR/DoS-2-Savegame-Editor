@@ -1,0 +1,41 @@
+
+//<<>-<>>---------------------------------------------------------------------()
+/*
+	Ressources
+									      */
+//()-------------------------------------------------------------------<<>-<>>//
+
+#include "_Global.h"
+
+
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Informations							  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+VS_VERSION_INFO VERSIONINFO
+
+	FILEVERSION	1,6,37,0
+	PRODUCTVERSION	1,6,37,0
+	FILEFLAGSMASK	VS_FF_DEBUG|VS_FF_PRERELEASE
+	FILEFLAGS	0
+	FILEOS		VOS__WINDOWS32
+	FILETYPE	VFT_APP
+{
+	BLOCK "StringFileInfo"
+		{
+		BLOCK "04090000"
+			{
+			VALUE "OriginalFilename", "libpng.dll\0"
+			VALUE "FileVersion", "1.6.37\0"
+			VALUE "ProductName", "libpng\0"
+			VALUE "ProductVersion", "1.6.37\0"
+			VALUE "FileDescription", "PNG library\0"
+			}
+		}
+	BLOCK "VarFileInfo"
+		{
+		VALUE "Translation", 0x0409, 0
+		}
+}

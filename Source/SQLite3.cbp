@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SQLite3" />
+		<Option pch_mode="2" />
+		<Option compiler="gnu_gcc_64_compiler" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Test/SQLite3-debug" imp_lib="Compiler/Debug/$(TARGET_OUTPUT_BASENAME)" def_file="Compiler/Debug/$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Compiler/Debug" />
+				<Option type="3" />
+				<Option compiler="gnu_gcc_64_compiler" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="Test/SQLite3" imp_lib="Compiler/Release/$(TARGET_OUTPUT_BASENAME)" def_file="Compiler/Release/$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Compiler/Release" />
+				<Option type="3" />
+				<Option compiler="gnu_gcc_64_compiler" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-m64" />
+			<Add directory="Includes" />
+			<Add directory="Sources/Libs/SQLite3/Includes" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="Includes" />
+		</ResourceCompiler>
+		<Linker>
+			<Add option="-m64" />
+			<Add library="user32" />
+		</Linker>
+		<Unit filename="Sources/Libs/SQLite3/DLL.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Libs/SQLite3/Includes/SQLite3.h" />
+		<Unit filename="Sources/Libs/SQLite3/Resources/SQLite3.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="Sources/Libs/SQLite3/Sources/SQLite3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

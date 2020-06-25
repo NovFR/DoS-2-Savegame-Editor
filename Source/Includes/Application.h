@@ -9,6 +9,7 @@
 #define _APPLICATION_INCLUDE
 
 #include "_Global.h"
+#include "SQLite3.h"
 #include "Locale.h"
 #include "Lists.h"
 

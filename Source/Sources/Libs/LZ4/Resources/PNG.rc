@@ -1,0 +1,41 @@
+
+//<<>-<>>---------------------------------------------------------------------()
+/*
+	Ressources
+									      */
+//()-------------------------------------------------------------------<<>-<>>//
+
+#include "_Global.h"
+
+
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Informations							  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+VS_VERSION_INFO VERSIONINFO
+
+	FILEVERSION	1,7,1,0
+	PRODUCTVERSION	1,7,1,0
+	FILEFLAGSMASK	VS_FF_DEBUG|VS_FF_PRERELEASE
+	FILEFLAGS	0
+	FILEOS		VOS__WINDOWS32
+	FILETYPE	VFT_APP
+{
+	BLOCK "StringFileInfo"
+		{
+		BLOCK "00000000"
+			{
+			VALUE "OriginalFilename", "LZ4.dll\0"
+			VALUE "FileVersion", "1.7.1\0"
+			VALUE "ProductName", "LZ4\0"
+			VALUE "ProductVersion", "1.7.1\0"
+			VALUE "FileDescription", "LZ4 library\0"
+			}
+		}
+	BLOCK "VarFileInfo"
+		{
+		VALUE "Translation", 0, 0
+		}
+}

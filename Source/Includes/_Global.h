@@ -34,6 +34,6 @@
 #include <commctrl.h>
 #include <stdio.h>
 
-#include "sqlite3.h"
+#define DLL_EXPORT		__declspec(dllimport)
 
 #endif

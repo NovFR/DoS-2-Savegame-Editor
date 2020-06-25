@@ -13,13 +13,9 @@
 				<Option type="0" />
 				<Option compiler="gnu_gcc_64_compiler" />
 				<Compiler>
-					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
-				<Linker>
-					<Add option="-m64" />
-				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="Test/GlEd" prefix_auto="1" extension_auto="1" />
@@ -29,11 +25,9 @@
 				<Option compiler="gnu_gcc_64_compiler" />
 				<Compiler>
 					<Add option="-O3" />
-					<Add option="-m64" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-m64" />
 				</Linker>
 			</Target>
 		</Build>
@@ -41,6 +35,9 @@
 			<Add option="-Wall" />
 			<Add option="-m64" />
 			<Add directory="Includes" />
+			<Add directory="Sources/Libs/SQLite3/Includes" />
+			<Add directory="Sources/Libs/PNG/Includes" />
+			<Add directory="Sources/Libs/LZ4/Includes" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="Includes" />
@@ -55,6 +52,9 @@
 			<Add library="Shlwapi" />
 			<Add library="ole32" />
 			<Add library="libz.a" />
+			<Add library="Compiler/Release/libSQLite3.a" />
+			<Add library="Compiler/Release/libpng.a" />
+			<Add library="Compiler/Release/libLZ4.a" />
 		</Linker>
 		<Unit filename="Application.manifest" />
 		<Unit filename="Includes/About.h" />
@@ -68,16 +68,12 @@
 		<Unit filename="Includes/Game.h" />
 		<Unit filename="Includes/GameEdit.h" />
 		<Unit filename="Includes/Infos.h" />
-		<Unit filename="Includes/LZ4.h" />
-		<Unit filename="Includes/LZ4frame.h" />
 		<Unit filename="Includes/LastFiles.h" />
 		<Unit filename="Includes/Lists.h" />
 		<Unit filename="Includes/Locale.h" />
 		<Unit filename="Includes/Menus.h" />
 		<Unit filename="Includes/Mods.h" />
-		<Unit filename="Includes/PNG.h" />
 		<Unit filename="Includes/Requests.h" />
-		<Unit filename="Includes/SQLite3.h" />
 		<Unit filename="Includes/Startup.h" />
 		<Unit filename="Includes/Texts.h" />
 		<Unit filename="Includes/Utils.h" />
@@ -104,60 +100,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Files/Files_PNG.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/LZ4/lz4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/LZ4/lz4frame.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/LZ4/lz4hc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/LZ4/xxhash.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/png.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngerror.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngget.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngmem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngread.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngrio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngrtran.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngrutil.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngset.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngtrans.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngwio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngwrite.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngwtran.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Files/PNG/pngwutil.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Edit/Game_Edit_Abilities.c">
@@ -209,9 +151,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Locale.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Sources/Main/Main_SQLite3.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Startup.c">

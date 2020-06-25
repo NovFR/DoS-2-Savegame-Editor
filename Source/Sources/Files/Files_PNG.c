@@ -112,7 +112,7 @@ HBITMAP png_Load(void *pImage)
 	if (Info.iColorType == PNG_COLOR_TYPE_GRAY && Info.iBitDepth < 8) png_set_expand_gray_1_2_4_to_8(pPngStruct);
 	if (png_get_valid(pPngStruct,pPngInfo,PNG_INFO_tRNS) != 0) png_set_tRNS_to_alpha(pPngStruct);
 	if ((Info.iColorType&PNG_COLOR_MASK_COLOR) != 0) png_set_bgr(pPngStruct);
-	//png_set_swap_alpha(pPngStruct);
+	png_set_alpha_mode(pPngStruct,PNG_ALPHA_OPTIMIZED,PNG_DEFAULT_sRGB);
 	png_set_filler(pPngStruct,0xffff,PNG_FILLER_AFTER);
 
 	//--- Read image ---
