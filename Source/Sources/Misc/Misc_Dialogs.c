@@ -137,32 +137,27 @@ void Dialog_DrawTextButton(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 	RECT		rcDrawArea;
 	SIZE		Size;
 	COLORREF	crText;
+	int		X,Y;
 	int		iBkMode;
 
-	uState = 0;
+	CopyRect(&rcDrawArea,&pDraw->rcItem);
+
+	uState = DFCS_ADJUSTRECT;
 	if (pDraw->itemState&ODS_DISABLED) uState = DFCS_INACTIVE;
 	if (pDraw->itemState&ODS_GRAYED) uState = DFCS_INACTIVE;
 	if (pDraw->itemState&ODS_SELECTED) uState = DFCS_PUSHED;
-	DrawFrameControl(pDraw->hDC,&pDraw->rcItem,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+	DrawFrameControl(pDraw->hDC,&rcDrawArea,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
 
 	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
 	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 	GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
-	rcDrawArea.left = (pDraw->rcItem.right-pDraw->rcItem.left-Size.cx)/2;
-	rcDrawArea.top = (pDraw->rcItem.bottom-pDraw->rcItem.top-Size.cy)/2;
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,rcDrawArea.left,rcDrawArea.top,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+	X = rcDrawArea.left+(rcDrawArea.right-rcDrawArea.left-Size.cx)/2;
+	Y = rcDrawArea.top+(rcDrawArea.bottom-rcDrawArea.top-Size.cy)/2;
+	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,X,Y,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
 	SetBkMode(pDraw->hDC,iBkMode);
 	SetTextColor(pDraw->hDC,crText);
 
-	if (pDraw->itemState&ODS_FOCUS)
-		{
-		rcDrawArea.left = pDraw->rcItem.left+2;
-		rcDrawArea.right = pDraw->rcItem.right-3;
-		rcDrawArea.top = pDraw->rcItem.top+2;
-		rcDrawArea.bottom = pDraw->rcItem.bottom-3;
-		DrawFocusRect(pDraw->hDC,&rcDrawArea);
-		}
-
+	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDrawArea);
 	return;
 }
 
@@ -267,27 +262,23 @@ void Dialog_DrawArrowButton(UINT uScroll, DRAWITEMSTRUCT *pDraw)
 
 void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)
 {
-	UINT	uState = 0;
+	UINT	uState;
 	RECT	rcDrawArea;
+	int	X,Y;
 
+	CopyRect(&rcDrawArea,&pDraw->rcItem);
+
+	uState = DFCS_ADJUSTRECT;
 	if (pDraw->itemState&ODS_DISABLED) uState = DFCS_INACTIVE;
 	if (pDraw->itemState&ODS_GRAYED) uState = DFCS_INACTIVE;
 	if (pDraw->itemState&ODS_SELECTED) uState = DFCS_PUSHED;
 	DrawFrameControl(pDraw->hDC,&pDraw->rcItem,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
 
-	rcDrawArea.left = (pDraw->rcItem.right-pDraw->rcItem.left-16)/2;
-	rcDrawArea.top = (pDraw->rcItem.bottom-pDraw->rcItem.top-16)/2;
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)App.hIcons[uIconId],0,rcDrawArea.left,rcDrawArea.top,16,16,DST_ICON|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+	X = rcDrawArea.left+(pDraw->rcItem.right-pDraw->rcItem.left-16)/2;
+	Y = rcDrawArea.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-16)/2;
+	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)App.hIcons[uIconId],0,X,Y,16,16,DST_ICON|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
 
-	if (pDraw->itemState&ODS_FOCUS)
-		{
-		rcDrawArea.left = pDraw->rcItem.left+2;
-		rcDrawArea.right = pDraw->rcItem.right-3;
-		rcDrawArea.top = pDraw->rcItem.top+2;
-		rcDrawArea.bottom = pDraw->rcItem.bottom-3;
-		DrawFocusRect(pDraw->hDC,&rcDrawArea);
-		}
-
+	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDrawArea);
 	return;
 }
 
