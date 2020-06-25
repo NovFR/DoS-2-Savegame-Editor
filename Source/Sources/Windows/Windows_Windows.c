@@ -12,6 +12,7 @@
 // いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい //
 
 #include "Application.h"
+#include "About.h"
 #include "Texts.h"
 #include "Menus.h"
 #include "Mods.h"
@@ -371,6 +372,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_CONFIGLANGUAGE:
 					Config_SelectLanguage();
+					break;
+				case IDM_ABOUT:
+					About_Display(hWnd);
 					break;
 				case CTLID_CHARACTERS_LIST:
 					Game_SaveTopIndex();

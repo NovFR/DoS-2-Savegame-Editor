@@ -57,6 +57,7 @@
 			<Add library="libz.a" />
 		</Linker>
 		<Unit filename="Application.manifest" />
+		<Unit filename="Includes/About.h" />
 		<Unit filename="Includes/AppWindows.h" />
 		<Unit filename="Includes/Application.h" />
 		<Unit filename="Includes/Config.h" />
@@ -83,6 +84,7 @@
 		<Unit filename="Includes/XML.h" />
 		<Unit filename="Includes/XMLTree.h" />
 		<Unit filename="Includes/_Global.h" />
+		<Unit filename="Includes/_Version.h" />
 		<Unit filename="Resources/Application.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
@@ -198,6 +200,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_XML.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_About.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Config.c">

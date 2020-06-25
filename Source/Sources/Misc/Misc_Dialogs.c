@@ -129,6 +129,140 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Affichage d'un bouton composé d'un texte ««««««««««««««««««««««««»
+
+void Dialog_DrawTextButton(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
+{
+	UINT		uState;
+	RECT		rcDrawArea;
+	SIZE		Size;
+	COLORREF	crText;
+	int		iBkMode;
+
+	uState = 0;
+	if (pDraw->itemState&ODS_DISABLED) uState = DFCS_INACTIVE;
+	if (pDraw->itemState&ODS_GRAYED) uState = DFCS_INACTIVE;
+	if (pDraw->itemState&ODS_SELECTED) uState = DFCS_PUSHED;
+	DrawFrameControl(pDraw->hDC,&pDraw->rcItem,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+
+	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
+	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+	GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+	rcDrawArea.left = (pDraw->rcItem.right-pDraw->rcItem.left-Size.cx)/2;
+	rcDrawArea.top = (pDraw->rcItem.bottom-pDraw->rcItem.top-Size.cy)/2;
+	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,rcDrawArea.left,rcDrawArea.top,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+	SetBkMode(pDraw->hDC,iBkMode);
+	SetTextColor(pDraw->hDC,crText);
+
+	if (pDraw->itemState&ODS_FOCUS)
+		{
+		rcDrawArea.left = pDraw->rcItem.left+2;
+		rcDrawArea.right = pDraw->rcItem.right-3;
+		rcDrawArea.top = pDraw->rcItem.top+2;
+		rcDrawArea.bottom = pDraw->rcItem.bottom-3;
+		DrawFocusRect(pDraw->hDC,&rcDrawArea);
+		}
+
+	return;
+}
+
+
+
+// «»»» Affichage d'un bouton composé d'une flèche ««««««««««««««««««««««»
+
+void Dialog_DrawArrowButton(UINT uScroll, DRAWITEMSTRUCT *pDraw)
+{
+	HDC		hDC;
+	UINT		uState;
+	RECT		rcDraw;
+
+	CopyRect(&rcDraw,&pDraw->rcItem);
+
+	uState = DFCS_BUTTONPUSH|DFCS_ADJUSTRECT;
+	if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
+	if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
+	DrawFrameControl(pDraw->hDC,&rcDraw,DFC_BUTTON,uState);
+
+	hDC = CreateCompatibleDC(pDraw->hDC);
+	if (hDC)
+		{
+		HBITMAP		hBmp,hDefBmp;
+		HPEN		hPen,hDefPen;
+		HBRUSH		hDefBrush;
+		RECT		rcIcon;
+		POINT		Points[4];
+		int		iColor;
+
+		iColor = (pDraw->itemState&ODS_DISABLED)?COLOR_GRAYTEXT:COLOR_BTNTEXT;
+		hBmp = CreateCompatibleBitmap(pDraw->hDC,16,16);
+		if (hBmp)
+			{
+			hDefBmp = SelectObject(hDC,hBmp);
+			hPen = CreatePen(PS_SOLID,1,GetSysColor(iColor));
+			if (hPen)
+				{
+				rcIcon.left = 0;
+				rcIcon.top = 0;
+				rcIcon.right = 16;
+				rcIcon.bottom = 16;
+				FillRect(hDC,&rcIcon,GetSysColorBrush(COLOR_BTNFACE));
+				hDefPen = SelectObject(hDC,hPen);
+				hDefBrush = SelectObject(hDC,GetSysColorBrush(iColor));
+				switch(uScroll)
+					{
+					case DFCS_SCROLLRIGHT:
+						Points[0].x = 10;
+						Points[0].y = 7;
+						Points[1].x = 6;
+						Points[1].y = 11;
+						Points[2].x = 6;
+						Points[2].y = 3;
+						break;
+					case DFCS_SCROLLDOWN:
+						Points[0].x = 11;
+						Points[0].y = 5;
+						Points[1].x = 7;
+						Points[1].y = 9;
+						Points[2].x = 3;
+						Points[2].y = 5;
+						break;
+					case DFCS_SCROLLLEFT:
+						Points[0].x = 5;
+						Points[0].y = 7;
+						Points[1].x = 9;
+						Points[1].y = 3;
+						Points[2].x = 9;
+						Points[2].y = 11;
+						break;
+					case DFCS_SCROLLUP:
+						Points[0].x = 7;
+						Points[0].y = 5;
+						Points[1].x = 11;
+						Points[1].y = 9;
+						Points[2].x = 3;
+						Points[2].y = 9;
+						break;
+					}
+				Points[3].x = Points[0].x;
+				Points[3].y = Points[0].y;
+				Polyline(hDC,Points,4);
+				FloodFill(hDC,7,7,GetSysColor(iColor));
+				SelectObject(hDC,hDefBrush);
+				SelectObject(hDC,hDefPen);
+				DeleteObject(hPen);
+				}
+			BitBlt(pDraw->hDC,rcDraw.left+(rcDraw.right-rcDraw.left-16)/2,rcDraw.top+(rcDraw.bottom-rcDraw.top-16)/2,16,16,hDC,0,0,SRCCOPY);
+			SelectObject(hDC,hDefBmp);
+			DeleteObject(hBmp);
+			}
+		DeleteDC(hDC);
+		}
+
+	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDraw);
+	return;
+}
+
+
 // «»»» Affichage d'un bouton composé uniquement d'une icône ««««««««««««»
 
 void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)

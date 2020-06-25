@@ -216,7 +216,7 @@ INT_PTR CALLBACK Game_TagsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPa
 					return(TRUE);
 				case 403:
 				case 404:
-					Dialog_DrawIconButton(wParam == 403?APP_ICON_UP:APP_ICON_DOWN,(DRAWITEMSTRUCT *)lParam);
+					Dialog_DrawArrowButton(wParam == 403?DFCS_SCROLLUP:DFCS_SCROLLDOWN,(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				}
 			break;

@@ -412,7 +412,8 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 						case 213:
 						case 222:
 						case 223:
-							Dialog_DrawIconButton(((wParam-202)%10)?APP_ICON_REMOVE:APP_ICON_MODIFY,(DRAWITEMSTRUCT *)lParam);
+							if ((wParam-202)%10) Dialog_DrawIconButton(APP_ICON_REMOVE,(DRAWITEMSTRUCT *)lParam);
+							else Dialog_DrawTextButton(szEdit,(DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
 						}
 					break;

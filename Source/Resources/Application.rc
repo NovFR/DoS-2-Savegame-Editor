@@ -6,6 +6,7 @@
 //()-------------------------------------------------------------------<<>-<>>//
 
 #include "_Global.h"
+#include "_Version.h"
 
 
 // いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい //
@@ -21,8 +22,6 @@
 12 ICON "Icons\\Joueur.ico"
 13 ICON "Icons\\Checked.ico"
 14 ICON "Icons\\Unchecked.ico"
-15 ICON "Icons\\Up.ico"
-16 ICON "Icons\\Down.ico"
 17 ICON "Icons\\Weapon.ico"
 18 ICON "Icons\\Armor.ico"
 19 ICON "Icons\\Accessory.ico"
@@ -31,7 +30,6 @@
 22 ICON "Icons\\Empty.ico"
 24 ICON "Icons\\Backpack.ico"
 25 ICON "Icons\\Back.ico"
-26 ICON "Icons\\Modify.ico"
 27 ICON "Icons\\Remove.ico"
 28 ICON "Icons\\Hidden.ico"
 29 ICON "Icons\\Protected.ico"
@@ -638,8 +636,8 @@ CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Application.manifest"
 
 VS_VERSION_INFO VERSIONINFO
 
-	FILEVERSION	1,0,0,2
-	PRODUCTVERSION	1,0,0,2
+	FILEVERSION	VERSION_MAJOR,REVISION_MAJOR,VERSION_MINOR,REVISION_MINOR
+	PRODUCTVERSION	VERSION_MAJOR,REVISION_MAJOR,VERSION_MINOR,REVISION_MINOR
 	FILEFLAGSMASK	VS_FF_DEBUG|VS_FF_PRERELEASE
 	#if _DEBUG
 	FILEFLAGS	VS_FF_DEBUG|VS_FF_PRERELEASE
@@ -654,9 +652,9 @@ VS_VERSION_INFO VERSIONINFO
 		BLOCK "00000000"
 			{
 			VALUE "OriginalFilename", "GlEd.exe\0"
-			VALUE "FileVersion", "1.0.0.2\0"
+			VALUE "FileVersion", VERSION_STRING_NZ
 			VALUE "ProductName", "GlEd\0"
-			VALUE "ProductVersion", "1.0.0.2\0"
+			VALUE "ProductVersion", VERSION_STRING_NZ
 			VALUE "FileDescription", "GlEd\0"
 			VALUE "LegalCopyright", "Nov'\0"
 			}

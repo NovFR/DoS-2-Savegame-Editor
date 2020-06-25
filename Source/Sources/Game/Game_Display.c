@@ -16,6 +16,7 @@
 #include "Texts.h"
 #include "Game.h"
 #include "Utils.h"
+#include "Dialogs.h"
 
 extern APPLICATION	App;
 extern GAMEQUALITY	Qualities[];
@@ -612,23 +613,8 @@ void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *
 
 void Game_PaintButton(DRAWITEMSTRUCT *pDraw)
 {
-	SIZE		Size;
-	COLORREF	crText;
-	int		iBkMode;
-
-	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
-	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
-
-	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_BTNFACE));
-
-	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_ETCHED,BF_RECT);
-	GetTextExtentPoint32(pDraw->hDC,szEdit,wcslen(szEdit),&Size);
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)szEdit,0,pDraw->rcItem.left+(pDraw->rcItem.right-pDraw->rcItem.left-Size.cx)/2,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-Size.cy)/2,Size.cx,Size.cy,DST_TEXT|((pDraw->itemState&ODS_DISABLED)?DSS_DISABLED:0));
-
-	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&pDraw->rcItem);
-
-	SetTextColor(pDraw->hDC,crText);
-	SetBkMode(pDraw->hDC,iBkMode);
+	Dialog_DrawTextButton(szEdit,pDraw);
+	//Dialog_DrawArrowButton(DFCS_SCROLLRIGHT,pDraw);
 	return;
 }
 
