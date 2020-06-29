@@ -49,9 +49,6 @@
 			<Add library="user32" />
 			<Add library="libz.a" />
 		</Linker>
-		<Unit filename="Sources/Libs/PNG/DLL.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="Sources/Libs/PNG/Includes/PNG.h" />
 		<Unit filename="Sources/Libs/PNG/Includes/pngconf.h" />
 		<Unit filename="Sources/Libs/PNG/Includes/pngdebug.h" />
@@ -59,6 +56,9 @@
 		<Unit filename="Sources/Libs/PNG/Includes/pnglibconf.h" />
 		<Unit filename="Sources/Libs/PNG/Includes/pngpriv.h" />
 		<Unit filename="Sources/Libs/PNG/Includes/pngstruct.h" />
+		<Unit filename="Sources/Libs/PNG/Library.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Libs/PNG/Resources/PNG.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>

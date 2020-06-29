@@ -338,7 +338,7 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					Infos_Tree();
 					break;
 				case IDM_SHOWCHARTREE:
-					Tree_Open(App.Game.pdcCurrent->pxnXML);
+					Tree_Open((XML_NODE *)App.Game.pdcCurrent->pxnRoot->children.next);
 					break;
 				case IDM_REMOVEMODS:
 					Mods_Dialog();

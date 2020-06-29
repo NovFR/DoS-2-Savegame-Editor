@@ -87,7 +87,7 @@ typedef struct DOS2CHARACTER {
 	NODE		nodeInventories;
 	UINT		uInventoryDepth;
 	//--- References
-	XML_NODE*	pxnXML;
+	XML_NODE*	pxnRoot;
 	XML_ATTR*	pxaInventoryId;
 	XML_ATTR*	pxaDamageCount;
 	XML_ATTR*	pxaHealCount;
@@ -110,7 +110,7 @@ typedef struct DOS2ITEM {
 	BOOL		bIsBackPack;
 	UINT		uNumItems;
 	//--- References
-	XML_NODE*	pxnXML;
+	XML_NODE*	pxnRoot;
 	XML_ATTR*	pxaName;
 	XML_ATTR*	pxaDisplayName;
 	XML_ATTR*	pxaDescription;

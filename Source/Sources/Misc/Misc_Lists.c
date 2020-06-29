@@ -88,6 +88,8 @@ void List_AddEntry(NODE *pNewEntry, NODE *pEntryListRoot)
 
 // л╗╗╗ Insшre une entrщe ллллллллллллллллллллллллллллллллллллллллллллллл╗
 
+//!\ pInsEntry ne doit pas ъtre une racine si bInsertAfter = FALSE
+
 void List_InsertEntry(NODE *pNewEntry, NODE *pInsEntry, BOOL bInsertAfter)
 {
 	NODE *pNext;

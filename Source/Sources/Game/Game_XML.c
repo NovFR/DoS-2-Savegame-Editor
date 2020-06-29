@@ -860,6 +860,34 @@ UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Insertion d'une balise ««««««««««««««««««««««««««««««««««««««««««»
+
+BOOL xml_InsertChildNode(XML_NODE *pxnInsert, XML_NODE *pxnInto, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue, BOOL bInsertAfter)
+{
+	if (!pxnInsert || !pxnInto) return(FALSE);
+
+	if (!pszNodeName)
+		{
+		if (!bInsertAfter)
+			{
+			if (!List_EntryCount(&pxnInto->children)) List_AddEntry((NODE *)pxnInsert,&pxnInto->children);
+			else List_InsertEntry((NODE *)pxnInsert,pxnInto->children.next,FALSE);
+			}
+		else List_AddEntry((NODE *)pxnInsert,&pxnInto->children);
+		}
+	else
+		{
+		XML_NODE*	pxnAfter;
+
+		pxnAfter = xml_GetNode((XML_NODE *)pxnInto->children.next,pszNodeName,pszAttrName,pszAttrValue);
+		if (!pxnAfter) return(FALSE);
+		List_InsertEntry((NODE *)pxnInsert,(NODE *)pxnAfter,bInsertAfter);
+		}
+
+	return(TRUE);
+}
+
+
 // «»»» Création d'une balise «««««««««««««««««««««««««««««««««««««««««««»
 
 //     ... : attribute, value (value may be NULL)

@@ -122,6 +122,7 @@ WCHAR*			xml_GetThisAttrValue(XML_ATTR *);
 BOOL			xml_IsTrue(XML_ATTR *);
 UINT			xml_TotalNodesCount(XML_NODE *);
 
+BOOL			xml_InsertChildNode(XML_NODE *,XML_NODE *,WCHAR *,WCHAR *,WCHAR *,BOOL);
 XML_NODE*		xml_CreateNode(WCHAR *,XML_NODE *,UINT,...);
 XML_NODE*		xml_CreateNodeArray(WCHAR ***,XML_NODE *);
 XML_ATTR*		xml_CreateAttr(WCHAR *,XML_NODE *);

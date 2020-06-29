@@ -322,7 +322,7 @@ void Game_InventoryMenu(HWND hwndCtrl, UINT uMenuId)
 			break;
 		case IDM_INVNODES:
 			if (!pItem) break;
-			Tree_Open(pItem->pxnXML);
+			Tree_Open((XML_NODE *)pItem->pxnRoot->children.next);
 			break;
 		case IDM_INVSYNCHROALL:
 			Game_SynchronizeAll();
@@ -427,7 +427,7 @@ int Game_BuildPlayers()
 			Game_ReleasePlayers();
 			return(0);
 			}
-		pdc->pxnXML = (XML_NODE *)pxnList->children.next;
+		pdc->pxnRoot = pxnList;
 		List_AddEntry((NODE *)pdc,&App.Game.nodeXMLCharacters);
 
 		// Identifiant de l'inventaire
@@ -588,7 +588,7 @@ DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentD
 			return(NULL);
 			}
 		pItem->node.type = ITEM_TYPE_REAL;
-		pItem->pxnXML = (XML_NODE *)pxnItem->children.next;
+		pItem->pxnRoot = pxnItem;
 		List_AddEntry((NODE *)pItem,&pInventory->nodeItems);
 
 		// Attributs généraux

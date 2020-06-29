@@ -94,17 +94,28 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	pItemContext->bBonuses = pItem->pxnPermanentBoost?TRUE:FALSE;
 	pItemContext->bHasRunes = (pItem->pxaRunes[0] && pItem->pxaRunes[1] && pItem->pxaRunes[2])?TRUE:FALSE;
 	pItemContext->uNewLevel = 1;
-	pItemContext->iAmount = pItem->pxaAmount?wcstol(xml_GetThisAttrValue(pItem->pxaAmount),NULL,10):-1;
+	pItemContext->iAmount = pItemContext->iAmountOld = pItem->pxaAmount?wcstol(xml_GetThisAttrValue(pItem->pxaAmount),NULL,10):1;
 	pItemContext->bSetGenLevel = TRUE;
 	pItemContext->uFilter = Game_GetItemFlags(pItemContext->pszName);
 	if (!pItemContext->uFilter) pItemContext->uFilter = FILTER_ALL;
 	else pItemContext->uFilter |= (FILTER_ALL_TYPES);
 
+	//--- Retire la quantité pour les objets qui ne s'empilent pas ---
+
+	if (pItemContext->pszName)
+		{
+		UINT uLen = wcslen(pItemContext->pszName);
+
+		if (Game_CompareStrings(L"ARM_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+		else if (Game_CompareStrings(L"WPN_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+		else if (Game_CompareStrings(L"CONT_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+		}
+
 	//--- Création des pages ---
 
 	if (uPageID == 0) // Sélection automatique de la page la plus appropriée
 		{
-		if (pItemContext->iAmount > 1) uPageID = GAME_PAGE_AMOUNT;
+		if (pItemContext->iAmount > 0) uPageID = GAME_PAGE_AMOUNT;
 		else uPageID = GAME_PAGE_NAME;
 		}
 
@@ -208,7 +219,26 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 					Game_EditNameSet(pItem,&pItem->pxaDisplayName,pItemContext->pszDisplayName,L"CustomDisplayName");
 					break;
 				case GAME_PAGE_AMOUNT:
-					xml_SetAttrValueNumber(pItem->pxaAmount,pItemContext->iAmount);
+					if (pItemContext->iAmount == 0) pItemContext->iAmount = 1;
+					if (pItemContext->iAmount != pItemContext->iAmountOld)
+						{
+						if (!pItem->pxaAmount)
+							{
+							if (pItemContext->iAmount > 1)
+								{
+								XML_NODE *pxnAmount = xml_CreateNode(szXMLattribute,pItem->pxnRoot,3,szXMLid,L"Amount",szXMLvalue,L"1",szXMLtype,L"4");
+								if (xml_InsertChildNode(pxnAmount,pItem->pxnRoot,szXMLattribute,szXMLid,L"Slot",TRUE))
+									pItem->pxaAmount = xml_GetXMLValueAttr(pxnAmount,szXMLattribute,szXMLid,L"Amount");
+								else xml_ReleaseNode(pxnAmount); // Bad
+								}
+							}
+						if (pItem->pxaAmount && pItemContext->iAmount == 1)
+							{
+							xml_ReleaseNode(pItem->pxaAmount->parent);
+							pItem->pxaAmount = NULL;
+							}
+						else xml_SetAttrValueNumber(pItem->pxaAmount,pItemContext->iAmount);
+						}
 					break;
 				case GAME_PAGE_BOOSTERS:
 					Game_EditBoostersRebuild(pItemContext,pItem->pxaIsGenerated,pItem->pxnGeneration);
@@ -792,7 +822,7 @@ BOOL Game_EditNameSet(DOS2ITEM *pItem, XML_ATTR **pxaNamePtr, WCHAR *pszName, WC
 
 	//--- Supprime l'ancien texte ---
 
-	pxn = xml_GetNode(pItem->pxnXML,L"children",NULL,NULL);
+	pxn = xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,L"children",NULL,NULL);
 	if (pxn)
 		{
 		pxn = xml_GetNode((XML_NODE *)pxn->children.next,szXMLnode,szXMLid,pszAttrName);
@@ -815,7 +845,7 @@ BOOL Game_EditNameSet(DOS2ITEM *pItem, XML_ATTR **pxaNamePtr, WCHAR *pszName, WC
 
 	//--- Recréation des structures ---
 
-	pxnParent = xml_GetNode(pItem->pxnXML,L"children",NULL,NULL);
+	pxnParent = xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,L"children",NULL,NULL);
 	if (pxnParent)
 		{
 		pxn = xml_CreateNode(szXMLnode,pxnParent,1,szXMLid,pszAttrName);

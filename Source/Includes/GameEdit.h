@@ -278,6 +278,7 @@ typedef struct GAMEEDITITEMCONTEXT {
 	BOOL			bBonuses;
 	UINT			uSlot;
 	int			iAmount;
+	int			iAmountOld;
 	UINT			uLevel;
 	UINT			uNewLevel;
 	BOOL			bSetLevel;

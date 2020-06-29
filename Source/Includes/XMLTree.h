@@ -39,6 +39,11 @@ void			Tree_Destroy(void);
 LRESULT			Tree_ProcessMessages(HWND,UINT,WPARAM,LPARAM);
 
 int			Tree_CreateTreeView(XML_NODE *);
+#if _DEBUG
+void			Tree_CreateDebugInfos(void *,BOOL,HTREEITEM);
+void			Tree_CreateDebugNode(WCHAR *,NODE *,HTREEITEM);
+void			Tree_CreateDebugInfo(WCHAR *,DWORD64,HTREEITEM);
+#endif
 int			Tree_CreateNodeTree(XML_NODE *,HTREEITEM);
 int			Tree_CreateAttrTree(XML_NODE *,HTREEITEM);
 void			Tree_DestroyTreeView(void);

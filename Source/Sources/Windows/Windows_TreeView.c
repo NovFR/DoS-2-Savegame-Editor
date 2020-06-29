@@ -118,6 +118,10 @@ int Tree_CreateTreeView(XML_NODE *pxn)
 {
 	if (!pxn) return(1);
 
+	#if _DEBUG
+	if (pxn->parent) Tree_CreateDebugInfos(pxn->parent,TRUE,TVI_ROOT);
+	#endif
+
 	if (!Tree_CreateNodeTree(pxn,NULL))
 		{
 		Tree_DestroyTreeView();
@@ -127,8 +131,7 @@ int Tree_CreateTreeView(XML_NODE *pxn)
 
 	if (pxn->parent)
 		{
-		WCHAR*	Text;
-		Text = xml_AttrToWideChar((XML_NODE *)pxn->parent);
+		WCHAR *Text = xml_AttrToWideChar((XML_NODE *)pxn->parent);
 		if (Text)
 			{
 			Misc_SetWindowText(App.xmlTree.hWnd,&App.xmlTree.pszWindowTitle,szTitle,szTitleFmtLong,szTitle,Locale_GetText(TEXT_TITLE_TREE),Text);
@@ -158,12 +161,93 @@ int Tree_CreateNodeTree(XML_NODE *pxn, HTREEITEM hParent)
 		tvItem.itemex.lParam = (LPARAM)pxnCurrent;
 		hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
 		if (!hItem) return(0);
+		#if _DEBUG
+		Tree_CreateDebugInfos(pxnCurrent,TRUE,hItem);
+		#endif
 		if (pxnCurrent->attributes.next) Tree_CreateAttrTree(pxnCurrent,hItem);
 		if (pxnCurrent->children.next) { if (!Tree_CreateNodeTree((XML_NODE *)pxnCurrent->children.next,hItem)) return(0); }
 		}
 
 	return(1);
 }
+
+//--- Informations de debug ---
+
+#if _DEBUG
+void Tree_CreateDebugInfos(void *px, BOOL bIsNode, HTREEITEM hParent)
+{
+	TV_INSERTSTRUCT	tvItem;
+	HTREEITEM	hItem;
+
+	tvItem.hParent = hParent?hParent:TVI_ROOT;
+	tvItem.hInsertAfter = TVI_LAST;
+	tvItem.itemex.mask = TVIF_CHILDREN|TVIF_PARAM|TVIF_TEXT;
+	tvItem.itemex.pszText = L" __debug__";
+	tvItem.itemex.cChildren = 1;
+	tvItem.itemex.lParam = 0;
+	hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
+
+	if (hItem)
+		{
+		if (bIsNode)
+			{
+			Tree_CreateDebugInfo(L"addr",(DWORD64)px,hItem);
+			Tree_CreateDebugNode(L"node",&((XML_NODE *)px)->node,hItem);
+			Tree_CreateDebugNode(L"children",&((XML_NODE *)px)->children,hItem);
+			Tree_CreateDebugNode(L"attributes",&((XML_NODE *)px)->attributes,hItem);
+			Tree_CreateDebugInfo(L"parent",(DWORD64)((XML_NODE *)px)->parent,hItem);
+			}
+		else
+			{
+			Tree_CreateDebugInfo(L"addr",(DWORD64)px,hItem);
+			Tree_CreateDebugNode(L"node",&((XML_ATTR *)px)->node,hItem);
+			Tree_CreateDebugInfo(L"parent",(DWORD64)((XML_ATTR *)px)->parent,hItem);
+			}
+		}
+
+	return;
+}
+
+void Tree_CreateDebugNode(WCHAR *pszText, NODE *pNode, HTREEITEM hParent)
+{
+	TV_INSERTSTRUCT	tvItem;
+	HTREEITEM	hItem;
+
+	tvItem.hParent = hParent?hParent:TVI_ROOT;
+	tvItem.hInsertAfter = TVI_LAST;
+	tvItem.itemex.mask = TVIF_CHILDREN|TVIF_PARAM|TVIF_TEXT;
+	tvItem.itemex.pszText = pszText;
+	tvItem.itemex.cChildren = 1;
+	tvItem.itemex.lParam = 0;
+	hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
+	if (hItem)
+		{
+		Tree_CreateDebugInfo(L"addr",(DWORD64)pNode,hItem);
+		Tree_CreateDebugInfo(L"next",(DWORD64)pNode->next,hItem);
+		Tree_CreateDebugInfo(L"prev",(DWORD64)pNode->prev,hItem);
+		Tree_CreateDebugInfo(L"type",(DWORD64)pNode->type,hItem);
+		}
+	return;
+}
+
+void Tree_CreateDebugInfo(WCHAR *pszText, DWORD64 dwValue, HTREEITEM hParent)
+{
+	TV_INSERTSTRUCT	tvItem;
+	WCHAR		pszBuffer[256];
+
+	swprintf(pszBuffer,255,L"%s=0x%016llX",pszText,dwValue);
+
+	tvItem.hParent = hParent?hParent:TVI_ROOT;
+	tvItem.hInsertAfter = TVI_LAST;
+	tvItem.itemex.mask = TVIF_CHILDREN|TVIF_PARAM|TVIF_TEXT;
+	tvItem.itemex.pszText = pszBuffer;
+	tvItem.itemex.cChildren = 0;
+	tvItem.itemex.lParam = 0;
+	SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
+	return;
+}
+
+#endif
 
 //--- Création des valeurs ---
 
@@ -183,6 +267,9 @@ int Tree_CreateAttrTree(XML_NODE *pxn, HTREEITEM hParent)
 		tvItem.itemex.lParam = (LPARAM)pxa;
 		hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
 		if (!hItem) return(0);
+		#if _DEBUG
+		Tree_CreateDebugInfos(pxa,FALSE,hItem);
+		#endif
 		}
 
 	return(1);
@@ -246,15 +333,18 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 									tvItem.hItem = hTreeItem;
 									tvItem.lParam = 0;
 									SendMessage(hwndTree,TVM_GETITEM,0,(LPARAM)&tvItem);
-									if (tvItem.lParam) switch(((NODE *)tvItem.lParam)->type)
+									if (tvItem.lParam)
 										{
-										case XML_TYPE_NODE:
-											SendMessage(hwndTree,TVM_EXPAND,TVE_TOGGLE,(LPARAM)hTreeItem);
-											break;
-										case XML_TYPE_ATTR:
-											if (App.hThread) break;
-											SendMessage(hwndTree,TVM_EDITLABEL,0,(LPARAM)hTreeItem);
-											break;
+										switch(((NODE *)tvItem.lParam)->type)
+											{
+											case XML_TYPE_NODE:
+												SendMessage(hwndTree,TVM_EXPAND,TVE_TOGGLE,(LPARAM)hTreeItem);
+												break;
+											case XML_TYPE_ATTR:
+												if (App.hThread) break;
+												SendMessage(hwndTree,TVM_EDITLABEL,0,(LPARAM)hTreeItem);
+												break;
+											}
 										}
 									}
 								break;

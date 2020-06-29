@@ -48,10 +48,10 @@
 			<Add option="-m64" />
 			<Add library="user32" />
 		</Linker>
-		<Unit filename="Sources/Libs/SQLite3/DLL.c">
+		<Unit filename="Sources/Libs/SQLite3/Includes/SQLite3.h" />
+		<Unit filename="Sources/Libs/SQLite3/Library.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Sources/Libs/SQLite3/Includes/SQLite3.h" />
 		<Unit filename="Sources/Libs/SQLite3/Resources/SQLite3.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>

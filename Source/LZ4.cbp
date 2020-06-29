@@ -48,15 +48,15 @@
 			<Add option="-m64" />
 			<Add library="user32" />
 		</Linker>
-		<Unit filename="Sources/Libs/LZ4/DLL.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="Sources/Libs/LZ4/Includes/LZ4.h" />
 		<Unit filename="Sources/Libs/LZ4/Includes/LZ4frame.h" />
 		<Unit filename="Sources/Libs/LZ4/Includes/LZ4frame_static.h" />
 		<Unit filename="Sources/Libs/LZ4/Includes/LZ4hc.h" />
 		<Unit filename="Sources/Libs/LZ4/Includes/xxhash.h" />
-		<Unit filename="Sources/Libs/LZ4/Resources/PNG.rc">
+		<Unit filename="Sources/Libs/LZ4/Library.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Libs/LZ4/Resources/LZ4.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="Sources/Libs/LZ4/Sources/lz4.c">
