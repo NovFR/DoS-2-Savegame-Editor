@@ -29,6 +29,10 @@
 #define GAME_POINTS_MAX			99
 #define GAME_ABILITIES_OVERRIDE		99
 
+#define GAME_DISPLAY_BARHEIGHT		20
+#define GAME_DISPLAY_BARVPADDING	4
+#define GAME_DISPLAY_BARHPADDING	4
+
 #define GAME_LOCK_DISABLED		0x00000000 // default
 #define GAME_LOCK_ENABLED		0x00000001
 #define GAME_LOCK_APP			0x00000002
@@ -89,6 +93,9 @@ typedef struct DOS2CHARACTER {
 	//--- References
 	XML_NODE*	pxnRoot;
 	XML_ATTR*	pxaInventoryId;
+	XML_ATTR*	pxaArmor;
+	XML_ATTR*	pxaMagicArmor;
+	XML_ATTR*	pxaVitality;
 	XML_ATTR*	pxaDamageCount;
 	XML_ATTR*	pxaHealCount;
 	XML_ATTR*	pxaKillCount;
@@ -168,6 +175,9 @@ typedef struct GAMEDRAWCONTEXT {
 	WCHAR*		pszDamages;
 	WCHAR*		pszHeal;
 	WCHAR*		pszKills;
+	WCHAR*		pszArmor;
+	WCHAR*		pszMagicArmor;
+	WCHAR*		pszVitality;
 } GAMEDRAWCONTEXT;
 
 //--- Données ---
@@ -258,6 +268,7 @@ DOS2INVENTORY*		Game_BuildInventory(XML_ATTR *,XML_ATTR *,XML_ATTR *,NODE *);
 UINT			Game_GetInventoryItemsCount(XML_NODE *,WCHAR *);
 void			Game_ReleaseInventory(DOS2INVENTORY *);
 void			Game_CharacterChanged(BOOL);
+void			Game_UpdateButtons(void);
 void			Game_SaveTopIndex(void);
 
 void			Game_Lock(DWORD);
@@ -274,6 +285,8 @@ void			Game_MeasureInventory(MEASUREITEMSTRUCT *);
 void			Game_DrawInventory(DRAWITEMSTRUCT *);
 
 void			Game_Paint(HWND,HDC,RECT *);
+void			Game_PaintInfos(HDC,GAMEDRAWCONTEXT *);
+void			Game_PaintInfosPart(HDC,WCHAR *,COLORREF,COLORREF,COLORREF,RECT *);
 void			Game_PaintText(HDC,WCHAR *,WCHAR *,RECT *);
 void			Game_PaintValue(HDC,LONG,HWND,WCHAR *,WCHAR *);
 void			Game_PaintButton(DRAWITEMSTRUCT *);

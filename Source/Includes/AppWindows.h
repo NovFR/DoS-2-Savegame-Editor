@@ -19,6 +19,9 @@
 
 #define STATUS_REFRESH_MS		25
 
+#define MAIN_WINDOW_WIDTH		1024
+#define MAIN_WINDOW_HEIGHT		828
+
 enum {
 	WINDOW_MAIN			= 0,
 	WINDOW_TREE

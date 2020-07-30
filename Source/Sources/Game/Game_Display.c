@@ -334,21 +334,30 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			if (pItem->bIsBackPack)
 				{
-				WCHAR*		Text;
+				WCHAR*		pszBuffer;
+				WCHAR*		pszText;
 				SIZE		Size;
 
-				Text = Locale_GetText(pItem->uNumItems?TEXT_OBJ_ITEMS:TEXT_OBJ_EMPTY);
-				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
-				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
-				if (pItem->uNumItems)
-					{
-					WCHAR		szBuffer[11];
+				pszBuffer = NULL;
 
-					rcDraw.left += Size.cx+2;
-					swprintf(szBuffer,10,L"%u",pItem->uNumItems);
-					DrawText(pDraw->hDC,szBuffer,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
-					GetTextExtentPoint32(pDraw->hDC,szBuffer,wcslen(szBuffer),&Size);
+				if (pItem->uNumItems > 1) pszText = Locale_GetText(TEXT_OBJ_ITEMS_MULTIPLE);
+				else if (pItem->uNumItems == 1) pszText = Locale_GetText(TEXT_OBJ_ITEMS_SINGLE);
+				else pszText = Locale_GetText(TEXT_OBJ_EMPTY);
+
+				if (pItem->uNumItems > 1)
+					{
+					DWORD_PTR	vl[1];
+
+					vl[0] = pItem->uNumItems;
+					FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszText,0,0,(WCHAR *)&pszBuffer,1,(va_list *)vl);
+					pszText = pszBuffer;
 					}
+
+				DrawText(pDraw->hDC,pszText,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+				GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+
+				if (pszBuffer) LocalFree(pszBuffer);
+
 				rcDraw.left += Size.cx+8;
 				}
 
@@ -438,6 +447,9 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 		ctx.pszDamages = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaDamageCount);
 		ctx.pszHeal = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaHealCount);
 		ctx.pszKills = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaKillCount);
+		ctx.pszArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmor);
+		ctx.pszMagicArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmor);
+		ctx.pszVitality = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitality);
 		ctx.uPortraitIcon = ctx.bIsMale?APP_ICON_MAN:APP_ICON_WOMAN;
 		if (App.Game.pdcCurrent->pxaOriginName)
 			{
@@ -492,21 +504,26 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	Game_PaintText(hDC,ctx.pszHeal,Locale_GetText(TEXT_CHR_HEAL),&ctx.rcText);
 	Game_PaintText(hDC,ctx.pszKills,Locale_GetText(TEXT_CHR_KILLS),&ctx.rcText);
 
-	ctx.rcText.left = ctx.rcArea.left;
+	ctx.rcText.left = ctx.rcArea.left+20;
+	ctx.rcText.right = ctx.rcArea.right-20;
 	ctx.rcText.top = ctx.rcWork.bottom+20;
-	ctx.rcText.bottom = ctx.rcText.top+2;
+	Game_PaintInfos(hDC,&ctx);
+
+	ctx.rcText.left = ctx.rcArea.left;
 	ctx.rcText.right = ctx.rcArea.right;
-	DrawEdge(hDC,&ctx.rcText,BDR_SUNKENOUTER,BF_TOP|BF_BOTTOM);
+	ctx.rcText.top = ctx.rcWork.bottom+20+GAME_DISPLAY_BARHEIGHT*2+GAME_DISPLAY_BARVPADDING+20;
+	ctx.rcText.bottom = ctx.rcText.top+2;
+	DrawEdge(hDC,&ctx.rcText,EDGE_RAISED,BF_TOP|BF_BOTTOM);
 
 	//--- Attributs
 
 	for (i = 0; i != 6; i++)
-		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndAttrBtn[i],Locale_GetText(TextsAttr[i]),App.Game.pdcCurrent?App.Game.pdcCurrent->pxaAttributes[i]->value:NULL);
+		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndAttrBtn[i],Locale_GetText(TextsAttr[i]),App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAttributes[i]):NULL);
 
 	//--- Points à dépenser
 
 	for (i = 0; i != 4; i++)
-		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndPointsBtn[i],Locale_GetText(TextsPts[i]),App.Game.pdcCurrent?App.Game.pdcCurrent->pxaPoints[i]->value:NULL);
+		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndPointsBtn[i],Locale_GetText(TextsPts[i]),App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaPoints[i]):NULL);
 
 	//--- Inventaire ---
 
@@ -527,6 +544,72 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	SetBkMode(hDC,ctx.iBack);
 	SetTextColor(hDC,ctx.crColor);
 	SelectObject(hDC,ctx.hFont);
+	return;
+}
+
+//--- Affichage des armures et de la vie ---
+
+void Game_PaintInfos(HDC hDC, GAMEDRAWCONTEXT *ctx)
+{
+	RECT		rcArea;
+
+	//--- Armor
+	CopyRect(&rcArea,&ctx->rcText);
+	rcArea.right = ctx->rcText.left+(ctx->rcText.right-ctx->rcText.left)/2-GAME_DISPLAY_BARHPADDING;
+	rcArea.bottom = ctx->rcText.top+GAME_DISPLAY_BARHEIGHT;
+	Game_PaintInfosPart(hDC,ctx->pszArmor,RGB(190,190,190),RGB(255,255,255),RGB(100,100,100),&rcArea);
+
+	//--- Magical armor
+	CopyRect(&rcArea,&ctx->rcText);
+	rcArea.left = ctx->rcText.left+(ctx->rcText.right-ctx->rcText.left)/2;
+	rcArea.bottom = ctx->rcText.top+GAME_DISPLAY_BARHEIGHT;
+	Game_PaintInfosPart(hDC,ctx->pszMagicArmor,RGB(88,170,218),RGB(255,255,255),RGB(0,80,128),&rcArea);
+
+	//--- Vitality
+	ctx->rcText.top = ctx->rcText.top+GAME_DISPLAY_BARHEIGHT+GAME_DISPLAY_BARVPADDING;
+	ctx->rcText.bottom = ctx->rcText.top+GAME_DISPLAY_BARHEIGHT;
+	CopyRect(&rcArea,&ctx->rcText);
+	Game_PaintInfosPart(hDC,ctx->pszVitality,RGB(204,54,64),RGB(255,255,255),RGB(114,0,0),&rcArea);
+	return;
+}
+
+//--- Affichage d'une information ---
+
+void Game_PaintInfosPart(HDC hDC, WCHAR *pszValue, COLORREF crBarColor, COLORREF crTextColor, COLORREF crTextShadowColor, RECT *rcArea)
+{
+	HBRUSH		hBrush;
+
+	DrawEdge(hDC,rcArea,BDR_SUNKENOUTER,BF_ADJUST|BF_RECT);
+
+	hBrush = CreateSolidBrush(crBarColor);
+	if (hBrush)
+		{
+		FillRect(hDC,rcArea,hBrush);
+		DeleteObject(hBrush);
+		}
+
+	if (pszValue)
+		{
+		RECT		rcShadow;
+		COLORREF	crOldTextColor;
+
+		if (rcArea->bottom-rcArea->top < App.Font.uFontHeight)
+			{
+			rcArea->top = rcArea->top+(rcArea->bottom-rcArea->top-App.Font.uFontHeight)/2;
+			rcArea->bottom = rcArea->top+App.Font.uFontHeight;
+			}
+		crOldTextColor = SetTextColor(hDC,crTextShadowColor);
+		CopyRect(&rcShadow,rcArea);
+		rcShadow.top += 1;
+		rcShadow.bottom += 1;
+		rcShadow.left += 1;
+		rcShadow.right += 1;
+		DrawText(hDC,pszValue,-1,&rcShadow,DT_CENTER|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
+		SetTextColor(hDC,crTextColor);
+		DrawText(hDC,pszValue,-1,rcArea,DT_CENTER|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
+		SetTextColor(hDC,crOldTextColor);
+		}
+
 	return;
 }
 

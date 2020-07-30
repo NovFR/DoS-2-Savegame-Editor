@@ -161,11 +161,11 @@ int Initialise_Window()
 		hMonitor = MonitorFromWindow(NULL,MONITOR_DEFAULTTOPRIMARY);
 		Info.cbSize = sizeof(MONITORINFO);
 		GetMonitorInfo(hMonitor,&Info);
-		if (X == CW_USEDEFAULT) X = ((Info.rcMonitor.right-Info.rcMonitor.left)-1024)/2;
-		if (Y == CW_USEDEFAULT) Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-768)/2;
+		if (X == CW_USEDEFAULT) X = ((Info.rcMonitor.right-Info.rcMonitor.left)-MAIN_WINDOW_WIDTH)/2;
+		if (Y == CW_USEDEFAULT) Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-MAIN_WINDOW_HEIGHT)/2;
 		}
 
-	hWnd = CreateWindowEx(WS_EX_ACCEPTFILES,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,1024,768,NULL,App.hMenu,App.hInstance,(LONG_PTR)WINDOW_MAIN);
+	hWnd = CreateWindowEx(WS_EX_ACCEPTFILES,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT,NULL,App.hMenu,App.hInstance,(LONG_PTR)WINDOW_MAIN);
 	if (!hWnd)
 		{
 		// NO DIALOG HERE because WM_QUIT has been posted

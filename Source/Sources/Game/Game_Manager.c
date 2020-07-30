@@ -39,11 +39,15 @@ static DOS2ITEM			ParentItem;
 
 int Game_CreateLayout()
 {
+	RECT		rcClient;
 	LVCOLUMN	lvColumn;
 	LVGROUP		lvGroup;
 	int		X,Y;
 	int		W,H;
+	int		iPad;
 	int		i;
+
+	iPad = -32;
 
 	//--- Liste des personnages ---
 
@@ -51,7 +55,7 @@ int Game_CreateLayout()
 	if (!App.Game.Layout.hwndList) return(0);
 
 	X = 378;
-	Y = 212;
+	Y = 278;
 	W = 20;
 	H = App.Font.uFontHeight+12;
 
@@ -60,15 +64,18 @@ int Game_CreateLayout()
 	for (Y += 16, i = 0; i != 4; i++, Y += H+10) if (!Game_CreateButton(X,Y,W,H,NULL,CTLID_POINTS+i,&App.Game.Layout.hwndPointsBtn[i],BS_OWNERDRAW)) return(0);
 
 	// Boutons
-	if (!Game_CreateButton(30,-54,120,0,Locale_GetText(TEXT_BUTTON_ABILITIES),CTLID_ABILITIES,&App.Game.Layout.hwndAbilitiesBtn,0)) return(0);
-	if (!Game_CreateButton(156,-54,120,0,Locale_GetText(TEXT_BUTTON_TAGS),CTLID_TAGS,&App.Game.Layout.hwndTagsBtn,0)) return(0);
-	if (!Game_CreateButton(282,-54,120,0,Locale_GetText(TEXT_BUTTON_TALENTS),CTLID_TALENTS,&App.Game.Layout.hwndTalentsBtn,0)) return(0);
+	if (!Game_CreateButton(30,iPad,120,0,Locale_GetText(TEXT_BUTTON_ABILITIES),CTLID_ABILITIES,&App.Game.Layout.hwndAbilitiesBtn,0)) return(0);
+	if (!Game_CreateButton(156,iPad,120,0,Locale_GetText(TEXT_BUTTON_TAGS),CTLID_TAGS,&App.Game.Layout.hwndTagsBtn,0)) return(0);
+	if (!Game_CreateButton(282,iPad,120,0,Locale_GetText(TEXT_BUTTON_TALENTS),CTLID_TALENTS,&App.Game.Layout.hwndTalentsBtn,0)) return(0);
 
 	//--- Inventaire ---
 
+	X = 436;
+	Y = 20;
 	W = 562;
-	H = 596;
-	App.Game.Layout.hwndInventory = CreateWindowEx(WS_EX_CLIENTEDGE,WC_LISTVIEW,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_VSCROLL|WS_TABSTOP|WS_GROUP|LVS_REPORT|LVS_SINGLESEL|LVS_NOCOLUMNHEADER|LVS_SHOWSELALWAYS|LVS_OWNERDRAWFIXED,436,20,W,H,App.hWnd,(HMENU)CTLID_INVENTORY,App.hInstance,NULL);
+	H = 656;
+
+	App.Game.Layout.hwndInventory = CreateWindowEx(WS_EX_CLIENTEDGE,WC_LISTVIEW,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_VSCROLL|WS_TABSTOP|WS_GROUP|LVS_REPORT|LVS_SINGLESEL|LVS_NOCOLUMNHEADER|LVS_SHOWSELALWAYS|LVS_OWNERDRAWFIXED,X,Y,W,H,App.hWnd,(HMENU)CTLID_INVENTORY,App.hInstance,NULL);
 	if (!App.Game.Layout.hwndInventory) return(0);
 
 	SendMessage(App.Game.Layout.hwndInventory,LVM_SETEXTENDEDLISTVIEWSTYLE,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER);
@@ -98,12 +105,20 @@ int Game_CreateLayout()
 
 	SendMessage(App.Game.Layout.hwndInventory,LVM_ENABLEGROUPVIEW,(WPARAM)TRUE,0);
 
-	// Boutons
-	if (!Game_CreateButton(446,-54,200,0,Locale_GetText(TEXT_BUTTON_MENU),CTLID_MENU,&App.Game.Layout.hwndMenuBtn,0)) return(0);
+	// Bouton du menu
+	if (!Game_CreateButton(446,iPad,200,0,Locale_GetText(TEXT_BUTTON_MENU),CTLID_MENU,&App.Game.Layout.hwndMenuBtn,0)) return(0);
 
 	// Nom de l'inventaire
-	App.Game.Layout.hwndInventoryName = CreateWindowEx(WS_EX_CLIENTEDGE,szStaticClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|SS_OWNERDRAW,656,628,332,App.Font.uFontHeight+16,App.hWnd,(HMENU)CTLID_INVENTORYNAME,App.hInstance,NULL);
+	Misc_GetMainWindowClientRect(&rcClient);
+	App.Game.Layout.hwndInventoryName = CreateWindowEx(WS_EX_CLIENTEDGE,szStaticClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|SS_OWNERDRAW,656,rcClient.bottom+iPad-(App.Font.uFontHeight+16),332,App.Font.uFontHeight+16,App.hWnd,(HMENU)CTLID_INVENTORYNAME,App.hInstance,NULL);
 	if (!App.Game.Layout.hwndInventoryName) return(0);
+
+	// Ajuste la hauteur de la liste
+	H = rcClient.bottom-rcClient.top-Y+iPad;
+	GetWindowRect(App.Game.Layout.hwndInventoryName,&rcClient);
+	MapWindowPoints(NULL,App.hWnd,(POINT *)&rcClient,2);
+	H -= rcClient.bottom-rcClient.top+14;
+	SetWindowPos(App.Game.Layout.hwndInventory,NULL,0,0,W,H,SWP_NOACTIVATE|SWP_NOMOVE|SWP_NOOWNERZORDER|SWP_NOZORDER);
 
 	Game_Setup(NULL,FALSE,FALSE);
 	return(1);
@@ -120,7 +135,7 @@ int Game_CreateButton(int X, int Y, int W, int H, WCHAR *pszLabel, UINT uCtlId, 
 		{
 		RECT	rcClient;
 
-		GetClientRect(App.hWnd,&rcClient);
+		Misc_GetMainWindowClientRect(&rcClient);
 		Y = rcClient.bottom+Y-H;
 		}
 
@@ -432,6 +447,11 @@ int Game_BuildPlayers()
 
 		// Identifiant de l'inventaire
 		pdc->pxaInventoryId = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"Inventory");
+		// Armures/Vitalité
+		pdc->pxaArmor = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"Armor");
+		pdc->pxaMagicArmor = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"MagicArmor");
+		pdc->pxaVitality = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"Vitality");
+		// Statistiques
 		pdc->pxaDamageCount = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"DamageCounter");
 		pdc->pxaHealCount = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"HealCounter");
 		pdc->pxaKillCount = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"KillCounter");
@@ -755,13 +775,57 @@ void Game_CharacterChanged(BOOL bRefresh)
 
 	App.Game.pdcCurrent = pdc;
 
-	//--- Activation des menus et mise-à-jour de l'affichage ---
+	//--- Activation des boutons, menus et mise-à-jour de l'affichage ---
 
+	Game_UpdateButtons();
 	InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_TREE);
 	if (bRefresh) InvalidateRect(App.hWnd,NULL,FALSE);
 	return;
 }
+
+//--- Mise-à-jour des boutons ---
+
+void Game_UpdateButtons()
+{
+	int	i,s;
+
+	// Attributes
+	s = sizeof(App.Game.Layout.hwndAttrBtn)/sizeof(HWND);
+	for (i = 0; i < s; i++) EnableWindow(App.Game.Layout.hwndAttrBtn[i],!(!App.Game.pdcCurrent || !App.Game.pdcCurrent->pxaAttributes[i] || !App.Game.pdcCurrent->pxaAttributes[i]->value));
+	// Points
+	s = sizeof(App.Game.Layout.hwndPointsBtn)/sizeof(HWND);
+	for (i = 0; i < s; i++) EnableWindow(App.Game.Layout.hwndPointsBtn[i],!(!App.Game.pdcCurrent || !App.Game.pdcCurrent->pxaPoints[i] || !App.Game.pdcCurrent->pxaPoints[i]->value));
+	// Abilities
+	if (App.Game.pdcCurrent)
+		{
+		s = sizeof(App.Game.pdcCurrent->pxaAbilities)/sizeof(XML_ATTR *);
+		i = --s;
+		for (; i >= 0; i--)
+			{
+			if (!App.Game.pdcCurrent->pxaAbilities[i]) break;
+			if (!App.Game.pdcCurrent->pxaAbilities[i]->value) break;
+			}
+		}
+	else i = 0;
+	EnableWindow(App.Game.Layout.hwndAbilitiesBtn,i == -1?TRUE:FALSE);
+	// Talents
+	if (App.Game.pdcCurrent)
+		{
+		s = sizeof(App.Game.pdcCurrent->pxaTalents)/sizeof(XML_ATTR *);
+		i = --s;
+		for (; i >= 0; i--)
+			{
+			if (!App.Game.pdcCurrent->pxaTalents[i]) break;
+			if (!App.Game.pdcCurrent->pxaTalents[i]->value) break;
+			}
+		}
+	else  i = 0;
+	EnableWindow(App.Game.Layout.hwndTalentsBtn,i == -1?TRUE:FALSE);
+
+	return;
+}
+
 
 //--- Tri de la liste des objets ---
 

@@ -920,6 +920,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 		if (xml_LoadFile(ctx->pszPath))
 			{
 			Game_BuildPlayers();
+			Game_UpdateButtons();
 			Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
 
 			LastFiles_Add(Divine_GetGameName(ctx->uGame),ctx->pszProfile,ctx->pszSaveName);

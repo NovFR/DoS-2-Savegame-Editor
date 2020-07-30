@@ -15,6 +15,7 @@
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+void			Misc_GetMainWindowClientRect(RECT *);
 int			Misc_GetFileTime(const WCHAR *,FILETIME *,FILETIME *,FILETIME *);
 WCHAR*			Misc_FormatNumber(WCHAR *);
 UINT			Misc_HtmlSpecialCharsDecode(WCHAR *,WCHAR *);

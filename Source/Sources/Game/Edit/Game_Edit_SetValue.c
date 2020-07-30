@@ -65,6 +65,8 @@ int Game_EditSetValue(HWND hWnd, WCHAR *pszLabel, XML_ATTR* pxa, int iMin, int i
 	DIALOGVALUE	Value;
 	DWORD_PTR	vl[2];
 
+	if (!pxa || !pxa->value) return(0);
+
 	ZeroMemory(&Value,sizeof(DIALOGVALUE));
 
 	vl[0] = (DWORD_PTR)iMin;

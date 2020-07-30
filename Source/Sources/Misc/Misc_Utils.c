@@ -24,6 +24,21 @@ extern APPLICATION	App;
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Récupération des dimensions de la fenêtre principale ««««««««««««»
+
+void Misc_GetMainWindowClientRect(RECT *rcClient)
+{
+	RECT	rcWindow;
+	RECT	rcStatus;
+
+	GetClientRect(App.hWnd,&rcWindow);
+	GetWindowRect(App.hwndStatus,&rcStatus);
+	MapWindowPoints(NULL,App.hWnd,(POINT *)&rcStatus,2);
+	SubtractRect(rcClient,&rcWindow,&rcStatus);
+	return;
+}
+
+
 // «»»» Récupération des dates d'un fichier «««««««««««««««««««««««««««««»
 
 int Misc_GetFileTime(const WCHAR *pszPath, FILETIME *pCreationTime, FILETIME *pLastAccessTime, FILETIME *pLastWriteTime)
