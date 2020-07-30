@@ -106,12 +106,15 @@ gold_large		ITEM			|f|Trader_Bank_Gold
 gold_large		ITEM			|f|InBetween_Gold
 gold_large		ITEM			|f|Pile_Of_Gold_Big_B
 gold_large		ITEM			|f|Pile_Of_Gold_D
+gold_large		ITEM			|f|Pile_Of_Gold_B
+gold_large		ITEM			|f|Pile_Of_Gold
 gold_medium		ITEM			|f|Trader_DragonsLair_Gold
 gold_medium		ITEM			|f|Larger_Gold_Big
 gold_medium		ITEM			|f|Pile_Of_Gold_C
 gold_small		ITEM			|f|Small_Gold
 gold_small		ITEM			|f|Tiny_Gold
 gold_small		ITEM			|f|Tiny_Gold_2
+gold_small		ITEM			|f|Tiny_Gold_3
 
 potion_heal_giant	ITEM			|f|POTION_Giant_Healing_Potion
 potion_heal_huge	ITEM			|f|POTION_Huge_Healing_Potion
