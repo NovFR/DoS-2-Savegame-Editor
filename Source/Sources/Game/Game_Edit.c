@@ -232,7 +232,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 								else xml_ReleaseNode(pxnAmount); // Bad
 								}
 							}
-						if (pItem->pxaAmount && pItemContext->iAmount == 1)
+						if (pItem->pxaAmount && pItemContext->iAmount == 1 && App.Config.uGame == 2)
 							{
 							xml_ReleaseNode(pItem->pxaAmount->parent);
 							pItem->pxaAmount = NULL;
