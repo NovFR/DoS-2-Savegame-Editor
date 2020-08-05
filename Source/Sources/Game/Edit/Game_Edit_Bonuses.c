@@ -168,7 +168,7 @@ static GAMESKILL	Skills[] = {
 					{ L"Shout_EvasiveAura", NULL, 1, 2, 545, TEXT_ABILITIES_AIR },
 					{ L"Shout_FavourableWind", NULL, 0, 1, 333, TEXT_ABILITIES_AIR },
 					{ L"Shout_FireBrand", NULL, 0, 1, 438, TEXT_ABILITIES_FIRE },
-					{ L"Shout_FlamingSkin", NULL, 1, 1, 496, TEXT_ABILITIES_FIRE },
+					{ L"Shout_FlamingSkin", NULL, 1, 1, 496, TEXT_ABILITIES_POLYMORPH },
 					{ L"Shout_FlamingTongues", NULL, 0, 1, 439, TEXT_ABILITIES_FIRE },
 					{ L"Shout_FleshSacrifice", NULL, 0, 0, 338, TEXT_ABILITIES_SPECIAL },
 					{ L"Shout_FrostAura", NULL, 0, 1, 449, TEXT_ABILITIES_WATER },
