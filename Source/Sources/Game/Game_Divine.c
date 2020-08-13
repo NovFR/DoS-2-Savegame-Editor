@@ -128,7 +128,7 @@ void Divine_Select()
 	psh->ppsp = psp;
 
 	iResult = PropertySheet(psh);
-	if (iResult) Divine_Open(pContext->uGame,pContext->pszProfile,pContext->pszSaveName);
+	if (iResult) Divine_Open(pContext->uGame,pContext->pszProfile,pContext->pszSaveName,NULL);
 
 	//--- Terminé ---
 
@@ -579,7 +579,7 @@ void Divine_SelectLoadGameInfos(HWND hDlg, DIVINESGCONTEXT *pContext)
 
 	pItem = (DIVINEITEM *)SendDlgItemMessage(hDlg,200,LB_GETITEMDATA,(WPARAM)lResult,0);
 	if (pItem == (DIVINEITEM *)LB_ERR) return;
-	pszPath = Divine_GetSaveGamePath(pContext->uGame,pContext->pszProfile,pItem->name);
+	pszPath = Divine_GetSaveGamePath(pContext->uGame,pContext->pszProfile,pItem->name,pContext->pszCustomSavePath);
 	if (!pszPath) return;
 
 	lsv_Release(&pContext->GameFiles);
@@ -619,17 +619,17 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 			if (uGame == CB_ERR) uGame = 0;
 			if (pContext->Profiles.type == ++uGame) return(1);
 			SendDlgItemMessage(hDlg,200,LB_RESETCONTENT,0,0);
-			uLen  = wcslen(App.Config.pszLarianPath)*sizeof(WCHAR);
+			uLen  = App.Config.pszLarianPath?(wcslen(App.Config.pszLarianPath)*sizeof(WCHAR)):0;
 			uLen += sizeof(WCHAR)+wcslen(Divine_GetGameName(uGame))*sizeof(WCHAR);
 			uLen += sizeof(WCHAR)+wcslen(szPlayerProfiles)*sizeof(WCHAR);
-			pszPath = HeapAlloc(App.hHeap,0,uLen+sizeof(WCHAR));
+			pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen+sizeof(WCHAR));
 			if (!pszPath)
 				{
 				SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 				Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 				return(0);
 				}
-			wcscpy(pszPath,App.Config.pszLarianPath);
+			if (App.Config.pszLarianPath) wcscpy(pszPath,App.Config.pszLarianPath);
 			PathAppend(pszPath,Divine_GetGameName(uGame));
 			PathAppend(pszPath,szPlayerProfiles);
 			pRoot = &pContext->Profiles;
@@ -639,20 +639,20 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 			if (pContext->Savegames.type == pContext->uGame) return(1);
 			SendDlgItemMessage(hDlg,200,LB_RESETCONTENT,0,0);
 			uGame = pContext->uGame;
-			uLen  = wcslen(App.Config.pszLarianPath)*sizeof(WCHAR);
+			uLen  = App.Config.pszLarianPath?(wcslen(App.Config.pszLarianPath)*sizeof(WCHAR)):0;
 			uLen += sizeof(WCHAR)+wcslen(Divine_GetGameName(uGame))*sizeof(WCHAR);
 			uLen += sizeof(WCHAR)+wcslen(szPlayerProfiles)*sizeof(WCHAR);
 			uLen += sizeof(WCHAR)+wcslen(szSavegames)*sizeof(WCHAR);
 			uLen += sizeof(WCHAR)+wcslen(szStory)*sizeof(WCHAR);
 			uLen += sizeof(WCHAR)+wcslen(pContext->pszProfile)*sizeof(WCHAR);
-			pszPath = HeapAlloc(App.hHeap,0,uLen+sizeof(WCHAR));
+			pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen+sizeof(WCHAR));
 			if (!pszPath)
 				{
 				SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 				Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 				return(0);
 				}
-			wcscpy(pszPath,App.Config.pszLarianPath);
+			if (App.Config.pszLarianPath) wcscpy(pszPath,App.Config.pszLarianPath);
 			PathAppend(pszPath,Divine_GetGameName(uGame));
 			PathAppend(pszPath,szPlayerProfiles);
 			PathAppend(pszPath,pContext->pszProfile);
@@ -837,41 +837,141 @@ void Divine_SelectReleaseList(NODE *pRoot)
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-// «»»» Préparation du chargement «««««««««««««««««««««««««««««««««««««««»
+// «»»» Ouverture d'une sauvegarde particulière «««««««««««««««««««««««««»
 
-void Divine_Open(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName)
+void Divine_OpenAs()
 {
+	OPENFILENAME	ofn;
 	DIVINECONTEXT*	ctx;
+	WCHAR*		lpstrFilter;
+	WCHAR*		lpstrFile;
+	WCHAR*		pszFilter;
+	UINT		uLen,uStrLen;
+	BOOL		bResult;
 
-	if (App.hThread)
-		{
-		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_RUNNING),NULL,MB_ICONERROR);
-		return;
-		}
+	//--- Initialisations ---
 
-	if (!PathFileExists(szDivineEXE))
-		{
-		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_MISSINGCONVERTER),NULL,MB_ICONERROR);
-		return;
-		}
+	ctx = Divine_PrepareContext(TEXT_ERR_LOADING);
+	if (!ctx) return;
 
-	ctx = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(DIVINECONTEXT));
-	if (!ctx)
+	uLen  = wcslen(Locale_GetText(TEXT_DIALOG_SAVE_DOS))+1;
+	uLen += wcslen(szLSVwext)+1;
+	uLen += wcslen(Locale_GetText(TEXT_DIALOG_SAVE_DOSDE))+1;
+	uLen += wcslen(szLSVwext)+1;
+	uLen += 1;
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = App.hWnd;
+	ofn.hInstance = App.hInstance;
+	ofn.lpstrFilter = lpstrFilter = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR));
+	ofn.lpstrCustomFilter = NULL;
+	ofn.nMaxCustFilter = 0;
+	ofn.nFilterIndex = 2;
+	ofn.lpstrFile = lpstrFile = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,2048*sizeof(WCHAR));
+	ofn.nMaxFile = 2048;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = App.Config.pszLarianPath;
+	ofn.lpstrTitle = NULL;
+	ofn.Flags = OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST|OFN_NOCHANGEDIR|OFN_HIDEREADONLY;
+	ofn.nFileOffset = 0;
+	ofn.nFileExtension = 0;
+	ofn.lpstrDefExt = NULL;
+	ofn.lCustData = 0;
+	ofn.lpfnHook = NULL;
+	ofn.lpTemplateName = NULL;
+	ofn.pvReserved = NULL;
+	ofn.dwReserved = 0;
+	ofn.FlagsEx = 0;
+
+	// Abort if buffer allocation failed
+	if (!lpstrFile || !lpstrFilter)
 		{
+		if (lpstrFile) HeapFree(App.hHeap,0,lpstrFile);
+		if (lpstrFilter) HeapFree(App.hHeap,0,lpstrFilter);
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
 		return;
 		}
 
-	ctx->uGame = uGame;
+	// Set filters and extensions
+	wcscpy(lpstrFilter,Locale_GetText(TEXT_DIALOG_SAVE_DOS));
+	pszFilter = wcschr(lpstrFilter,L'\0');
+	wcscpy(++pszFilter,szLSVwext);
+	pszFilter = wcschr(pszFilter,L'\0');
+	wcscpy(++pszFilter,Locale_GetText(TEXT_DIALOG_SAVE_DOSDE));
+	pszFilter = wcschr(pszFilter,L'\0');
+	wcscpy(++pszFilter,szLSVwext);
 
-	ctx->pszProfile = Misc_StrCpyAlloc(pszProfile);
-	if (!ctx->pszProfile)
+	//--- Sélection du fichier ---
+
+	bResult = GetOpenFileName(&ofn);
+	if (!bResult)
+		{
+		HeapFree(App.hHeap,0,lpstrFile);
+		HeapFree(App.hHeap,0,lpstrFilter);
+		if (GetLastError() == ERROR_SUCCESS) return;
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
+	HeapFree(App.hHeap,0,lpstrFilter);
+
+	//--- Copie des informations ---
+
+	uLen  = uStrLen = wcslen(lpstrFile);
+	uLen -= ofn.nFileOffset;
+	uLen -= uStrLen-ofn.nFileExtension+1;
+	ctx->pszSaveName = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
+	if (!ctx->pszSaveName)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
 		Divine_ReleaseContext(ctx);
 		return;
+		}
+	CopyMemory(ctx->pszSaveName,lpstrFile+ofn.nFileOffset,uLen*sizeof(WCHAR));
+
+	ctx->uGame = ofn.nFilterIndex;
+	ctx->pszCustomSavePath = lpstrFile;
+
+	//--- Chargement ---
+
+	App.hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Divine_LoadThread,ctx,0,NULL);
+	if (!App.hThread)
+		{
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
+	return;
+}
+
+
+// «»»» Préparation du chargement «««««««««««««««««««««««««««««««««««««««»
+
+void Divine_Open(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath)
+{
+	DIVINECONTEXT*	ctx;
+
+	ctx = Divine_PrepareContext(TEXT_ERR_LOADING);
+	if (!ctx) return;
+
+	ctx->uGame = uGame;
+
+	if (pszProfile)
+		{
+		ctx->pszProfile = Misc_StrCpyAlloc(pszProfile);
+		if (!ctx->pszProfile)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+			Divine_ReleaseContext(ctx);
+			return;
+			}
 		}
 
 	ctx->pszSaveName = Misc_StrCpyAlloc(pszSaveName);
@@ -881,6 +981,18 @@ void Divine_Open(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName)
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
 		Divine_ReleaseContext(ctx);
 		return;
+		}
+
+	if (pszCustomSavePath)
+		{
+		ctx->pszCustomSavePath = Misc_StrCpyAlloc(pszCustomSavePath);
+		if (!ctx->pszCustomSavePath)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+			Divine_ReleaseContext(ctx);
+			return;
+			}
 		}
 
 	App.hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Divine_LoadThread,ctx,0,NULL);
@@ -922,17 +1034,26 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 			Game_BuildPlayers();
 			Game_UpdateButtons();
 			Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
-
-			LastFiles_Add(Divine_GetGameName(ctx->uGame),ctx->pszProfile,ctx->pszSaveName);
 			Misc_SetWindowText(App.hWnd,&App.pszWindowTitle,szTitle,szTitleFmt,szTitle,ctx->pszSaveName);
 
-			if (App.Config.pszProfile) HeapFree(App.hHeap,0,App.Config.pszProfile);
+			LastFiles_Add(ctx->uGame,ctx->pszProfile,ctx->pszSaveName,ctx->pszCustomSavePath);
+
 			CopyMemory(&App.Game.Save.ftLastWrite,&ctx->ftLastWrite,sizeof(FILETIME));
+			if (ctx->pszProfile)
+				{
+				if (App.Config.pszProfile) HeapFree(App.hHeap,0,App.Config.pszProfile);
+				App.Config.pszProfile = ctx->pszProfile;
+				ctx->pszProfile = NULL;
+				}
+
 			App.Config.uGame = ctx->uGame;
-			App.Config.pszProfile = ctx->pszProfile;
+
+			if (App.Game.Save.pszCustomSavePath) HeapFree(App.hHeap,0,App.Game.Save.pszCustomSavePath);
+			if (App.Game.Save.pszSaveName)  HeapFree(App.hHeap,0,App.Game.Save.pszSaveName);
+			App.Game.Save.pszCustomSavePath = ctx->pszCustomSavePath;
 			App.Game.Save.pszSaveName = ctx->pszSaveName;
-			ctx->pszProfile = NULL;
 			ctx->pszSaveName = NULL;
+			ctx->pszCustomSavePath = NULL;
 			}
 		}
 	else xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
@@ -957,43 +1078,25 @@ Done:	if (ctx->dwResult != ERROR_SUCCESS)
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-// «»»» Préparation de la sauvegarde ««««««««««««««««««««««««««««««««««««»
+// «»»» Création d'une sauvegarde particulière ««««««««««««««««««««««««««»
 
-void Divine_Write()
+void Divine_WriteAs()
 {
 	DIVINECONTEXT*	ctx;
+	IFileDialog*	pFileDialog;
+	IShellItem*	pItem;
+	WCHAR*		pszPath;
+	HRESULT		hr;
 
-	if (!App.Config.pszProfile || !App.Game.Save.pszSaveName) return;
+	ctx = Divine_PrepareContext(TEXT_ERR_SAVING);
+	if (!ctx) return;
 
-	if (App.hThread)
-		{
-		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_RUNNING),NULL,MB_ICONERROR);
-		return;
-		}
-
-	if (!PathFileExists(szDivineEXE))
-		{
-		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_MISSINGCONVERTER),NULL,MB_ICONERROR);
-		return;
-		}
-
-	ctx = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(DIVINECONTEXT));
-	if (!ctx)
-		{
-		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
-		return;
-		}
+	//--- Copie le jeu ciblé ---
 
 	ctx->uGame = App.Config.uGame;
-	ctx->pszProfile = Misc_StrCpyAlloc(App.Config.pszProfile);
-	if (!ctx->pszProfile)
-		{
-		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
-		Divine_ReleaseContext(ctx);
-		return;
-		}
+
+	//--- Copie du nom ---
+
 	ctx->pszSaveName = Misc_StrCpyAlloc(App.Game.Save.pszSaveName);
 	if (!ctx->pszSaveName)
 		{
@@ -1003,11 +1106,147 @@ void Divine_Write()
 		return;
 		}
 
-	if (Divine_IsSaveGameChanged(App.hWnd,Locale_GetText(TEXT_MODIFIED_SAVEGAME),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,&App.Game.Save.ftLastWrite))
+	//--- Sélection du répertoire cible ---
+
+	hr = CoCreateInstance(&CLSID_FileOpenDialog,NULL,CLSCTX_INPROC,&IID_IFileDialog,(void *)&pFileDialog);
+	if (SUCCEEDED(hr))
+		{
+		pFileDialog->lpVtbl->SetTitle(pFileDialog,Locale_GetText(TEXT_DIALOG_SAVE_LOCATION));
+		pFileDialog->lpVtbl->SetOptions(pFileDialog,FOS_PICKFOLDERS|FOS_FORCEFILESYSTEM);
+
+		if (App.Game.Save.pszCustomSavePath)
+			{
+			pszPath = Misc_StrCpyAlloc(App.Game.Save.pszCustomSavePath);
+			if (pszPath)
+				{
+				*(PathFindFileName(pszPath)) = 0;
+				hr = SHCreateItemFromParsingName(pszPath,NULL,&IID_IShellItem,(void *)&pItem);
+				if (SUCCEEDED(hr))
+					{
+					pFileDialog->lpVtbl->SetFolder(pFileDialog,pItem);
+					pItem->lpVtbl->Release(pItem);
+					}
+				HeapFree(App.hHeap,0,pszPath);
+				}
+			}
+
+		hr = pFileDialog->lpVtbl->Show(pFileDialog,NULL);
+		if (SUCCEEDED(hr))
+			{
+			hr = pFileDialog->lpVtbl->GetResult(pFileDialog,&pItem);
+			if (SUCCEEDED(hr))
+				{
+				hr = pItem->lpVtbl->GetDisplayName(pItem,SIGDN_FILESYSPATH,&pszPath);
+				if (SUCCEEDED(hr))
+					{
+					UINT uLen = wcslen(pszPath);
+					uLen += 1;
+					uLen += wcslen(ctx->pszSaveName);
+					uLen += wcslen(szLSVext);
+					uLen += 1;
+					ctx->pszCustomSavePath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR));
+					if (ctx->pszCustomSavePath)
+						{
+						wcscpy(ctx->pszCustomSavePath,pszPath);
+						PathAppend(ctx->pszCustomSavePath,ctx->pszSaveName);
+						wcscat(ctx->pszCustomSavePath,szLSVext);
+						}
+					else hr = E_OUTOFMEMORY;
+					CoTaskMemFree(pszPath);
+					}
+				pItem->lpVtbl->Release(pItem);
+				}
+			}
+		pFileDialog->lpVtbl->Release(pFileDialog);
+		}
+
+	if (hr == HRESULT_FROM_WIN32(ERROR_CANCELLED)) return;
+
+	if (FAILED(hr))
+		{
+		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
+	//--- Sauvegarde ---
+
+	App.hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Divine_SaveThread,ctx,0,NULL);
+	if (!App.hThread)
+		{
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
+	return;
+}
+
+
+// «»»» Préparation de la sauvegarde ««««««««««««««««««««««««««««««««««««»
+
+void Divine_Write()
+{
+	DIVINECONTEXT*	ctx;
+
+	if (!App.Game.Save.pszSaveName) return;
+	if (!App.Game.Save.pszCustomSavePath && !App.Config.pszProfile) return;
+
+	ctx = Divine_PrepareContext(TEXT_ERR_SAVING);
+	if (!ctx) return;
+
+	//--- Copie le jeu ciblé ---
+
+	ctx->uGame = App.Config.uGame;
+
+	//--- Copie du nom de profil (optionnel) ---
+
+	if (App.Config.pszProfile)
+		{
+		ctx->pszProfile = Misc_StrCpyAlloc(App.Config.pszProfile);
+		if (!ctx->pszProfile)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
+			Divine_ReleaseContext(ctx);
+			return;
+			}
+		}
+
+	//--- Copie du nom ---
+
+	ctx->pszSaveName = Misc_StrCpyAlloc(App.Game.Save.pszSaveName);
+	if (!ctx->pszSaveName)
+		{
+		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
+		Divine_ReleaseContext(ctx);
+		return;
+		}
+
+	//--- Copie de l'emplacement (optionnel) ---
+
+	if (App.Game.Save.pszCustomSavePath)
+		{
+		ctx->pszCustomSavePath = Misc_StrCpyAlloc(App.Game.Save.pszCustomSavePath);
+		if (!ctx->pszCustomSavePath)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_SAVING),NULL,MB_ICONERROR);
+			Divine_ReleaseContext(ctx);
+			return;
+			}
+		}
+
+	//--- Vérifie si la sauvegarde a été modifiée ---
+
+	if (Divine_IsSaveGameChanged(App.hWnd,Locale_GetText(TEXT_MODIFIED_SAVEGAME),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,App.Game.Save.pszCustomSavePath,&App.Game.Save.ftLastWrite))
 		{
 		Divine_ReleaseContext(ctx);
 		return;
 		}
+
+	//--- Sauvegarde ---
 
 	App.hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Divine_SaveThread,ctx,0,NULL);
 	if (!App.hThread)
@@ -1071,7 +1310,14 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 
 	#if !_DEBUG || !DIVINE_SIMULATION
 	ctx->dwResult = Divine_Execute(DIVINE_CREATEARCHIVE,ctx);
-	if (ctx->dwResult == ERROR_SUCCESS) CopyMemory(&App.Game.Save.ftLastWrite,&ctx->ftLastWrite,sizeof(FILETIME));
+	if (ctx->dwResult == ERROR_SUCCESS)
+		{
+		LastFiles_Add(ctx->uGame,ctx->pszProfile,ctx->pszSaveName,ctx->pszCustomSavePath);
+		CopyMemory(&App.Game.Save.ftLastWrite,&ctx->ftLastWrite,sizeof(FILETIME));
+		if (App.Game.Save.pszCustomSavePath) HeapFree(App.hHeap,0,App.Game.Save.pszCustomSavePath);
+		App.Game.Save.pszCustomSavePath = ctx->pszCustomSavePath;
+		ctx->pszCustomSavePath = NULL;
+		}
 	#else
 	#warning Save routine in simulation mode !
 	#endif
@@ -1091,6 +1337,36 @@ Done:	Status_SetText(Locale_GetText(TEXT_DONE));
 // ¤¤¤ Gestion								  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// «»»» Vérifications et initialisations de base ««««««««««««««««««««««««»
+
+DIVINECONTEXT* Divine_PrepareContext(UINT uErr)
+{
+	DIVINECONTEXT*	ctx;
+
+	if (App.hThread)
+		{
+		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_RUNNING),NULL,MB_ICONERROR);
+		return(NULL);
+		}
+
+	if (!PathFileExists(szDivineEXE))
+		{
+		MessageBox(App.hWnd,Locale_GetText(TEXT_ERR_MISSINGCONVERTER),NULL,MB_ICONERROR);
+		return(NULL);
+		}
+
+	ctx = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(DIVINECONTEXT));
+	if (!ctx)
+		{
+		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+		return(NULL);
+		}
+
+	return(ctx);
+}
+
 
 // «»»» Exécution d'une opération (divine.exe) ««««««««««««««««««««««««««»
 
@@ -1129,7 +1405,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 		case DIVINE_EXTRACTARCHIVE:
 			pszFmt = szDivineExtract;
 
-			vl[1] = (DWORD_PTR)Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName);
+			vl[1] = (DWORD_PTR)Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName,ctx->pszCustomSavePath);
 			if (!vl[1])
 				{
 				dwLastError = GetLastError();
@@ -1324,7 +1600,7 @@ Done:	if (dwLastError == ERROR_SUCCESS)
 				break;
 
 			case DIVINE_CREATEARCHIVE:
-				pszTemp = Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName);
+				pszTemp = Divine_GetSaveGamePath(ctx->uGame,ctx->pszProfile,ctx->pszSaveName,ctx->pszCustomSavePath);
 				if (pszTemp)
 					{
 					if (!MoveFileEx((WCHAR *)vl[2],pszTemp,MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING)) dwLastError = GetLastError();
@@ -1351,6 +1627,7 @@ Done:	if (dwLastError == ERROR_SUCCESS)
 void Divine_ReleaseContext(DIVINECONTEXT *ctx)
 {
 	if (!ctx) return;
+	if (ctx->pszCustomSavePath) HeapFree(App.hHeap,0,ctx->pszCustomSavePath);
 	if (ctx->pszSaveName) HeapFree(App.hHeap,0,ctx->pszSaveName);
 	if (ctx->pszProfile) HeapFree(App.hHeap,0,ctx->pszProfile);
 	if (ctx->pszPath) HeapFree(App.hHeap,0,ctx->pszPath);
@@ -1370,7 +1647,9 @@ void Divine_Close()
 	lsv_Release(&App.Game.Save.nodeFiles);
 	Divine_Cleanup();
 
+	if (App.Game.Save.pszCustomSavePath) HeapFree(App.hHeap,0,App.Game.Save.pszCustomSavePath);
 	if (App.Game.Save.pszSaveName) HeapFree(App.hHeap,0,App.Game.Save.pszSaveName);
+	App.Game.Save.pszCustomSavePath = NULL;
 	App.Game.Save.pszSaveName = NULL;
 
 	Game_Lock(GAME_LOCK_DISABLED|GAME_LOCK_FILE|GAME_LOCK_TREE);
@@ -1387,6 +1666,7 @@ void Divine_Cleanup()
 	pszPath = Divine_GetTempPath(1,szTempPath);
 	if (!pszPath) return;
 	Divine_CleanupLoop(pszPath);
+	RemoveDirectory(pszPath);
 	HeapFree(App.hHeap,0,pszPath);
 	return;
 }
@@ -1676,16 +1956,21 @@ void Divine_DrawLogLine(DRAWITEMSTRUCT *pDraw)
 
 // «»»» Vérifie que la sauvegarde n'a pas été modifiée ««««««««««««««««««»
 
-int Divine_IsSaveGameChanged(HWND hWnd, WCHAR *pszText, UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, FILETIME *pLastWrite)
+int Divine_IsSaveGameChanged(HWND hWnd, WCHAR *pszText, UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath, FILETIME *pLastWrite)
 {
 	FILETIME	ftLastWrite;
 	WCHAR*		pszPath;
 	int		iResult;
 
 	iResult = 1;
-	pszPath = Divine_GetSaveGamePath(uGame,pszProfile,pszSaveName);
+	pszPath = Divine_GetSaveGamePath(uGame,pszProfile,pszSaveName,pszCustomSavePath);
 	if (pszPath)
 		{
+		if (!PathFileExists(pszPath))
+			{
+			HeapFree(App.hHeap,0,pszPath);
+			return(0);
+			}
 		if (Misc_GetFileTime(pszPath,NULL,NULL,&ftLastWrite))
 			{
 			if (CompareFileTime(&ftLastWrite,pLastWrite))
@@ -1774,7 +2059,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 
 	//--- Calcul la taille totale du répertoire temporaire
 	va_start(vl,uNumPaths);
-	uLen = wcslen(App.Config.pszTempPath);
+	uLen = App.Config.pszTempPath?wcslen(App.Config.pszTempPath):1;
 	uNum = uNumPaths;
 	while (uNum)
 		{
@@ -1784,7 +2069,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 	va_end(vl);
 
 	//--- Alloue la mémoire pour le répertoire temporaire
-	pszPath = HeapAlloc(App.hHeap,0,uLen*sizeof(WCHAR)+sizeof(WCHAR));
+	pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
 	if (!pszPath)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
@@ -1793,7 +2078,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 
 	//--- Copie du répertoire temporaire
 	va_start(vl,uNumPaths);
-	wcscpy(pszPath,App.Config.pszTempPath);
+	if (App.Config.pszTempPath) wcscpy(pszPath,App.Config.pszTempPath);
 	while (uNumPaths)
 		{
 		PathAppend(pszPath,va_arg(vl,WCHAR *));
@@ -1805,35 +2090,49 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 
 // «»»» Recupère le chemin du fichier de sauvegarde «««««««««««««««««««««»
 
-WCHAR* Divine_GetSaveGamePath(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName)
+WCHAR* Divine_GetSaveGamePath(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath)
 {
 	WCHAR*	pszPath;
 	UINT	uLen;
 
-	uLen  = wcslen(App.Config.pszLarianPath)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(Divine_GetGameName(uGame))*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(szPlayerProfiles)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(pszProfile)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(szSavegames)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(szStory)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(pszSaveName)*sizeof(WCHAR);
-	uLen += sizeof(WCHAR)+wcslen(pszSaveName)*sizeof(WCHAR);
-	uLen += wcslen(szLSVext)*sizeof(WCHAR);
-	pszPath = HeapAlloc(App.hHeap,0,uLen+sizeof(WCHAR));
-	if (!pszPath)
+	if (pszCustomSavePath)
 		{
-		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		return(NULL);
+		uLen = wcslen(pszCustomSavePath);
+		pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
+		if (!pszPath)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			return(NULL);
+			}
+		wcscpy(pszPath,pszCustomSavePath);
 		}
-	wcscpy(pszPath,App.Config.pszLarianPath);
-	PathAppend(pszPath,Divine_GetGameName(uGame));
-	PathAppend(pszPath,szPlayerProfiles);
-	PathAppend(pszPath,pszProfile);
-	PathAppend(pszPath,szSavegames);
-	PathAppend(pszPath,szStory);
-	PathAppend(pszPath,pszSaveName);
-	PathAppend(pszPath,pszSaveName);
-	wcscat(pszPath,szLSVext);
+	else
+		{
+		uLen  = App.Config.pszLarianPath?(wcslen(App.Config.pszLarianPath)*sizeof(WCHAR)):0;
+		uLen += sizeof(WCHAR)+wcslen(Divine_GetGameName(uGame))*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(szPlayerProfiles)*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(pszProfile)*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(szSavegames)*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(szStory)*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(pszSaveName)*sizeof(WCHAR);
+		uLen += sizeof(WCHAR)+wcslen(pszSaveName)*sizeof(WCHAR);
+		uLen += wcslen(szLSVext)*sizeof(WCHAR);
+		pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen+sizeof(WCHAR));
+		if (!pszPath)
+			{
+			SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+			return(NULL);
+			}
+		if (App.Config.pszLarianPath) wcscpy(pszPath,App.Config.pszLarianPath);
+		PathAppend(pszPath,Divine_GetGameName(uGame));
+		PathAppend(pszPath,szPlayerProfiles);
+		PathAppend(pszPath,pszProfile);
+		PathAppend(pszPath,szSavegames);
+		PathAppend(pszPath,szStory);
+		PathAppend(pszPath,pszSaveName);
+		PathAppend(pszPath,pszSaveName);
+		wcscat(pszPath,szLSVext);
+		}
 
 	return(pszPath);
 }

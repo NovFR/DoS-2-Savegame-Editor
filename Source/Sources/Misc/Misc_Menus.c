@@ -479,7 +479,7 @@ void Menu_DrawItems(DRAWITEMSTRUCT *pDraw)
 		rcText.top = pDraw->rcItem.top;
 		rcText.right = pDraw->rcItem.right-MENU_RIGHTPADDING;
 		rcText.bottom = pDraw->rcItem.bottom;
-		DrawText(pDraw->hDC,pMenuItem->pszText,-1,&rcText,DT_LEFT|DT_PATH_ELLIPSIS|DT_SINGLELINE|DT_VCENTER);
+		DrawText(pDraw->hDC,pMenuItem->pszText,-1,&rcText,DT_LEFT|DT_END_ELLIPSIS|DT_SINGLELINE|DT_VCENTER);
 		}
 
 	else DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pMenuItem->pszText,0,(pMenuItem->uSpecialFlags&MENU_FLAG_NOICON)?(pDraw->rcItem.left+8):X,Y,pDraw->rcItem.right-pDraw->rcItem.left,pDraw->rcItem.bottom-pDraw->rcItem.top,DST_PREFIXTEXT|uTextFlags);

@@ -125,12 +125,12 @@ int Infos_LoadMetaDatas(HWND hWnd)
 
 	//--- Vérifie si la sauvegarde a été modifiée ---
 
-	if (Divine_IsSaveGameChanged(hWnd,Locale_GetText(TEXT_MODIFIED_SGMETA),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,&App.Game.Save.ftLastWrite))
+	if (Divine_IsSaveGameChanged(hWnd,Locale_GetText(TEXT_MODIFIED_SGMETA),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,App.Game.Save.pszCustomSavePath,&App.Game.Save.ftLastWrite))
 		return(0);
 
 	//--- Unpack LSV ---
 
-	pszPath = Divine_GetSaveGamePath(App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName);
+	pszPath = Divine_GetSaveGamePath(App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,App.Game.Save.pszCustomSavePath);
 	if (!pszPath)
 		{
 		Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_METADATAS),NULL,MB_ICONERROR,Locale_GetText(TEXT_ERR_NOMEMORY));

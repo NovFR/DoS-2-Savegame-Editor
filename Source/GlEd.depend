@@ -3,22 +3,24 @@
 	"_Global.h"
 	"_Version.h"
 
-1593075565 f:\programmation\sources\jeux\divinity original sin ii\includes\_global.h
+1597329723 f:\programmation\sources\jeux\divinity original sin ii\includes\_global.h
 	<windows.h>
 	<windowsx.h>
+	<initguid.h>
 	<shlobj.h>
 	<shlwapi.h>
+	<shobjidl.h>
 	<commctrl.h>
 	<stdio.h>
 
-1593079427 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
+1597148696 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
 
-1593057815 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
+1597338986 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
 	"Application.h"
 	"Game.h"
 	"Menus.h"
 
-1593075764 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
+1597317635 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
 	"_Global.h"
 	"SQLite3.h"
 	"Locale.h"
@@ -31,30 +33,30 @@
 1593069188 f:\programmation\sources\jeux\divinity original sin ii\sources\libs\sqlite3\includes\sqlite3.h
 	<stdarg.h>
 
-1593055026 f:\programmation\sources\jeux\divinity original sin ii\includes\locale.h
+1597347279 f:\programmation\sources\jeux\divinity original sin ii\includes\locale.h
 	"Lists.h"
 
 1549383208 f:\programmation\sources\jeux\divinity original sin ii\includes\lists.h
 
-1592914304 f:\programmation\sources\jeux\divinity original sin ii\includes\config.h
+1597347450 f:\programmation\sources\jeux\divinity original sin ii\includes\config.h
 	"Locale.h"
 
 1550580781 f:\programmation\sources\jeux\divinity original sin ii\includes\font.h
 
-1580546868 f:\programmation\sources\jeux\divinity original sin ii\includes\appwindows.h
+1595925946 f:\programmation\sources\jeux\divinity original sin ii\includes\appwindows.h
 	"XML.h"
 
-1574007168 f:\programmation\sources\jeux\divinity original sin ii\includes\xml.h
+1593424002 f:\programmation\sources\jeux\divinity original sin ii\includes\xml.h
 	"Lists.h"
 
-1573878263 f:\programmation\sources\jeux\divinity original sin ii\includes\xmltree.h
+1593418362 f:\programmation\sources\jeux\divinity original sin ii\includes\xmltree.h
 
-1592917772 f:\programmation\sources\jeux\divinity original sin ii\includes\game.h
+1596114530 f:\programmation\sources\jeux\divinity original sin ii\includes\game.h
 	"XML.h"
 
 1550548183 f:\programmation\sources\jeux\divinity original sin ii\includes\menus.h
 
-1593057701 source:f:\programmation\sources\jeux\divinity original sin ii\sources\datas\datas_texts.c
+1597351230 source:f:\programmation\sources\jeux\divinity original sin ii\sources\datas\datas_texts.c
 	"_Global.h"
 
 1574103217 source:f:\programmation\sources\jeux\divinity original sin ii\sources\files\files_lsf.c
@@ -83,9 +85,9 @@
 
 1523697809 f:\programmation\sources\jeux\divinity original sin ii\includes\requests.h
 
-1593057718 f:\programmation\sources\jeux\divinity original sin ii\includes\texts.h
+1597351267 f:\programmation\sources\jeux\divinity original sin ii\includes\texts.h
 
-1574115036 f:\programmation\sources\jeux\divinity original sin ii\includes\utils.h
+1595924813 f:\programmation\sources\jeux\divinity original sin ii\includes\utils.h
 
 1574103430 source:f:\programmation\sources\jeux\divinity original sin ii\sources\files\files_lsv.c
 	"Application.h"
@@ -130,12 +132,12 @@
 	"Menus.h"
 	"Requests.h"
 
-1578621591 f:\programmation\sources\jeux\divinity original sin ii\includes\gameedit.h
+1593411797 f:\programmation\sources\jeux\divinity original sin ii\includes\gameedit.h
 	"Game.h"
 
 1593057540 f:\programmation\sources\jeux\divinity original sin ii\includes\dialogs.h
 
-1573748965 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_bonuses.c
+1596659276 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_bonuses.c
 	"Application.h"
 	"GameEdit.h"
 	"Dialogs.h"
@@ -143,7 +145,7 @@
 	"Utils.h"
 	"Texts.h"
 
-1576336117 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_setvalue.c
+1596112026 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_setvalue.c
 	"Application.h"
 	"GameEdit.h"
 	"Requests.h"
@@ -165,7 +167,7 @@
 	"Dialogs.h"
 	"Texts.h"
 
-1574045769 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_talents.c
+1593409958 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_talents.c
 	"Application.h"
 	"Divine.h"
 	"Requests.h"
@@ -173,7 +175,7 @@
 	"Utils.h"
 	"Texts.h"
 
-1574115648 f:\programmation\sources\jeux\divinity original sin ii\includes\divine.h
+1597355307 f:\programmation\sources\jeux\divinity original sin ii\includes\divine.h
 	"GameEdit.h"
 
 1550589851 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_datas.c
@@ -185,7 +187,7 @@
 	"Texts.h"
 	"Locale.h"
 
-1593057958 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_display.c
+1596111847 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_display.c
 	"Application.h"
 	"Locale.h"
 	"Texts.h"
@@ -193,7 +195,7 @@
 	"Utils.h"
 	"Dialogs.h"
 
-1574117713 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_divine.c
+1597355333 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_divine.c
 	"Application.h"
 	"Locale.h"
 	"Texts.h"
@@ -208,10 +210,10 @@
 
 1574049555 f:\programmation\sources\jeux\divinity original sin ii\includes\infos.h
 
-1550618407 f:\programmation\sources\jeux\divinity original sin ii\includes\lastfiles.h
+1597362255 f:\programmation\sources\jeux\divinity original sin ii\includes\lastfiles.h
 	"Menus.h"
 
-1593057730 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_edit.c
+1593428187 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_edit.c
 	"Application.h"
 	"GameEdit.h"
 	"Locale.h"
@@ -220,7 +222,7 @@
 	"Utils.h"
 	"Texts.h"
 
-1574117386 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_infos.c
+1597355342 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_infos.c
 	"Application.h"
 	"Divine.h"
 	"Files.h"
@@ -231,7 +233,7 @@
 	"Utils.h"
 	"Requests.h"
 
-1593015697 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_manager.c
+1597339475 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_manager.c
 	"Application.h"
 	"Locale.h"
 	"Texts.h"
@@ -254,7 +256,7 @@
 
 1574054938 f:\programmation\sources\jeux\divinity original sin ii\includes\mods.h
 
-1580668792 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_xml.c
+1597322304 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_xml.c
 	"Application.h"
 	"XML.h"
 	"XMLTree.h"
@@ -273,7 +275,7 @@
 
 1593055784 f:\programmation\sources\jeux\divinity original sin ii\includes\about.h
 
-1592915390 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_config.c
+1597347406 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_config.c
 	"_Global.h"
 	"Application.h"
 	"Locale.h"
@@ -296,7 +298,7 @@
 	"Texts.h"
 	"Utils.h"
 
-1593070659 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_startup.c
+1597330379 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_startup.c
 	"Application.h"
 	"Startup.h"
 	"Texts.h"
@@ -314,7 +316,7 @@
 	"_Global.h"
 	"Application.h"
 
-1551117330 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_lastfiles.c
+1597360068 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_lastfiles.c
 	"_Global.h"
 	"Application.h"
 	"LastFiles.h"
@@ -323,13 +325,14 @@
 	"Divine.h"
 	"Requests.h"
 	"Texts.h"
+	"Utils.h"
 
-1550000945 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_lists.c
+1593425911 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_lists.c
 	"_Global.h"
 	"Application.h"
 	"Lists.h"
 
-1550548083 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_menus.c
+1597355583 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_menus.c
 	"_Global.h"
 	"Application.h"
 	"Locale.h"
@@ -341,7 +344,7 @@
 	"Requests.h"
 	"Texts.h"
 
-1580716303 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_utils.c
+1595924813 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_utils.c
 	"Application.h"
 	"Utils.h"
 	"Texts.h"
@@ -351,7 +354,7 @@
 	"Locale.h"
 	"Texts.h"
 
-1573879256 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
+1593423029 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
 	"Application.h"
 	"XML.h"
 	"XMLTree.h"
@@ -359,7 +362,7 @@
 	"Requests.h"
 	"Utils.h"
 
-1593055802 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
+1597338972 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
 	"Application.h"
 	"About.h"
 	"Texts.h"
@@ -372,4 +375,8 @@
 	"Divine.h"
 	"GameEdit.h"
 	"Utils.h"
+
+1593080148 source:f:\programmation\sources\jeux\divinity original sin ii\sources\files\files_png.c
+	"Application.h"
+	"Files.h"
 

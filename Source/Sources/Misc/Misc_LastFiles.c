@@ -19,6 +19,7 @@
 #include "Divine.h"
 #include "Requests.h"
 #include "Texts.h"
+#include "Utils.h"
 
 extern APPLICATION		App;
 
@@ -50,7 +51,10 @@ void LastFiles_ReleaseAll()
 
 void LastFiles_Release(LASTFILE *pFile)
 {
-	if (pFile->pszPath) HeapFree(App.hHeap,0,pFile->pszPath);
+	if (pFile->pszProfile) HeapFree(App.hHeap,0,pFile->pszProfile);
+	if (pFile->pszSaveName) HeapFree(App.hHeap,0,pFile->pszSaveName);
+	if (pFile->pszCustomSavePath) HeapFree(App.hHeap,0,pFile->pszCustomSavePath);
+	if (pFile->pszDisplay) HeapFree(App.hHeap,0,pFile->pszDisplay);
 	HeapFree(App.hHeap,0,pFile);
 	return;
 }
@@ -58,46 +62,65 @@ void LastFiles_Release(LASTFILE *pFile)
 
 // «»»» Ajoute un fichier «««««««««««««««««««««««««««««««««««««««««««««««»
 
-void LastFiles_Add(WCHAR *pszGame, WCHAR *pszProfile, WCHAR *pszSaveName)
+void LastFiles_Add(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath)
 {
 	LASTFILE*	pFile;
-	WCHAR*		pszNext;
-	UINT		uGameLen = wcslen(pszGame);
-	UINT		uProfileLen = wcslen(pszProfile);
+	UINT		uCustomLen = 0;
+	UINT		uProfileLen = 0;
+	UINT		uSaveLen = 0;
+	UINT		uLen;
 
 	//--- Vérifie que le fichier n'existe pas déjà dans la liste ---
 
+	if (pszCustomSavePath) uCustomLen = wcslen(pszCustomSavePath);
+	if (pszProfile) uProfileLen = wcslen(pszProfile);
+	uSaveLen = wcslen(pszSaveName);
+
 	for (pFile = (LASTFILE *)App.nodeLastFiles.next; pFile != NULL; pFile = (LASTFILE *)pFile->node.next)
 		{
-		if (wcsncmp(pFile->pszPath,pszGame,uGameLen)) continue;
-		pszNext = wcschr(pFile->pszPath,L'\\');
-		if (!pszNext++) continue;
-		if (wcsncmp(pszNext,pszProfile,uProfileLen)) continue;
-		pszNext = wcschr(pszNext,L'\\');
-		if (!pszNext++) continue;
-		if (wcscmp(pszNext,pszSaveName)) continue;
+		if (pFile->uGame != uGame) continue;
+
+		if (pszCustomSavePath)
+			{
+			if (!pFile->pszCustomSavePath) continue;
+			if (wcsncmp(pFile->pszCustomSavePath,pszCustomSavePath,uCustomLen)) continue;
+			return;
+			}
+
+		if (pszProfile)
+			{
+			if (!pFile->pszProfile) continue;
+			if (wcsncmp(pFile->pszProfile,pszProfile,uProfileLen)) continue;
+			}
+
+		if (wcsncmp(pFile->pszSaveName,pszSaveName,uSaveLen)) continue;
 		return;
 		}
 
-	//--- Copie le chemin et le nom du fichier ---
+	//--- Ajoute la nouvelle entrée ---
 
 	pFile = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LASTFILE));
 	if (!pFile) return;
 
-	pFile->pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,wcslen(pszGame)*sizeof(WCHAR)+sizeof(WCHAR)+wcslen(pszProfile)*sizeof(WCHAR)+sizeof(WCHAR)+wcslen(pszSaveName)*sizeof(WCHAR)+sizeof(WCHAR));
-	if (!pFile->pszPath)
+	pFile->uGame = uGame;
+	pFile->pszSaveName = Misc_StrCpyAlloc(pszSaveName);
+	if (!pFile->pszSaveName) goto Failed;
+
+	if (uCustomLen)
 		{
-		LastFiles_Release(pFile);
-		return;
+		pFile->pszCustomSavePath = Misc_StrCpyAlloc(pszCustomSavePath);
+		if (!pFile->pszCustomSavePath) goto Failed;
+		}
+	else if (uProfileLen)
+		{
+		pFile->pszProfile = Misc_StrCpyAlloc(pszProfile);
+		if (!pFile->pszProfile) goto Failed;
 		}
 
-	wcscpy(pFile->pszPath,pszGame);
-	wcscat(pFile->pszPath,L"\\");
-	wcscat(pFile->pszPath,pszProfile);
-	wcscat(pFile->pszPath,L"\\");
-	wcscat(pFile->pszPath,pszSaveName);
-
-	//--- Ajoute l'entrée à la fin ---
+	uLen = LastFiles_SetDisplayText(NULL,pFile);
+	pFile->pszDisplay = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
+	if (!pFile->pszDisplay) goto Failed;
+	LastFiles_SetDisplayText(pFile->pszDisplay,pFile);
 
 	List_AddEntry((NODE *)pFile,&App.nodeLastFiles);
 	LastFiles_InsertMenuItem(pFile);
@@ -113,6 +136,9 @@ void LastFiles_Add(WCHAR *pszGame, WCHAR *pszProfile, WCHAR *pszSaveName)
 		}
 
 	LastFiles_SaveList();
+	return;
+
+Failed:	HeapFree(App.hHeap,0,pFile);
 	return;
 }
 
@@ -167,8 +193,8 @@ void LastFiles_InsertMenuItem(LASTFILE *pFile)
 
 	pFile->cMenu.uType = MENU_ITEM;
 	pFile->cMenu.uId = IDM_LASTFILES+lCount-1;
-	pFile->cMenu.pszText = pFile->pszPath;
-	pFile->cMenu.uTextLen = wcslen(pFile->pszPath);
+	pFile->cMenu.pszText = pFile->pszDisplay;
+	pFile->cMenu.uTextLen = wcslen(pFile->pszDisplay);
 	pFile->cMenu.uSpecialFlags = MENU_FLAG_FILENAME;
 
 	MenuItem.cbSize = sizeof(MENUITEMINFO);
@@ -192,7 +218,7 @@ void LastFiles_InsertMenuItem(LASTFILE *pFile)
 
 void LastFiles_AppendItems()
 {
-	LASTFILE*	pLastFile;
+	LASTFILE*	pFile;
 	MENUITEMINFO	MenuItem;
 	HMENU		hSubMenu;
 	LONG		lCount;
@@ -203,13 +229,13 @@ void LastFiles_AppendItems()
 	GetMenuItemInfo(App.hMenu,MENU_RECENT,FALSE,&MenuItem);
 	hSubMenu = MenuItem.hSubMenu;
 
-	for (lCount = 0, pLastFile = (LASTFILE *)App.nodeLastFiles.next; pLastFile != NULL; pLastFile = (LASTFILE *)pLastFile->node.next, lCount++)
+	for (lCount = 0, pFile = (LASTFILE *)App.nodeLastFiles.next; pFile != NULL; pFile = (LASTFILE *)pFile->node.next, lCount++)
 		{
 		MenuItem.fMask = MIIM_TYPE|MIIM_STATE|MIIM_ID|MIIM_DATA;
 		MenuItem.fType = MFT_OWNERDRAW;
 		MenuItem.fState = 0;
 		MenuItem.wID = IDM_LASTFILES+lCount;
-		MenuItem.dwItemData = (ULONG_PTR)&pLastFile->cMenu;
+		MenuItem.dwItemData = (ULONG_PTR)&pFile->cMenu;
 		MenuItem.dwTypeData = NULL;
 		InsertMenuItem(hSubMenu,lCount,TRUE,&MenuItem);
 		}
@@ -226,36 +252,28 @@ void LastFiles_AppendItems()
 
 void LastFiles_RemoveObsolete()
 {
-	LASTFILE*	pLastFile;
+	LASTFILE*	pFile;
 	LASTFILE*	pNext;
-	UINT		uGame;
-	WCHAR*		pszProfile;
-	WCHAR*		pszSaveName;
 	WCHAR*		pszPath;
 	UINT		uCount;
 	BOOL		bExists;
 
-	for (uCount = 0, pLastFile = (LASTFILE *)App.nodeLastFiles.next; pLastFile != NULL; pLastFile = pNext)
+	for (uCount = 0, pFile = (LASTFILE *)App.nodeLastFiles.next; pFile != NULL; pFile = pNext)
 		{
-		pNext = (LASTFILE *)pLastFile->node.next;
-
+		pNext = (LASTFILE *)pFile->node.next;
 		bExists = FALSE;
-		if (LastFiles_Explode(pLastFile->pszPath,&uGame,&pszProfile,&pszSaveName))
+
+		pszPath = Divine_GetSaveGamePath(pFile->uGame,pFile->pszProfile,pFile->pszSaveName,pFile->pszCustomSavePath);
+		if (pszPath)
 			{
-			pszPath = Divine_GetSaveGamePath(uGame,pszProfile,pszSaveName);
-			if (pszPath)
-				{
-				if (PathFileExists(pszPath)) bExists = TRUE;
-				HeapFree(App.hHeap,0,pszPath);
-				}
-			HeapFree(App.hHeap,0,pszProfile);
-			HeapFree(App.hHeap,0,pszSaveName);
+			if (PathFileExists(pszPath)) bExists = TRUE;
+			HeapFree(App.hHeap,0,pszPath);
 			}
 		if (bExists) continue;
 
-		LastFiles_RemoveMenuItem(pLastFile);
-		List_RemEntry((NODE *)pLastFile);
-		LastFiles_Release(pLastFile);
+		LastFiles_RemoveMenuItem(pFile);
+		List_RemEntry((NODE *)pFile);
+		LastFiles_Release(pFile);
 		uCount++;
 		}
 
@@ -275,11 +293,11 @@ void LastFiles_RemoveObsolete()
 
 void LastFiles_RemoveAll()
 {
-	LASTFILE*	pLastFile;
+	LASTFILE*	pFile;
 
 	if (MessageBox(App.hWnd,Locale_GetText(TEXT_REMOVE_ALL),Locale_GetText(TEXT_TITLE_REQUEST),MB_ICONQUESTION|MB_YESNO) != IDYES) return;
 
-	for (pLastFile = (LASTFILE *)App.nodeLastFiles.next; pLastFile != NULL; pLastFile = (LASTFILE *)pLastFile->node.next) DeleteMenu(App.hMenu,pLastFile->cMenu.uId,MF_BYCOMMAND);
+	for (pFile = (LASTFILE *)App.nodeLastFiles.next; pFile != NULL; pFile = (LASTFILE *)pFile->node.next) DeleteMenu(App.hMenu,pFile->cMenu.uId,MF_BYCOMMAND);
 	LastFiles_ReleaseAll();
 	EnableMenuItem(App.hMenu,IDM_RECENTREMOVEOBSOLETE,MF_BYCOMMAND|MF_GRAYED);
 	EnableMenuItem(App.hMenu,IDM_RECENTREMOVEALL,MF_BYCOMMAND|MF_GRAYED);
@@ -299,11 +317,12 @@ void LastFiles_RemoveAll()
 
 void LastFiles_LoadList()
 {
-	LASTFILE*	pLastFile;
+	LASTFILE*	pFile;
 	FILEHEADER	Header;
 	HANDLE		hFile;
 	DWORD		dwBytes;
 	DWORD		dwValue;
+	UINT		uLen;
 
 	if (!PathFileExists(szLastFilesPath)) return;
 
@@ -319,38 +338,87 @@ void LastFiles_LoadList()
 	ReadFile(hFile,&Header,sizeof(FILEHEADER),&dwBytes,NULL);
 	if (dwBytes != sizeof(FILEHEADER)) goto Done;
 	if (Header.head != FILE_HEADER_LASTFILES) goto Done;
-	if (Header.version != 1) goto Done;
+	if (Header.version > LASTFILES_VERSION) goto Done;
 
 	do {
 
-		ReadFile(hFile,&dwValue,sizeof(DWORD),&dwBytes,NULL);
-		if (dwBytes != sizeof(DWORD)) break;
+		pFile = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LASTFILE));
+		if (!pFile) break;
 
-		pLastFile = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LASTFILE));
-		if (!pLastFile) break;
-		pLastFile->pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,dwValue+sizeof(WCHAR));
-		if (!pLastFile->pszPath)
+		//--- Version 1 ---
+		if (Header.version == 1)
 			{
-			HeapFree(App.hHeap,0,pLastFile);
-			break;
+			WCHAR*	pszPath;
+
+			ReadFile(hFile,&dwValue,sizeof(DWORD),&dwBytes,NULL);
+			if (dwBytes != sizeof(DWORD)) break;
+
+			pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,dwValue+sizeof(WCHAR));
+			if (!pszPath) break;
+
+			ReadFile(hFile,pszPath,dwValue,&dwBytes,NULL);
+			if (dwBytes != dwValue)
+				{
+				HeapFree(App.hHeap,0,pszPath);
+				break;
+				}
+			LastFiles_Explode(pszPath,&pFile->uGame,&pFile->pszProfile,&pFile->pszSaveName);
+			HeapFree(App.hHeap,0,pszPath);
 			}
-		ReadFile(hFile,pLastFile->pszPath,dwValue,&dwBytes,NULL);
-		if (dwBytes != dwValue)
+		//--- Version 2 ---
+		else if (Header.version == 2)
 			{
-			HeapFree(App.hHeap,0,pLastFile->pszPath);
-			HeapFree(App.hHeap,0,pLastFile);
-			break;
+			if (!LastFiles_LoadData(hFile,LASTFILE_DATA_UINT,(void **)&pFile->uGame)) break;
+			if (!LastFiles_LoadData(hFile,LASTFILE_DATA_WCHAR,(void **)&pFile->pszProfile)) break;
+			if (!LastFiles_LoadData(hFile,LASTFILE_DATA_WCHAR,(void **)&pFile->pszSaveName)) break;
+			if (!LastFiles_LoadData(hFile,LASTFILE_DATA_WCHAR,(void **)&pFile->pszCustomSavePath)) break;
 			}
-		List_AddEntry((NODE *)pLastFile,&App.nodeLastFiles);
-		LastFiles_InsertMenuItem(pLastFile);
+
+		uLen = LastFiles_SetDisplayText(NULL,pFile);
+		pFile->pszDisplay = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
+		if (!pFile->pszDisplay) break;
+		LastFiles_SetDisplayText(pFile->pszDisplay,pFile);
+
+		List_AddEntry((NODE *)pFile,&App.nodeLastFiles);
+		LastFiles_InsertMenuItem(pFile);
+		pFile = NULL;
 
 	} while (--Header.size);
+
+	if (pFile) LastFiles_Release(pFile);
 
 	//--- Terminé ---
 
 Done:	if (hFile != INVALID_HANDLE_VALUE) CloseHandle(hFile);
 	SetLastError(ERROR_SUCCESS);
 	return;
+}
+
+//--- Chargement d'une donnée ---
+
+BOOL LastFiles_LoadData(HANDLE hFile, UINT uType, void **pData)
+{
+	DWORD	dwLen;
+	DWORD	dwBytes;
+
+	switch(uType)
+		{
+		case LASTFILE_DATA_UINT:
+			ReadFile(hFile,pData,sizeof(UINT),&dwBytes,NULL);
+			if (dwBytes != sizeof(UINT)) return(FALSE);
+			break;
+		case LASTFILE_DATA_WCHAR:
+			ReadFile(hFile,&dwLen,sizeof(DWORD),&dwBytes,NULL);
+			if (dwBytes != sizeof(DWORD)) return(FALSE);
+			if (!dwLen) return(TRUE);
+			*pData = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,dwLen*sizeof(WCHAR)+sizeof(WCHAR));
+			if (!*pData) return(FALSE);
+			ReadFile(hFile,*pData,dwLen*sizeof(WCHAR),&dwBytes,NULL);
+			if (dwBytes != dwLen*sizeof(WCHAR)) return(FALSE);
+			break;
+		}
+
+	return(TRUE);
 }
 
 
@@ -361,9 +429,6 @@ void LastFiles_SaveList()
 	LASTFILE*	pLastFile;
 	HANDLE		hFile;
 	DWORD		dwBytes;
-	DWORD		dwSize;
-	DWORD		dwLen;
-	DWORD		dwPad;
 	FILEHEADER	Header;
 
 	if (List_EntryCount(&App.nodeLastFiles) == 0)
@@ -381,20 +446,16 @@ void LastFiles_SaveList()
 		}
 
 	Header.head = FILE_HEADER_LASTFILES;
-	Header.version = 1;
+	Header.version = LASTFILES_VERSION;
 	Header.size = List_EntryCount(&App.nodeLastFiles);
 	if (!WriteFile(hFile,&Header,sizeof(FILEHEADER),&dwBytes,NULL)) goto Write_Error;
 
-	for (dwPad = 0, pLastFile = (LASTFILE *)App.nodeLastFiles.next; pLastFile != NULL; pLastFile = (LASTFILE *)pLastFile->node.next)
+	for (pLastFile = (LASTFILE *)App.nodeLastFiles.next; pLastFile != NULL; pLastFile = (LASTFILE *)pLastFile->node.next)
 		{
-		dwLen = wcslen(pLastFile->pszPath);
-		dwSize = dwLen*sizeof(WCHAR);
-		dwSize += dwSize%sizeof(DWORD);
-		if (!WriteFile(hFile,&dwSize,sizeof(DWORD),&dwBytes,NULL)) goto Write_Error;
-		if (!WriteFile(hFile,pLastFile->pszPath,dwLen*sizeof(WCHAR),&dwBytes,NULL)) goto Write_Error;
-		dwSize = (dwLen*sizeof(WCHAR))%sizeof(DWORD);
-		if (!dwSize) continue;
-		if (!WriteFile(hFile,&dwPad,dwSize,&dwBytes,NULL)) goto Write_Error;
+		if (!LastFiles_SaveData(hFile,LASTFILE_DATA_UINT,pLastFile->uGame)) goto Write_Error;
+		if (!LastFiles_SaveData(hFile,LASTFILE_DATA_WCHAR,pLastFile->pszProfile)) goto Write_Error;
+		if (!LastFiles_SaveData(hFile,LASTFILE_DATA_WCHAR,pLastFile->pszSaveName)) goto Write_Error;
+		if (!LastFiles_SaveData(hFile,LASTFILE_DATA_WCHAR,pLastFile->pszCustomSavePath)) goto Write_Error;
 		}
 
 	CloseHandle(hFile);
@@ -407,25 +468,60 @@ Write_Error:
 	return;
 }
 
+//--- Sauvegarde d'une donnée ---
+
+BOOL LastFiles_SaveData(HANDLE hFile, UINT uType, ...)
+{
+	DWORD	dwBytes;
+	DWORD	dwLen;
+	UINT	uData;
+	WCHAR*	pszData;
+	BOOL	bResult = TRUE;
+	va_list	vl;
+
+	//--- Écriture des données
+
+	va_start(vl,uType);
+
+	switch(uType)
+		{
+		case LASTFILE_DATA_UINT:
+			uData = va_arg(vl,UINT);
+			bResult = WriteFile(hFile,&uData,sizeof(UINT),&dwBytes,NULL);
+			break;
+
+		case LASTFILE_DATA_WCHAR:
+			pszData = va_arg(vl,WCHAR *);
+			if (pszData)
+				{
+				dwLen = wcslen(pszData);
+				bResult = WriteFile(hFile,&dwLen,sizeof(DWORD),&dwBytes,NULL);
+				if (!bResult) break;
+				bResult = WriteFile(hFile,pszData,dwLen*sizeof(WCHAR),&dwBytes,NULL);
+				}
+			else
+				{
+				dwLen = 0;
+				bResult = WriteFile(hFile,&dwLen,sizeof(DWORD),&dwBytes,NULL);
+				}
+			break;
+		}
+
+	va_end(vl);
+	return(bResult);
+}
+
 
 // «»»» Recharge un fichier récent ««««««««««««««««««««««««««««««««««««««»
 
 void LastFiles_Reload(UINT uId)
 {
 	LASTFILE*	pFile;
-	UINT		uGame;
-	WCHAR*		pszProfile;
-	WCHAR*		pszSaveName;
 
 	for (pFile = (LASTFILE *)App.nodeLastFiles.next; pFile != NULL; pFile = (LASTFILE *)pFile->node.next) if (pFile->cMenu.uId == uId) break;
 	if (!pFile) return;
 
-	if (LastFiles_Explode(pFile->pszPath,&uGame,&pszProfile,&pszSaveName))
-		{
-		Divine_Open(uGame,pszProfile,pszSaveName);
-		HeapFree(App.hHeap,0,pszProfile);
-		HeapFree(App.hHeap,0,pszSaveName);
-		}
+	Divine_Open(pFile->uGame,pFile->pszProfile,pFile->pszSaveName,pFile->pszCustomSavePath);
 	return;
 }
 
@@ -458,4 +554,51 @@ int LastFiles_Explode(WCHAR *pszPath, UINT *puGame, WCHAR **pszProfilePtr, WCHAR
 	wcscpy(*pszSaveNamePtr,pszSaveName);
 
 	return(1);
+}
+
+
+// «»»» Texte pour affichage ««««««««««««««««««««««««««««««««««««««««««««»
+
+int LastFiles_SetDisplayText(WCHAR *pszText, LASTFILE *pFile)
+{
+	UINT	uLen;
+
+	//--- Save name
+
+	if (pszText) wcscpy(pszText,pFile->pszSaveName);
+	uLen = wcslen(pFile->pszSaveName);
+
+	//--- Profile
+
+	if (pFile->pszProfile)
+		{
+		if (pszText)
+			{
+			wcscat(pszText,L" (");
+			wcscat(pszText,pFile->pszProfile);
+			wcscat(pszText,L")");
+			}
+		uLen += wcslen(pFile->pszProfile);
+		uLen += 3;
+		}
+
+	//--- Game
+
+	if (pszText) wcscat(pszText,pFile->uGame == 2?szDefinitiveEdition:szStandardEdition);
+	uLen+= wcslen(pFile->uGame == 2?szDefinitiveEdition:szStandardEdition);
+
+	//--- Path
+
+	if (pFile->pszCustomSavePath)
+		{
+		if (pszText)
+			{
+			wcscat(pszText,L" - ");
+			wcscat(pszText,pFile->pszCustomSavePath);
+			}
+		uLen += wcslen(pFile->pszCustomSavePath);
+		uLen += 3;
+		}
+
+	return(uLen);
 }

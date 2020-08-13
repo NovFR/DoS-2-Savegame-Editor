@@ -67,6 +67,9 @@ extern WCHAR	szGlobalsLSF[];
 extern WCHAR	szGlobalsLSX[];
 extern WCHAR	szLSVext[];
 extern WCHAR	szPNGext[];
+extern WCHAR	szLSVwext[];
+extern WCHAR	szDefinitiveEdition[];
+extern WCHAR	szStandardEdition[];
 
 extern WCHAR	szLastFilesPath[];
 extern WCHAR	szConfigPath[];
@@ -82,6 +85,7 @@ extern WCHAR	szLangIcoPath[];
 extern WCHAR	szDOS2PNGPath[];
 extern WCHAR	szDOS2EEPNGPath[];
 extern WCHAR	szLangDefault[];
+extern WCHAR	szWarning[];
 extern WCHAR	szConfigErr[];
 extern WCHAR	szConfigLoadErr[];
 extern WCHAR	szLocaleFatalErr[];
@@ -89,6 +93,10 @@ extern WCHAR	szLocaleErr[];
 extern WCHAR	szSQLiteErr[];
 extern WCHAR	szLocaleMissingAppErr[];
 extern WCHAR	szLocaleLangErr[];
+extern WCHAR	szConfigCustSaveLocationErr[];
+extern WCHAR	szConfigCustTempLocationErr[];
+extern WCHAR	szConfigSaveLocationErr[];
+extern WCHAR	szConfigTempLocationErr[];
 
 extern WCHAR	szDataBaseRunes[];
 extern WCHAR	szDataBaseTags[];

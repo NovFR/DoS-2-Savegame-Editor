@@ -39,6 +39,7 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 	App.hInstance = hWinCInstance;
 	App.hHeap = GetProcessHeap();
 
+	CoInitializeEx(NULL,COINIT_APARTMENTTHREADED|COINIT_DISABLE_OLE1DDE);
 	InitializeCriticalSection(&App.CriticalSection);
 
 	if (!Config_Defaults(&App.Config)) goto Done;
@@ -71,6 +72,7 @@ Done:	if (App.hShortcuts) DestroyAcceleratorTable(App.hShortcuts);
 	LastFiles_ReleaseAll();
 	Config_Release(&App.Config);
 
+	CoUninitialize();
 	DeleteCriticalSection(&App.CriticalSection);
 	return(msg.wParam);
 }

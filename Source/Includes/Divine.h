@@ -53,6 +53,7 @@ typedef struct DIVINESGCONTEXT {
 	UINT		uGame;
 	WCHAR*		pszProfile;
 	WCHAR*		pszSaveName;
+	WCHAR*		pszCustomSavePath;
 	NODE		Profiles;
 	NODE		Savegames;
 	NODE		GameFiles;
@@ -63,6 +64,7 @@ typedef struct DIVINESGCONTEXT {
 typedef struct DIVINECONTEXT {
 	UINT		uDebugLevel;
 	UINT		uGame;
+	WCHAR*		pszCustomSavePath;
 	WCHAR*		pszProfile;
 	WCHAR*		pszSaveName;
 	WCHAR*		pszPath;
@@ -112,12 +114,16 @@ void			Divine_SelectLoadGameInfos(HWND,DIVINESGCONTEXT *);
 int			Divine_SelectCreateList(HWND,UINT,DIVINESGCONTEXT *);
 void			Divine_SelectReleaseList(NODE *);
 
-void			Divine_Open(UINT,WCHAR *,WCHAR *);
+void			Divine_OpenAs(void);
+void			Divine_Open(UINT,WCHAR *,WCHAR *,WCHAR *);
 DWORD WINAPI		Divine_LoadThread(DIVINECONTEXT *);
 
+void			Divine_WriteAs(void);
+int CALLBACK		Divine_WriteAsProc(HWND,UINT,LPARAM,LPARAM);
 void			Divine_Write(void);
 DWORD WINAPI		Divine_SaveThread(DIVINECONTEXT *);
 
+DIVINECONTEXT*		Divine_PrepareContext(UINT);
 DWORD			Divine_Execute(UINT,DIVINECONTEXT *);
 void			Divine_ReleaseContext(DIVINECONTEXT *);
 void			Divine_Close(void);
@@ -130,10 +136,10 @@ void			Divine_ShowLog(DIVINECONTEXT *);
 INT_PTR CALLBACK	Divine_LogProc(HWND,UINT,WPARAM,LPARAM);
 void			Divine_DrawLogLine(DRAWITEMSTRUCT *);
 
-int			Divine_IsSaveGameChanged(HWND,WCHAR *,UINT,WCHAR *,WCHAR *,FILETIME *);
+int			Divine_IsSaveGameChanged(HWND,WCHAR *,UINT,WCHAR *,WCHAR *,WCHAR *,FILETIME *);
 WCHAR*			Divine_CreateTempPath(UINT,...);
 WCHAR*			Divine_GetTempPath(UINT,...);
-WCHAR*			Divine_GetSaveGamePath(UINT,WCHAR *,WCHAR *);
+WCHAR*			Divine_GetSaveGamePath(UINT,WCHAR *,WCHAR *,WCHAR *);
 WCHAR*			Divine_GetGameName(UINT);
 UINT			Divine_GetGameFromName(WCHAR *,UINT);
 void			Divine_RunConverter(void);

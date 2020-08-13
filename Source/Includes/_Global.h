@@ -26,11 +26,14 @@
 #define NOPROFILER
 #define NODEFERWINDOWPOS
 #define NOMCX
+#define COBJMACROS
 
 #include <windows.h>
 #include <windowsx.h>
+#include <initguid.h>
 #include <shlobj.h>
 #include <shlwapi.h>
+#include <shobjidl.h>
 #include <commctrl.h>
 #include <stdio.h>
 

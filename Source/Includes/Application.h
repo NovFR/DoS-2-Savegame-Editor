@@ -142,6 +142,7 @@ typedef struct APPLICATION {
 			HWND		hwndInventoryName;
 		} Layout;
 		struct {
+			WCHAR*		pszCustomSavePath;
 			WCHAR*		pszSaveName;
 			FILETIME	ftLastWrite;
 			NODE		nodeFiles;

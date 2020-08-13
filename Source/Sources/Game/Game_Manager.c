@@ -909,11 +909,16 @@ void Game_Lock(DWORD uFlags)
 	if (uFlags & GAME_LOCK_APP)
 		{
 		EnableMenuItem(App.hMenu,IDM_OPENSAVEGAME,uEnable);
+		EnableMenuItem(App.hMenu,IDM_OPENSAVEAS,uEnable);
 		EnableMenuItem(App.hMenu,MENU_RECENT,uEnable);
 		EnableMenuItem(App.hMenu,IDM_QUIT,uEnable);
+		EnableMenuItem(App.hMenu,IDM_CONFIGCAPOVERRIDE,uEnable);
+		EnableMenuItem(App.hMenu,IDM_CONFIGTEMPLOCATION,uEnable);
+		EnableMenuItem(App.hMenu,IDM_CONFIGSAVELOCATION,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CONFIGLANGUAGE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CONFIGSAVE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CONFIGSAVEONEXIT,uEnable);
+		EnableMenuItem(App.hMenu,IDM_ABOUT,uEnable);
 		}
 	if (uFlags & GAME_LOCK_FILE)
 		{
@@ -923,6 +928,7 @@ void Game_Lock(DWORD uFlags)
 		EnableMenuItem(App.hMenu,IDM_INFOS,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CLOSE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_WRITESAVEGAME,uEnable);
+		EnableMenuItem(App.hMenu,IDM_WRITESAVEAS,uEnable);
 		}
 	if (uFlags & GAME_LOCK_TREE)
 		{

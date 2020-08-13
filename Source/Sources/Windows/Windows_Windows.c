@@ -312,6 +312,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case IDM_OPENSAVEGAME:
 					Divine_Select();
 					break;
+				case IDM_OPENSAVEAS:
+					Divine_OpenAs();
+					break;
 				case IDM_RECENTREMOVEOBSOLETE:
 					LastFiles_RemoveObsolete();
 					break;
@@ -323,6 +326,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_WRITESAVEGAME:
 					Divine_Write();
+					break;
+				case IDM_WRITESAVEAS:
+					Divine_WriteAs();
 					break;
 				case IDM_CLOSE:
 					Divine_Close();
@@ -372,6 +378,12 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_CONFIGLANGUAGE:
 					Config_SelectLanguage();
+					break;
+				case IDM_CONFIGTEMPLOCATION:
+					Config_SelectTempLocation();
+					break;
+				case IDM_CONFIGSAVELOCATION:
+					Config_SelectSaveLocation();
 					break;
 				case IDM_ABOUT:
 					About_Display(hWnd);

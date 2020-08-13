@@ -37,6 +37,8 @@ enum {
 	CONFIG_IDENT_SKILLSVIEW_V1,
 	CONFIG_IDENT_BOOSTERSGROUPS_V1,
 	CONFIG_IDENT_CAPOVERRIDE_V1,
+	CONFIG_IDENT_SAVELOCATION_V1,
+	CONFIG_IDENT_TEMPLOCATION_V1,
 };
 
 
@@ -92,10 +94,14 @@ void			Config_SelectLanguage(void);
 INT_PTR CALLBACK	Config_SelectLanguageProc(HWND,UINT,WPARAM,LPARAM);
 BOOL			Config_SelectLanguageDrawItem(DRAWITEMSTRUCT *);
 int			Config_SelectLanguageSet(HWND);
-
 int			Config_SetLanguage(HWND,WCHAR *);
 
+void			Config_SelectTempLocation(void);
+void			Config_SelectSaveLocation(void);
+
 int			Config_Defaults(CONFIG *);
+void			Config_DefaultTempLocation(CONFIG *);
+void			Config_DefaultSaveLocation(CONFIG *);
 void			Config_Release(CONFIG *);
 
 #endif
