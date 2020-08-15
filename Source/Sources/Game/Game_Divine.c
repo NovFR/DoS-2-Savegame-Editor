@@ -1360,7 +1360,7 @@ DIVINECONTEXT* Divine_PrepareContext(UINT uErr)
 	if (!ctx)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_LOADING),NULL,MB_ICONERROR);
+		Request_PrintError(App.hWnd,Locale_GetText(uErr),NULL,MB_ICONERROR);
 		return(NULL);
 		}
 
