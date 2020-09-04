@@ -63,11 +63,10 @@ static GAMETALENT	GameTalents[] = {	{ 0x00000008, 0 },				// Opportuniste
 						{ 0x80000000, 2 },				// Bourreau
 						{ 0x00000001, 3 },				// Sortilège sauvage
 						{ 0x00000002, 3 },				// Pion
-//						{ 0x00000000, 3 },				// Baiser de l'araignée [For +2 | Con -2] (Towering Oak)
-//						{ 0x00000000, 3 },				// Baiser de l'araignée [Int +2 | Con -2] (Curved Quill)
-//						{ 0x00000000, 3 },				// Baiser de l'araignée [ 2000G | Con -2] (Golden Chest)
+						{ 0x00000004, 3 },				// Baiser de l'araignée [For +2 | Con -2] (Towering Oak)
+						{ 0x00000008, 3 },				// Baiser de l'araignée [Int +2 | Con -2] (Curved Quill)
 						{ 0x00000010, 3 },				// Baiser de l'araignée [Dex +2 | Con -2] (Stately Dragon)
-//						{ 0x00000000, 3 },				// Baiser de l'araignée [  Idol | Con -2] (Transparent Chrysalis)
+						{ 0x00000020, 3 },				// Baiser de l'araignée [------ | Con -2] (Golden Chest: 200G / Transparent Chrysalis: Idol) (???)
 						{ 0x00000040, 3 },				// Mnémonique
 						{ 0x00000080, 3 },				// Secrets professionnels
 						{ 0x00000400, 3 },				// Armure vivante

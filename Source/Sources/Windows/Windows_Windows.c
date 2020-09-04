@@ -385,6 +385,9 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case IDM_CONFIGSAVELOCATION:
 					Config_SelectSaveLocation();
 					break;
+				case IDM_CONFIGRESETLOCATIONS:
+					Config_ResetLocations();
+					break;
 				case IDM_ABOUT:
 					About_Display(hWnd);
 					break;

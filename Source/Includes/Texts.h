@@ -95,6 +95,7 @@ extern WCHAR	szLocaleMissingAppErr[];
 extern WCHAR	szLocaleLangErr[];
 extern WCHAR	szConfigCustSaveLocationErr[];
 extern WCHAR	szConfigCustTempLocationErr[];
+extern WCHAR	szConfigCustLocationErr[];
 extern WCHAR	szConfigSaveLocationErr[];
 extern WCHAR	szConfigTempLocationErr[];
 

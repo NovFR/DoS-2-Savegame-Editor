@@ -97,6 +97,7 @@ WCHAR	szLocaleMissingAppErr[]		= L"Translation for %2 is missing in language fil
 WCHAR	szLocaleLangErr[]		= L"Unable to obtain language name in database \"%1\".";
 WCHAR	szConfigCustSaveLocationErr[]	= L"The savegame location stored in your configuration is not found. Default location will be used.";
 WCHAR	szConfigCustTempLocationErr[]	= L"The temp location stored in your configuration is not found. Default location will be used.";
+WCHAR	szConfigCustLocationErr[]	= L"The temporary locations stored in your configuration are not found. Default locations will be used.";
 WCHAR	szConfigSaveLocationErr[]	= L"An error occurred while creating default savegame location.";
 WCHAR	szConfigTempLocationErr[]	= L"An error occurred while creating default temp location.";
 

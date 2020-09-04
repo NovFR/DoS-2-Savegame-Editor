@@ -48,6 +48,8 @@ void Config_Load(CONFIG *pConfig)
 	UINT		uType;
 	DWORD		dwRead;
 	BOOL		bCompleted;
+	BOOL		bTempPathIsValid;
+	BOOL		bLarianPathIsValid;
 
 	if (!PathFileExists(szConfigPath)) return;
 
@@ -195,9 +197,12 @@ Done:	if (!bCompleted) Request_PrintError(App.hWnd,pszErrorMsg,NULL,MB_ICONERROR
 		}
 	List_ReleaseMemory(&Root);
 
-	//--- Vérifie que le chemin des sauvegardes est toujours valide ---
+	//--- Vérifie que les chemins sont toujours valides ---
 
-	if (!PathFileExists(pConfig->pszLarianPath))
+	bLarianPathIsValid = PathFileExists(pConfig->pszLarianPath);
+	bTempPathIsValid = PathFileExists(pConfig->pszTempPath);
+
+	if (bTempPathIsValid && !bLarianPathIsValid) // SAVEGAME path is NOT OK, TEMP path is OK
 		{
 		WCHAR*	pszWarningMsg;
 		WCHAR*	pszWarningTitle;
@@ -207,10 +212,10 @@ Done:	if (!bCompleted) Request_PrintError(App.hWnd,pszErrorMsg,NULL,MB_ICONERROR
 		if (!pszWarningMsg) pszWarningMsg = szConfigCustSaveLocationErr;
 		if (!pszWarningTitle) pszWarningTitle = szWarning;
 		MessageBox(App.hWnd,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
-		Config_DefaultSaveLocation(pConfig);
+		Config_DefaultSaveLocation(pConfig,FALSE);
 		}
 
-	if (!PathFileExists(pConfig->pszTempPath))
+	else if (!bTempPathIsValid && bLarianPathIsValid) // SAVEGAME path is OK, TEMP path is NOT OK
 		{
 		WCHAR*	pszWarningMsg;
 		WCHAR*	pszWarningTitle;
@@ -220,7 +225,21 @@ Done:	if (!bCompleted) Request_PrintError(App.hWnd,pszErrorMsg,NULL,MB_ICONERROR
 		if (!pszWarningMsg) pszWarningMsg = szConfigCustTempLocationErr;
 		if (!pszWarningTitle) pszWarningTitle = szWarning;
 		MessageBox(App.hWnd,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
-		Config_DefaultTempLocation(pConfig);
+		Config_DefaultTempLocation(pConfig,FALSE);
+		}
+
+	else if (!bTempPathIsValid && !bLarianPathIsValid) // BOTH paths are NOT OK
+		{
+		WCHAR*	pszWarningMsg;
+		WCHAR*	pszWarningTitle;
+
+		pszWarningMsg = Locale_GetText(TEXT_ERR_CONFIGCUSTOMLOCATION);
+		pszWarningTitle = Locale_GetText(TEXT_TITLE_WARNING);
+		if (!pszWarningMsg) pszWarningMsg = szConfigCustLocationErr;
+		if (!pszWarningTitle) pszWarningTitle = szWarning;
+		MessageBox(App.hWnd,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
+		Config_DefaultSaveLocation(pConfig,FALSE);
+		Config_DefaultTempLocation(pConfig,FALSE);
 		}
 
 	return;
@@ -585,6 +604,71 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Restaurer les répertoires temporaires «««««««««««««««««««««««««««»
+
+void Config_ResetLocations()
+{
+	CONFIG*		pConfig;
+	BOOL		bTempIsValid;
+	BOOL		bLarianIsValid;
+	int		iTempResult;
+	int		iLarianResult;
+
+	if (App.Game.Save.pszSaveName)
+		{
+		MessageBox(App.hWnd,Locale_GetText(TEXT_CONFIG_OPENEDSAVEGAME),Locale_GetText(TEXT_TITLE_INFO),MB_ICONEXCLAMATION|MB_OK);
+		return;
+		}
+
+	pConfig = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(CONFIG));
+	if (!pConfig) return;
+
+	bTempIsValid = Config_DefaultTempLocation(pConfig,TRUE);
+	bLarianIsValid = Config_DefaultSaveLocation(pConfig,TRUE);
+	if (!bTempIsValid || !bLarianIsValid) goto Done;
+
+	iTempResult = Config_ResetLocationsRequest(pConfig->pszTempPath,App.Config.pszTempPath,TEXT_CONFIG_LOCATION_TEMP);
+	if (iTempResult == IDCANCEL) goto Done;
+	iLarianResult = Config_ResetLocationsRequest(pConfig->pszLarianPath,App.Config.pszLarianPath,TEXT_CONFIG_LOCATION_LARIAN);
+	if (iLarianResult == IDCANCEL) goto Done;
+
+	if (iTempResult == IDYES)
+		{
+		if (App.Config.pszTempPath) HeapFree(App.hHeap,0,App.Config.pszTempPath);
+		App.Config.pszTempPath = pConfig->pszTempPath;
+		pConfig->pszTempPath = NULL;
+		}
+
+	if (iLarianResult == IDYES)
+		{
+		if (App.Config.pszLarianPath) HeapFree(App.hHeap,0,App.Config.pszLarianPath);
+		App.Config.pszLarianPath = pConfig->pszLarianPath;
+		pConfig->pszLarianPath = NULL;
+		}
+
+Done:	Config_Release(pConfig);
+	HeapFree(App.hHeap,0,pConfig);
+	return;
+}
+
+//--- Requête de confirmation ---
+
+int Config_ResetLocationsRequest(WCHAR *pszNewPath, WCHAR *pszOldPath, UINT uLocaleId)
+{
+	WCHAR*		pszText;
+	DWORD_PTR	vl[3];
+	int		iResult;
+
+	vl[0] = (DWORD_PTR)pszNewPath;
+	vl[1] = (DWORD_PTR)Locale_GetText(uLocaleId);
+	vl[2] = (DWORD_PTR)pszOldPath;
+	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,Locale_GetText(TEXT_CONFIG_LOCATION),0,0,(WCHAR *)&pszText,1,(va_list *)&vl)) return(IDCANCEL);
+	iResult = MessageBox(App.hWnd,pszText,Locale_GetText(IDM_CONFIGRESETLOCATIONS),MB_ICONQUESTION|MB_YESNOCANCEL);
+	LocalFree(pszText);
+	return(iResult);
+}
+
+
 // «»»» Sélection du répertoire temporaire ««««««««««««««««««««««««««««««»
 
 void Config_SelectTempLocation()
@@ -754,8 +838,8 @@ int Config_Defaults(CONFIG *pConfig)
 
 	//--- Jeu ---
 
-	Config_DefaultSaveLocation(pConfig);
-	Config_DefaultTempLocation(pConfig);
+	Config_DefaultSaveLocation(pConfig,FALSE);
+	Config_DefaultTempLocation(pConfig,FALSE);
 
 	//--- Edition ---
 
@@ -774,7 +858,7 @@ int Config_Defaults(CONFIG *pConfig)
 
 // «»»» Répertoire temporaire par défaut ««««««««««««««««««««««««««««««««»
 
-void Config_DefaultTempLocation(CONFIG *pConfig)
+BOOL Config_DefaultTempLocation(CONFIG *pConfig, BOOL bQuiet)
 {
 	WCHAR*			pszWarningMsg;
 	WCHAR*			pszWarningTitle;
@@ -790,17 +874,17 @@ void Config_DefaultTempLocation(CONFIG *pConfig)
 	if (!pConfig->pszTempPath)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
-		return;
+		if (!bQuiet) Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
+		return(FALSE);
 		}
 	GetTempPath(iSize,pConfig->pszTempPath);
-	return;
+	return(TRUE);
 }
 
 
 // «»»» Répertoire par défaut pour les sauvegardes ««««««««««««««««««««««»
 
-void Config_DefaultSaveLocation(CONFIG *pConfig)
+BOOL Config_DefaultSaveLocation(CONFIG *pConfig, BOOL bQuiet)
 {
 	static const GUID	FOLDERID_Documents = { 0xfdd39ad0, 0x238f, 0x46af, { 0xad, 0xb4, 0x6c, 0x85, 0x48, 0x03, 0x69, 0xc7 } };
 	WCHAR*			pszTemp;
@@ -815,20 +899,20 @@ void Config_DefaultSaveLocation(CONFIG *pConfig)
 	SHGetKnownFolderPath(&FOLDERID_Documents,KF_FLAG_DEFAULT,NULL,&pszTemp);
 	if (!pszTemp)
 		{
-		Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
-		return;
+		if (!bQuiet) Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
+		return(FALSE);
 		}
 	pConfig->pszLarianPath = HeapAlloc(App.hHeap,0,wcslen(pszTemp)*sizeof(WCHAR)+sizeof(WCHAR)+wcslen(szLarianStudios)*sizeof(WCHAR)+sizeof(WCHAR));
 	if (!pConfig->pszLarianPath)
 		{
-		Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
+		if (!bQuiet) Request_PrintError(NULL,pszWarningMsg,pszWarningTitle,MB_ICONWARNING|MB_OK);
 		CoTaskMemFree(pszTemp);
-		return;
+		return(FALSE);
 		}
 	wcscpy(pConfig->pszLarianPath,pszTemp);
 	PathAppend(pConfig->pszLarianPath,szLarianStudios);
 	CoTaskMemFree(pszTemp);
-	return;
+	return(TRUE);
 }
 
 

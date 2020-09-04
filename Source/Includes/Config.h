@@ -96,12 +96,14 @@ BOOL			Config_SelectLanguageDrawItem(DRAWITEMSTRUCT *);
 int			Config_SelectLanguageSet(HWND);
 int			Config_SetLanguage(HWND,WCHAR *);
 
+void			Config_ResetLocations(void);
+int			Config_ResetLocationsRequest(WCHAR *,WCHAR *,UINT);
 void			Config_SelectTempLocation(void);
 void			Config_SelectSaveLocation(void);
 
 int			Config_Defaults(CONFIG *);
-void			Config_DefaultTempLocation(CONFIG *);
-void			Config_DefaultSaveLocation(CONFIG *);
+BOOL			Config_DefaultTempLocation(CONFIG *,BOOL);
+BOOL			Config_DefaultSaveLocation(CONFIG *,BOOL);
 void			Config_Release(CONFIG *);
 
 #endif
