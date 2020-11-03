@@ -102,13 +102,27 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 
 	//--- Retire la quantité pour les objets qui ne s'empilent pas ---
 
-	if (pItemContext->pszName)
+	if (pItemContext->pszName && pItemContext->iAmount == 1)
 		{
-		UINT uLen = wcslen(pItemContext->pszName);
+		static WCHAR*	pszAllowed[] = { L"WPN_Arrow_", L"WPN_ArrowHead_", L"WPN_ArrowShaft_", NULL };
+		BOOL		bAllowed = FALSE;
+		UINT		uLen = wcslen(pItemContext->pszName);
 
-		if (Game_CompareStrings(L"ARM_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
-		else if (Game_CompareStrings(L"WPN_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
-		else if (Game_CompareStrings(L"CONT_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+		for (i = 0; pszAllowed[i] != NULL; i++)
+			{
+			if (Game_CompareStrings(pszAllowed[i],pItemContext->pszName,uLen,CMP_TYPE_BEGIN))
+				{
+				bAllowed = TRUE;
+				break;
+				}
+			}
+
+		if (!bAllowed)
+			{
+			if (Game_CompareStrings(L"ARM_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			else if (Game_CompareStrings(L"WPN_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			else if (Game_CompareStrings(L"CONT_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			}
 		}
 
 	//--- Création des pages ---
