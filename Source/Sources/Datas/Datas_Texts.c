@@ -52,10 +52,10 @@ WCHAR	szBonusColorsFmt[]		= L"%1: %2";
 
 WCHAR	szConverterEXE[]		= L"C\\ConverterApp.exe";
 WCHAR	szDivineEXE[]			= L"C\\divine.exe";
-WCHAR	szDivineExtract[]		= L"divine.exe -l %1 -s \"%2\" -i lsv -d \"%3\" -a extract-package";
-WCHAR	szDivineCreate[]		= L"divine.exe -l %1 -s \"%2\" -o lsv -d \"%3\" -a create-package";
-WCHAR	szDivineConvertLSF[]		= L"divine.exe -l %1 -s \"%2\" -i lsf -o lsx -d \"%3\" -a convert-resource";
-WCHAR	szDivineConvertLSX[]		= L"divine.exe -l %1 -s \"%2\" -i lsx -o lsf -d \"%3\" -a convert-resource";
+WCHAR	szDivineExtract[]		= L"divine.exe -l %1 -s \"%2\" -i lsv -d \"%3\" -a extract-package -g %4";
+WCHAR	szDivineCreate[]		= L"divine.exe -l %1 -s \"%2\" -o lsv -d \"%3\" -a create-package -g %4";
+WCHAR	szDivineConvertLSF[]		= L"divine.exe -l %1 -s \"%2\" -i lsf -o lsx -d \"%3\" -a convert-resource -g %4";
+WCHAR	szDivineConvertLSX[]		= L"divine.exe -l %1 -s \"%2\" -i lsx -o lsf -d \"%3\" -a convert-resource -g %4";
 WCHAR	szTempPath[]			= L"GlEd";
 WCHAR	szLarianStudios[]		= L"Larian Studios";
 WCHAR	szGameName[]			= L"Divinity Original Sin 2";

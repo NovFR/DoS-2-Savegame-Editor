@@ -1382,12 +1382,13 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 	WCHAR*			pszTemp;
 	DWORD			dwLastError;
 	DWORD			dwRead;
-	DWORD_PTR		vl[3];
+	DWORD_PTR		vl[4];
 
 	dwLastError = ERROR_SUCCESS;
 	hChildStdOutRead = hChildStdOutWrite = INVALID_HANDLE_VALUE;
 	hChildStdInRead = hChildStdInWrite = INVALID_HANDLE_VALUE;
 	vl[1] = vl[2] = 0;
+	vl[3] = (DWORD_PTR)(ctx->uGame == DIVINE_DOS_2?L"dos2":L"dos2de");
 
 	switch(ctx->uDebugLevel)
 		{

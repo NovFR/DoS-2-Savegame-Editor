@@ -36,7 +36,7 @@ enum {
 
 #define MENU_RIGHTPADDING	24
 #define MENU_BLANKHEIGHT	8
-#define MENU_FILENAMEMAXWIDTH	450
+#define MENU_FILENAMEMAXWIDTH	600
 
 
 // いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい //
