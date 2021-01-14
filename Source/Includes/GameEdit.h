@@ -71,6 +71,12 @@
 #define BONUS_FLAG_TITLE		0x80000000 // [DISPLAY] title
 
 enum {
+	BOOSTER_UPDATE_FROMLIST = 1,
+	BOOSTER_UPDATE_FROMTEXTBOX,
+	BOOSTER_UPDATE_FROMVALUE
+};
+
+enum {
 	GAME_PAGE_NAME = 1,
 	GAME_PAGE_AMOUNT,
 	GAME_PAGE_QUALITY,
@@ -147,6 +153,7 @@ typedef struct GAMEEDITVALUE {
 	WCHAR*			pszObject;
 	WCHAR*			pszResult;
 	WCHAR*			pszTitle;
+	GAMEDATA		localData;
 } GAMEEDITVALUE;
 
 //--- Edition des mots-clщs ---
@@ -459,10 +466,11 @@ void			Game_EditValueSizeObject(HWND,UINT);
 void			Game_EditValueDrawObject(WCHAR *,WCHAR *,DRAWITEMSTRUCT *);
 void			Game_EditValueSelectLB(HWND,GAMEEDITVALUE *);
 void			Game_EditValueSelectLV(HWND,GAMEEDITVALUE *);
+void			Game_EditValueSelectListEntry(HWND,WCHAR *);
 GAMEDATA*		Game_EditValueGetSelected(HWND,BOOL,GAMEEDITVALUE *);
+void			Game_EditValueUpdateBooster(HWND,DWORD,BOOL,GAMEEDITVALUE *);
 int			Game_EditValueSave(HWND,GAMEEDITVALUE *);
 void			Game_EditValueClose(HWND,INT_PTR,GAMEEDITVALUE *);
-void			Game_EditValueCopyID(HWND,GAMEEDITVALUE *);
 
 // л╗╗╗ Capacitщs ллллллллллллллллллллллллллллллллллллллллллллллллллллллл╗
 

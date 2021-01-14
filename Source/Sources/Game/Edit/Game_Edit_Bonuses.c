@@ -1515,10 +1515,8 @@ int Game_BonusInitSkills(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 		lvGroup.pszHeader = Locale_GetText(uGroupsTitles[i]);
 		lvGroup.iGroupId = uGroupsTitles[i];
 		lvGroup.stateMask = lvGroup.state = LVGS_COLLAPSIBLE|LVGS_COLLAPSED;
-		if (pSelected)
-			{
-			if (pSelected->uSchoolLocaleID == uGroupsTitles[i]) lvGroup.state &= ~LVGS_COLLAPSED;
-			}
+		if (pSelected && pSelected->uSchoolLocaleID == uGroupsTitles[i]) lvGroup.state &= ~LVGS_COLLAPSED;
+		else if (!ctx->bonus.pContext->pEdit->skill.pszId) lvGroup.state &= ~LVGS_COLLAPSED;
 		if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Error;
 		}
 

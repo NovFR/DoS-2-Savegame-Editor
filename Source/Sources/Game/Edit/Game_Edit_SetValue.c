@@ -257,7 +257,10 @@ WCHAR* Game_EditValue(HWND hWnd, WCHAR *pszValue, UINT uType, ...)
 	//if (pValue->pFilter) *pValue->pFilter = pValue->uFilter;
 
 	pszResult = pValue->pszResult;
+
+	if (pValue->localData.pszId) HeapFree(App.hHeap,0,pValue->localData.pszId);
 	HeapFree(App.hHeap,0,pValue);
+
 	return(pszResult);
 }
 
@@ -322,6 +325,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 					EndDialog(hDlg,-1);
 					return(FALSE);
 					}
+				Game_EditValueUpdateBooster(hDlg,BOOSTER_UPDATE_FROMVALUE,TRUE,pValue);
 
 				//--- Filtres ---
 				for (i = 0; GameBoostersFilters[i].uCtrlID != 0; i++)
@@ -336,9 +340,11 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 
 				CheckDlgButton(hDlg,245,App.Config.bBoostersGroups?BST_CHECKED:BST_UNCHECKED);
 				SendDlgItemMessage(hDlg,245,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_VIEW_GROUPS));
+				SendDlgItemMessage(hDlg,247,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_RESET));
 				Game_EditValueSizeObject(hDlg,777);
 				Game_EditValueSetBoostersFilters(hDlg,231,pValue->uFilter);
 				Game_EditValueSetBoostersFilters(hDlg,241,pValue->uFilter);
+				SetFocus(GetDlgItem(hDlg,300));
 				} break;
 
 			//--- Runes ---
@@ -487,16 +493,13 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 		case WM_NOTIFY:
 			switch(((NMHDR *)lParam)->code)
 				{
-				case LVN_KEYDOWN:
-					if (((NMLVKEYDOWN *)lParam)->wVKey == 0x43) Game_EditValueCopyID(hDlg,pValue);
-					return(TRUE);
-
 				case LVN_ITEMACTIVATE:
 					Game_EditValueClose(hDlg,IDOK,pValue);
 					return(TRUE);
 
 				case LVN_ITEMCHANGED:
-					EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
+					if (pValue->uType == DATA_TYPE_BOOSTERS) Game_EditValueUpdateBooster(hDlg,BOOSTER_UPDATE_FROMLIST,TRUE,pValue);
+					else EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
 					return(TRUE);
 
 				case LVN_COLUMNCLICK:
@@ -538,6 +541,16 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 		case WM_COMMAND:
 			switch(HIWORD(wParam))
 				{
+				case EN_CHANGE:
+					switch(LOWORD(wParam))
+						{
+						case 246:
+							if (pValue->uType == DATA_TYPE_BOOSTERS) Game_EditValueUpdateBooster(hDlg,BOOSTER_UPDATE_FROMTEXTBOX,FALSE,pValue);
+							EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
+							return(TRUE);
+						}
+					break;
+
 				case LBN_DBLCLK:
 					switch(LOWORD(wParam))
 						{
@@ -581,6 +594,13 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 				case BN_CLICKED:
 					switch(LOWORD(wParam))
 						{
+						case 247:
+							if (pValue->uType == DATA_TYPE_BOOSTERS)
+								{
+								Game_EditValueUpdateBooster(hDlg,BOOSTER_UPDATE_FROMVALUE,TRUE,pValue);
+								Game_EditValueSelectListEntry(hDlg,pValue->localData.pszId);
+								}
+							return(TRUE);
 						case IDOK:
 							Game_EditValueClose(hDlg,IDOK,pValue);
 							return(TRUE);
@@ -680,7 +700,8 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 			lvGroup.pszHeader = Locale_GetText(uBoostersGTitles[i]);
 			lvGroup.iGroupId = i;
 			lvGroup.stateMask = lvGroup.state = LVGS_COLLAPSIBLE|LVGS_COLLAPSED;
-			if (Game_EditValueIsBoosterValid(pValue->pszValue,uBoostersGFilters[i],FALSE)) lvGroup.stateMask &= ~LVGS_COLLAPSED;
+			if (!pValue->pszValue) lvGroup.stateMask &= ~LVGS_COLLAPSED;
+			else if (Game_EditValueIsBoosterValid(pValue->pszValue,uBoostersGFilters[i],FALSE)) lvGroup.stateMask &= ~LVGS_COLLAPSED;
 			if (SendDlgItemMessage(hDlg,300,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Failed;
 			}
 		}
@@ -1260,10 +1281,60 @@ void Game_EditValueSelectLV(HWND hDlg, GAMEEDITVALUE *pValue)
 	return;
 }
 
+//--- ListView entry ---
+
+void Game_EditValueSelectListEntry(HWND hDlg, WCHAR *pszText)
+{
+	LVGROUP	lvGroup;
+	LVITEM	lvItem;
+	UINT	uCount;
+
+	if (!pszText)
+		{
+		lvItem.mask = LVIF_STATE;
+		lvItem.iItem = SendDlgItemMessage(hDlg,300,LVM_GETNEXTITEM,(WPARAM)-1,(LPARAM)LVNI_SELECTED);
+		lvItem.iSubItem = 0;
+		if (lvItem.iItem == -1) return;
+		lvItem.stateMask = LVIS_SELECTED;
+		lvItem.state = 0;
+		SendDlgItemMessage(hDlg,300,LVM_SETITEM,(WPARAM)0,(LPARAM)&lvItem);
+		return;
+		}
+
+	uCount = SendDlgItemMessage(hDlg,300,LVM_GETITEMCOUNT,0,0);
+	if (!uCount) return;
+
+	while(uCount--)
+		{
+		lvItem.mask = LVIF_PARAM|LVIF_GROUPID;
+		lvItem.iItem = uCount;
+		lvItem.iSubItem = 0;
+		lvItem.lParam = 0;
+		lvItem.iGroupId = 0;
+		if (!SendDlgItemMessage(hDlg,300,LVM_GETITEM,(WPARAM)0,(LPARAM)&lvItem)) continue;
+		if (!lvItem.lParam) continue;
+		if (wcscmp(((GAMEDATA *)lvItem.lParam)->pszId,pszText)) continue;
+
+		lvGroup.cbSize = sizeof(LVGROUP);
+		lvGroup.mask = LVGF_STATE;
+		lvGroup.stateMask = LVGS_COLLAPSED;
+		lvGroup.state = 0;
+		SendDlgItemMessage(hDlg,300,LVM_SETGROUPINFO,(WPARAM)lvItem.iGroupId,(LPARAM)&lvGroup);
+
+		lvItem.stateMask = LVIS_SELECTED;
+		lvItem.state = LVIS_SELECTED;
+		SendDlgItemMessage(hDlg,300,LVM_SETITEMSTATE,(WPARAM)uCount,(LPARAM)&lvItem);
+		SendDlgItemMessage(hDlg,300,LVM_ENSUREVISIBLE,(WPARAM)uCount,(LPARAM)FALSE);
+		break;
+		}
+
+	return;
+}
+
 
 // л╗╗╗ Rщcupшre la valeur sщlectionnщe ллллллллллллллллллллллллллллллллл╗
 
-GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bModifyCheck, GAMEEDITVALUE *pValue)
+GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bCheckModified, GAMEEDITVALUE *pValue)
 {
 	LVITEM		lvItem;
 	UINT		uSelected;
@@ -1274,6 +1345,9 @@ GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bModifyCheck, GAMEEDITVALUE 
 	switch(pValue->uType)
 		{
 		case DATA_TYPE_BOOSTERS:
+			pData = &pValue->localData;
+			if (pData->pszId == NULL) pData = NULL;
+			break;
 		case DATA_TYPE_RUNES:
 			lvItem.iItem = SendDlgItemMessage(hDlg,300,LVM_GETNEXTITEM,(WPARAM)-1,(LPARAM)LVNI_SELECTED);
 			if (lvItem.iItem == -1) break;
@@ -1293,12 +1367,82 @@ GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bModifyCheck, GAMEEDITVALUE 
 			break;
 		}
 
-	if (pData)
-		if (bModifyCheck && pValue->pszValue)
-			if (!wcscmp(pData->pszId,pValue->pszValue))
-				return(NULL);
-
+	if (bCheckModified && pData && pValue->pszValue && !wcscmp(pData->pszId,pValue->pszValue)) pData = NULL;
 	return(pData);
+}
+
+
+// л╗╗╗ Copie la valeur dans la zone d'щdition лллллллллллллллллллллллллл╗
+
+void Game_EditValueUpdateBooster(HWND hDlg, DWORD dwFlags, BOOL bUpdateEditBox, GAMEEDITVALUE *pValue)
+{
+	switch(dwFlags)
+		{
+		case BOOSTER_UPDATE_FROMLIST: {
+			LVITEM		lvItem;
+
+			lvItem.iItem = SendDlgItemMessage(hDlg,300,LVM_GETNEXTITEM,(WPARAM)-1,(LPARAM)LVNI_SELECTED);
+			if (lvItem.iItem == -1) return;
+			lvItem.mask = LVIF_PARAM;
+			lvItem.iSubItem = 0;
+			lvItem.lParam = 0;
+
+			if (!SendDlgItemMessage(hDlg,300,LVM_GETITEM,(WPARAM)0,(LPARAM)&lvItem)) return;
+			if (!lvItem.lParam) return;
+
+			if (bUpdateEditBox) // SetDlgItemText() will trigger EN_CHANGE (BOOSTER_UPDATE_FROMTEXTBOX)
+				{
+				SetDlgItemText(hDlg,246,((GAMEDATA *)lvItem.lParam)->pszId);
+				return;
+				}
+
+			if (pValue->localData.pszId)
+				{
+				HeapFree(App.hHeap,0,pValue->localData.pszId);
+				pValue->localData.pszId = NULL;
+				}
+
+			pValue->localData.pszId = HeapAlloc(App.hHeap,0,wcslen(((GAMEDATA *)lvItem.lParam)->pszId)*sizeof(WCHAR)+sizeof(WCHAR));
+			if (pValue->localData.pszId) wcscpy(pValue->localData.pszId,((GAMEDATA *)lvItem.lParam)->pszId);
+
+			} break;
+
+		case BOOSTER_UPDATE_FROMTEXTBOX: {
+			UINT	uLen;
+
+			if (pValue->localData.pszId)
+				{
+				HeapFree(App.hHeap,0,pValue->localData.pszId);
+				pValue->localData.pszId = NULL;
+				}
+
+			uLen = SendDlgItemMessage(hDlg,246,WM_GETTEXTLENGTH,0,0);
+			if (!uLen) break;
+
+			pValue->localData.pszId = HeapAlloc(App.hHeap,0,++uLen*sizeof(WCHAR));
+			if (pValue->localData.pszId) GetDlgItemText(hDlg,246,pValue->localData.pszId,uLen);
+
+			} break;
+
+		case BOOSTER_UPDATE_FROMVALUE: {
+
+			if (pValue->localData.pszId)
+				{
+				HeapFree(App.hHeap,0,pValue->localData.pszId);
+				pValue->localData.pszId = NULL;
+				}
+
+			if (!pValue->pszValue) break;
+			if (!wcslen(pValue->pszValue)) break;
+
+			pValue->localData.pszId = HeapAlloc(App.hHeap,0,wcslen(pValue->pszValue)*sizeof(WCHAR)+sizeof(WCHAR));
+			if (pValue->localData.pszId) wcscpy(pValue->localData.pszId,pValue->pszValue);
+
+			} break;
+		}
+
+	if (bUpdateEditBox) SetDlgItemText(hDlg,246,pValue->localData.pszId);
+	return;
 }
 
 
@@ -1308,7 +1452,7 @@ int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 {
 	GAMEDATA*	pData;
 
-	pData = Game_EditValueGetSelected(hDlg,TRUE,pValue);
+	pData = Game_EditValueGetSelected(hDlg,FALSE,pValue);
 	if (!pData) return(0);
 
 	pValue->pszResult = HeapAlloc(App.hHeap,0,wcslen(pData->pszId)*sizeof(WCHAR)+sizeof(WCHAR));
@@ -1342,35 +1486,8 @@ int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 
 void Game_EditValueClose(HWND hDlg, INT_PTR nResult, GAMEEDITVALUE *pValue)
 {
+	if (!IsWindowEnabled(GetDlgItem(hDlg,nResult))) return;
 	if (nResult == IDOK && !Game_EditValueSave(hDlg,pValue)) return;
 	EndDialog(hDlg,nResult);
-	return;
-}
-
-
-// л╗╗╗ Copie un identifiant dans le presse-papier лллллллллллллллллллллл╗
-
-void Game_EditValueCopyID(HWND hDlg, GAMEEDITVALUE *pValue)
-{
-	GAMEDATA*	pData;
-
-	pData = Game_EditValueGetSelected(hDlg,FALSE,pValue);
-	if (!pData) return;
-
-	if (OpenClipboard(NULL))
-		{
-		UINT cch = wcslen(pData->pszId);
-		HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE,(cch+1)*sizeof(WCHAR));
-		if (hGlobal)
-			{
-			LPTSTR lptstrCopy = GlobalLock(hGlobal);
-			CopyMemory(lptstrCopy,pData->pszId,cch*sizeof(WCHAR));
-			GlobalUnlock(hGlobal);
-			EmptyClipboard();
-			SetClipboardData(CF_UNICODETEXT,hGlobal);
-			}
-		CloseClipboard();
-		}
-
 	return;
 }
