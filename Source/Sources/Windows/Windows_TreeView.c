@@ -88,15 +88,15 @@ LRESULT Tree_Create(HWND hWnd)
 	if (!App.xmlTree.hwndClose) return(0);
 	App.xmlTree.hwndHelp = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREEHELP,App.hInstance,NULL);
 	if (!App.xmlTree.hwndHelp) return(0);
-	App.xmlTree.hwndSave = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREESAVE,App.hInstance,NULL);
-	if (!App.xmlTree.hwndSave) return(0);
+	// App.xmlTree.hwndSave = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREESAVE,App.hInstance,NULL);
+	// if (!App.xmlTree.hwndSave) return(0);
 
 	SendMessage(App.xmlTree.hwndClose,WM_SETFONT,(WPARAM)App.Font.hFont,0);
 	SendMessage(App.xmlTree.hwndClose,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_CLOSE));
 	SendMessage(App.xmlTree.hwndHelp,WM_SETFONT,(WPARAM)App.Font.hFont,0);
 	SendMessage(App.xmlTree.hwndHelp,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_HELP));
-	SendMessage(App.xmlTree.hwndSave,WM_SETFONT,(WPARAM)App.Font.hFont,0);
-	SendMessage(App.xmlTree.hwndSave,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_SAVE));
+	// SendMessage(App.xmlTree.hwndSave,WM_SETFONT,(WPARAM)App.Font.hFont,0);
+	// SendMessage(App.xmlTree.hwndSave,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_SAVE));
 
 	ShowWindow(App.xmlTree.hwndTree,SW_SHOWNORMAL);
 	return(1);
