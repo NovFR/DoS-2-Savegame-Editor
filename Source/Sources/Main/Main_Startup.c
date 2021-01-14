@@ -59,7 +59,7 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 			DispatchMessage(&msg);
 			continue;
 			}
-		if (TranslateAccelerator(App.hWnd,App.hShortcuts,&msg)) continue;
+		if (App.hShortcuts && TranslateAccelerator(App.hWnd,App.hShortcuts,&msg)) continue;
 		if (IsDialogMessage(App.hWnd,&msg)) continue;
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -288,9 +288,10 @@ int Initialise_Accelerators()
 		// --- Vérifie que la touche est valide ---
 		if (wKey == 0xFFFF)
 			{
-			Request_MessageBoxEx(NULL,Locale_GetText(TEXT_ERR_INVALIDSHORTCUT),NULL,MB_ICONHAND,Locale_GetText(Shortcuts[iCount].acc));
+			// In case of error, shortcuts are just deactivated...
+			// Request_MessageBoxEx(NULL,Locale_GetText(TEXT_ERR_INVALIDSHORTCUT),NULL,MB_ICONWARNING,Locale_GetText(Shortcuts[iCount].acc));
 			HeapFree(App.hHeap,0,Accelerators);
-			return(0);
+			return(1);
 			}
 		Accelerators[iCount].key = wKey;
 		}

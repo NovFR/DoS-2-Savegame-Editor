@@ -154,7 +154,7 @@ BOOL Menu_Create_AppendItem(HMENU hMenu, CUSTOMMENUTEMPLATE **pTemplatePtr)
 	(*pTemplatePtr)->pszText = Locale_GetText((*pTemplatePtr)->uId);
 	(*pTemplatePtr)->uTextLen = wcslen((*pTemplatePtr)->pszText);
 
-	if ((*pTemplatePtr)->uKeyId) (*pTemplatePtr)->pszKey = Locale_GetText((*pTemplatePtr)->uKeyId);
+	if (App.hShortcuts && (*pTemplatePtr)->uKeyId) (*pTemplatePtr)->pszKey = Locale_GetText((*pTemplatePtr)->uKeyId);
 	if ((*pTemplatePtr)->uIconId) (*pTemplatePtr)->hIcon = LoadImage(App.hInstance,MAKEINTRESOURCE((*pTemplatePtr)->uIconId),IMAGE_ICON,MENU_IMAGEWIDTH,MENU_IMAGEHEIGHT,LR_DEFAULTCOLOR);
 	if ((*pTemplatePtr)->uSpecialFlags&MENU_FLAG_CHECKBOX) (*pTemplatePtr)->hImage = LoadImage(NULL,MAKEINTRESOURCE(OBM_CHECK),IMAGE_BITMAP,MENU_IMAGEWIDTH,MENU_IMAGEHEIGHT,LR_DEFAULTCOLOR);
 	if ((*pTemplatePtr)->uSpecialFlags&MENU_FLAG_SEPARATOR) MenuItem.fType |= MFT_SEPARATOR;
@@ -289,7 +289,7 @@ void Menu_MeasureItems(HWND hWnd, UINT uCtlId, MEASUREITEMSTRUCT *pMeasure)
 	if (Size.cy < 21) pMeasure->itemHeight = 21;
 	if (pMenuItem->uSpecialFlags&MENU_FLAG_CAPTION) pMeasure->itemHeight += 2;
 
-	if (pMenuItem->uKeyId)
+	if (pMenuItem->uKeyId && pMenuItem->pszKey)
 		{
 		GetTextExtentPoint32(hDC,pMenuItem->pszKey,wcslen(pMenuItem->pszKey),&Size);
 		pMeasure->itemWidth += Size.cx+12;
