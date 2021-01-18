@@ -77,7 +77,8 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			if (wParam != VK_F1) break;
 			//Game_Talents();
 			//Game_Bonus(hWnd,NULL,NULL);
-			Mods_Dialog();
+			Game_EditValue(hWnd,NULL,DATA_TYPE_BOOSTERS,NULL,NULL);
+			//Mods_Dialog();
 			break;
 		#endif
 

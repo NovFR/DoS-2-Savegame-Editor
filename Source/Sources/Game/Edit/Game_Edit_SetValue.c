@@ -1452,7 +1452,7 @@ int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 {
 	GAMEDATA*	pData;
 
-	pData = Game_EditValueGetSelected(hDlg,FALSE,pValue);
+	pData = Game_EditValueGetSelected(hDlg,TRUE,pValue);
 	if (!pData) return(0);
 
 	pValue->pszResult = HeapAlloc(App.hHeap,0,wcslen(pData->pszId)*sizeof(WCHAR)+sizeof(WCHAR));

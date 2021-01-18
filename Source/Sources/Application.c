@@ -5,6 +5,7 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
+
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤ Includes								  ¤¤¤ //
@@ -213,7 +214,7 @@ GAMEORIGIN		Origins[] = {
 
 			};
 
-WCHAR*		ModsIgnore[] = {
+WCHAR*			ModsIgnore[] = {
 
 				L"1301db3d-1f54-4e98-9be5-5094030916e4", // Divinity: Original Sin 2
 				L"2bd9bdbe-22ae-4aa2-9c93-205880fc6564", // Shared
@@ -222,7 +223,7 @@ WCHAR*		ModsIgnore[] = {
 
 			};
 
-WCHAR*		ModsLarian[] = {
+WCHAR*			ModsLarian[] = {
 
 				L"9b45f7e5-d4e2-4fc2-8ef7-3b8e90a5256c", // 8 Action Points
 				L"015de505-6e7f-460c-844c-395de6c2ce34", // AS_BlackCatPlus
