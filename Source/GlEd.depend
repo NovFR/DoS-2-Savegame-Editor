@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1616292941 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
+1616335457 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
 	"_Global.h"
 	"_Version.h"
 
@@ -18,12 +18,12 @@
 
 1616261378 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
 
-1616256723 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
+1616334928 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
 	"Application.h"
 	"Game.h"
 	"Menus.h"
 
-1616327396 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
+1616334928 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
 	"_Global.h"
 	"SQLite3.h"
 	"Locale.h"
@@ -363,13 +363,14 @@
 	"Locale.h"
 	"Texts.h"
 
-1616261319 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
+1616330260 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
 	"Application.h"
 	"XML.h"
 	"XMLTree.h"
 	"Texts.h"
 	"Requests.h"
 	"Utils.h"
+	"Taskbar.h"
 
 1616329893 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
 	"Application.h"
@@ -445,7 +446,7 @@
 
 1616262759 f:\programmation\sources\jeux\divinity original sin ii\includes\debug.h
 
-1616295276 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
+1616332108 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
 	"Application.h"
 	"Game.h"
 	"GameEdit.h"

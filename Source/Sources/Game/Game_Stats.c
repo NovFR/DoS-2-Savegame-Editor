@@ -340,7 +340,7 @@ int Game_Stats_SetItem(HWND hDlg, UINT uCtlID, int iItem, WCHAR *pszName, WCHAR 
 	//--- Value ---
 
 	lvItem.iSubItem = 1;
-	lvItem.pszText = pszFmt?pszFmt:pszValue;
+	lvItem.pszText = pszFmt?pszFmt:(pszValue?pszValue:szZero);
 	if (SendDlgItemMessage(hDlg,uCtlID,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == -1) return(0);
 
 	if (pszFmt) HeapFree(App.hHeap,0,pszFmt);

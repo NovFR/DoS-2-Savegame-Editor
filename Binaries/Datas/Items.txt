@@ -40,6 +40,7 @@
 # /!\ Order IS important
 #
 
+armor_body		ARMOR|CHEST		|f|S_RC_OIL_EQ_Armor_Mage_WallBoss
 armor_helmet		ARMOR|HELMET		|f|ARM_ShapeshifterMask
 armor_amulet		ACCESSORY|AMULET	|f|ARM_SourceCollar
 armor_belt		ARMOR|BELT		|f|ARM_WithermooreGirdle
@@ -52,6 +53,7 @@ armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet
 weapon_staff		WEAPON			|f|ARX_UNIQUE_Staff_Divine
 weapon_mace		WEAPON			|f|WPN_FTJ_UNIQUE_BraccusTorch
 weapon_dagger		WEAPON			|f|WPN_FTJ_UNIQUE_GriffsKitchenKnife
+weapon_spear		WEAPON			|f|GLO_Malady_Spear
 weapon_wand		WEAPON			|b|ARX_UNIQUE_Wand_
 item_aug		ITEM			|b|CON_Herb_Augmentor_
 item_mushroom		ITEM			|f|CON_Herb_Mushroom_A
@@ -84,7 +86,6 @@ bag_scrolls		ITEM			|f|CONT_IO_Scrolls
 bag_shields		ITEM			|f|CONT_IO_Shields
 bag_skillbooks		ITEM			|f|CONT_IO_SkillBooks
 item_sleepbag		ITEM			|f|FUR_Humans_Camping_Sleepingbag_B
-weapon_spear		WEAPON			|f|GLO_Malady_Spear
 item_key		ITEM			|f|ITEM_Key
 item_nails		ITEM			|f|ITEM_Nails
 source_orb		ITEM			|f|LOOT_Source_Orb
@@ -92,7 +93,6 @@ container_box		ITEM			|f|QUEST_DeadTrader_GarvanSupplies
 container		ITEM			|f|Rendal_CONT_Dyebox
 item			ITEM			|f|RC_FTJ_ScavengerSeeds
 scroll_resurrect	ITEM			|f|SCROLL_Resurrect
-armor_body		ARMOR|CHEST		|f|S_RC_OIL_EQ_Armor_Mage_WallBoss
 item_glass		ITEM			|f|TOOL_IdentifyingGlass
 item_lockpick		ITEM			|f|TOOL_Lockpick
 item_dust_bone		ITEM			|b|TOOL_Pouch_Dust_Bone_
@@ -182,6 +182,7 @@ container		ITEM			|b|CONT_
 food			ITEM			|b|FOOD_
 furniture		ITEM			|b|FUR_
 gen			ITEM			|b|Gen_
+grenade			ITEM			|b|GRN_Combo_Grenade_
 grenade			ITEM			|b|GRN_Grenade_
 item			ITEM			|b|GRN_Ingredient_
 item			ITEM			|b|HAR_
@@ -203,15 +204,19 @@ weapon_wand		WEAPON			|b|WPN_Wand_
 armor_belt		ARMOR|BELT		|e|_Belt
 armor_amulet		ACCESSORY|AMULET	|e|Amulet
 weapon_axe		WEAPON			|e|Axe
+weapon_axe		WEAPON			|e|Axe2H
 weapon_bow		WEAPON			|e|Bow
 weapon_crossbow		WEAPON			|e|Crossbow
 weapon_dagger		WEAPON			|e|Dagger
 weapon_mace		WEAPON			|e|Hammer
+weapon_mace		WEAPON			|e|Mace
+weapon_mace		WEAPON			|e|Mace2H
 weapon_shield		ARMOR|SHIELD		|e|Shield
 weapon_spear		WEAPON			|e|Spear
 weapon_staff		WEAPON			|e|Staff
 weapon_sword		WEAPON			|e|Sword
 weapon_sword		WEAPON			|e|Sword_2H
+weapon_sword		WEAPON			|e|Sword2H
 weapon_wand		WEAPON			|e|Wand
 weapon_wand		WEAPON			|e|Wand_Poison
 

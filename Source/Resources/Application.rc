@@ -17,8 +17,6 @@
 
 1  ICON "Icons\\Application.ico"
 
-10 ICON	"Icons\\Homme.ico"
-11 ICON "Icons\\Femme.ico"
 12 ICON "Icons\\Joueur.ico"
 13 ICON "Icons\\Checked.ico"
 14 ICON "Icons\\Unchecked.ico"
@@ -27,7 +25,7 @@
 19 ICON "Icons\\Accessory.ico"
 20 ICON "Icons\\InventoryCellController52.ico"
 21 ICON "Icons\\Frame.ico"
-22 ICON "Icons\\Empty.ico"
+22 ICON "Icons\\Blank.ico"
 24 ICON "Icons\\Backpack.ico"
 25 ICON "Icons\\Back.ico"
 27 ICON "Icons\\Remove.ico"
