@@ -16,7 +16,6 @@
 #	Exemple: 32 indicates the icon "SI_0032".
 # [5] Memory slots
 #	Number of memory slots required.
-#	** NOT USED AT THIS TIME **
 # [6] School
 #	Can be one of the following:
 #		AIR
