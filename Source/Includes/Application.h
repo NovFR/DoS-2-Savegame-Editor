@@ -131,6 +131,8 @@ typedef struct APPLICATION {
 	CRITICAL_SECTION		CriticalSection;
 	XMLTREE				xmlTree;
 	NODE				nodeLastFiles;
+	UINT				WM_TASKBARBUTTONCREATED;
+	ITaskbarList3*			pTaskbar;
 	//--- Données d'affichage
 	UINT				uProgression;
 	DWORD				dwProgressionTime;

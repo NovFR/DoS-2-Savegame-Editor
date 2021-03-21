@@ -17,6 +17,7 @@
 #include "Texts.h"
 #include "Requests.h"
 #include "Utils.h"
+#include "Taskbar.h"
 
 extern APPLICATION		App;
 
@@ -121,14 +122,17 @@ int Tree_CreateTreeView(XML_NODE *pxn)
 	#if _DEBUG
 	if (pxn->parent) Tree_CreateDebugInfos(pxn->parent,TRUE,TVI_ROOT);
 	#endif
+	Taskbar_SetProgressState(TBPF_INDETERMINATE);
 
 	if (!Tree_CreateNodeTree(pxn,NULL))
 		{
+		Taskbar_SetProgressState(TBPF_NOPROGRESS);
 		Tree_DestroyTreeView();
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_TREE_CREATE),NULL,MB_ICONERROR);
 		return(0);
 		}
 
+	Taskbar_SetProgressState(TBPF_NOPROGRESS);
 	if (pxn->parent)
 		{
 		WCHAR *Text = xml_AttrToWideChar((XML_NODE *)pxn->parent);

@@ -23,7 +23,7 @@
 	"Game.h"
 	"Menus.h"
 
-1616261389 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
+1616327396 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
 	"_Global.h"
 	"SQLite3.h"
 	"Locale.h"
@@ -199,7 +199,7 @@
 	"Utils.h"
 	"Dialogs.h"
 
-1616260911 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_divine.c
+1616329952 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_divine.c
 	"Application.h"
 	"Locale.h"
 	"Texts.h"
@@ -211,6 +211,7 @@
 	"Dialogs.h"
 	"Utils.h"
 	"Requests.h"
+	"Taskbar.h"
 
 1616262844 f:\programmation\sources\jeux\divinity original sin ii\includes\infos.h
 
@@ -345,11 +346,12 @@
 	"Locale.h"
 	"Menus.h"
 
-1616261254 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_requests.c
+1616329279 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_requests.c
 	"_Global.h"
 	"Application.h"
 	"Requests.h"
 	"Texts.h"
+	"Taskbar.h"
 
 1616258838 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_utils.c
 	"Application.h"
@@ -369,7 +371,7 @@
 	"Requests.h"
 	"Utils.h"
 
-1616261340 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
+1616329893 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
 	"Application.h"
 	"About.h"
 	"Texts.h"
@@ -383,6 +385,7 @@
 	"GameEdit.h"
 	"Utils.h"
 	"Dialogs.h"
+	"Taskbar.h"
 
 1616260716 source:f:\programmation\sources\jeux\divinity original sin ii\sources\files\files_png.c
 	"Application.h"
@@ -442,7 +445,7 @@
 
 1616262759 f:\programmation\sources\jeux\divinity original sin ii\includes\debug.h
 
-1616291177 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
+1616295276 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
 	"Application.h"
 	"Game.h"
 	"GameEdit.h"
@@ -454,4 +457,10 @@
 	"Utils.h"
 
 1616091588 f:\programmation\sources\jeux\divinity original sin ii\includes\_resources.h
+
+1616328387 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_taskbar.c
+	"Application.h"
+	"Taskbar.h"
+
+1616328668 f:\programmation\sources\jeux\divinity original sin ii\includes\taskbar.h
 

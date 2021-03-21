@@ -22,6 +22,7 @@
 #include "Dialogs.h"
 #include "Utils.h"
 #include "Requests.h"
+#include "Taskbar.h"
 
 extern APPLICATION	App;
 
@@ -1020,6 +1021,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 {
 	Divine_Close();
 	Game_Lock(GAME_LOCK_DISABLED|GAME_LOCK_APP);
+	Taskbar_SetProgressState(TBPF_INDETERMINATE);
 
 	#if _DEBUG
 	ctx->uDebugLevel = DIVINE_DEBUG_ALL;
@@ -1071,6 +1073,7 @@ Done:	if (ctx->dwResult != ERROR_SUCCESS)
 		if (!ctx->bNoErrorMsg) xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
 		}
 
+	Taskbar_SetProgressState(TBPF_NOPROGRESS);
 	Status_SetText(Locale_GetText(TEXT_DONE));
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_APP);
 	Divine_ReleaseContext(ctx);
@@ -1272,6 +1275,7 @@ void Divine_Write()
 DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 {
 	Game_Lock(GAME_LOCK_DISABLED|GAME_LOCK_ALL);
+	Taskbar_SetProgressState(TBPF_INDETERMINATE);
 
 	#if _DEBUG
 	ctx->uDebugLevel = DIVINE_DEBUG_ALL;
@@ -1331,7 +1335,8 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 
 	//--- Done ---
 
-Done:	Status_SetText(Locale_GetText(TEXT_DONE));
+Done:	Taskbar_SetProgressState(TBPF_NOPROGRESS);
+	Status_SetText(Locale_GetText(TEXT_DONE));
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_ALL);
 	Divine_ReleaseContext(ctx);
 	App.hThread = NULL;

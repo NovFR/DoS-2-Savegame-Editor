@@ -78,6 +78,7 @@
 		<Unit filename="Includes/Mods.h" />
 		<Unit filename="Includes/Requests.h" />
 		<Unit filename="Includes/Startup.h" />
+		<Unit filename="Includes/Taskbar.h" />
 		<Unit filename="Includes/Texts.h" />
 		<Unit filename="Includes/Utils.h" />
 		<Unit filename="Includes/XML.h" />
@@ -175,6 +176,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Startup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_Taskbar.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Misc/Misc_Dialogs.c">

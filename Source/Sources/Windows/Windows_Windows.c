@@ -24,6 +24,7 @@
 #include "GameEdit.h"
 #include "Utils.h"
 #include "Dialogs.h"
+#include "Taskbar.h"
 
 extern APPLICATION		App;
 extern CUSTOMMENUTEMPLATE	MainMenu;
@@ -161,6 +162,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			ShowWindow(hWnd,SW_HIDE);
 			SetMenu(hWnd,NULL);
 			Menu_Release(App.hMenu,&MainMenu);
+			Taskbar_Reset();
 			CloseThemeData(App.hThemeButton);
 			CloseThemeData(App.hThemeProgress);
 			App.hMenu = NULL;
@@ -168,6 +170,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			break;
 
 		default:
+			if (App.WM_TASKBARBUTTONCREATED && uMsgId == App.WM_TASKBARBUTTONCREATED) Taskbar_Initialize();
 			return(DefWindowProc(hWnd,uMsgId,wParam,lParam));
 		}
 
@@ -190,6 +193,7 @@ LRESULT Window_Create(HWND hWnd)
 
 	if (!App.Font.hFont) goto Error_0;
 	if (!Font_GetInfo(hWnd,&App.Font)) goto Error_0;
+	if (!Taskbar_Prepare()) goto Error_0;
 	if (!Status_CreateWindow()) goto Error_0;
 	if (!Game_CreateLayout()) goto Error_0;
 
