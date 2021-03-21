@@ -182,6 +182,7 @@ Summon_Condor					0	2	1	524	SUMMONING
 Summon_FireSlug					1	1	2	460	FIRE
 Summon_Incarnate				0	2	1	417	SUMMONING
 Summon_PlanarGateway				2	0	2	467	SUMMONING
+Summon_SoulWolf					1	3	0	431	SPECIAL		INNATE
 Summon_TotemFromSurface				0	2	1	414	SUMMONING
 Target_AcidInfusion				2	1	2	495	SUMMONING
 Target_Apportation				0	1	1	461	AIR
