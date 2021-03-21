@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "GameEdit.h"
@@ -266,15 +266,15 @@ static GAMEITEMCOLORS	ItemColors[] =	{
 				};
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Initialisation							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Initialisation							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 // La fonction effectue une copie de pBonus (si non NULL)
-// Elle retourne cette copie (éventuellement modifiée) ou NULL en cas d'erreur.
-// La structure pointée par pBonus n'est JAMAIS modifiée.
+// Elle retourne cette copie (Ã©ventuellement modifiÃ©e) ou NULL en cas d'erreur.
+// La structure pointÃ©e par pBonus n'est JAMAIS modifiÃ©e.
 
 GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject)
 {
@@ -333,7 +333,7 @@ GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject
 
 	pBonusContext->pszObject = pszObject;
 
-	//--- Création des pages ---
+	//--- CrÃ©ation des pages ---
 
 	for (i = 0; BonusesPages[i].uPageID != 0; i++)
 		{
@@ -359,7 +359,7 @@ GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject
 		psp[i].lParam = (LPARAM)ctx;
 		}
 
-	//--- Affichage de la boîte de dialogue ---
+	//--- Affichage de la boÃ®te de dialogue ---
 
 	psh->dwSize = sizeof(PROPSHEETHEADER);
 	psh->dwFlags = PSH_PROPSHEETPAGE|PSH_USEICONID|PSH_NOAPPLYNOW|PSH_WIZARD;
@@ -396,11 +396,11 @@ Done:	for (i = 0; ItemColors[i].pszId != NULL; i++) if (ItemColors[i].pszName !=
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Boîte de dialogue						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ BoÃ®te de dialogue						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -671,7 +671,7 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 	return(FALSE);
 }
 
-//--- Sous-classe d'un contrôle d'édition ---
+//--- Sous-classe d'un contrÃ´le d'Ã©dition ---
 
 // dwRefData can be one of the following value: BONUS_FLAG_INT, BONUS_FLAG_UINT, BONUS_FLAG_FLOAT
 
@@ -779,9 +779,9 @@ LRESULT CALLBACK Game_BonusEditSubclass(HWND hWnd, UINT uMsgId, WPARAM wParam, L
 }
 
 
-// «»»» Navigation ««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Navigation Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Activation de la page précédente ---
+//--- Activation de la page prÃ©cÃ©dente ---
 
 LONG_PTR Game_BonusSetPrevPage(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 {
@@ -946,7 +946,7 @@ LONG_PTR Game_BonusGetPage(UINT uPageID)
 }
 
 
-// «»»» Activation d'une page «««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Activation d'une page Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_BonusActivate(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 {
@@ -1270,7 +1270,7 @@ int Game_BonusInitSkills(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 }
 
 
-// «»»» Affichage des bonus «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage des bonus Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusDraw(DRAWITEMSTRUCT *pDraw)
 {
@@ -1330,7 +1330,7 @@ void Game_BonusDraw(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage d'un séparateur «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage d'un sÃ©parateur Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusDrawSeparator(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 {
@@ -1370,7 +1370,7 @@ void Game_BonusDrawSeparator(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Aperçu du résultat ««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» AperÃ§u du rÃ©sultat Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusDrawResult(GAMEEDITPAGECONTEXT *ctx, DRAWITEMSTRUCT *pDraw)
 {
@@ -1405,7 +1405,7 @@ void Game_BonusDrawResult(GAMEEDITPAGECONTEXT *ctx, DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Modifie la valeur des nombres «««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modifie la valeur des nombres Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONTEXT *ctx)
 {
@@ -1441,13 +1441,13 @@ void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONT
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions de gestion						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions de gestion						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Texte d'affichage d'un bonus ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Texte d'affichage d'un bonus Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Game_BonusGetDisplayText(GAMEEDITBONUS *pEditBonus)
 {
@@ -1538,7 +1538,7 @@ WCHAR* Game_BonusGetDisplayText(GAMEEDITBONUS *pEditBonus)
 }
 
 
-// «»»» Détermine le type de dégâts «««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©termine le type de dÃ©gÃ¢ts Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Game_BonusDamageType(HWND hDlg, WCHAR *pszDamageType, UINT uAction)
 {
@@ -1603,7 +1603,7 @@ WCHAR* Game_BonusDamageType(HWND hDlg, WCHAR *pszDamageType, UINT uAction)
 }
 
 
-// «»»» Retrouve un bonus par son identifiant «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve un bonus par son identifiant Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 GAMEBONUS* Game_BonusGetFromID(WCHAR *pszId)
 {
@@ -1622,7 +1622,7 @@ GAMEBONUS* Game_BonusGetFromID(WCHAR *pszId)
 }
 
 
-// «»»» Modifie les informations d'un bonux ««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modifie les informations d'un bonux Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_BonusSetInfos(GAMEEDITBONUS *pEditBonus, GAMEBONUS *pBonus)
 {
@@ -1638,7 +1638,7 @@ int Game_BonusSetInfos(GAMEEDITBONUS *pEditBonus, GAMEBONUS *pBonus)
 }
 
 
-// «»»» Modifie une valeur ««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modifie une valeur Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //!\ Pointers are copied
 
@@ -1700,7 +1700,7 @@ int Game_BonusSetVal(GAMEEDITBONUS *pEditBonus, UINT uType, ...)
 }
 
 
-// «»»» Copie d'un bonus ««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Copie d'un bonus Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_BonusCopy(GAMEEDITBONUS *pEditBonusDest, GAMEEDITBONUS *pEditBonusSrc)
 {
@@ -1744,9 +1744,9 @@ int Game_BonusCopy(GAMEEDITBONUS *pEditBonusDest, GAMEEDITBONUS *pEditBonusSrc)
 }
 
 
-// «»»» Libération des bonus ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration des bonus Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Libération de tous les bonus ---
+//--- LibÃ©ration de tous les bonus ---
 
 void Game_BonusReleaseAll(NODE *pBonusList)
 {
@@ -1759,7 +1759,7 @@ void Game_BonusReleaseAll(NODE *pBonusList)
 	return;
 }
 
-//--- Libération d'un bonus ---
+//--- LibÃ©ration d'un bonus ---
 
 void Game_BonusRelease(GAMEEDITBONUS *pEditBonus, BOOL bCleanUpOnly)
 {
@@ -1814,13 +1814,13 @@ void Game_BonusRelease(GAMEEDITBONUS *pEditBonus, BOOL bCleanUpOnly)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Manipulation des chaînes						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Manipulation des chaÃ®nes						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Incrémente un nombre ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» IncrÃ©mente un nombre Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusIncreaseNumber(WCHAR *pszNumber, int iIncrease, BOOL bFloat, BOOL bSigned)
 {
@@ -1850,7 +1850,7 @@ void Game_BonusIncreaseNumber(WCHAR *pszNumber, int iIncrease, BOOL bFloat, BOOL
 }
 
 
-// «»»» Détermine si un texte est un nombre positif «««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©termine si un texte est un nombre positif Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Game_BonusGetPositiveSign(WCHAR *pszText)
 {
@@ -1861,7 +1861,7 @@ WCHAR* Game_BonusGetPositiveSign(WCHAR *pszText)
 }
 
 
-// «»»» Détermine si un texte est vide ««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©termine si un texte est vide Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Game_BonusIsEmptyNumber(WCHAR *pszText)
 {
@@ -1881,7 +1881,7 @@ BOOL Game_BonusIsEmptyNumber(WCHAR *pszText)
 }
 
 
-// «»»» Multiplie ou divise un nombre par 100 «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Multiplie ou divise un nombre par 100 Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusShiftNumber(WCHAR *pszNumber, BOOL bLeft)
 {
@@ -1896,7 +1896,7 @@ void Game_BonusShiftNumber(WCHAR *pszNumber, BOOL bLeft)
 }
 
 
-// «»»» Nettoie un nombre «««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Nettoie un nombre Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_BonusCleanNumber(WCHAR *pszNumber, BOOL bFloat, BOOL bSigned)
 {
@@ -1984,7 +1984,7 @@ void Game_BonusCleanNumber(WCHAR *pszNumber, BOOL bFloat, BOOL bSigned)
 }
 
 
-// «»»» Supprime ".0" à la fin d'un nombre à virgule (pour affichage) «««»
+// Â«Â»Â»Â» Supprime ".0" Ã  la fin d'un nombre Ã  virgule (pour affichage) Â«Â«Â«Â»
 
 void Game_BonusCleanFloat(WCHAR *pszNumber)
 {

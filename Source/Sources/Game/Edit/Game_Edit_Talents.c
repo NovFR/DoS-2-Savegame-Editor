@@ -8,11 +8,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Divine.h"
@@ -28,46 +28,46 @@ extern APPLICATION	App;
 static GAMETALENT	GameTalents[] = {	{ 0x00000008, 0 },				// Opportuniste
 						{ 0x00100000, 0 },				// Revenant
 						{ 0x02000000, 0 },				// Taille XXL
-						{ 0x04000000, 0 },				// Super compétent
-						{ 0x00000200, 1 },				// Ami des bêtes
-						{ 0x00000400, 1 },				// Maître de l'évasion
-						{ 0x00001000, 1 },				// Guérilla
-						{ 0x00004000, 1 },				// Lêve-tôt
+						{ 0x04000000, 0 },				// Super compÃ©tent
+						{ 0x00000200, 1 },				// Ami des bÃªtes
+						{ 0x00000400, 1 },				// MaÃ®tre de l'Ã©vasion
+						{ 0x00001000, 1 },				// GuÃ©rilla
+						{ 0x00004000, 1 },				// LÃªve-tÃ´t
 						{ 0x00010000, 1 },				// Canon de verre
 						{ 0x00040000, 1 },				// Empressement
 						{ 0x00080000, 1 },				// En retrait
 						{ 0x00100000, 1 },				// Sangsue
-						{ 0x00200000, 1 },				// Affinité élémentaire
-						{ 0x00400000, 1 },				// Dîner cinq étoiles
-						{ 0x01000000, 1 },				// Ranger élémentaire
+						{ 0x00200000, 1 },				// AffinitÃ© Ã©lÃ©mentaire
+						{ 0x00400000, 1 },				// DÃ®ner cinq Ã©toiles
+						{ 0x01000000, 1 },				// Ranger Ã©lÃ©mentaire
 						{ 0x10000000, 1 },				// Loup solitaire
 						{ 0x20000000, 1, GAME_TALENT_UNDEAD },		// Mort-vivant
-						{ 0x40000000, 1 },				// Démon
-						{ 0x80000000, 1 },				// Complètement givré
+						{ 0x40000000, 1 },				// DÃ©mon
+						{ 0x80000000, 1 },				// ComplÃ¨tement givrÃ©
 						{ 0x00000004, 2 },				// Fortitude
 						{ 0x00000020, 2 },				// Puanteur
-						{ 0x00000100, 2 },				// Santé de fer
-						{ 0x00000400, 2 },				// Trouve-flèches
+						{ 0x00000100, 2 },				// SantÃ© de fer
+						{ 0x00000400, 2 },				// Trouve-flÃ¨ches
 						{ 0x00020000, 2 },				// Jeu du mouchoir
 						{ 0x00040000, 2 },				// Fronde
-						{ 0x00200000, 2 },				// Maître de la parade
-						{ 0x00400000, 2, GAME_TALENT_HUMAN },		// Ingéniosité
+						{ 0x00200000, 2 },				// MaÃ®tre de la parade
+						{ 0x00400000, 2, GAME_TALENT_HUMAN },		// IngÃ©niositÃ©
 						{ 0x00800000, 2, GAME_TALENT_HUMAN },		// Econome
 						{ 0x01000000, 2, GAME_TALENT_ELF },		// Savoir ancestral
 						{ 0x02000000, 2, GAME_TALENT_ELF },		// Mangeur de cadavres
 						{ 0x04000000, 2, GAME_TALENT_DWARF },		// Robuste
 						{ 0x08000000, 2, GAME_TALENT_DWARF },		// Ruse de nain
-						{ 0x10000000, 2, GAME_TALENT_LIZARD },		// Sophistiqué
+						{ 0x10000000, 2, GAME_TALENT_LIZARD },		// SophistiquÃ©
 						{ 0x20000000, 2, GAME_TALENT_LIZARD },		// Chantesort
-						{ 0x40000000, 2 },				// Tête brûlée
+						{ 0x40000000, 2 },				// TÃªte brÃ»lÃ©e
 						{ 0x80000000, 2 },				// Bourreau
-						{ 0x00000001, 3 },				// Sortilège sauvage
+						{ 0x00000001, 3 },				// SortilÃ¨ge sauvage
 						{ 0x00000002, 3 },				// Pion
-						{ 0x00000004, 3 },				// Baiser de l'araignée [For +2 | Con -2] (Towering Oak)
-						{ 0x00000008, 3 },				// Baiser de l'araignée [Int +2 | Con -2] (Curved Quill)
-						{ 0x00000010, 3 },				// Baiser de l'araignée [Dex +2 | Con -2] (Stately Dragon)
-						{ 0x00000020, 3 },				// Baiser de l'araignée [------ | Con -2] (Golden Chest: 200G / Transparent Chrysalis: Idol) (???)
-						{ 0x00000040, 3 },				// Mnémonique
+						{ 0x00000004, 3 },				// Baiser de l'araignÃ©e [For +2 | Con -2] (Towering Oak)
+						{ 0x00000008, 3 },				// Baiser de l'araignÃ©e [Int +2 | Con -2] (Curved Quill)
+						{ 0x00000010, 3 },				// Baiser de l'araignÃ©e [Dex +2 | Con -2] (Stately Dragon)
+						{ 0x00000020, 3 },				// Baiser de l'araignÃ©e [------ | Con -2] (Golden Chest: 200G / Transparent Chrysalis: Idol) (???)
+						{ 0x00000040, 3 },				// MnÃ©monique
 						{ 0x00000080, 3 },				// Secrets professionnels
 						{ 0x00000400, 3 },				// Armure vivante
 						{ 0x00000800, 3 },				// Tortionnaire
@@ -77,20 +77,21 @@ static GAMETALENT	GameTalents[] = {	{ 0x00000008, 0 },				// Opportuniste
 						{ 0x00800000, 3 },				// Fauchage
 						{ 0x01000000, 3 },				// Gladiateur
 						{ 0x02000000, 3 },				// Indomptable
-						{ 0x10000000, 3 },				// Preneur d'âmes
-						{ 0x20000000, 3 },				// Maître voleur
+						{ 0x10000000, 3 },				// Preneur d'Ã¢mes
+						{ 0x20000000, 3 },				// MaÃ®tre voleur
+						{ 0x40000000, 3 },				// RÃ©ceptacle avide
 						{ 0x80000000, 3 },				// Cycles magiques
 						{ 0 }
 					};
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Boîte de dialogue						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ BoÃ®te de dialogue						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Création de la boîte de dialogue ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_Talents()
 {
@@ -156,7 +157,7 @@ void Game_Talents()
 			pContext->dwUnknownTalents[GameTalents[i].uGroup] &= ~GameTalents[i].dwFlag;
 		}
 
-	//--- Affichage de la boîte de dialogue ---
+	//--- Affichage de la boÃ®te de dialogue ---
 
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1009),App.hWnd,Game_TalentsProc,(LPARAM)pContext);
 	if (iResult == -1) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
@@ -173,7 +174,7 @@ void Game_Talents()
 			}
 		}
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 	for (i = 0; GameTalents[i].dwFlag != 0; i++)
 		{
@@ -186,7 +187,7 @@ void Game_Talents()
 }
 
 
-// «»»» Processus de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Processus de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Game_TalentsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -369,7 +370,7 @@ INT_PTR CALLBACK Game_TalentsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM 
 }
 
 
-// «»»» Tri des talents «««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Tri des talents Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int CALLBACK Game_TalentsSort(GAMETALENTSTRUCT *pTalent1, GAMETALENTSTRUCT *pTalent2, GAMETALENTSCONTEXT *pContext)
 {
@@ -384,7 +385,7 @@ int CALLBACK Game_TalentsSort(GAMETALENTSTRUCT *pTalent1, GAMETALENTSTRUCT *pTal
 }
 
 
-// «»»» Copie la description d'un talent ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Copie la description d'un talent Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TalentsTip(HWND hDlg, NMLVGETINFOTIP *pTip, GAMETALENTSCONTEXT *pContext)
 {
@@ -416,7 +417,7 @@ void Game_TalentsTip(HWND hDlg, NMLVGETINFOTIP *pTip, GAMETALENTSCONTEXT *pConte
 }
 
 
-// «»»» Active/Désactive un talent ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Active/DÃ©sactive un talent Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TalentsCheck(HWND hDlg, int iItem, BOOL bToggle, GAMETALENTSCONTEXT *pContext)
 {
@@ -427,7 +428,7 @@ void Game_TalentsCheck(HWND hDlg, int iItem, BOOL bToggle, GAMETALENTSCONTEXT *p
 
 	if (!pContext->bInitialized) return;
 
-	//--- Récupère le talent ---
+	//--- RÃ©cupÃ¨re le talent ---
 
 	lvItem.mask = LVIF_PARAM|LVIF_STATE|LVIF_GROUPID;
 	lvItem.iItem = iItem;
@@ -438,7 +439,7 @@ void Game_TalentsCheck(HWND hDlg, int iItem, BOOL bToggle, GAMETALENTSCONTEXT *p
 	lvItem.lParam = 0;
 	SendDlgItemMessage(hDlg,200,LVM_GETITEM,0,(LPARAM)&lvItem);
 
-	//--- Empêche la modification des talents inconnus ---
+	//--- EmpÃªche la modification des talents inconnus ---
 
 	if (lvItem.iGroupId == 2)
 		{
@@ -460,7 +461,7 @@ void Game_TalentsCheck(HWND hDlg, int iItem, BOOL bToggle, GAMETALENTSCONTEXT *p
 	pContext->dwTalents[pTalent->Flag.uGroup] &= ~pTalent->Flag.dwFlag;
 	pContext->dwTalents[pTalent->Flag.uGroup] |= dwState;
 
-	//--- Bascule l'état du talent ---
+	//--- Bascule l'Ã©tat du talent ---
 
 	if (bToggle)
 		{
@@ -472,7 +473,7 @@ void Game_TalentsCheck(HWND hDlg, int iItem, BOOL bToggle, GAMETALENTSCONTEXT *p
 		return;
 		}
 
-	//--- Déplace le talent dans un nouveau groupe ---
+	//--- DÃ©place le talent dans un nouveau groupe ---
 
 	iNewGroupId = dwState?0:1;
 	if (iNewGroupId != lvItem.iGroupId)

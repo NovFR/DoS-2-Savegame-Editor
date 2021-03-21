@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1616335457 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
+1616341574 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
 	"_Global.h"
 	"_Version.h"
 
@@ -430,7 +430,7 @@
 	"Requests.h"
 	"Utils.h"
 
-1616260947 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_stats.c
+1616336796 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_stats.c
 	"Application.h"
 	"Locale.h"
 	"Dialogs.h"
@@ -459,7 +459,7 @@
 
 1616091588 f:\programmation\sources\jeux\divinity original sin ii\includes\_resources.h
 
-1616328387 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_taskbar.c
+1616338112 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_taskbar.c
 	"Application.h"
 	"Taskbar.h"
 

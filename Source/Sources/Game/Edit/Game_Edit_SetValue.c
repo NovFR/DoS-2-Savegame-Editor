@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "GameEdit.h"
@@ -52,13 +52,13 @@ static GAMEEDITFILTER	GameBoostersFilters[] = {
 						};
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Modification d'une valeur numérique				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Modification d'une valeur numÃ©rique				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Affichage de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_EditSetValue(HWND hWnd, WCHAR *pszLabel, XML_ATTR* pxa, int iMin, int iMax)
 {
@@ -112,9 +112,9 @@ int Game_EditSetValue(HWND hWnd, WCHAR *pszLabel, XML_ATTR* pxa, int iMin, int i
 }
 
 
-// «»»» Fonctions de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Fonctions de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Initialisation de la boîte de dialogue ---
+//--- Initialisation de la boÃ®te de dialogue ---
 
 int Game_EditSetValue_Init(HWND hDlg, RECT *rcDialog, int iHeight, void *pDialog)
 {
@@ -174,11 +174,11 @@ int Game_EditSetValue_Ok(HWND hDlg, void *pDialog)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Modification d'une valeur texte					  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Modification d'une valeur texte					  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 // Extra parameters:
 //
@@ -266,7 +266,7 @@ WCHAR* Game_EditValue(HWND hWnd, WCHAR *pszValue, UINT uType, ...)
 }
 
 
-// «»»» Processus de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Processus de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -320,7 +320,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 						}
 					}
 
-				//--- Entrées ---
+				//--- EntrÃ©es ---
 				if (!Game_EditValueBuildList(hDlg,TRUE,pValue))
 					{
 					EndDialog(hDlg,-1);
@@ -388,7 +388,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 						}
 					}
 
-				//--- Entrées ---
+				//--- EntrÃ©es ---
 				if (!Game_EditValueBuildList(hDlg,TRUE,pValue))
 					{
 					EndDialog(hDlg,-1);
@@ -405,7 +405,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 				Game_EditValueSizeObject(hDlg,777);
 				} break;
 
-			//--- Mots-clé ---
+			//--- Mots-clÃ© ---
 
 			case DATA_TYPE_TAGS:
 				if (!Game_TagsPopulateList(hDlg,300,&pValue->nodeData,pValue->bIgnoreProtected,pValue->bIgnoreProtected))
@@ -665,7 +665,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 }
 
 
-// «»»» Création de la liste ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation de la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 {
@@ -683,7 +683,7 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 	SendDlgItemMessage(hDlg,300,LVM_DELETEALLITEMS,0,0);
 	EnableWindow(GetDlgItem(hDlg,IDOK),FALSE);
 
-	//--- Création des images et des groupes pour les runes ---
+	//--- CrÃ©ation des images et des groupes pour les runes ---
 
 	if (pValue->uType == DATA_TYPE_RUNES)
 		{
@@ -702,7 +702,7 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 			}
 		}
 
-	//--- Création des groupes pour les boosters ---
+	//--- CrÃ©ation des groupes pour les boosters ---
 
 	else if (pValue->uType == DATA_TYPE_BOOSTERS)
 		{
@@ -721,7 +721,7 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 			}
 		}
 
-	//--- Boucle d'insertion des entrées ---
+	//--- Boucle d'insertion des entrÃ©es ---
 
 	for (lvItem.iItem = 0, pData = (GAMEDATA *)pValue->nodeData.next; pData != NULL; pData = (GAMEDATA *)pData->node.next)
 		{
@@ -884,7 +884,7 @@ Failed:	if (!bQuiet) Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NUL
 }
 
 
-// «»»» Routine de tri ««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Routine de tri Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int CALLBACK Game_EditValueCmp(GAMEDATA *pData1, GAMEDATA *pData2, GAMEEDITVALUE *pValue)
 {
@@ -936,7 +936,7 @@ int CALLBACK Game_EditValueCmp(GAMEDATA *pData1, GAMEDATA *pData2, GAMEEDITVALUE
 }
 
 
-// «»»» [BOOSTERS] Liste des filtres «««««««««««««««««»
+// Â«Â»Â»Â» [BOOSTERS] Liste des filtres Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //--- Modifie les filtres ---
 
@@ -1039,7 +1039,7 @@ BOOL Game_EditValueIsBoosterValid(WCHAR *pszId, UINT64 uFilter, BOOL bCheckTarge
 
 		UINT uLen = wcslen(pszId);
 
-		//--- Détermine quelle table utiliser pour la comparaison ---
+		//--- DÃ©termine quelle table utiliser pour la comparaison ---
 
 		if (bCheckTarget)
 			{
@@ -1065,7 +1065,7 @@ BOOL Game_EditValueIsBoosterValid(WCHAR *pszId, UINT64 uFilter, BOOL bCheckTarge
 	return(TRUE);
 }
 
-// --- Définition des filtres ---
+// --- DÃ©finition des filtres ---
 
 void Game_EditValueSetBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uFilter)
 {
@@ -1086,7 +1086,7 @@ void Game_EditValueSetBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uFilter)
 	return;
 }
 
-//--- Mise à jour des filtres ---
+//--- Mise Ã  jour des filtres ---
 
 void Game_EditValueUpdateBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uMask, GAMEEDITVALUE *pValue)
 {
@@ -1095,7 +1095,7 @@ void Game_EditValueUpdateBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uMask, 
 	UINT		uSelCount;
 	UINT64		uFilterTmp, uFilter = 0;
 
-	//--- Retrouve la liste des entrées sélectionnées ---
+	//--- Retrouve la liste des entrÃ©es sÃ©lectionnÃ©es ---
 
 	uSelCount = SendDlgItemMessage(hDlg,uCtrlID,LB_GETSELCOUNT,0,0);
 	if (uSelCount)
@@ -1105,7 +1105,7 @@ void Game_EditValueUpdateBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uMask, 
 		SendDlgItemMessage(hDlg,uCtrlID,LB_GETSELITEMS,(WPARAM)uSelCount,(LPARAM)uSelectedPtr);
 		}
 
-	//--- Mise-à-jour des filtres ---
+	//--- Mise-Ã -jour des filtres ---
 
 	if (uSelectedPtr)
 		{
@@ -1118,12 +1118,12 @@ void Game_EditValueUpdateBoostersFilters(HWND hDlg, UINT uCtrlID, UINT64 uMask, 
 		HeapFree(App.hHeap,0,uSelectedPtr);
 		}
 
-	//--- Vérifie si une mise-à-jour de la liste est nécessaire ---
+	//--- VÃ©rifie si une mise-Ã -jour de la liste est nÃ©cessaire ---
 
 	uFilterTmp = pValue->uFilter&uMask;
 	if (uFilterTmp == uFilter) return;
 
-	//--- Mise-à-jour de la liste ---
+	//--- Mise-Ã -jour de la liste ---
 
 	pValue->uFilter &= ~uMask;
 	pValue->uFilter |= uFilter;
@@ -1166,7 +1166,7 @@ void Game_EditValueDrawBoostersFilter(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage du séparateur «««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage du sÃ©parateur Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_EditValueDrawSeparator(DRAWITEMSTRUCT *pDraw)
 {
@@ -1175,9 +1175,9 @@ void Game_EditValueDrawSeparator(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Objet cible «««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Objet cible Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Redimensionne le contrôle ---
+//--- Redimensionne le contrÃ´le ---
 
 void Game_EditValueSizeObject(HWND hDlg, UINT uCtrlID)
 {
@@ -1239,7 +1239,7 @@ void Game_EditValueDrawObject(WCHAR *pszName, WCHAR *pszMore, DRAWITEMSTRUCT *pD
 }
 
 
-// «»»» Sélectionne la valeur dans la liste «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» SÃ©lectionne la valeur dans la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //--- ListBox ---
 
@@ -1347,7 +1347,7 @@ void Game_EditValueSelectListEntry(HWND hDlg, WCHAR *pszText)
 }
 
 
-// «»»» Récupère la valeur sélectionnée «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re la valeur sÃ©lectionnÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bCheckModified, GAMEEDITVALUE *pValue)
 {
@@ -1387,7 +1387,7 @@ GAMEDATA* Game_EditValueGetSelected(HWND hDlg, BOOL bCheckModified, GAMEEDITVALU
 }
 
 
-// «»»» Copie la valeur dans la zone d'édition ««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Copie la valeur dans la zone d'Ã©dition Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_EditValueUpdateBooster(HWND hDlg, DWORD dwFlags, BOOL bUpdateEditBox, GAMEEDITVALUE *pValue)
 {
@@ -1461,7 +1461,7 @@ void Game_EditValueUpdateBooster(HWND hDlg, DWORD dwFlags, BOOL bUpdateEditBox, 
 }
 
 
-// «»»» Sauvegarde la valeur ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Sauvegarde la valeur Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 {
@@ -1475,7 +1475,7 @@ int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 
 	wcscpy(pValue->pszResult,pData->pszId);
 
-	//--- Vérifie si le tag n'est pas protégé ---
+	//--- VÃ©rifie si le tag n'est pas protÃ©gÃ© ---
 
 	if (pValue->uType == DATA_TYPE_TAGS)
 		{
@@ -1497,7 +1497,7 @@ int Game_EditValueSave(HWND hDlg, GAMEEDITVALUE *pValue)
 }
 
 
-// «»»» Fermeture de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Fermeture de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_EditValueClose(HWND hDlg, INT_PTR nResult, GAMEEDITVALUE *pValue)
 {

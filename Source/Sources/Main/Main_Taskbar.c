@@ -58,7 +58,12 @@ int Taskbar_Initialize()
 
 void Taskbar_Reset()
 {
-	if (App.pTaskbar) App.pTaskbar->lpVtbl->Release(App.pTaskbar);
+	if (App.pTaskbar)
+		{
+		App.pTaskbar->lpVtbl->Release(App.pTaskbar);
+		App.pTaskbar = NULL;
+		}
+
 	return;
 }
 
