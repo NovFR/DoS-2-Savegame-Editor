@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "_Global.h"
 #include "Application.h"
@@ -22,13 +22,13 @@ extern APPLICATION	App;
 extern WCHAR*		TextsIds[];
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ 	Gestion des fichiers & des structures				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ 	Gestion des fichiers & des structures				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Énumération des langues disponibles «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ã‰numÃ©ration des langues disponibles Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 {
@@ -42,7 +42,7 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 
 	ZeroMemory(pRoot,sizeof(NODE));
 
-	//--- Création du chemin de recherche ---
+	//--- CrÃ©ation du chemin de recherche ---
 
 	vl[0] = (DWORD_PTR)L"*";
 	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszPathFmt,0,0,(WCHAR *)&pszSearchPath,1,(va_list *)vl))
@@ -102,7 +102,7 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 	return(1);
 }
 
-//--- Libération de la structure ---
+//--- LibÃ©ration de la structure ---
 
 void Locale_EnumRelease(NODE *pRoot)
 {
@@ -119,7 +119,7 @@ void Locale_EnumRelease(NODE *pRoot)
 }
 
 
-// «»»» Chargement des textes «««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Chargement des textes Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void **pLocalePtr, WCHAR **pszLocaleNamePtr)
 {
@@ -142,7 +142,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 				SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 				goto Done;
 				}
-			// Initialise les identifiants numériques & textuels
+			// Initialise les identifiants numÃ©riques & textuels
 			for (uId = 0; uId != TEXT_LAST; uId++)
 				{
 				((LOCALE_TEXT *)*pLocalePtr)[uId].lUID = uId;
@@ -159,11 +159,11 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			break;
 		}
 
-	//--- Création du nom (Path\%1.txt) ---
+	//--- CrÃ©ation du nom (Path\%1.txt) ---
 
 	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszPathFmt,0,0,(WCHAR *)&Parser.pszFilePath,1,(va_list *)dwpLangFile)) goto Done;
 
-	//--- Ouverture de la base de données ---
+	//--- Ouverture de la base de donnÃ©es ---
 
 	Parser.pszDataBasePath = Misc_WideCharToUTF8(Parser.pszFilePath);
 	if (!Parser.pszDataBasePath) goto Done;
@@ -188,7 +188,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 		goto Done;
 		}
 
-	//--- Récupération du nom de la langue ---
+	//--- RÃ©cupÃ©ration du nom de la langue ---
 
 	if (pszLocaleNamePtr)
 		{
@@ -203,7 +203,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			}
 		}
 
-	//--- Récupération des textes ---
+	//--- RÃ©cupÃ©ration des textes ---
 
 	Parser.pszLastError = NULL;
 	Parser.iResult = 1;
@@ -240,7 +240,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			break;
 		}
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 Done:	if (Parser.pszLastError)
 		{
@@ -255,7 +255,7 @@ Done:	if (Parser.pszLastError)
 }
 
 
-// «»»» Libération de la mémoire ««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration de la mÃ©moire Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 {
@@ -282,7 +282,7 @@ void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 				}
 			break;
 		case LOCALE_TYPE_MISC:
-			sqlite3_close(((LOCALE_MISC *)pLocalePtr)->db);
+			sqlite3_close(((LOCALE_MISC *)*pLocalePtr)->db);
 			break;
 		}
 
@@ -292,13 +292,13 @@ void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ 	Parser								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ 	Parser								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Récupère la langue de la base de données ««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re la langue de la base de donnÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Locale_Language(void *pLocaleName, int iRowsCount, char **pszRowsTextsPtr, char **pszRowsNamesPtr)
 {
@@ -307,7 +307,7 @@ int Locale_Language(void *pLocaleName, int iRowsCount, char **pszRowsTextsPtr, c
 }
 
 
-// «»»» Récupère les textes de l'application ««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re les textes de l'application Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Locale_Parse(void *pLocale, int iRowsCount, char **pszRowsTextsPtr, char **pszRowsNamesPtr)
 {
@@ -343,7 +343,7 @@ int Locale_Parse(void *pLocale, int iRowsCount, char **pszRowsTextsPtr, char **p
 }
 
 
-// «»»» Récupère la traduction d'un identifiant «««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re la traduction d'un identifiant Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Locale_QueryID(sqlite3 *db, WCHAR *pszDataBaseName, WCHAR *pszId, WCHAR *pszRows, WCHAR *pszResults[], UINT iNumRows)
 {
@@ -360,11 +360,11 @@ BOOL Locale_QueryID(sqlite3 *db, WCHAR *pszDataBaseName, WCHAR *pszId, WCHAR *ps
 	pszQuery = NULL;
 	bResult = FALSE;
 
-	//--- Réinitialise tous les résultats ---
+	//--- RÃ©initialise tous les rÃ©sultats ---
 
 	for (i = 0; i != iNumRows; i++) pszResults[i] = NULL;
 
-	//--- Création de la requête ---
+	//--- CrÃ©ation de la requÃªte ---
 
 	vl[0] = (DWORD_PTR)pszDataBaseName;
 	vl[1] = (DWORD_PTR)(pszRows?pszRows:L"text");
@@ -373,13 +373,13 @@ BOOL Locale_QueryID(sqlite3 *db, WCHAR *pszDataBaseName, WCHAR *pszId, WCHAR *ps
 	LocalFree(pszQueryTmp);
 	if (!pszQuery) goto Done;
 
-	//--- Préparation de la requête ---
+	//--- PrÃ©paration de la requÃªte ---
 
 	if (sqlite3_prepare_v2(db,pszQuery,-1,&stmt,NULL) != SQLITE_OK) goto Done;
 	if (!(pszQueryId = Misc_WideCharToUTF8(pszId))) goto Done;
 	if (sqlite3_bind_text(stmt,1,pszQueryId,strlen(pszQueryId),NULL) != SQLITE_OK) goto Done;
 
-	//--- Récupération des colonnes ---
+	//--- RÃ©cupÃ©ration des colonnes ---
 
 	if (sqlite3_step(stmt) == SQLITE_ROW)
 		for (i = 0; i != iNumRows; i++)
@@ -387,7 +387,7 @@ BOOL Locale_QueryID(sqlite3 *db, WCHAR *pszDataBaseName, WCHAR *pszId, WCHAR *ps
 
 	bResult = TRUE;
 
-	//--- Libération de la mémoire ---
+	//--- LibÃ©ration de la mÃ©moire ---
 
 Done:	if (pszQueryId) HeapFree(App.hHeap,0,pszQueryId);
 	if (pszQuery) HeapFree(App.hHeap,0,pszQuery);
@@ -396,7 +396,7 @@ Done:	if (pszQueryId) HeapFree(App.hHeap,0,pszQueryId);
 }
 
 
-// «»»» Récupère les bonus d'une rune «««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re les bonus d'une rune Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Locale_QueryBonuses(sqlite3 *db, WCHAR *pszRuneId, WCHAR *pszResults[])
 {
@@ -433,7 +433,7 @@ Done:	if (pszQueryID) HeapFree(App.hHeap,0,pszQueryID);
 }
 
 
-// «»»» Récupère la traduction d'un talent ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re la traduction d'un talent Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Locale_QueryTalent(sqlite3 *db, DWORD dwTalentFlag, UINT uTalentIndex, WCHAR **pszName, WCHAR **pszDescription)
 {
@@ -450,15 +450,15 @@ Done:	sqlite3_finalize(stmt);
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ 	Sous-routines							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ 	Sous-routines							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Gestion des textes de l'application «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Gestion des textes de l'application Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Récupération d'un texte en fonction de son identifiant numérique ---
+//--- RÃ©cupÃ©ration d'un texte en fonction de son identifiant numÃ©rique ---
 
 WCHAR* Locale_GetText(LONG lUID)
 {
@@ -467,7 +467,7 @@ WCHAR* Locale_GetText(LONG lUID)
 	else return(App.pLocaleTexts[lUID].pszText);
 }
 
-//--- Récupération d'un texte en fonction de son identifiant texte ---
+//--- RÃ©cupÃ©ration d'un texte en fonction de son identifiant texte ---
 
 LONG Locale_GetTextUID(LOCALE_TEXT *pLocale, WCHAR *pszText)
 {

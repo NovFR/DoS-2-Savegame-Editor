@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Références des textes fixes
+	RÃ©fÃ©rences des textes fixes
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -19,6 +19,8 @@ extern WCHAR	szEditClass[];
 extern WCHAR	szListBoxClass[];
 extern WCHAR	szButtonClass[];
 extern WCHAR	szStaticClass[];
+extern WCHAR	szThemeButton[];
+extern WCHAR	szThemeProgress[];
 
 extern WCHAR	szRootPath[];
 extern WCHAR	szParentPath[];
@@ -30,13 +32,14 @@ extern WCHAR	szBlank[];
 extern WCHAR	sSourcePoint;
 extern WCHAR	sActionPoint;
 extern WCHAR	szEdit[];
+extern WCHAR	szClassSpace[];
+extern WCHAR	szGeneric[];
 
 extern WCHAR	szPlayerName[];
 extern WCHAR	szLevelFmt[];
 extern WCHAR	szLevelProgressionFmt[];
 extern WCHAR	szRaceFmt[];
-extern WCHAR	szMale[];
-extern WCHAR	szFemale[];
+extern WCHAR	szClassFmt[];
 
 extern WCHAR	szPlus[];
 extern WCHAR	szEmpty[];
@@ -77,6 +80,7 @@ extern WCHAR	szItemsDataPath[];
 extern WCHAR	szBoostersDataPath[];
 extern WCHAR	szRunesDataPath[];
 extern WCHAR	szTagsDataPath[];
+extern WCHAR	szSkillsDataPath[];
 extern WCHAR	szIconsPath[];
 extern WCHAR	szSkillsIconsPath[];
 extern WCHAR	szRunesIconsPath[];
@@ -129,6 +133,10 @@ extern WCHAR	szXMLBoost[];
 extern WCHAR	szXMLObject[];
 extern WCHAR	szXMLObject[];
 extern WCHAR	szXMLTarget[];
+extern WCHAR	szXMLSkills[];
+extern WCHAR	szXMLTrue[];
+extern WCHAR	szXMLFalse[];
+
 extern WCHAR*	szCharactersPath[];
 extern WCHAR*	szCharacterStatsPath[];
 extern WCHAR*	szCharacterCustomDataPath[];
@@ -153,5 +161,8 @@ extern WCHAR*	szInfoGameModsPath[];
 extern WCHAR*	szInfoGameVersionsPath[];
 extern WCHAR*	szInfoGamePartyPath[];
 extern WCHAR*	szInfoGameDatePath[];
+
+extern WCHAR*	szSkillManagerPath[];
+extern WCHAR*	szSkillManagerSkillsPath[];
 
 #endif

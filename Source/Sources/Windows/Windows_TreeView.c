@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "XML.h"
@@ -21,13 +21,13 @@
 extern APPLICATION		App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Initalisations							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Initalisations							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Création de la fenêtre ««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation de la fenÃªtre Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Tree_Open(XML_NODE *pxn)
 {
@@ -43,9 +43,9 @@ void Tree_Open(XML_NODE *pxn)
 	Info.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(hMonitor,&Info);
 	X = ((Info.rcMonitor.right-Info.rcMonitor.left)-800)/2;
-	Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-700)/2;
+	Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-800)/2;
 
-	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,800,700,NULL,NULL,App.hInstance,(void *)WINDOW_TREE);
+	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,800,800,NULL,NULL,App.hInstance,(void *)WINDOW_TREE);
 	if (!hWnd)
 		{
 		App.xmlTree.pxn = NULL;
@@ -102,7 +102,7 @@ LRESULT Tree_Create(HWND hWnd)
 	return(1);
 }
 
-//--- Destruction de la fenêtre ---
+//--- Destruction de la fenÃªtre ---
 
 void Tree_Destroy()
 {
@@ -112,7 +112,7 @@ void Tree_Destroy()
 }
 
 
-// «»»» Création de la liste ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation de la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Tree_CreateTreeView(XML_NODE *pxn)
 {
@@ -143,7 +143,7 @@ int Tree_CreateTreeView(XML_NODE *pxn)
 	return(1);
 }
 
-//--- Création d'un noeud ---
+//--- CrÃ©ation d'un noeud ---
 
 int Tree_CreateNodeTree(XML_NODE *pxn, HTREEITEM hParent)
 {
@@ -233,9 +233,9 @@ void Tree_CreateDebugNode(WCHAR *pszText, NODE *pNode, HTREEITEM hParent)
 void Tree_CreateDebugInfo(WCHAR *pszText, DWORD64 dwValue, HTREEITEM hParent)
 {
 	TV_INSERTSTRUCT	tvItem;
-	WCHAR		pszBuffer[256];
+	WCHAR		pszBuffer[32];
 
-	swprintf(pszBuffer,255,L"%s=0x%016llX",pszText,dwValue);
+	Misc_Printf(pszBuffer,32,L"%s=0x%016llX",pszText,dwValue);
 
 	tvItem.hParent = hParent?hParent:TVI_ROOT;
 	tvItem.hInsertAfter = TVI_LAST;
@@ -249,7 +249,7 @@ void Tree_CreateDebugInfo(WCHAR *pszText, DWORD64 dwValue, HTREEITEM hParent)
 
 #endif
 
-//--- Création des valeurs ---
+//--- CrÃ©ation des valeurs ---
 
 int Tree_CreateAttrTree(XML_NODE *pxn, HTREEITEM hParent)
 {
@@ -276,7 +276,7 @@ int Tree_CreateAttrTree(XML_NODE *pxn, HTREEITEM hParent)
 }
 
 
-// «»»» Destruction de la liste «««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Destruction de la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Tree_DestroyTreeView()
 {
@@ -286,11 +286,11 @@ void Tree_DestroyTreeView()
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Gestion des messages						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Gestion des messages						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {

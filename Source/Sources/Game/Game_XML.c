@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "XML.h"
@@ -24,13 +24,13 @@
 extern APPLICATION		App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Chargement d'un fichier LSX (XML)				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Chargement d'un fichier LSX (XML)				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Initie le chargement d'un fichier XML «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Initie le chargement d'un fichier XML Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_LoadFile(WCHAR *pszFilePath)
 {
@@ -63,7 +63,7 @@ int xml_LoadFile(WCHAR *pszFilePath)
 }
 
 
-// «»»» Chargement d'un fichier XML «««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Chargement d'un fichier XML Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_ReadFile(XML_PARSER *pParser)
 {
@@ -90,7 +90,7 @@ int xml_ReadFile(XML_PARSER *pParser)
 
 	pParser->dwLastErrorType = XML_ERROR_NONE;
 
-	//--- Vérification basiques ---
+	//--- VÃ©rification basiques ---
 
 	pParser->dwLastErrorType = xml_ReadTag(pParser);
 	if (pParser->dwLastErrorType == XML_ERROR_EOF)
@@ -120,7 +120,7 @@ int xml_ReadFile(XML_PARSER *pParser)
 	pParser->dwLastErrorType = xml_ParseNodes(pParser,NULL,&App.Game.Save.nodeXMLRoot);
 	if (pParser->dwLastErrorType == XML_ERROR_EOF) pParser->dwLastErrorType = XML_ERROR_NONE;
 
-	//--- Terminé ! ---
+	//--- TerminÃ© ! ---
 
 Done:	if (pParser->pFileBuffer) HeapFree(App.hHeap,0,pParser->pFileBuffer);
 	if (pParser->hFile != INVALID_HANDLE_VALUE) CloseHandle(pParser->hFile);
@@ -128,7 +128,7 @@ Done:	if (pParser->pFileBuffer) HeapFree(App.hHeap,0,pParser->pFileBuffer);
 }
 
 
-// «»»» Récupère les limites d'un tag «««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RÃ©cupÃ¨re les limites d'un tag Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_ReadTag(XML_PARSER *pParser)
 {
@@ -161,7 +161,7 @@ int xml_ReadTag(XML_PARSER *pParser)
 }
 
 
-// «»»» Conversion des tags XML en structures «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Conversion des tags XML en structures Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 {
@@ -183,7 +183,7 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 			break;
 			}
 
-		// Récupère le nom du tag (assume qu'il n'y a pas d'espace entre le < et le nom)
+		// RÃ©cupÃ¨re le nom du tag (assume qu'il n'y a pas d'espace entre le < et le nom)
 
 		dwCursor = pParser->dwTagBegin;
 		dwNameSize = 0;
@@ -215,7 +215,7 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 		pxnNew->parent = pxnParent;
 		MultiByteToWideChar(CP_UTF8,0,(char *)&pParser->pFileBuffer[pParser->dwTagBegin],dwNameSize,pxnNew->name,sizeof(WCHAR)*dwNameSize);
 
-		// Vérifie s'il s'agit d'une fermeture
+		// VÃ©rifie s'il s'agit d'une fermeture
 
 		if (pxnNew->name[0] == '/')
 			{
@@ -243,7 +243,7 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 			break;
 			}
 
-		// Recupère les tags enfants
+		// RecupÃ¨re les tags enfants
 
 		List_AddEntry((NODE *)pxnNew,pRoot);
 		if (pParser->pFileBuffer[pParser->dwTagEnd-1] != '/')
@@ -257,7 +257,7 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 }
 
 
-// «»»» Conversion des attributs XML en structures ««««««««««««««««««««««»
+// Â«Â»Â»Â» Conversion des attributs XML en structures Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 {
@@ -277,11 +277,11 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 		dwCursor++;
 		}
 
-	//--- Récupère les attributs ---
+	//--- RÃ©cupÃ¨re les attributs ---
 
 	while(1)
 		{
-		//--- Retrouve le début de l'attribut ---
+		//--- Retrouve le dÃ©but de l'attribut ---
 		while(1)
 			{
 			if (dwCursor >= pParser->dwTagEnd) break;
@@ -306,7 +306,7 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 			return(XML_ERROR_FROM_LOCALE);
 			}
 
-		//--- Retrouve le début de la valeur ---
+		//--- Retrouve le dÃ©but de la valeur ---
 		dwCursor++;
 		while(1)
 			{
@@ -327,7 +327,7 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 		if (pParser->pFileBuffer[dwCursor] != '"') break;
 		dwValLen = dwCursor-dwValBegin;
 
-		//--- Création de la structure ---
+		//--- CrÃ©ation de la structure ---
 
 		pxaNew = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_ATTR)+sizeof(WCHAR)*dwAttrLen+sizeof(WCHAR));
 		if (!pxaNew)
@@ -366,19 +366,19 @@ int xml_ParseAttributes(XML_PARSER *pParser, XML_NODE *pxnOwner)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Sauvegarde							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Sauvegarde							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Initie la sauvegarde d'un fichier XML «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Initie la sauvegarde d'un fichier XML Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_SaveFile(WCHAR *pszFilePath, UINT uTarget, XML_NODE *pxn)
 {
 	XML_PARSER*	pParser;
 
-	//--- Création de la structure ---
+	//--- CrÃ©ation de la structure ---
 
 	pParser = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_PARSER));
 	if (!pParser)
@@ -421,7 +421,7 @@ int xml_SaveFile(WCHAR *pszFilePath, UINT uTarget, XML_NODE *pxn)
 }
 
 
-// «»»» Sauvegarde d'un fichier XML «««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Sauvegarde d'un fichier XML Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int xml_WriteFile(XML_PARSER *pParser)
 {
@@ -544,7 +544,7 @@ BOOL xml_WriteTabs(XML_PARSER *pParser)
 	return(xml_WriteToBuffer(pParser,pParser->pszTabsBuffer,pParser->uTabsCount,FALSE));
 }
 
-//--- Ecriture d'une chaîne WCHAR en UTF-8 ---
+//--- Ecriture d'une chaÃ®ne WCHAR en UTF-8 ---
 
 BOOL xml_WriteUTF8(XML_PARSER *pParser, WCHAR *pszText)
 {
@@ -576,7 +576,7 @@ BOOL xml_WriteUTF8(XML_PARSER *pParser, WCHAR *pszText)
 	return(TRUE);
 }
 
-//--- Ecriture des données dans un tampon ---
+//--- Ecriture des donnÃ©es dans un tampon ---
 
 BOOL xml_WriteToBuffer(XML_PARSER *pParser, void *pBuffer, UINT uBufferSize, BOOL bPurge)
 {
@@ -627,13 +627,13 @@ BOOL xml_WriteToBuffer(XML_PARSER *pParser, void *pBuffer, UINT uBufferSize, BOO
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Libération des structures					  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ LibÃ©ration des structures					  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Libération de la structure de chargement/sauvegarde «««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration de la structure de chargement/sauvegarde Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void xml_FreeParser(XML_PARSER *pParser)
 {
@@ -643,7 +643,7 @@ void xml_FreeParser(XML_PARSER *pParser)
 }
 
 
-// «»»» Libération des noeuds XML «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration des noeuds XML Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void xml_ReleaseAll(NODE *pxnRoot)
 {
@@ -653,7 +653,7 @@ void xml_ReleaseAll(NODE *pxnRoot)
 	return;
 }
 
-//--- Libère un noeud ---
+//--- LibÃ¨re un noeud ---
 
 void xml_ReleaseNode(XML_NODE *pxn)
 {
@@ -667,7 +667,7 @@ void xml_ReleaseNode(XML_NODE *pxn)
 	return;
 }
 
-//--- Libère un attribut ---
+//--- LibÃ¨re un attribut ---
 
 void xml_ReleaseAttr(XML_ATTR *pxa)
 {
@@ -678,17 +678,17 @@ void xml_ReleaseAttr(XML_ATTR *pxa)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Manipulation des structures					  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Manipulation des structures					  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Retrouve une entrée par un chemin «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve une entrÃ©e par un chemin Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 // Le chemin est de la forme WCHAR*,WCHAR*,...,NULL
 // Le premier WCHAR* est le nom du noeud
-// Le second WCHAR* est la valeur de l'attribut id du noeud (peut être nul)
+// Le second WCHAR* est la valeur de l'attribut id du noeud (peut Ãªtre nul)
 
 XML_NODE* xml_GetNodeFromPath(XML_NODE *pxnBegin, WCHAR *pszPath[])
 {
@@ -716,7 +716,7 @@ XML_NODE* xml_GetNodeFromPath(XML_NODE *pxnBegin, WCHAR *pszPath[])
 }
 
 
-// «»»» Retrouve le premier enfant d'une entrée à la fin d'un chemin ««««»
+// Â«Â»Â»Â» Retrouve le premier enfant d'une entrÃ©e Ã  la fin d'un chemin Â«Â«Â«Â«Â»
 
 XML_NODE* xml_GetNodeFromPathFirstChild(XML_NODE *pxnBegin, WCHAR *pszPath[])
 {
@@ -728,11 +728,11 @@ XML_NODE* xml_GetNodeFromPathFirstChild(XML_NODE *pxnBegin, WCHAR *pszPath[])
 }
 
 
-// «»»» Retrouve une entrée par son nom et un attribut ««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve une entrÃ©e par son nom et un attribut Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 // La fonction ne recherche que la branche actuelle, elle ne parcourt pas les enfants
-// > pszAttrName peut être nul (pas de recherche par attribut)
-// > pszAttrValue peut être nulle (l'attribut n'a pas de valeur)
+// > pszAttrName peut Ãªtre nul (pas de recherche par attribut)
+// > pszAttrValue peut Ãªtre nulle (l'attribut n'a pas de valeur)
 
 XML_NODE* xml_GetNode(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
 {
@@ -755,7 +755,7 @@ XML_NODE* xml_GetNode(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *pszAttrName
 }
 
 
-// «»»» Retrouve l'entrée suivante ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve l'entrÃ©e suivante Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 XML_NODE* xml_GetNextNode(XML_NODE *pxn)
 {
@@ -764,7 +764,7 @@ XML_NODE* xml_GetNextNode(XML_NODE *pxn)
 }
 
 
-// «»»» Retrouve une valeur par son nom «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve une valeur par son nom Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 XML_ATTR* xml_GetAttr(XML_NODE *pxn, WCHAR *pszAttrName)
 {
@@ -784,7 +784,7 @@ XML_ATTR* xml_GetAttr(XML_NODE *pxn, WCHAR *pszAttrName)
 }
 
 
-// «»»» Retrouve la valeur d'une entrée «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve la valeur d'une entrÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 XML_ATTR* xml_GetXMLValueAttr(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue)
 {
@@ -796,7 +796,7 @@ XML_ATTR* xml_GetXMLValueAttr(XML_NODE *pxnBegin, WCHAR *pszNodeName, WCHAR *psz
 }
 
 
-// «»»» Retrouve une valeur par son nom «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve une valeur par son nom Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* xml_GetAttrValue(XML_NODE *pxn, WCHAR *pszAttrName)
 {
@@ -815,7 +815,7 @@ WCHAR* xml_GetAttrValue(XML_NODE *pxn, WCHAR *pszAttrName)
 }
 
 
-// «»»» Retourne la valeur d'un attribut ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retourne la valeur d'un attribut Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 // /!\ Returned pointer may be NULL
 
@@ -826,17 +826,23 @@ WCHAR* xml_GetThisAttrValue(XML_ATTR *pxa)
 }
 
 
-// «»»» Détermine si une valeur est "vraie" «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©termine si une valeur est "vraie" Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL xml_IsTrue(XML_ATTR *pxa)
 {
 	if (!pxa) return(FALSE);
 	if (!pxa->value) return(FALSE);
-	return(wcscmp(pxa->value,L"True")?FALSE:TRUE);
+	return(wcscmp(pxa->value,szXMLTrue)?FALSE:TRUE);
+}
+
+BOOL xml_IsValueTrue(WCHAR *pszValue)
+{
+	if (!pszValue) return(FALSE);
+	return(wcscmp(pszValue,szXMLTrue)?FALSE:TRUE);
 }
 
 
-// «»»» Calcul le nombre total de noeuds ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Calcul le nombre total de noeuds Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
 {
@@ -854,13 +860,13 @@ UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions de création et de conversion				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions de crÃ©ation et de conversion				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Insertion d'une balise ««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Insertion d'une balise Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL xml_InsertChildNode(XML_NODE *pxnInsert, XML_NODE *pxnInto, WCHAR *pszNodeName, WCHAR *pszAttrName, WCHAR *pszAttrValue, BOOL bInsertAfter)
 {
@@ -888,7 +894,7 @@ BOOL xml_InsertChildNode(XML_NODE *pxnInsert, XML_NODE *pxnInto, WCHAR *pszNodeN
 }
 
 
-// «»»» Création d'une balise «««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation d'une balise Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //     ... : attribute, value (value may be NULL)
 // numAttrs: number of attributes
@@ -945,17 +951,17 @@ XML_NODE* xml_CreateNode(WCHAR *pszName, XML_NODE *pxnParent, UINT uNumAttrs, ..
 }
 
 
-// «»»» Création d'une série de balises «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation d'une sÃ©rie de balises Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-// Les balises sont définies comme ceci: WCHAR* pArray[] = { node, (attribute, value, ...), 0|1|-1|-2 }
+// Les balises sont dÃ©finies comme ceci: WCHAR* pArray[] = { node, (attribute, value, ...), 0|1|-1|-2 }
 //        node: nom de la balise
 //   attribute: nom de l'attribut (facultatif)
 //       value: valeur de l'attribut (facultatif)
-//           0: la prochaine balise suit la précédente
-//           1: la prochaine balise est enfant de la précédente
-//          -1: revient à la balise parente ou fin de la chaîne s'il n'y en a pas
-//          -2: fin de la chaîne
-// La fonction reçoit un pointeur sur le pointeur de la chaîne (WCHAR** pArrayPtr = pArray)
+//           0: la prochaine balise suit la prÃ©cÃ©dente
+//           1: la prochaine balise est enfant de la prÃ©cÃ©dente
+//          -1: revient Ã  la balise parente ou fin de la chaÃ®ne s'il n'y en a pas
+//          -2: fin de la chaÃ®ne
+// La fonction reÃ§oit un pointeur sur le pointeur de la chaÃ®ne (WCHAR** pArrayPtr = pArray)
 // xml_CreateNode(&pArrayPtr,pxnParent)
 
 XML_NODE* xml_CreateNodeArray(WCHAR ***pArray, XML_NODE *pxnParent)
@@ -971,6 +977,20 @@ XML_NODE* xml_CreateNodeArray(WCHAR ***pArray, XML_NODE *pxnParent)
 		{
 		while(**pArray != (WCHAR *)-2)
 			{
+			if (**pArray == (WCHAR *)-1)
+				{
+				(*pArray)++;
+				return((XML_NODE *)nodeRoot.next);
+				}
+			#if _DEBUG
+			if (**pArray == (WCHAR *)0 || **pArray == (WCHAR *)1)
+				{
+				if (**pArray == (WCHAR *)0) MessageBox(App.hWnd,L"Extra EOL(0) in array",NULL,MB_OK);
+				else MessageBox(App.hWnd,L"Unauthorized NIC(1) in array",NULL,MB_OK);
+				(*pArray)++;
+				continue;
+				}
+			#endif
 			pxnNew = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_NODE)+wcslen(**pArray)*sizeof(WCHAR)+sizeof(WCHAR));
 			if (!pxnNew)
 				{
@@ -1042,7 +1062,7 @@ XML_NODE* xml_CreateNodeArray(WCHAR ***pArray, XML_NODE *pxnParent)
 }
 
 
-// «»»» Création d'un attribut ««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation d'un attribut Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 XML_ATTR* xml_CreateAttr(WCHAR *pszName, XML_NODE *pxnOwner)
 {
@@ -1061,7 +1081,7 @@ XML_ATTR* xml_CreateAttr(WCHAR *pszName, XML_NODE *pxnOwner)
 }
 
 
-// «»»» Modifie la valeur d'un attribut «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modifie la valeur d'un attribut Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //--- Valeur textuelle ---
 
@@ -1085,7 +1105,7 @@ BOOL xml_SetAttrValue(XML_ATTR *pxa, WCHAR *pszValue)
 	return(TRUE);
 }
 
-//--- Valeur numérique ---
+//--- Valeur numÃ©rique ---
 
 BOOL xml_SetAttrValueNumber(XML_ATTR *pxa, UINT uValue)
 {
@@ -1109,7 +1129,7 @@ BOOL xml_SetAttrValueNumber(XML_ATTR *pxa, UINT uValue)
 }
 
 
-// «»»» Gestion du chemin sous forme de texte «««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Gestion du chemin sous forme de texte Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* xml_BuildWideCharPath(XML_NODE *pxn)
 {
@@ -1180,7 +1200,7 @@ WCHAR* xml_ValueToWideChar(XML_ATTR *pxa)
 	return(pszText);
 }
 
-//--- Ajoute une valeur à un chemin ---
+//--- Ajoute une valeur Ã  un chemin ---
 
 WCHAR* xml_AppendWideCharValue(XML_ATTR *pxa, WCHAR *pszText)
 {
@@ -1204,13 +1224,13 @@ WCHAR* xml_AppendWideCharValue(XML_ATTR *pxa, WCHAR *pszText)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions diverses						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions diverses						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Envoie un message d'erreur à la fenêtre principale ««««««««««««««»
+// Â«Â»Â»Â» Envoie un message d'erreur Ã  la fenÃªtre principale Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void xml_SendErrorMsg(UINT uLastErrorType, UINT uLastErrorMsg)
 {
@@ -1230,7 +1250,7 @@ void xml_SendErrorMsg(UINT uLastErrorType, UINT uLastErrorMsg)
 }
 
 
-// «»»» Mise-à-jour de la barre de progression ««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Mise-Ã -jour de la barre de progression Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void xml_UpdateProgress(UINT uCurrent, UINT uMax)
 {

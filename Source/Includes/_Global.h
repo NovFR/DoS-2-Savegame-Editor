@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Définitions principales
+	DÃ©finitions principales
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -35,7 +35,10 @@
 #include <shlwapi.h>
 #include <shobjidl.h>
 #include <commctrl.h>
+#include <uxtheme.h>
+#include <vsstyle.h>
 #include <stdio.h>
+#include <DbgHelp.h>
 
 #define DLL_EXPORT		__declspec(dllimport)
 

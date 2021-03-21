@@ -9,11 +9,11 @@
 #define _GAME_DEFINITIONS
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Définitions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DÃ©finitions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "XML.h"
 
@@ -52,6 +52,7 @@ enum {
 	DATA_TYPE_BOOSTERS,
 	DATA_TYPE_RUNES,
 	DATA_TYPE_TAGS,
+	DATA_TYPE_SKILLS,
 };
 
 enum {
@@ -69,140 +70,147 @@ enum {
 };
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Structures							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Structures							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-//--- Structures générales ---
+//--- Structures gÃ©nÃ©rales ---
 
 typedef struct DOS2INVENTORY {
-	NODE		node;
-	NODE		nodeItems;
-	WCHAR*		pszNameRef;
-	WCHAR*		pszDisplayName;
-	int		iTopIndex;
-	int		iSelected;
+	NODE			node;
+	NODE			nodeItems;
+	WCHAR*			pszNameRef;
+	WCHAR*			pszDisplayName;
+	int			iTopIndex;
+	int			iSelected;
 } DOS2INVENTORY;
 
 typedef struct DOS2CHARACTER {
-	NODE		node;
-	NODE		nodeInventories;
-	UINT		uInventoryDepth;
+	NODE			node;
+	NODE			nodeInventories;
+	UINT			uInventoryDepth;
 	//--- References
-	XML_NODE*	pxnRoot;
-	XML_ATTR*	pxaInventoryId;
-	XML_ATTR*	pxaArmor;
-	XML_ATTR*	pxaMagicArmor;
-	XML_ATTR*	pxaVitality;
-	XML_ATTR*	pxaDamageCount;
-	XML_ATTR*	pxaHealCount;
-	XML_ATTR*	pxaKillCount;
-	XML_ATTR*	pxaName;
-	XML_ATTR*	pxaOriginName;
-	XML_ATTR*	pxaIsMale;
-	XML_ATTR*	pxaRace;
-	XML_ATTR*	pxaExp;
-	XML_ATTR*	pxaPoints[4];
-	XML_ATTR*	pxaAttributes[6];
-	XML_ATTR*	pxaAbilities[40];
-	XML_ATTR*	pxaTalents[4];
-	XML_NODE*	pxaTags;
-	DOS2INVENTORY*	pdiInventory;
+	XML_NODE*		pxnRoot;
+	XML_ATTR*		pxaInventoryId;
+	XML_ATTR*		pxaArmor;
+	XML_ATTR*		pxaArmorMax;
+	XML_ATTR*		pxaMagicArmor;
+	XML_ATTR*		pxaMagicArmorMax;
+	XML_ATTR*		pxaVitality;
+	XML_ATTR*		pxaVitalityMax;
+	XML_ATTR*		pxaMap;
+	XML_ATTR*		pxaDamageCount;
+	XML_ATTR*		pxaHealCount;
+	XML_ATTR*		pxaKillCount;
+	XML_ATTR*		pxaName;
+	XML_ATTR*		pxaOriginName;
+	XML_ATTR*		pxaRace;
+	XML_ATTR*		pxaClass;
+	XML_ATTR*		pxaExp;
+	XML_ATTR*		pxaPoints[4];
+	XML_ATTR*		pxaAttributes[6];
+	XML_ATTR*		pxaAbilities[40];
+	XML_ATTR*		pxaTalents[4];
+	XML_NODE*		pxaTags;
+	DOS2INVENTORY*		pdiInventory;
 } DOS2CHARACTER;
 
 typedef struct DOS2ITEM {
-	NODE		node;
-	BOOL		bIsBackPack;
-	UINT		uNumItems;
+	NODE			node;
+	BOOL			bIsBackPack;
+	UINT			uNumItems;
 	//--- References
-	XML_NODE*	pxnRoot;
-	XML_ATTR*	pxaName;
-	XML_ATTR*	pxaDisplayName;
-	XML_ATTR*	pxaDescription;
-	XML_ATTR*	pxaAmount;
-	XML_ATTR*	pxaIsGenerated;
-	XML_ATTR*	pxaHasCustomBase;
-	XML_ATTR*	pxaSlot;
-	XML_ATTR*	pxaInventory;
-	XML_ATTR*	pxaType;
-	XML_ATTR*	pxaLevel;
-	XML_ATTR*	pxaRunes[3];
-	XML_NODE*	pxnGeneration;
-	XML_NODE*	pxnPermanentBoost;
-	XML_NODE*	pxnBase;
+	XML_NODE*		pxnRoot;
+	XML_ATTR*		pxaName;
+	XML_ATTR*		pxaDisplayName;
+	XML_ATTR*		pxaDescription;
+	XML_ATTR*		pxaAmount;
+	XML_ATTR*		pxaIsGenerated;
+	XML_ATTR*		pxaHasCustomBase;
+	XML_ATTR*		pxaSlot;
+	XML_ATTR*		pxaInventory;
+	XML_ATTR*		pxaType;
+	XML_ATTR*		pxaLevel;
+	XML_ATTR*		pxaRunes[3];
+	XML_NODE*		pxnGeneration;
+	XML_NODE*		pxnPermanentBoost;
+	XML_NODE*		pxnBase;
 } DOS2ITEM;
 
 //--- Affichage ---
 
 typedef struct DOS2ICON {
-	NODE		node;
-	HICON		hIcon;
-	WCHAR*		pszName;
+	NODE			node;
+	HICON			hIcon;
+	WCHAR*			pszName;
 } DOS2ICON;
 
 typedef struct GAMEQUALITY {
-	WCHAR*		xmlName;
-	UINT		uNameId;
-	COLORREF	crColor;
+	WCHAR*			xmlName;
+	UINT			uNameId;
+	COLORREF		crColor;
 } GAMEQUALITY;
 
-typedef struct GAMEPORTRAIT {
-	WCHAR*		pszName;
-	UINT		uIconId;
-} GAMEPORTRAIT;
-
 typedef struct GAMEORIGIN {
-	WCHAR*		pszName;
-	UINT		uLocaleId;
+	WCHAR*			pszName;
+	UINT			uLocaleId;
 } GAMEORIGIN;
 
 typedef struct GAMEDRAWCONTEXT {
 	//--- GDI
-	HFONT		hFont;
-	RECT		rcArea;
-	RECT		rcWork;
-	RECT		rcText;
-	COLORREF	crColor;
-	int		iBack;
+	HFONT			hFont;
+	RECT			rcArea;
+	RECT			rcWork;
+	RECT			rcText;
+	COLORREF		crColor;
+	int			iBack;
 	//--- Game
-	UINT		uPortraitIcon;
-	BOOL		bIsMale;
-	WCHAR*		pszExp;
-	WCHAR*		pszLevel;
-	WCHAR		szLevel[4];
-	WCHAR*		pszDamages;
-	WCHAR*		pszHeal;
-	WCHAR*		pszKills;
-	WCHAR*		pszArmor;
-	WCHAR*		pszMagicArmor;
-	WCHAR*		pszVitality;
+	WCHAR*			pszClass;
+	WCHAR*			pszExp;
+	WCHAR*			pszLevel;
+	WCHAR			szLevel[4];
+	WCHAR*			pszDamages;
+	WCHAR*			pszHeal;
+	WCHAR*			pszKills;
+	WCHAR*			pszArmor;
+	WCHAR*			pszMagicArmor;
+	WCHAR*			pszVitality;
+	WCHAR			szNextLevel[12];
+	struct {
+		SIZE		sizeClass;
+		SIZE		sizeClassSpace;
+		SIZE		sizeLabel;
+		SIZE		sizeSpace;
+		SIZE		sizeLevel;
+		WCHAR*		pszText;
+	} level;
 } GAMEDRAWCONTEXT;
 
-//--- Données ---
+//--- DonnÃ©es ---
 
 typedef struct GAMEDATABOOSTER {
-	WCHAR*		pszType;
-	WCHAR*		pszSlot;
+	WCHAR*			pszType;
+	WCHAR*			pszSlot;
 } GAMEDATABOOSTER;
 
 typedef struct GAMEDATARUNE {
-	WCHAR*		pszBonus1;
-	WCHAR*		pszBonus2;
-	WCHAR*		pszBonus3;
+	WCHAR*			pszBonus1;
+	WCHAR*			pszBonus2;
+	WCHAR*			pszBonus3;
 } GAMEDATARUNE;
 
 typedef struct GAMEDATATAG {
-	BOOL		bProtected;
-	BOOL		bHidden;
-	WCHAR*		pszDescription;
+	BOOL			bProtected;
+	BOOL			bHidden;
+	WCHAR*			pszDescription;
 } GAMEDATATAG;
 
 typedef struct GAMEDATA {
-	NODE		node;
-	WCHAR*		pszId;
-	WCHAR*		pszText;
+	NODE			node;
+	WCHAR*			pszId;
+	WCHAR*			pszText;
 	union {
 		GAMEDATABOOSTER	booster;
 		GAMEDATARUNE	rune;
@@ -211,49 +219,80 @@ typedef struct GAMEDATA {
 } GAMEDATA;
 
 typedef struct GAMEDATAFLAG {
-	char*		pszFlagName;
-	UINT		uType;
-	UINT64		uFlags;
+	char*			pszFlagName;
+	UINT			uType;
+	UINT64			uFlags;
 } GAMEDATAFLAG;
 
+typedef struct GAMEDATASCHOOL {
+	char*			pszSchool;
+	UINT			uLocaleId;
+} GAMEDATASCHOOL;
+
 typedef struct GAMEDATAITEM {
-	NODE		node;
-	UINT		uType;
-	UINT64		uFlags;
-	WCHAR*		pszIconName;
+	NODE			node;
+	UINT			uType;
+	UINT64			uFlags;
+	WCHAR*			pszIconName;
 	struct {
-	WCHAR*		pszFull;
-	WCHAR*		pszBegin;
-	WCHAR*		pszContent;
-	WCHAR*		pszEnd;
+		WCHAR*		pszFull;
+		WCHAR*		pszBegin;
+		WCHAR*		pszContent;
+		WCHAR*		pszEnd;
 	} filter;
 } GAMEDATAITEM;
 
+typedef struct GAMEDATASKILLINFOS {
+	UINT			uSourcePoints;
+	UINT			uActionPoints;
+	UINT			uMemorySlots;
+	UINT			uIconID;
+	UINT			uSchoolLocaleID;
+} GAMEDATASKILLINFOS;
+
+typedef struct GAMEDATASKILLOPTIONS {
+	BOOL			bIsLearned;
+	BOOL			bIsActivated;
+	BOOL			bZeroMemory;
+	float			fActiveCooldown;
+	double			fTimeAdded;
+} GAMEDATASKILLOPTIONS;
+
+typedef struct GAMEDATASKILL {
+	NODE			node;
+	WCHAR*			pszId;
+	WCHAR*			pszName;
+	int			iIconIndex;
+	GAMEDATASKILLINFOS	infos;
+	GAMEDATASKILLOPTIONS	options;
+} GAMEDATASKILL;
+
 typedef struct GAMEDATAPARSER {
-	BOOL		bSuccess;
-	HANDLE		hFile;
-	DWORD		dwFileSize;
-	BYTE*		pFileBuffer;
-	BYTE*		pFilePtr;
-	BYTE*		pLinePtr;
-	BYTE*		pLineBegin;
-	BYTE*		pLineEnd;
-	LOCALE_MISC*	pLocale;
-	WCHAR*		pszResults[4];
+	BOOL			bSuccess;
+	HANDLE			hFile;
+	DWORD			dwFileSize;
+	BYTE*			pFileBuffer;
+	BYTE*			pFilePtr;
+	BYTE*			pLinePtr;
+	BYTE*			pLineBegin;
+	BYTE*			pLineEnd;
+	LOCALE_MISC*		pLocale;
+	WCHAR*			pszResults[4];
 	union {
 		GAMEDATAITEM*	pItem;
 		GAMEDATA*	pData;
+		GAMEDATASKILL*	pSkill;
 	};
 } GAMEDATAPARSER;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Prototypes							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Prototypes							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Gestion «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Gestion Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int			Game_CreateLayout(void);
 int			Game_CreateButton(int,int,int,int,WCHAR *,UINT,HWND *,UINT);
@@ -273,10 +312,14 @@ void			Game_SaveTopIndex(void);
 
 void			Game_Lock(DWORD);
 UINT			Game_GetLevelFromExp(UINT);
+UINT			Game_GetExpFromLevel(UINT);
+UINT			Game_GetNextLevelFromExp(UINT);
+UINT			Game_GetMaxXP(void);
+UINT			Game_GetMaxLevel(void);
 BOOL			Game_IsItemEquipped(DOS2ITEM *);
 WCHAR*			Game_CopyDisplayName(WCHAR *);
 
-// «»»» Affichage «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_MeasureList(MEASUREITEMSTRUCT *);
 void			Game_DrawList(DRAWITEMSTRUCT *);
@@ -285,15 +328,13 @@ void			Game_MeasureInventory(MEASUREITEMSTRUCT *);
 void			Game_DrawInventory(DRAWITEMSTRUCT *);
 
 void			Game_Paint(HWND,HDC,RECT *);
-void			Game_PaintInfos(HDC,GAMEDRAWCONTEXT *);
-void			Game_PaintInfosPart(HDC,WCHAR *,COLORREF,COLORREF,COLORREF,RECT *);
-void			Game_PaintText(HDC,WCHAR *,WCHAR *,RECT *);
-void			Game_PaintValue(HDC,LONG,HWND,WCHAR *,WCHAR *);
+void			Game_PaintDecoration(HDC,int,int,HBITMAP);
+void			Game_PaintValue(HDC,LONG,HWND,WCHAR *,WCHAR *,UINT);
 void			Game_PaintButton(DRAWITEMSTRUCT *);
 void			Game_PaintBag(DRAWITEMSTRUCT *);
 void			Game_PaintIcon(HDC,WCHAR *,UINT,RECT *,int,BOOL,BOOL);
 
-// «»»» Fichiers de données «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Fichiers de donnÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL			Game_LoadDataFile(HWND,WCHAR *,UINT,NODE *);
 BYTE*			Game_LoadSplitWord(BYTE *);
@@ -310,5 +351,16 @@ UINT			Game_GetItemType(WCHAR *);
 UINT64			Game_GetItemFlags(WCHAR *);
 GAMEDATAITEM*		Game_GetItemData(WCHAR *);
 BOOL			Game_CompareStrings(WCHAR *,WCHAR *,UINT,UINT);
+
+// Â«Â»Â»Â» Statistiques Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
+
+void			Game_Stats(HWND);
+int			Game_Stats_Init(HWND,RECT *,int,void *);
+BOOL			Game_Stats_Draw(UINT,DRAWITEMSTRUCT *,void *);
+void			Game_Stats_Click(HWND,UINT,void *);
+WCHAR*			Game_Stats_GetOriginName(WCHAR *);
+void			Game_Stats_SetNumber(HWND,UINT,WCHAR *);
+int			Game_Stats_SetItem(HWND,UINT,int,WCHAR *,WCHAR *,WCHAR *,UINT);
+int			Game_Stats_Sort(LPARAM,LPARAM,LPARAM);
 
 #endif

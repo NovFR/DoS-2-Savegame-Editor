@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Locale.h"
@@ -41,11 +41,11 @@ static GAMEEDITPAGE	SaveGamePages[] = {
 				};
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Sélection de la sauvegarde					  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ SÃ©lection de la sauvegarde					  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 void Divine_Select()
 {
@@ -85,7 +85,7 @@ void Divine_Select()
 		goto Done;
 		}
 
-	//--- Valeurs par défaut ---
+	//--- Valeurs par dÃ©faut ---
 
 	if (App.Config.uGame) pContext->uGame = App.Config.uGame;
 	else pContext->uGame = DIVINE_DOS_2EE;
@@ -130,7 +130,7 @@ void Divine_Select()
 	iResult = PropertySheet(psh);
 	if (iResult) Divine_Open(pContext->uGame,pContext->pszProfile,pContext->pszSaveName,NULL);
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 Done:	if (psh) HeapFree(App.hHeap,0,psh);
 	if (psp)
@@ -154,7 +154,7 @@ Done:	if (psh) HeapFree(App.hHeap,0,psh);
 }
 
 
-// «»»» Boîte de dialogue «««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» BoÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL CALLBACK Divine_SelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -303,7 +303,7 @@ BOOL CALLBACK Divine_SelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lP
 }
 
 
-// «»»» Navigation ««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Navigation Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //--- Activation d'une page ---
 
@@ -342,7 +342,7 @@ int Divine_SelectActivate(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 	return(1);
 }
 
-//--- Activation de la page précédente ---
+//--- Activation de la page prÃ©cÃ©dente ---
 
 LONG_PTR Divine_SelectSetPrevPage(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 {
@@ -416,7 +416,7 @@ LONG_PTR Divine_SelectSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *c
 }
 
 
-// «»»» Affichage du jeu ««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage du jeu Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectDrawGame(DRAWITEMSTRUCT *pDraw)
 {
@@ -459,7 +459,7 @@ void Divine_SelectDrawGame(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage d'un répertoire «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage d'un rÃ©pertoire Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectDrawItem(DRAWITEMSTRUCT *pDraw)
 {
@@ -494,7 +494,7 @@ void Divine_SelectDrawItem(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage de la ligne de séparation «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage de la ligne de sÃ©paration Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectDrawSeparator(DRAWITEMSTRUCT *pDraw)
 {
@@ -508,7 +508,7 @@ void Divine_SelectDrawSeparator(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage de l'image du jeu «««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage de l'image du jeu Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectDrawGameImage(DRAWITEMSTRUCT *pDraw, DIVINESGCONTEXT *pContext)
 {
@@ -527,12 +527,13 @@ void Divine_SelectDrawGameImage(DRAWITEMSTRUCT *pDraw, DIVINESGCONTEXT *pContext
 			DeleteDC(hDC);
 			}
 		}
+	else FillRect(pDraw->hDC,&pDraw->rcItem,GetStockObject(BLACK_BRUSH));
 
 	return;
 }
 
 
-// «»»» Chargement de l'image du jeu ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Chargement de l'image du jeu Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectLoadImage(HWND hDlg, DIVINESGCONTEXT *pContext)
 {
@@ -566,7 +567,7 @@ void Divine_SelectLoadImage(HWND hDlg, DIVINESGCONTEXT *pContext)
 }
 
 
-// «»»» Chargement des informations sur la sauvegarde sélectionnée ««««««»
+// Â«Â»Â»Â» Chargement des informations sur la sauvegarde sÃ©lectionnÃ©e Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectLoadGameInfos(HWND hDlg, DIVINESGCONTEXT *pContext)
 {
@@ -574,26 +575,32 @@ void Divine_SelectLoadGameInfos(HWND hDlg, DIVINESGCONTEXT *pContext)
 	WCHAR*		pszPath;
 	LRESULT		lResult;
 
+	pszPath = NULL;
 	lResult = SendDlgItemMessage(hDlg,200,LB_GETCURSEL,0,0);
-	if (lResult == LB_ERR) return;
+	if (lResult == LB_ERR) goto Error;
 
 	pItem = (DIVINEITEM *)SendDlgItemMessage(hDlg,200,LB_GETITEMDATA,(WPARAM)lResult,0);
-	if (pItem == (DIVINEITEM *)LB_ERR) return;
+	if (pItem == (DIVINEITEM *)LB_ERR) goto Error;
 	pszPath = Divine_GetSaveGamePath(pContext->uGame,pContext->pszProfile,pItem->name,pContext->pszCustomSavePath);
-	if (!pszPath) return;
+	if (!pszPath) goto Error;
 
 	lsv_Release(&pContext->GameFiles);
 	lResult = lsv_Load(hDlg,pszPath,&pContext->GameFiles,LS_LOAD_QUIET|LS_LOAD_META|LS_LOAD_PNG);
-	if (!lResult) return;
+	if (!lResult) goto Error;
 
 	Infos_PrepareAndUpdate(hDlg,pItem->name,&pContext->GameFiles);
-
 	HeapFree(App.hHeap,0,pszPath);
+	return;
+
+Error:	if (pszPath) HeapFree(App.hHeap,0,pszPath);
+	lsv_Release(&pContext->GameFiles);
+	SendDlgItemMessage(hDlg,801,LVM_DELETEALLITEMS,0,0);
+	InvalidateRect(GetDlgItem(hDlg,800),NULL,FALSE);
 	return;
 }
 
 
-// «»»» Création d'une liste ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation d'une liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 {
@@ -610,7 +617,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 	int			iResult;
 	int			iIndex;
 
-	//--- Sélection du répertoire ---
+	//--- SÃ©lection du rÃ©pertoire ---
 
 	switch(uType)
 		{
@@ -666,7 +673,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 
 	Divine_SelectReleaseList(pRoot);
 
-	//--- Vérifie que le répertoire existe ---
+	//--- VÃ©rifie que le rÃ©pertoire existe ---
 
 	if (!PathFileExists(pszPath))
 		{
@@ -674,7 +681,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 		return(1);
 		}
 
-	//--- Récupère la liste des dossiers dans le répertoire ---
+	//--- RÃ©cupÃ¨re la liste des dossiers dans le rÃ©pertoire ---
 
 	pszSearch = HeapAlloc(App.hHeap,0,wcslen(pszPath)*sizeof(WCHAR)+sizeof(WCHAR)+wcslen(szWild)*sizeof(WCHAR)+sizeof(WCHAR));
 	if (!pszSearch)
@@ -705,7 +712,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 
 		if (Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
-			//--- Vérifie que le profil contient bien le répertoire des sauvegardes
+			//--- VÃ©rifie que le profil contient bien le rÃ©pertoire des sauvegardes
 			if (uType == DIVINE_PROFILE_LIST)
 				{
 				WCHAR*	pszTemp;
@@ -734,7 +741,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				HeapFree(App.hHeap,0,pszTemp);
 				}
 
-			//--- Ajoute le dossier à la liste interne
+			//--- Ajoute le dossier Ã  la liste interne
 			pItem = HeapAlloc(App.hHeap,0,sizeof(DIVINEITEM));
 			if (!pItem)
 				{
@@ -752,7 +759,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				goto Done;
 				}
 
-			//--- Tente d'insérer le dossier en fonction de la date de création
+			//--- Tente d'insÃ©rer le dossier en fonction de la date de crÃ©ation
 			if (SendDlgItemMessage(hDlg,200,LB_GETCOUNT,0,0) > 1)
 				{
 				DIVINEITEM*	pListItem;
@@ -770,7 +777,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				}
 			else iIndex = -1;
 
-			//--- Ajoute le dossier à la liste visuelle
+			//--- Ajoute le dossier Ã  la liste visuelle
 			lResult = SendDlgItemMessage(hDlg,200,LB_INSERTSTRING,(WPARAM)iIndex,(LPARAM)pItem);
 			if (lResult == LB_ERR || lResult == LB_ERRSPACE)
 				{
@@ -814,7 +821,7 @@ Done:	FindClose(hFile);
 }
 
 
-// «»»» Libération de la mémoire utilisée par une liste «««««««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration de la mÃ©moire utilisÃ©e par une liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_SelectReleaseList(NODE *pRoot)
 {
@@ -831,13 +838,13 @@ void Divine_SelectReleaseList(NODE *pRoot)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Chargement							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Chargement							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Ouverture d'une sauvegarde particulière «««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ouverture d'une sauvegarde particuliÃ¨re Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_OpenAs()
 {
@@ -904,7 +911,7 @@ void Divine_OpenAs()
 	pszFilter = wcschr(pszFilter,L'\0');
 	wcscpy(++pszFilter,szLSVwext);
 
-	//--- Sélection du fichier ---
+	//--- SÃ©lection du fichier ---
 
 	bResult = GetOpenFileName(&ofn);
 	if (!bResult)
@@ -951,7 +958,7 @@ void Divine_OpenAs()
 }
 
 
-// «»»» Préparation du chargement «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» PrÃ©paration du chargement Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_Open(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath)
 {
@@ -1007,7 +1014,7 @@ void Divine_Open(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCu
 }
 
 
-// «»»» Tâche de chargement «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» TÃ¢che de chargement Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 {
@@ -1072,13 +1079,13 @@ Done:	if (ctx->dwResult != ERROR_SUCCESS)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Sauvegarde							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Sauvegarde							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Création d'une sauvegarde particulière ««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation d'une sauvegarde particuliÃ¨re Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_WriteAs()
 {
@@ -1091,7 +1098,7 @@ void Divine_WriteAs()
 	ctx = Divine_PrepareContext(TEXT_ERR_SAVING);
 	if (!ctx) return;
 
-	//--- Copie le jeu ciblé ---
+	//--- Copie le jeu ciblÃ© ---
 
 	ctx->uGame = App.Config.uGame;
 
@@ -1106,7 +1113,7 @@ void Divine_WriteAs()
 		return;
 		}
 
-	//--- Sélection du répertoire cible ---
+	//--- SÃ©lection du rÃ©pertoire cible ---
 
 	hr = CoCreateInstance(&CLSID_FileOpenDialog,NULL,CLSCTX_INPROC,&IID_IFileDialog,(void *)&pFileDialog);
 	if (SUCCEEDED(hr))
@@ -1130,7 +1137,7 @@ void Divine_WriteAs()
 				}
 			}
 
-		hr = pFileDialog->lpVtbl->Show(pFileDialog,NULL);
+		hr = pFileDialog->lpVtbl->Show(pFileDialog,App.hWnd);
 		if (SUCCEEDED(hr))
 			{
 			hr = pFileDialog->lpVtbl->GetResult(pFileDialog,&pItem);
@@ -1183,7 +1190,7 @@ void Divine_WriteAs()
 }
 
 
-// «»»» Préparation de la sauvegarde ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» PrÃ©paration de la sauvegarde Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_Write()
 {
@@ -1195,7 +1202,7 @@ void Divine_Write()
 	ctx = Divine_PrepareContext(TEXT_ERR_SAVING);
 	if (!ctx) return;
 
-	//--- Copie le jeu ciblé ---
+	//--- Copie le jeu ciblÃ© ---
 
 	ctx->uGame = App.Config.uGame;
 
@@ -1238,7 +1245,7 @@ void Divine_Write()
 			}
 		}
 
-	//--- Vérifie si la sauvegarde a été modifiée ---
+	//--- VÃ©rifie si la sauvegarde a Ã©tÃ© modifiÃ©e ---
 
 	if (Divine_IsSaveGameChanged(App.hWnd,Locale_GetText(TEXT_MODIFIED_SAVEGAME),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,App.Game.Save.pszCustomSavePath,&App.Game.Save.ftLastWrite))
 		{
@@ -1260,7 +1267,7 @@ void Divine_Write()
 }
 
 
-// «»»» Tâche de sauvegarde «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» TÃ¢che de sauvegarde Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 {
@@ -1332,13 +1339,13 @@ Done:	Status_SetText(Locale_GetText(TEXT_DONE));
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Gestion								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Gestion								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Vérifications et initialisations de base ««««««««««««««««««««««««»
+// Â«Â»Â»Â» VÃ©rifications et initialisations de base Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DIVINECONTEXT* Divine_PrepareContext(UINT uErr)
 {
@@ -1368,7 +1375,7 @@ DIVINECONTEXT* Divine_PrepareContext(UINT uErr)
 }
 
 
-// «»»» Exécution d'une opération (divine.exe) ««««««««««««««««««««««««««»
+// Â«Â»Â»Â» ExÃ©cution d'une opÃ©ration (divine.exe) Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 {
@@ -1399,7 +1406,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 			break;
 		}
 
-	//--- Préparation des paramètres ---
+	//--- PrÃ©paration des paramÃ¨tres ---
 
 	switch(uType)
 		{
@@ -1532,7 +1539,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 		goto Done;
 		}
 
-	//--- Exécution de l'opération ---
+	//--- ExÃ©cution de l'opÃ©ration ---
 
 	Security.nLength = sizeof(SECURITY_ATTRIBUTES);
 	Security.bInheritHandle = TRUE;
@@ -1587,7 +1594,7 @@ DWORD Divine_Execute(UINT uType, DIVINECONTEXT *ctx)
 	else dwLastError = GetLastError();
 	LocalFree(pszParameters);
 
-	//--- Terminé ! ---
+	//--- TerminÃ© ! ---
 
 Done:	if (dwLastError == ERROR_SUCCESS)
 		{
@@ -1623,7 +1630,7 @@ Done:	if (dwLastError == ERROR_SUCCESS)
 }
 
 
-// «»»» Libération des données de gestion «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» LibÃ©ration des donnÃ©es de gestion Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_ReleaseContext(DIVINECONTEXT *ctx)
 {
@@ -1637,7 +1644,7 @@ void Divine_ReleaseContext(DIVINECONTEXT *ctx)
 }
 
 
-// «»»» Fermeture de la sauvegarde ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Fermeture de la sauvegarde Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_Close()
 {
@@ -1658,7 +1665,7 @@ void Divine_Close()
 }
 
 
-// «»»» Nettoyage du répertoire temporaire ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Nettoyage du rÃ©pertoire temporaire Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_Cleanup()
 {
@@ -1681,7 +1688,7 @@ int Divine_CleanupLoop(WCHAR *pszPath)
 	WCHAR*			pszCurrent;
 	DWORD			dwLen;
 
-	//--- Copie le répertoire actuel
+	//--- Copie le rÃ©pertoire actuel
 	dwLen = GetCurrentDirectory(0,NULL);
 	pszCurrent = HeapAlloc(App.hHeap,0,dwLen*sizeof(WCHAR));
 	if (!pszCurrent)
@@ -1691,14 +1698,14 @@ int Divine_CleanupLoop(WCHAR *pszPath)
 		}
 	GetCurrentDirectory(dwLen,pszCurrent);
 
-	//--- Modifie le répertoire
+	//--- Modifie le rÃ©pertoire
 	if (!SetCurrentDirectory(pszPath))
 		{
 		HeapFree(App.hHeap,0,pszCurrent);
 		return(0);
 		}
 
-	//--- Retrouve les fichiers dans le répertoire
+	//--- Retrouve les fichiers dans le rÃ©pertoire
 	hFile = FindFirstFile(szWild,&Find);
 	if (hFile == INVALID_HANDLE_VALUE)
 		{
@@ -1713,14 +1720,14 @@ int Divine_CleanupLoop(WCHAR *pszPath)
 
 		if (Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
-			//--- Parcours le répertoire
+			//--- Parcours le rÃ©pertoire
 			if (!Divine_CleanupLoop(Find.cFileName))
 				{
 				FindClose(hFile);
 				HeapFree(App.hHeap,0,pszCurrent);
 				return(0);
 				}
-			//--- Supprime le répertoire
+			//--- Supprime le rÃ©pertoire
 			RemoveDirectory(Find.cFileName);
 			continue;
 			}
@@ -1732,7 +1739,7 @@ int Divine_CleanupLoop(WCHAR *pszPath)
 
 	FindClose(hFile);
 
-	//--- Restaure le répertoire actuel
+	//--- Restaure le rÃ©pertoire actuel
 	if (!SetCurrentDirectory(pszCurrent))
 		{
 		HeapFree(App.hHeap,0,pszCurrent);
@@ -1744,13 +1751,13 @@ int Divine_CleanupLoop(WCHAR *pszPath)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Logs								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Logs								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Analyse du journal ««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Analyse du journal Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DWORD Divine_ParseLog(DIVINECONTEXT *ctx)
 {
@@ -1783,7 +1790,7 @@ DWORD Divine_ParseLog(DIVINECONTEXT *ctx)
 }
 
 
-// «»»» Retrouve les informations d'une ligne du journal ««««««««««««««««»
+// Â«Â»Â»Â» Retrouve les informations d'une ligne du journal Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 DIVINELOGHEADER* Divine_GetHeader(char *pszLogLine)
 {
@@ -1799,7 +1806,7 @@ DIVINELOGHEADER* Divine_GetHeader(char *pszLogLine)
 }
 
 
-// «»»» Affichage du journal ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage du journal Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_ShowLog(DIVINECONTEXT *ctx)
 {
@@ -1843,7 +1850,7 @@ void Divine_ShowLog(DIVINECONTEXT *ctx)
 }
 
 
-// «»»» Messages de la boîte de dialogue ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Messages de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Divine_LogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -1949,13 +1956,13 @@ void Divine_DrawLogLine(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Sous-routines							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Sous-routines							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Vérifie que la sauvegarde n'a pas été modifiée ««««««««««««««««««»
+// Â«Â»Â»Â» VÃ©rifie que la sauvegarde n'a pas Ã©tÃ© modifiÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Divine_IsSaveGameChanged(HWND hWnd, WCHAR *pszText, UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath, FILETIME *pLastWrite)
 {
@@ -1988,7 +1995,7 @@ int Divine_IsSaveGameChanged(HWND hWnd, WCHAR *pszText, UINT uGame, WCHAR *pszPr
 }
 
 
-// «»»» Création du répertoire temporaire «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation du rÃ©pertoire temporaire Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Divine_CreateTempPath(UINT uNumPaths, ...)
 {
@@ -1999,11 +2006,11 @@ WCHAR* Divine_CreateTempPath(UINT uNumPaths, ...)
 	UINT		uNum;
 	va_list		vl;
 
-	//--- Récupère le répertoire temporaire du système
+	//--- RÃ©cupÃ¨re le rÃ©pertoire temporaire du systÃ¨me
 	pszTempPath = Divine_GetTempPath(0);
 	if (!pszTempPath) return(NULL);
 
-	//--- Calcul la taille finale du répertoire temporaire
+	//--- Calcul la taille finale du rÃ©pertoire temporaire
 	va_start(vl,uNumPaths);
 	uLen = wcslen(pszTempPath);
 	uNum = uNumPaths;
@@ -2014,7 +2021,7 @@ WCHAR* Divine_CreateTempPath(UINT uNumPaths, ...)
 		}
 	va_end(vl);
 
-	//--- Alloue la mémoire pour le répertoire temporaire
+	//--- Alloue la mÃ©moire pour le rÃ©pertoire temporaire
 	pszPath = HeapAlloc(App.hHeap,0,uLen*sizeof(WCHAR)+sizeof(WCHAR));
 	if (!pszPath)
 		{
@@ -2023,7 +2030,7 @@ WCHAR* Divine_CreateTempPath(UINT uNumPaths, ...)
 		return(NULL);
 		}
 
-	//--- Boucle de création des répertoires
+	//--- Boucle de crÃ©ation des rÃ©pertoires
 	va_start(vl,uNumPaths);
 	wcscpy(pszPath,pszTempPath);
 	bResult = 1;
@@ -2049,7 +2056,7 @@ WCHAR* Divine_CreateTempPath(UINT uNumPaths, ...)
 }
 
 
-// «»»» Détermine un chemin pour un fichier/dossier temporaire ««««««««««»
+// Â«Â»Â»Â» DÃ©termine un chemin pour un fichier/dossier temporaire Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 {
@@ -2058,7 +2065,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 	UINT	uLen;
 	va_list	vl;
 
-	//--- Calcul la taille totale du répertoire temporaire
+	//--- Calcul la taille totale du rÃ©pertoire temporaire
 	va_start(vl,uNumPaths);
 	uLen = App.Config.pszTempPath?wcslen(App.Config.pszTempPath):1;
 	uNum = uNumPaths;
@@ -2069,7 +2076,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 		}
 	va_end(vl);
 
-	//--- Alloue la mémoire pour le répertoire temporaire
+	//--- Alloue la mÃ©moire pour le rÃ©pertoire temporaire
 	pszPath = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,uLen*sizeof(WCHAR)+sizeof(WCHAR));
 	if (!pszPath)
 		{
@@ -2077,7 +2084,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 		return(NULL);
 		}
 
-	//--- Copie du répertoire temporaire
+	//--- Copie du rÃ©pertoire temporaire
 	va_start(vl,uNumPaths);
 	if (App.Config.pszTempPath) wcscpy(pszPath,App.Config.pszTempPath);
 	while (uNumPaths)
@@ -2089,7 +2096,7 @@ WCHAR*	Divine_GetTempPath(UINT uNumPaths, ...)
 }
 
 
-// «»»» Recupère le chemin du fichier de sauvegarde «««««««««««««««««««««»
+// Â«Â»Â»Â» RecupÃ¨re le chemin du fichier de sauvegarde Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Divine_GetSaveGamePath(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *pszCustomSavePath)
 {
@@ -2139,7 +2146,7 @@ WCHAR* Divine_GetSaveGamePath(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName,
 }
 
 
-// «»»» Recupère le nom du jeu ««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» RecupÃ¨re le nom du jeu Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //--- A partir d'un identifiant ---
 
@@ -2157,7 +2164,7 @@ UINT Divine_GetGameFromName(WCHAR *pszName, UINT uLen)
 }
 
 
-// «»»» Exécute le programme de conversion ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» ExÃ©cute le programme de conversion Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Divine_RunConverter()
 {

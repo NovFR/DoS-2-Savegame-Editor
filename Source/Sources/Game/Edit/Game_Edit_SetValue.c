@@ -190,7 +190,7 @@ int Game_EditSetValue_Ok(HWND hDlg, void *pDialog)
 //		WCHAR* > Identifier of the object (may be NULL)
 //
 //	DATA_TYPE_TAGS:
-//		none
+//		BOOL > Show Protected
 
 WCHAR* Game_EditValue(HWND hWnd, WCHAR *pszValue, UINT uType, ...)
 {
@@ -234,6 +234,7 @@ WCHAR* Game_EditValue(HWND hWnd, WCHAR *pszValue, UINT uType, ...)
 		case DATA_TYPE_TAGS:
 			pValue->pszTitle = Locale_GetText(pszValue?TEXT_DIALOG_TAG_TITLE_EDIT:TEXT_DIALOG_TAG_TITLE_ADD);
 			pValue->pszFileName = szTagsDataPath;
+			pValue->bIgnoreProtected = va_arg(vl,BOOL)?FALSE:TRUE;
 			pValue->uResId = 1005;
 			break;
 		default:va_end(vl);
@@ -292,7 +293,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 			//--- Augmentations ---
 
 			case DATA_TYPE_BOOSTERS: {
-				static int	ColsWidths[4] = { 300, 280, 100, 100 };
+				static int	ColsWidths[4] = { 350, 280, 100, 100 };
 				static UINT	ColsTexts[4] = { TEXT_DIALOG_BOOSTER_COLUMN_ID, TEXT_DIALOG_BOOSTER_COLUMN_TEXT, TEXT_DIALOG_BOOSTER_COLUMN_TYPE, TEXT_DIALOG_BOOSTER_COLUMN_SLOT };
 
 				LVCOLUMN	lvColumn;
@@ -407,12 +408,14 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 			//--- Mots-clé ---
 
 			case DATA_TYPE_TAGS:
-				if (!Game_TagsPopulateList(hDlg,300,&pValue->nodeData,TRUE,TRUE))
+				if (!Game_TagsPopulateList(hDlg,300,&pValue->nodeData,pValue->bIgnoreProtected,pValue->bIgnoreProtected))
 					{
 					EndDialog(hDlg,-1);
 					return(FALSE);
 					}
 				Game_EditValueSelectLB(hDlg,pValue);
+				CheckDlgButton(hDlg,110,pValue->bIgnoreProtected?BST_UNCHECKED:BST_CHECKED);
+				SendDlgItemMessage(hDlg,110,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_TAG_SHOWHIDDEN));
 				break;
 			}
 
@@ -633,6 +636,18 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 								case 100:
 									App.Config.bRunesGroups = (IsDlgButtonChecked(hDlg,100) == BST_CHECKED?TRUE:FALSE);
 									SendDlgItemMessage(hDlg,300,LVM_ENABLEGROUPVIEW,(WPARAM)App.Config.bRunesGroups,0);
+									return(TRUE);
+								}
+							break;
+						case DATA_TYPE_TAGS:
+							switch(LOWORD(wParam))
+								{
+								case 110:
+									SendDlgItemMessage(hDlg,300,LB_RESETCONTENT,0,0);
+									pValue->bIgnoreProtected ^= 1;
+									CheckDlgButton(hDlg,110,pValue->bIgnoreProtected?BST_UNCHECKED:BST_CHECKED);
+									Game_TagsPopulateList(hDlg,300,&pValue->nodeData,pValue->bIgnoreProtected,pValue->bIgnoreProtected);
+									EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
 									return(TRUE);
 								}
 							break;

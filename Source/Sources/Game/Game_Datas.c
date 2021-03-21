@@ -1,15 +1,15 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Gestion des fichiers de données
+	Gestion des fichiers de donnÃ©es
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Game.h"
@@ -38,17 +38,34 @@ static GAMEDATAFLAG		GameDataFlags[] = {
 						{ NULL, 0, 0 },
 					};
 
+static GAMEDATASCHOOL		GameDataSchools[] = {
+						{ "AIR", TEXT_ABILITIES_AIR },
+						{ "DEATH", TEXT_ABILITIES_DEATH },
+						{ "EARTH", TEXT_ABILITIES_EARTH },
+						{ "FIRE", TEXT_ABILITIES_FIRE },
+						{ "HUNTING", TEXT_ABILITIES_HUNTING },
+						{ "POLYMORPH", TEXT_ABILITIES_POLYMORPH },
+						{ "ROGUES", TEXT_ABILITIES_ROGUES },
+						{ "SOURCE", TEXT_ABILITIES_SOURCE },
+						{ "SPECIAL", TEXT_ABILITIES_SPECIAL },
+						{ "SUMMONING", TEXT_ABILITIES_SUMMONING },
+						{ "WARFARE", TEXT_ABILITIES_WARFARE },
+						{ "WATER", TEXT_ABILITIES_WATER },
+						{ NULL, 0 },
+					};
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Chargement							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Chargement							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 {
 	GAMEDATAPARSER	Parser;
 	DWORD		dwBytes;
+	int		i;
 
 	//--- Initialisations ---
 
@@ -61,6 +78,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 		case DATA_TYPE_BOOSTERS:
 		case DATA_TYPE_RUNES:
 		case DATA_TYPE_TAGS:
+		case DATA_TYPE_SKILLS:
 			if (!Locale_Load(App.hWnd,szLangPath,App.Config.pszLocaleName,LOCALE_TYPE_MISC,(void **)&Parser.pLocale,NULL)) return(FALSE);
 			break;
 		}
@@ -115,7 +133,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.pData = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATA));
 				if (!Parser.pData) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 				List_AddEntry((NODE *)Parser.pData,pRoot);
-				//--- Vérifie si le tag est protégé
+				//--- VÃ©rifie si le tag est protÃ©gÃ©
 				if (uType == DATA_TYPE_TAGS)
 					{
 					if (*Parser.pLineBegin == '*')
@@ -130,7 +148,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 						Parser.pLineBegin++;
 						}
 					}
-				//--- Ignore les caractères superflus à la fin
+				//--- Ignore les caractÃ¨res superflus Ã  la fin
 				for (Parser.pLineEnd = Parser.pLineBegin; *Parser.pLineEnd != 0 && (char)*Parser.pLineEnd > ' ' && *Parser.pLineEnd != '#'; Parser.pLineEnd++);
 				*Parser.pLineEnd = 0;
 				if (!*Parser.pLineBegin)
@@ -142,7 +160,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				//--- Copie l'identifiant
 				Parser.pData->pszId = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
 				if (!Parser.pData->pszId) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
-				//--- Copie les traductions éventuelles
+				//--- Copie les traductions Ã©ventuelles
 				switch(uType)
 					{
 					case DATA_TYPE_BOOSTERS:
@@ -173,7 +191,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.pItem = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATAITEM));
 				if (!Parser.pItem) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 				List_AddEntry((NODE *)Parser.pItem,pRoot);
-				//--- Récupère le premier mot (nom de l'icône)
+				//--- RÃ©cupÃ¨re le premier mot (nom de l'icÃ´ne)
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 				Parser.pItem->pszIconName = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
 				if (Parser.pItem->pszIconName)
@@ -185,30 +203,30 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 						}
 					}
 				else { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
-				//--- Récupère le second mot (type d'objet) ---
+				//--- RÃ©cupÃ¨re le second mot (type d'objet) ---
 				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
 				if (!Parser.pLineBegin) break;
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 				Game_LoadGetItemInfos((char *)Parser.pLineBegin,Parser.pItem);
-				//--- Boucle de récupération des chaînes de comparaison
+				//--- Boucle de rÃ©cupÃ©ration des chaÃ®nes de comparaison
 				do {
-					//--- Ignore les caractères superflus au début
+					//--- Ignore les caractÃ¨res superflus au dÃ©but
 					Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
 					if (!Parser.pLineBegin) break;
-					//--- Récupère le prochain mot (chaîne)
+					//--- RÃ©cupÃ¨re le prochain mot (chaÃ®ne)
 					Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 					if (Parser.pLinePtr)
 						{
 						char	cStringType;
 						//--- Interruption s'il s'agit d'un commentaire
 						if (*Parser.pLineBegin == '#') break;
-						//--- Vérifie qu'il s'agit bien d'une chaîne de comparaison (|char|char[])
+						//--- VÃ©rifie qu'il s'agit bien d'une chaÃ®ne de comparaison (|char|char[])
 						if (*Parser.pLineBegin != '|') { SetLastError(ERROR_INVALID_DATA); goto Done; }
 						Parser.pLineBegin++;
 						cStringType = *Parser.pLineBegin;
 						if (!*Parser.pLineBegin++) { SetLastError(ERROR_INVALID_DATA); goto Done; }
 						if (*Parser.pLineBegin++ != '|') { SetLastError(ERROR_INVALID_DATA); goto Done; }
-						//--- Copie la chaîne de comparaison
+						//--- Copie la chaÃ®ne de comparaison
 						switch(cStringType)
 							{
 							case 'f':
@@ -235,10 +253,71 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.bSuccess = TRUE;
 				SetLastError(ERROR_SUCCESS);
 				break;
+
+			//--- Skills ---
+			case DATA_TYPE_SKILLS:
+				Parser.bSuccess = FALSE;
+				Parser.pszResults[0] = NULL;
+				//--- Alloue la structure
+				Parser.pSkill = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATAITEM));
+				if (!Parser.pSkill) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+				List_AddEntry((NODE *)Parser.pSkill,pRoot);
+				//--- ParamÃ¨tres par dÃ©faut
+				Parser.pSkill->options.bIsLearned = TRUE;
+				//--- RÃ©cupÃ¨re l'identifiant de la compÃ©tence
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->pszId = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
+				if (!Parser.pSkill->pszId) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+				//--- Traduction de la compÃ©tence (optionnelle)
+				Locale_QueryID(Parser.pLocale->db,szDataBaseSkills,Parser.pSkill->pszId,L"text",Parser.pszResults,1);
+				Parser.pSkill->pszName = Parser.pszResults[0];
+				Parser.bSuccess = TRUE;
+				SetLastError(ERROR_SUCCESS);
+				//--- RÃ©cupÃ¨re le coÃ»t en source
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->infos.uSourcePoints = atol((char *)Parser.pLineBegin);
+				//--- RÃ©cupÃ¨re le coÃ»t en points d'action
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->infos.uActionPoints = atol((char *)Parser.pLineBegin);
+				//--- RÃ©cupÃ¨re le coÃ»t en mÃ©moire
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->infos.uMemorySlots = atol((char *)Parser.pLineBegin);
+				//--- RÃ©cupÃ¨re l'identifiant de l'icÃ´ne
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->infos.uIconID = atol((char *)Parser.pLineBegin);
+				//--- RÃ©cupÃ¨re l'Ã©cole
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pSkill->infos.uSchoolLocaleID = TEXT_ABILITIES_SPECIAL;
+				for (i = 0; GameDataSchools[i].pszSchool != NULL; i++)
+					{
+					if (strcmp(GameDataSchools[i].pszSchool,(char *)Parser.pLineBegin)) continue;
+					Parser.pSkill->infos.uSchoolLocaleID = GameDataSchools[i].uLocaleId;
+					break;
+					}
+				//--- RÃ©cupÃ¨re les drapeaux
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				if (!strcmp("INNATE",(char *)Parser.pLineBegin))
+					{
+					Parser.pSkill->options.bIsLearned = TRUE;
+					Parser.pSkill->options.bIsActivated = TRUE;
+					}
+				break;
 			}
 		}
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 Done:	if (GetLastError() != ERROR_SUCCESS)
 		{
@@ -251,7 +330,7 @@ Done:	if (GetLastError() != ERROR_SUCCESS)
 	return(Parser.bSuccess);
 }
 
-//--- Sépare un mot de la ligne ---
+//--- SÃ©pare un mot de la ligne ---
 
 BYTE* Game_LoadSplitWord(BYTE *pszBuffer)
 {
@@ -261,7 +340,7 @@ BYTE* Game_LoadSplitWord(BYTE *pszBuffer)
 	return(++pszBuffer);
 }
 
-//--- Ignore les caractères blancs et les lignes vides ---
+//--- Ignore les caractÃ¨res blancs et les lignes vides ---
 
 BYTE* Game_LoadLeadingSpaces(BYTE *pszBuffer, BYTE *pszBegin, DWORD dwSize)
 {
@@ -277,7 +356,7 @@ BYTE* Game_LoadNextLine(BYTE *pszBuffer, BYTE *pszBegin, DWORD dwSize, BOOL bEOF
 	return(pszBuffer);
 }
 
-//--- Recupère les informations de l'objet ---
+//--- RecupÃ¨re les informations de l'objet ---
 
 void Game_LoadGetItemInfos(char *pszFlags, GAMEDATAITEM *pItem)
 {
@@ -314,16 +393,17 @@ void Game_LoadGetItemInfo(char *pszFlag, GAMEDATAITEM *pItem)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Libération							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ LibÃ©ration							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 void Game_UnloadDataFile(UINT uType, NODE *pRoot)
 {
 	GAMEDATAITEM*	pItem;
 	GAMEDATA*	pData;
+	GAMEDATASKILL*	pSkill;
 
 	switch(uType)
 		{
@@ -364,19 +444,28 @@ void Game_UnloadDataFile(UINT uType, NODE *pRoot)
 				}
 			List_ReleaseMemory(pRoot);
 			break;
+
+		case DATA_TYPE_SKILLS:
+			for (pSkill = (GAMEDATASKILL *)pRoot->next; pSkill != NULL; pSkill = (GAMEDATASKILL *)pSkill->node.next)
+				{
+				if (pSkill->pszId) HeapFree(App.hHeap,0,pSkill->pszId);
+				if (pSkill->pszName) HeapFree(App.hHeap,0,pSkill->pszName);
+				}
+			List_ReleaseMemory(pRoot);
+			break;
 		}
 
 	return;
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Retrouve le nom d'un icône ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve le nom d'un icÃ´ne Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Game_GetItemIconName(WCHAR *pszObjectName)
 {
@@ -385,7 +474,7 @@ WCHAR* Game_GetItemIconName(WCHAR *pszObjectName)
 }
 
 
-// «»»» Retrouve le nom du type d'objet «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve le nom du type d'objet Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 WCHAR* Game_GetItemTypeName(WCHAR *pszObjectName)
 {
@@ -415,7 +504,7 @@ WCHAR* Game_GetItemTypeName(WCHAR *pszObjectName)
 }
 
 
-// «»»» Retrouve le type d'objet ««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve le type d'objet Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 UINT Game_GetItemType(WCHAR *pszObjectName)
 {
@@ -424,7 +513,7 @@ UINT Game_GetItemType(WCHAR *pszObjectName)
 }
 
 
-// «»»» Retrouve les drapeaux de l'objet ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve les drapeaux de l'objet Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 UINT64 Game_GetItemFlags(WCHAR *pszObjectName)
 {
@@ -433,7 +522,7 @@ UINT64 Game_GetItemFlags(WCHAR *pszObjectName)
 }
 
 
-// «»»» Retrouve le type d'objet ««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve le type d'objet Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 GAMEDATAITEM* Game_GetItemData(WCHAR *pszObjectName)
 {
@@ -456,7 +545,7 @@ GAMEDATAITEM* Game_GetItemData(WCHAR *pszObjectName)
 }
 
 
-// «»»» Comparaisons ««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Comparaisons Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Game_CompareStrings(WCHAR *pszCmp, WCHAR *pszName, UINT uNameLen, UINT uType)
 {

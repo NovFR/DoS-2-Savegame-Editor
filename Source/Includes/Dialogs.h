@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Boîtes de dialogue
+	BoÃ®tes de dialogue
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -9,25 +9,26 @@
 #define _DIALOGS_INCLUDE
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Définitions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DÃ©finitions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #define DIALOG_SUBCLASS_FILTER		0
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Structures							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Structures							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 typedef int (*DIALOGFNINIT)(HWND,RECT *,int,void *);
 typedef BOOL (*DIALOGFNDRAW)(UINT,DRAWITEMSTRUCT *,void *);
 typedef int (*DIALOGFNOK)(HWND,void *);
 typedef int (*DIALOGFNCANCEL)(HWND,void *);
+typedef void (*DIALOGFNCLICK)(HWND,UINT,void *);
 
 typedef struct DIALOG {
 	HWND		hwndParent;
@@ -36,6 +37,7 @@ typedef struct DIALOG {
 	UINT		uResID;
 	DIALOGFNINIT	fnInit;
 	DIALOGFNDRAW	fnDraw;
+	DIALOGFNCLICK	fnClick;
 	DIALOGFNOK	fnOk;
 	DIALOGFNCANCEL	fnCancel;
 } DIALOG;
@@ -55,12 +57,31 @@ typedef struct DIALOGVALUE {
 	int		iValueMax;
 } DIALOGVALUE;
 
+typedef struct DIALOGSTATS {
+	DIALOG		dialogStruct;
+	void*		pdcList;
+	void*		pdcCurrent;
+	struct {
+		WCHAR*	pszName;
+		WCHAR*	pszOrigin;
+		WCHAR*	pszRace;
+		WCHAR*	pszClass;
+		WCHAR*	pszMap;
+		WCHAR*	pszExp;
+		WCHAR*	pszDamages;
+		WCHAR*	pszHeals;
+		WCHAR*	pszKills;
+	} pxa;
+	BOOL		bFocus;
+	BOOL		bSetCharts;
+} DIALOGSTATS;
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Prototypes							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Prototypes							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 int			Dialog_Open(DIALOG *);
 INT_PTR CALLBACK	Dialog_Proc(HWND,UINT,WPARAM,LPARAM);
@@ -72,7 +93,7 @@ void			Dialog_DrawLabel(WCHAR *,DRAWITEMSTRUCT *,UINT);
 void			Dialog_DrawInfo(WCHAR *,DRAWITEMSTRUCT *,UINT);
 
 int			Dialog_ViewComboInit(HWND,UINT,UINT,UINT,...);
-void			Dialog_ViewComboChanged(HWND,UINT,UINT,UINT *);
+int			Dialog_ViewComboChanged(HWND,UINT,UINT,UINT *);
 int			Dialog_ViewComboMeasureItem(UINT,MEASUREITEMSTRUCT *);
 void			Dialog_ViewComboDrawItem(DRAWITEMSTRUCT *);
 
@@ -81,5 +102,8 @@ void			Dialog_OffsetY(HWND,UINT,int);
 int			Dialog_GetInfoHeight(HWND,UINT,WCHAR *);
 void			Dialog_CenterWindow(HWND,HWND);
 int			Dialog_GetIntValue(HWND,UINT,int,int,int *);
+int			Dialog_GetUIntValue(HWND,UINT,UINT,UINT,UINT *);
+HRESULT			Dialog_TaskDialogProc(HWND,UINT,WPARAM,LPARAM,LONG_PTR);
+void			Dialog_NotImplemented(HWND);
 
 #endif

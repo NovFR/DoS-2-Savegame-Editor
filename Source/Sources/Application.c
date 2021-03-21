@@ -6,22 +6,22 @@
 //()-------------------------------------------------------------------<<>-<>>//
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Includes								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Includes								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Game.h"
 #include "Menus.h"
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 APPLICATION		App;
 WCHAR*			TextsIds[] = { FOREACH_AppText(LOCALE_EnumString) };
@@ -54,6 +54,10 @@ APPICON			AppIcons[APP_MAX_ICONS] = {
 				{ APP_ICON_PROFILE, 33, 16, 16 },
 				{ APP_ICON_FOLDER, 34, 16, 16 },
 				{ APP_ICON_SAVEGAME, 35, 16, 16 },
+				{ APP_ICON_ACTION_OFF, 40, 24, 24 },
+				{ APP_ICON_ACTION_ON, 41, 24, 24 },
+				{ APP_ICON_SOURCE_OFF, 42, 20, 20 },
+				{ APP_ICON_SOURCE_ON, 43, 20, 20 },
 				{ APP_ICON_INFO_EMPTY, 50, 48, 48 },
 				{ APP_ICON_INFO_SAVEGAME, 51, 48, 48 },
 				{ APP_ICON_INFO_VERSION, 52, 48, 48 },
@@ -64,12 +68,18 @@ APPICON			AppIcons[APP_MAX_ICONS] = {
 				{ APP_ICON_INFO_NOTCHARACTER, 57, 48, 48 },
 				{ APP_ICON_INFO_LARIAN, 58, 48, 48 },
 				{ APP_ICON_INFO_MOD, 59, 48, 48 },
-				{ APP_ICON_PORTRAIT_IFAN, 80, 80, 100 },
-				{ APP_ICON_PORTRAIT_LOHSE, 81, 80, 100 },
-				{ APP_ICON_PORTRAIT_REDPRINCE, 82, 80, 100 },
-				{ APP_ICON_PORTRAIT_SEBILLE, 83, 80, 100 },
-				{ APP_ICON_PORTRAIT_FANE, 84, 80, 100 },
-				{ APP_ICON_PORTRAIT_BEAST, 85, 80, 100 },
+				{ APP_ICON_STAT_STR, 80, 24, 24 },
+				{ APP_ICON_STAT_DEX, 81, 24, 24 },
+				{ APP_ICON_STAT_INT, 82, 24, 24 },
+				{ APP_ICON_STAT_CON, 83, 24, 24 },
+				{ APP_ICON_STAT_MEM, 84, 24, 24 },
+				{ APP_ICON_STAT_PER, 85, 24, 24 },
+				{ APP_ICON_STAT_POINT, 86, 24, 24 },
+				{ APP_ICON_STAT_XP, 87, 24, 24 },
+				{ APP_ICON_STAT_NEXT, 88, 24, 24 },
+				{ APP_ICON_STAT_MAGICAL, 89, 24, 24 },
+				{ APP_ICON_STAT_PHYSICAL, 90, 24, 24 },
+				{ APP_ICON_STAT_LIFE, 91, 24, 24 },
 
 			};
 
@@ -108,13 +118,9 @@ CUSTOMMENUTEMPLATE	MainMenu[] = {
 					{ MENU_ITEM, IDM_REMOVEMODS, MFS_GRAYED },
 					{ MENU_STOP },
 				{ MENU_POPUP, MENU_SETTINGS, 0 },
-					{ MENU_ITEM, IDM_CONFIGCAPOVERRIDE, 0, 0, 0, MENU_FLAG_CHECKBOX },
+					{ MENU_ITEM, IDM_CONFIGMODIFY },
 					{ MENU_SEPARATOR },
-					{ MENU_ITEM, IDM_CONFIGTEMPLOCATION },
-					{ MENU_ITEM, IDM_CONFIGSAVELOCATION },
 					{ MENU_ITEM, IDM_CONFIGLANGUAGE },
-					{ MENU_SEPARATOR },
-					{ MENU_ITEM, IDM_CONFIGRESETLOCATIONS },
 					{ MENU_SEPARATOR },
 					{ MENU_ITEM, IDM_CONFIGSAVE, 0, 0, 101 },
 					{ MENU_SEPARATOR },
@@ -159,6 +165,20 @@ CUSTOMMENUTEMPLATE	InvMenu[] = {
 
 			};
 
+CUSTOMMENUTEMPLATE	SkillsListMenu[] = {
+
+				{ MENU_POPUP, MENU_LIST },
+					{ MENU_ITEM, IDM_LIST_SKILLSELECT },
+					{ MENU_SEPARATOR },
+					{ MENU_ITEM, IDM_LIST_EXPAND },
+					{ MENU_ITEM, IDM_LIST_COLLAPSE },
+					{ MENU_SEPARATOR },
+					{ MENU_ITEM, IDM_CANCEL },
+					{ MENU_STOP },
+				{ MENU_STOP }
+
+			};
+
 //--- Raccourcis ---
 
 SHORTCUT		Shortcuts[] = {
@@ -186,18 +206,6 @@ GAMEQUALITY		Qualities[] = {
 				{ L"Legendary", TEXT_OBJ_LEGENDARY, RGB(187,2,111) },
 				{ L"Unique", TEXT_OBJ_UNIQUE, RGB(190,159,84) },
 				{ L"Divine", TEXT_OBJ_DIVINE, RGB(235,200,8) },
-				{ NULL }
-
-			};
-
-GAMEPORTRAIT		Portraits[] = {
-
-				{ L"Ifan", APP_ICON_PORTRAIT_IFAN },
-				{ L"Lohse", APP_ICON_PORTRAIT_LOHSE },
-				{ L"RedPrince", APP_ICON_PORTRAIT_REDPRINCE },
-				{ L"Sebille", APP_ICON_PORTRAIT_SEBILLE },
-				{ L"Beast", APP_ICON_PORTRAIT_BEAST },
-				{ L"Fane", APP_ICON_PORTRAIT_FANE },
 				{ NULL }
 
 			};
@@ -237,6 +245,11 @@ WCHAR*			ModsLarian[] = {
 				L"d2507d43-efce-48b8-ba5e-5dd136c715a7", // Pet Power
 				L"a945eefa-530c-4bca-a29c-a51450f8e181", // Shiny Gear
 				L"ec27251d-acc0-4ab8-920e-dbc851e79bb4", // ToggleSpeedAddon
+				L"ca32a698-d63e-4d20-92a7-dd83cba7bc56", // Divine Talents
+				L"8fe1719c-ef8f-4cb7-84bd-5a474ff7b6c1", // Enhanced Spirit Vision
+				L"1273be96-6a1b-4da9-b377-249b98dc4b7e", // AS_RestRestorePoints
+				L"af4b3f9c-c5cb-438d-91ae-08c5804c1983", // AS_Resturrect
+				L"3da57b9d-8b41-46c7-a33c-afb31eea38a3", // ArmorSets
 				NULL
 
 			};

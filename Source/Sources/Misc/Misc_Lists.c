@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "_Global.h"
 #include "Application.h"
@@ -18,13 +18,13 @@
 extern APPLICATION	App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Calcul le nombre d'entrée dans une liste ««««««««««««««««««««««««»
+// Â«Â»Â»Â» Calcul le nombre d'entrÃ©e dans une liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 long List_EntryCount(NODE *pEntryListRoot)
 {
@@ -36,7 +36,7 @@ long List_EntryCount(NODE *pEntryListRoot)
 }
 
 
-// «»»» Déplace toutes les entrées d'une liste vers une autre liste «««««»
+// Â«Â»Â»Â» DÃ©place toutes les entrÃ©es d'une liste vers une autre liste Â«Â«Â«Â«Â«Â»
 
 void List_Move(NODE *pSrcListRoot, NODE *pDestListRoot)
 {
@@ -53,7 +53,7 @@ void List_Move(NODE *pSrcListRoot, NODE *pDestListRoot)
 }
 
 
-// «»»» Déplace une liste à la fin d'une autre liste ««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©place une liste Ã  la fin d'une autre liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 //!\ La liste source ne doit pas avoir de racine
 
@@ -71,7 +71,7 @@ void List_Append(NODE *pSrcList, NODE *pDestList)
 }
 
 
-// «»»» Ajoute une entrée «««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ajoute une entrÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void List_AddEntry(NODE *pNewEntry, NODE *pEntryListRoot)
 {
@@ -86,9 +86,9 @@ void List_AddEntry(NODE *pNewEntry, NODE *pEntryListRoot)
 }
 
 
-// «»»» Insère une entrée «««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» InsÃ¨re une entrÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//!\ pInsEntry ne doit pas être une racine si bInsertAfter = FALSE
+//!\ pInsEntry ne doit pas Ãªtre une racine si bInsertAfter = FALSE
 
 void List_InsertEntry(NODE *pNewEntry, NODE *pInsEntry, BOOL bInsertAfter)
 {
@@ -117,7 +117,7 @@ void List_InsertEntry(NODE *pNewEntry, NODE *pInsEntry, BOOL bInsertAfter)
 }
 
 
-// «»»» Supprime une entrée «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Supprime une entrÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void List_RemEntry(NODE *pEntry)
 {
@@ -136,7 +136,7 @@ void List_RemEntry(NODE *pEntry)
 }
 
 
-// «»»» Supprime la mémoire utilisée par une liste ««««««««««««««««««««««»
+// Â«Â»Â»Â» Supprime la mÃ©moire utilisÃ©e par une liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void List_ReleaseMemory(NODE *pListRoot)
 {
@@ -156,7 +156,7 @@ void List_ReleaseMemory(NODE *pListRoot)
 }
 
 
-// «»»» Compare deux entrées ««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Compare deux entrÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 long List_CompareEntries(NODE *pFirstEntry, NODE *pSecondEntry)
 {

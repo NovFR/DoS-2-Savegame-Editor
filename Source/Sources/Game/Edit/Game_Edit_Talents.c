@@ -73,6 +73,13 @@ static GAMETALENT	GameTalents[] = {	{ 0x00000008, 0 },				// Opportuniste
 						{ 0x00000800, 3 },				// Tortionnaire
 						{ 0x00001000, 3 },				// Ambidextrie
 						{ 0x00002000, 3 },				// Instable
+						{ 0x00400000, 3 },				// Sadisme
+						{ 0x00800000, 3 },				// Fauchage
+						{ 0x01000000, 3 },				// Gladiateur
+						{ 0x02000000, 3 },				// Indomptable
+						{ 0x10000000, 3 },				// Preneur d'âmes
+						{ 0x20000000, 3 },				// Maître voleur
+						{ 0x80000000, 3 },				// Cycles magiques
 						{ 0 }
 					};
 
@@ -161,7 +168,7 @@ void Game_Talents()
 		for (i = 0; i != 4; i++)
 			{
 			if (!App.Game.pdcCurrent->pxaTalents[i]) continue;
-			wsprintf(pContext->szTemp,L"%u",pContext->dwTalents[i]);
+			Misc_Printf(pContext->szTemp,16,L"%u",pContext->dwTalents[i]);
 			xml_SetAttrValue(App.Game.pdcCurrent->pxaTalents[i],pContext->szTemp);
 			}
 		}
@@ -252,7 +259,7 @@ INT_PTR CALLBACK Game_TalentsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM 
 				{
 				if (pContext->dwUnknownTalents[i]&dwMask)
 					{
-					wsprintf(pContext->szTemp,L"0x%.8X (%u)",dwMask,i);
+					Misc_Printf(pContext->szTemp,16,L"0x%.8X (%u)",dwMask,i);
 					lvItem.pszText = pContext->szTemp;
 					lvItem.iGroupId = 2;
 					lvItem.lParam = 0;

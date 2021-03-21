@@ -99,234 +99,6 @@ static GAMEBONUS	Bonuses[] = {
 					{ 0 }
 				};
 
-static GAMESKILL	Skills[] = {
-					{ L"Cone_CorrosiveSpray", NULL, 1, 2, 540, TEXT_ABILITIES_EARTH },
-					{ L"Cone_Flamebreath", NULL, 0, 1, 313, TEXT_ABILITIES_SPECIAL },
-					{ L"Cone_GroundSmash", NULL, 0, 2, 364, TEXT_ABILITIES_WARFARE },
-					{ L"Cone_Shatter", NULL, 0, 4, 390, TEXT_ABILITIES_WATER },
-					{ L"Cone_SilencingStare", NULL, 0, 2, 392, TEXT_ABILITIES_DEATH },
-					{ L"Cone_SteamLance", NULL, 2, 2, 330, TEXT_ABILITIES_WATER },
-					{ L"Jump_CloakAndDagger", NULL, 0, 1, 112, TEXT_ABILITIES_ROGUES },
-					{ L"Jump_PhoenixDive", NULL, 0, 1, 325, TEXT_ABILITIES_WARFARE },
-					{ L"Jump_TacticalRetreat", NULL, 0, 1, 106, TEXT_ABILITIES_HUNTING },
-					{ L"MultiStrike_BlinkStrike", NULL, 0, 2, 370, TEXT_ABILITIES_WARFARE },
-					{ L"MultiStrike_Vault", NULL, 0, 1, 343, TEXT_ABILITIES_ROGUES },
-					{ L"ProjectileStrike_DazingBolt", NULL, 0, 3, 448, TEXT_ABILITIES_AIR },
-					{ L"ProjectileStrike_HailAttack", NULL, 3, 4, 172, TEXT_ABILITIES_WATER },
-					{ L"ProjectileStrike_HailStrike", NULL, 0, 3, 353, TEXT_ABILITIES_WATER },
-					{ L"ProjectileStrike_MeteorShower", NULL, 3, 4, 578, TEXT_ABILITIES_FIRE },
-					{ L"ProjectileStrike_RainOfArrows", NULL, 3, 3, 581, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_AcidSpores", NULL, 2, 3, 54, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_ArrowSpray", NULL, 1, 3, 315, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_BallisticShot", NULL, 0, 2, 483, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_BouncingShield", NULL, 0, 2, 472, TEXT_ABILITIES_WARFARE },
-					{ L"Projectile_ChainHeal", NULL, 0, 2, 369, TEXT_ABILITIES_WATER },
-					{ L"Projectile_ChainLightning", NULL, 1, 3, 12, TEXT_ABILITIES_AIR },
-					{ L"Projectile_Chloroform", NULL, 0, 1, 318, TEXT_ABILITIES_ROGUES },
-					{ L"Projectile_DeployMassTraps", NULL, 1, 3, 509, TEXT_ABILITIES_FIRE },
-					{ L"Projectile_DimensionalBolt", NULL, 0, 2, 405, TEXT_ABILITIES_SUMMONING },
-					{ L"Projectile_DustBlast", NULL, 1, 3, 555, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_FanOfKnives", NULL, 1, 3, 488, TEXT_ABILITIES_ROGUES },
-					{ L"Projectile_Fireball", NULL, 0, 2, 355, TEXT_ABILITIES_FIRE },
-					{ L"Projectile_FlamingDaggers", NULL, 0, 2, 362, TEXT_ABILITIES_FIRE },
-					{ L"Projectile_IceFan", NULL, 0, 3, 452, TEXT_ABILITIES_WATER },
-					{ L"Projectile_InfectiousFlame", NULL, 2, 3, 579, TEXT_ABILITIES_FIRE },
-					{ L"Projectile_LaunchBomber", NULL, 0, 2, 458, TEXT_ABILITIES_ROGUES },
-					{ L"Projectile_LaunchExplosiveTrap", NULL, 0, 1, 510, TEXT_ABILITIES_FIRE },
-					{ L"Projectile_LaunchOilBlob", NULL, 0, 2, 484, TEXT_ABILITIES_POLYMORPH },
-					{ L"Projectile_LightningBolt", NULL, 0, 2, 357, TEXT_ABILITIES_AIR },
-					{ L"Projectile_Mark", NULL, 0, 1, 350, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_Multishot", NULL, 0, 3, 95, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_PiercingShot", NULL, 0, 2, 317, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_PinDown", NULL, 0, 3, 379, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_PoisonDartStart", NULL, 0, 2, 64, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_PyroclasticEruption", NULL, 3, 3, 455, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_PyroclasticRock", NULL, 0, 2, 312, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_Ricochet", NULL, 0, 2, 100, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_SkyShot", NULL, 0, 2, 482, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_Snipe", NULL, 0, 3, 351, TEXT_ABILITIES_HUNTING },
-					{ L"Projectile_Superconductor", NULL, 0, 3, 447, TEXT_ABILITIES_AIR },
-					{ L"Projectile_ThrowDust", NULL, 0, 2, 542, TEXT_ABILITIES_EARTH },
-					{ L"Projectile_ThrowingKnife", NULL, 0, 2, 342, TEXT_ABILITIES_ROGUES },
-					{ L"Quake_Earthquake", NULL, 0, 3, 55, TEXT_ABILITIES_EARTH },
-					{ L"Rain_Blood", NULL, 0, 2, 346, TEXT_ABILITIES_DEATH },
-					{ L"Rain_Water", NULL, 0, 1, 180, TEXT_ABILITIES_WATER },
-					{ L"Rush_BatteringRam", NULL, 0, 2, 324, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_Adrenaline", NULL, 0, 0, 110, TEXT_ABILITIES_ROGUES },
-					{ L"Shout_Apotheosis", NULL, 3, 2, 544, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_BlindingRadiance", NULL, 0, 2, 335, TEXT_ABILITIES_AIR },
-					{ L"Shout_BoneCage", NULL, 0, 1, 456, TEXT_ABILITIES_DEATH },
-					{ L"Shout_BreakTheShackles", NULL, 1, 0, 429, TEXT_ABILITIES_SPECIAL },
-					{ L"Shout_BreathingBubble", NULL, 0, 1, 526, TEXT_ABILITIES_AIR },
-					{ L"Shout_BullHorns", NULL, 0, 0, 402, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_ChameleonSkin", NULL, 0, 1, 314, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_CloseTheDoor", NULL, 1, 2, 486, TEXT_ABILITIES_SUMMONING },
-					{ L"Shout_Contamination", NULL, 0, 1, 336, TEXT_ABILITIES_EARTH },
-					{ L"Shout_Cryotherapy", NULL, 0, 1, 531, TEXT_ABILITIES_WATER },
-					{ L"Shout_DeflectiveBarrier", NULL, 0, 2, 473, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_ElectricFence", NULL, 2, 2, 334, TEXT_ABILITIES_AIR },
-					{ L"Shout_EvasiveAura", NULL, 1, 2, 545, TEXT_ABILITIES_AIR },
-					{ L"Shout_FavourableWind", NULL, 0, 1, 333, TEXT_ABILITIES_AIR },
-					{ L"Shout_FireBrand", NULL, 0, 1, 438, TEXT_ABILITIES_FIRE },
-					{ L"Shout_FlamingSkin", NULL, 1, 1, 496, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_FlamingTongues", NULL, 0, 1, 439, TEXT_ABILITIES_FIRE },
-					{ L"Shout_FleshSacrifice", NULL, 0, 0, 338, TEXT_ABILITIES_SPECIAL },
-					{ L"Shout_FrostAura", NULL, 0, 1, 449, TEXT_ABILITIES_WATER },
-					{ L"Shout_GlobalCooling", NULL, 0, 1, 365, TEXT_ABILITIES_WATER },
-					{ L"Shout_GuardianAngel", NULL, 0, 2, 394, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_HealingTears", NULL, 0, 1, 535, TEXT_ABILITIES_WATER },
-					{ L"Shout_IceBreaker", NULL, 0, 1, 538, TEXT_ABILITIES_WATER },
-					{ L"Shout_IceSkin", NULL, 1, 1, 534, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_Ignition", NULL, 0, 1, 319, TEXT_ABILITIES_FIRE },
-					{ L"Shout_InnerDemon", NULL, 1, 1, 560, TEXT_ABILITIES_SUMMONING },
-					{ L"Shout_InspireStart", NULL, 0, 1, 158, TEXT_ABILITIES_SPECIAL },
-					{ L"Shout_JellyfishSkin", NULL, 1, 1, 525, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_MassBreathingBubbles", NULL, 1, 1, 527, TEXT_ABILITIES_AIR },
-					{ L"Shout_MassCleanseWounds", NULL, 1, 2, 536, TEXT_ABILITIES_WATER },
-					{ L"Shout_MassCorpseExplosion", NULL, 1, 1, 499, TEXT_ABILITIES_FIRE },
-					{ L"Shout_MassCryotherapy", NULL, 1, 2, 530, TEXT_ABILITIES_WATER },
-					{ L"Shout_MassOilyCarapace", NULL, 1, 2, 559, TEXT_ABILITIES_EARTH },
-					{ L"Shout_MedusaHead", NULL, 0, 2, 502, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_MendMetal", NULL, 0, 1, 459, TEXT_ABILITIES_EARTH },
-					{ L"Shout_NecromancerTotems", NULL, 3, 2, 453, TEXT_ABILITIES_DEATH },
-					{ L"Shout_OilyCarapace", NULL, 0, 1, 558, TEXT_ABILITIES_EARTH },
-					{ L"Shout_PlayDead", NULL, 0, 0, 501, TEXT_ABILITIES_SPECIAL },
-					{ L"Shout_PoisonWave", NULL, 0, 2, 464, TEXT_ABILITIES_EARTH },
-					{ L"Shout_PoisonousSkin", NULL, 1, 1, 553, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_ReactiveArmor", NULL, 0, 2, 478, TEXT_ABILITIES_EARTH },
-					{ L"Shout_RecoverArmour", NULL, 0, 2, 375, TEXT_ABILITIES_SPECIAL },
-					{ L"Shout_ShedSkin", NULL, 1, 1, 398, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_SiphonPoison", NULL, 0, 1, 457, TEXT_ABILITIES_EARTH },
-					{ L"Shout_SmokeCover", NULL, 0, 1, 548, TEXT_ABILITIES_AIR },
-					{ L"Shout_SparkingSwings", NULL, 0, 1, 514, TEXT_ABILITIES_FIRE },
-					{ L"Shout_SpiderLegs", NULL, 0, 0, 515, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_SpiritForm_Lucian", NULL, 0, 2, 1015, TEXT_ABILITIES_SOURCE },
-					{ L"Shout_SpiritVision", NULL, 0, 1, 1015, TEXT_ABILITIES_SOURCE },
-					{ L"Shout_SteelSkin", NULL, 0, 2, 401, TEXT_ABILITIES_POLYMORPH },
-					{ L"Shout_Supernova", NULL, 0, 3, 440, TEXT_ABILITIES_FIRE },
-					{ L"Shout_Taunt", NULL, 0, 2, 166, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_ThickOfTheFight", NULL, 1, 2, 395, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_VacuumAura", NULL, 1, 2, 522, TEXT_ABILITIES_AIR },
-					{ L"Shout_VampiricHungerAura", NULL, 1, 1, 533, TEXT_ABILITIES_WATER },
-					{ L"Shout_VenomCoating", NULL, 0, 1, 556, TEXT_ABILITIES_EARTH },
-					{ L"Shout_VenomousAura", NULL, 1, 2, 557, TEXT_ABILITIES_EARTH },
-					{ L"Shout_Whirlwind", NULL, 0, 2, 323, TEXT_ABILITIES_WARFARE },
-					{ L"Shout_Wings", NULL, 0, 1, 397, TEXT_ABILITIES_POLYMORPH },
-					{ L"Storm_Blood", NULL, 3, 4, 507, TEXT_ABILITIES_DEATH },
-					{ L"Storm_Ethereal", NULL, 3, 4, 466, TEXT_ABILITIES_SUMMONING },
-					{ L"Storm_Lightning", NULL, 3, 4, 582, TEXT_ABILITIES_AIR },
-					{ L"Summon_ArtilleryPlant", NULL, 1, 2, 352, TEXT_ABILITIES_EARTH },
-					{ L"Summon_BonePile", NULL, 0, 2, 476, TEXT_ABILITIES_DEATH },
-					{ L"Summon_Cat", NULL, 0, 2, 383, TEXT_ABILITIES_SUMMONING },
-					{ L"Summon_Condor", NULL, 0, 2, 524, TEXT_ABILITIES_SUMMONING },
-					{ L"Summon_FireSlug", NULL, 1, 1, 460, TEXT_ABILITIES_FIRE },
-					{ L"Summon_Incarnate", NULL, 0, 2, 417, TEXT_ABILITIES_SUMMONING },
-					{ L"Summon_PlanarGateway", NULL, 2, 0, 467, TEXT_ABILITIES_SUMMONING },
-					{ L"Summon_TotemFromSurface", NULL, 0, 2, 414, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_AcidInfusion", NULL, 2, 1, 495, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Apportation", NULL, 0, 1, 461, TEXT_ABILITIES_AIR },
-					{ L"Target_ArcaneStitch", NULL, 1, 3, 465, TEXT_ABILITIES_WATER },
-					{ L"Target_BlackShroud", NULL, 1, 1, 454, TEXT_ABILITIES_DEATH },
-					{ L"Target_Bless", NULL, 1, 1, 368, TEXT_ABILITIES_SOURCE },
-					{ L"Target_BlessedSmokeCloud", NULL, 2, 1, 547, TEXT_ABILITIES_AIR },
-					{ L"Target_BloatedCorpse", NULL, 0, 1, 468, TEXT_ABILITIES_DEATH },
-					{ L"Target_BloodBubble", NULL, 0, 1, 345, TEXT_ABILITIES_DEATH },
-					{ L"Target_BurnMyEyes", NULL, 0, 1, 354, TEXT_ABILITIES_FIRE },
-					{ L"Target_Cannibalize", NULL, 0, 1, 337, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Challenge", NULL, 0, 0, 471, TEXT_ABILITIES_WARFARE },
-					{ L"Target_Charm", NULL, 0, 3, 583, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_ChickenTouch", NULL, 0, 2, 399, TEXT_ABILITIES_POLYMORPH },
-					{ L"Target_CleanseWounds", NULL, 0, 2, 537, TEXT_ABILITIES_WATER },
-					{ L"Target_Condense", NULL, 0, 1, 360, TEXT_ABILITIES_EARTH },
-					{ L"Target_CorpseExplosion", NULL, 0, 1, 498, TEXT_ABILITIES_FIRE },
-					{ L"Target_CorrosiveTouch", NULL, 0, 1, 539, TEXT_ABILITIES_EARTH },
-					{ L"Target_CorruptedBlade", NULL, 0, 3, 469, TEXT_ABILITIES_ROGUES },
-					{ L"Target_CripplingBlow", NULL, 0, 2, 149, TEXT_ABILITIES_WARFARE },
-					{ L"Target_CryogenicStasis", NULL, 0, 2, 393, TEXT_ABILITIES_WATER },
-					{ L"Target_Curse", NULL, 0, 1, 366, TEXT_ABILITIES_SOURCE },
-					{ L"Target_CursedBloodInfusion", NULL, 2, 1, 2000, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_CursedElectricInfusion", NULL, 2, 1, 529, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_CursedOilInfusion", NULL, 2, 1, 2001, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_DaggersDrawn", NULL, 2, 4, 114, TEXT_ABILITIES_ROGUES },
-					{ L"Target_DeathWish", NULL, 0, 2, 445, TEXT_ABILITIES_DEATH },
-					{ L"Target_DeathsDoor", NULL, 0, 3, 554, TEXT_ABILITIES_DEATH },
-					{ L"Target_DecayingTouch", NULL, 0, 2, 347, TEXT_ABILITIES_DEATH },
-					{ L"Target_DemonicBargain", NULL, 2, 1, 550, TEXT_ABILITIES_POLYMORPH },
-					{ L"Target_DemonicStare", NULL, 1, 2, 400, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_DualWieldingAttack", NULL, 0, 2, 603, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_ElectricInfusion", NULL, 0, 1, 420, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_ElementalArrowheads", NULL, 0, 1, 485, TEXT_ABILITIES_HUNTING },
-					{ L"Target_EnemyCripplingBlow_Shambling_Boss", NULL, 0, 2, 149, TEXT_ABILITIES_WARFARE },
-					{ L"Target_Enrage", NULL, 0, 2, 340, TEXT_ABILITIES_WARFARE },
-					{ L"Target_Equalize", NULL, 0, 2, 549, TEXT_ABILITIES_POLYMORPH },
-					{ L"Target_EvasiveManeuver", NULL, 0, 1, 546, TEXT_ABILITIES_AIR },
-					{ L"Target_Farsight", NULL, 1, 1, 505, TEXT_ABILITIES_HUNTING },
-					{ L"Target_Fatality", NULL, 3, 2, 580, TEXT_ABILITIES_ROGUES },
-					{ L"Target_FireInfusion", NULL, 0, 1, 424, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_FireWhip", NULL, 0, 3, 436, TEXT_ABILITIES_FIRE },
-					{ L"Target_Fireblood", NULL, 0, 1, 361, TEXT_ABILITIES_FIRE },
-					{ L"Target_FirstAid", NULL, 0, 1, 93, TEXT_ABILITIES_HUNTING },
-					{ L"Target_FlamingCrescendo", NULL, 0, 1, 450, TEXT_ABILITIES_FIRE },
-					{ L"Target_Flurry", NULL, 2, 4, 513, TEXT_ABILITIES_WARFARE },
-					{ L"Target_Fortify", NULL, 0, 1, 358, TEXT_ABILITIES_EARTH },
-					{ L"Target_FrostyShell", NULL, 0, 1, 326, TEXT_ABILITIES_WATER },
-					{ L"Target_GagOrder", NULL, 0, 2, 506, TEXT_ABILITIES_ROGUES },
-					{ L"Target_GraspOfTheStarved", NULL, 2, 2, 446, TEXT_ABILITIES_DEATH },
-					{ L"Target_Harmony", NULL, 0, 2, 413, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Haste", NULL, 0, 1, 79, TEXT_ABILITIES_FIRE },
-					{ L"Target_HeavyAttack", NULL, 0, 3, 376, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_IceInfusion", NULL, 2, 1, 508, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Infect", NULL, 0, 3, 348, TEXT_ABILITIES_DEATH },
-					{ L"Target_KneeBreaker", NULL, 0, 2, 396, TEXT_ABILITIES_ROGUES },
-					{ L"Target_MaddeningSong", NULL, 1, 1, 433, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_MassSabotage", NULL, 1, 2, 511, TEXT_ABILITIES_FIRE },
-					{ L"Target_MasterOfSparks", NULL, 1, 1, 497, TEXT_ABILITIES_FIRE },
-					{ L"Target_MosquitoSwarm", NULL, 0, 2, 344, TEXT_ABILITIES_DEATH },
-					{ L"Target_NecrofireInfusion", NULL, 2, 1, 500, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_OilInfusion", NULL, 0, 1, 427, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Overpower", NULL, 3, 2, 339, TEXT_ABILITIES_WARFARE },
-					{ L"Target_PetrifyingTouch", NULL, 0, 1, 332, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_PoisonInfusion", NULL, 0, 1, 421, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_PowerInfusion", NULL, 0, 1, 415, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_PressureSpike", NULL, 0, 1, 462, TEXT_ABILITIES_AIR },
-					{ L"Target_RangedInfusion", NULL, 0, 1, 416, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_ReactionShot", NULL, 0, 2, 481, TEXT_ABILITIES_HUNTING },
-					{ L"Target_Restoration", NULL, 0, 1, 184, TEXT_ABILITIES_WATER },
-					{ L"Target_RockSpikes", NULL, 0, 2, 327, TEXT_ABILITIES_EARTH },
-					{ L"Target_Sabotage", NULL, 0, 1, 512, TEXT_ABILITIES_FIRE },
-					{ L"Target_SerratedEdge", NULL, 0, 2, 320, TEXT_ABILITIES_ROGUES },
-					{ L"Target_ShacklesOfPain", NULL, 0, 1, 349, TEXT_ABILITIES_DEATH },
-					{ L"Target_ShadowInfusion", NULL, 0, 1, 475, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_ShockingTouch", NULL, 0, 2, 23, TEXT_ABILITIES_AIR },
-					{ L"Target_SingleHandedAttack", NULL, 0, 1, 377, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_SleepingArms", NULL, 0, 2, 380, TEXT_ABILITIES_ROGUES },
-					{ L"Target_SoulMate", NULL, 0, 1, 470, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_SourceVampirism", NULL, 0, 1, 367, TEXT_ABILITIES_SOURCE },
-					{ L"Target_SpontaneousCombustion", NULL, 0, 2, 363, TEXT_ABILITIES_FIRE },
-					{ L"Target_Squall", NULL, 1, 2, 434, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_StripResistance", NULL, 0, 2, 516, TEXT_ABILITIES_POLYMORPH },
-					{ L"Target_Supercharge", NULL, 0, 1, 412, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_TentacleLash", NULL, 0, 2, 403, TEXT_ABILITIES_POLYMORPH },
-					{ L"Target_TerrifyingCruelty", NULL, 0, 3, 487, TEXT_ABILITIES_ROGUES },
-					{ L"Target_TimeWarp", NULL, 1, 2, 435, TEXT_ABILITIES_SPECIAL },
-					{ L"Target_VacuumTouch", NULL, 0, 1, 528, TEXT_ABILITIES_AIR },
-					{ L"Target_VampiricHunger", NULL, 0, 1, 532, TEXT_ABILITIES_WATER },
-					{ L"Target_Vaporize", NULL, 0, 1, 1003, TEXT_ABILITIES_AIR },
-					{ L"Target_WarpInfusion", NULL, 0, 1, 474, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_WaterInfusion", NULL, 0, 1, 423, TEXT_ABILITIES_SUMMONING },
-					{ L"Target_Windwalker", NULL, 0, 1, 310, TEXT_ABILITIES_AIR },
-					{ L"Target_WinterBlast", NULL, 0, 2, 331, TEXT_ABILITIES_WATER },
-					{ L"Target_WormTremor", NULL, 0, 3, 479, TEXT_ABILITIES_EARTH },
-					{ L"Teleportation_FreeFall", NULL, 0, 2, 309, TEXT_ABILITIES_AIR },
-					{ L"Teleportation_LastRites", NULL, 0, 3, 391, TEXT_ABILITIES_DEATH },
-					{ L"Teleportation_Netherswap", NULL, 0, 1, 20, TEXT_ABILITIES_AIR },
-					{ L"Teleportation_SwapGround", NULL, 0, 1, 564, TEXT_ABILITIES_POLYMORPH },
-					{ L"Tornado_Air", NULL, 0, 2, 27, TEXT_ABILITIES_AIR },
-					{ L"Wall_LivingWall", NULL, 0, 2, 477, TEXT_ABILITIES_EARTH },
-					{ L"Zone_LaserRay", NULL, 0, 3, 437, TEXT_ABILITIES_FIRE },
-					{ 0 }
-				};
-
 static GAMEITEMCOLORS	ItemColors[] =	{
 
 					{ L"Autunite", NULL, { 0xffe651, 0x918648, 0xfff3b7 } },
@@ -604,8 +376,7 @@ GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject
 		pBonusContext->pEdit = NULL;
 		}
 
-Done:	for (i = 0; Skills[i].pszId != NULL; i++) if (Skills[i].pszName != NULL) { HeapFree(App.hHeap,0,Skills[i].pszName); Skills[i].pszName = NULL; };
-	for (i = 0; ItemColors[i].pszId != NULL; i++) if (ItemColors[i].pszName != NULL) { HeapFree(App.hHeap,0,ItemColors[i].pszName); ItemColors[i].pszName = NULL; };
+Done:	for (i = 0; ItemColors[i].pszId != NULL; i++) if (ItemColors[i].pszName != NULL) { HeapFree(App.hHeap,0,ItemColors[i].pszName); ItemColors[i].pszName = NULL; };
 	if (psh) HeapFree(App.hHeap,0,psh);
 	if (psp)
 		{
@@ -614,6 +385,7 @@ Done:	for (i = 0; Skills[i].pszId != NULL; i++) if (Skills[i].pszName != NULL) {
 		}
 	if (pBonusContext)
 		{
+		Game_UnloadDataFile(DATA_TYPE_SKILLS,&pBonusContext->skills);
 		Locale_Unload(LOCALE_TYPE_MISC,(void **)&pBonusContext->pLocale,NULL);
 		Game_BonusRelease(pBonusContext->pEdit,FALSE);
 		HeapFree(App.hHeap,0,pBonusContext);
@@ -637,6 +409,7 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 	if (uMsgId == WM_MEASUREITEM)
 		{
 		if (Dialog_ViewComboMeasureItem(190,(MEASUREITEMSTRUCT *)lParam)) return(TRUE);
+		if (Dialog_ViewComboMeasureItem(191,(MEASUREITEMSTRUCT *)lParam)) return(TRUE);
 		((MEASUREITEMSTRUCT *)lParam)->itemWidth = 0;
 		((MEASUREITEMSTRUCT *)lParam)->itemHeight = App.Font.uFontHeight+4;
 		if (((MEASUREITEMSTRUCT *)lParam)->itemHeight < 24+4) ((MEASUREITEMSTRUCT *)lParam)->itemHeight = 24+4;
@@ -704,6 +477,9 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 			case GAME_PAGE_BONUS_SKILLS:
 				Dialog_OffsetY(hDlg,180,Height);
 				Dialog_OffsetY(hDlg,190,Height);
+				Dialog_OffsetY(hDlg,191,Height);
+				Dialog_OffsetY(hDlg,192,Height);
+				Dialog_OffsetY(hDlg,193,Height);
 				Dialog_OffsetY(hDlg,200,Height);
 				GetWindowRect(GetDlgItem(hDlg,200),&rcDialog);
 				MapWindowPoints(NULL,hDlg,(POINT *)&rcDialog,2);
@@ -720,6 +496,7 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				break;
 			}
 
+		Dialog_CenterWindow(GetParent(hDlg),App.hWnd);
 		return(TRUE);
 		}
 
@@ -790,6 +567,16 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 						Dialog_ViewComboDrawItem((DRAWITEMSTRUCT *)lParam);
 						return(TRUE);
 						}
+					else if (wParam == 191)
+						{
+						Game_SkillsSortComboDrawItem((DRAWITEMSTRUCT *)lParam);
+						return(TRUE);
+						}
+					else if (wParam == 192)
+						{
+						Game_SkillsDrawPoints(hDlg,200,&((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->skills,NULL,(DRAWITEMSTRUCT *)lParam,FALSE);
+						return(TRUE);
+						}
 					break;
 				}
 			break;
@@ -805,6 +592,9 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 						{
 						case 190:
 							Dialog_ViewComboChanged(hDlg,190,200,&App.Config.uSkillsView);
+							return(TRUE);
+						case 191:
+							Game_SkillsSortComboChanged(hDlg,191,200,&((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.uSort);
 							return(TRUE);
 						case 200:
 							SendMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_BACK|(Game_BonusSetNextPage(hDlg,FALSE,(GAMEEDITPAGECONTEXT *)psp->lParam) != -1?PSWIZB_NEXT:0));
@@ -838,6 +628,9 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 									App.Config.bSkillsGroups = (IsDlgButtonChecked(hDlg,180) == BST_CHECKED?TRUE:FALSE);
 									SendDlgItemMessage(hDlg,200,LVM_ENABLEGROUPVIEW,(WPARAM)App.Config.bSkillsGroups,0);
 									return(TRUE);
+								case 193:
+									Game_SkillsMenu(hDlg,200,(HWND)lParam);
+									return(TRUE);
 								}
 							break;
 						}
@@ -853,12 +646,14 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 					return(TRUE);
 				case LVN_ITEMACTIVATE:
 					SendMessage(GetParent(hDlg),PSM_PRESSBUTTON,(WPARAM)PSBTN_FINISH,0);
+					InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
 					return(TRUE);
 				case LVN_ITEMCHANGED:
 					SendMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_BACK|(Game_BonusSetNextPage(hDlg,FALSE,(GAMEEDITPAGECONTEXT *)psp->lParam) != -1?PSWIZB_FINISH:PSWIZB_DISABLEDFINISH));
+					InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
 					return(TRUE);
 				case PSN_SETACTIVE:
-					SetWindowLongPtr(hDlg,DWLP_MSGRESULT,Game_BonusActivate(hDlg,(GAMEEDITPAGECONTEXT *)psp->lParam)?0:-1);
+					SetWindowLongPtr(hDlg,DWLP_MSGRESULT,Game_BonusActivate(hDlg,(GAMEEDITPAGECONTEXT *)psp->lParam)?0:7001);
 					return(TRUE);
 				case PSN_WIZBACK:
 					SetWindowLongPtr(hDlg,DWLP_MSGRESULT,Game_BonusSetPrevPage(hDlg,(GAMEEDITPAGECONTEXT *)psp->lParam));
@@ -885,11 +680,11 @@ LRESULT CALLBACK Game_BonusEditSubclass(HWND hWnd, UINT uMsgId, WPARAM wParam, L
 	switch(uMsgId)
 		{
 		case WM_PASTE: {
-			WCHAR	szText[BONUS_NUMBER_MAX_LEN+1];
+			WCHAR	szText[BONUS_NUMBER_MAX_LEN];
 			LRESULT	lResult;
 
 			lResult = DefSubclassProc(hWnd,uMsgId,wParam,lParam);
-			SendMessage(hWnd,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szText);
+			SendMessage(hWnd,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szText);
 			Game_BonusCleanNumber(szText,dwRefData == BONUS_FLAG_FLOAT,dwRefData == BONUS_FLAG_FLOAT || dwRefData == BONUS_FLAG_INT);
 			SendMessage(hWnd,WM_SETTEXT,0,(LPARAM)szText);
 			return(lResult);
@@ -929,12 +724,12 @@ LRESULT CALLBACK Game_BonusEditSubclass(HWND hWnd, UINT uMsgId, WPARAM wParam, L
 				{
 				if (dwRefData == BONUS_FLAG_FLOAT)
 					{
-					WCHAR	szText[BONUS_NUMBER_MAX_LEN+1];
+					WCHAR	szText[BONUS_NUMBER_MAX_LEN];
 					int	iStartSel;
 					int	iEndSel;
 					int	i,b;
 
-					SendMessage(hWnd,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szText);
+					SendMessage(hWnd,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szText);
 					SendMessage(hWnd,EM_GETSEL,(WPARAM)&iStartSel,(LPARAM)&iEndSel);
 					if (!wcschr(szText,L'.')) // No "." in the string
 						{
@@ -1038,9 +833,9 @@ LONG_PTR Game_BonusSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *ctx)
 			} break;
 
 		case GAME_PAGE_BONUS_VALUE: {
-			WCHAR	szTemp[BONUS_NUMBER_MAX_LEN+1];
+			WCHAR	szTemp[BONUS_NUMBER_MAX_LEN];
 
-			SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szTemp);
+			SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szTemp);
 			Game_BonusSetVal(ctx->bonus.pContext->pEdit,(ctx->bonus.pContext->pSelected->uFlags&BONUS_FLAG_FLOAT)?BONUS_FLAG_FLOAT:BONUS_FLAG_INT,szTemp);
 			if (Game_BonusIsEmptyNumber(szTemp)) break;
 			} return(0);
@@ -1053,10 +848,10 @@ LONG_PTR Game_BonusSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *ctx)
 			} return(0);
 
 		case GAME_PAGE_BONUS_REFLECTION: {
-			WCHAR	szPercentage[BONUS_NUMBER_MAX_LEN+1];
+			WCHAR	szPercentage[BONUS_NUMBER_MAX_LEN];
 			WCHAR	szDamageType[4];
 
-			SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szPercentage);
+			SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szPercentage);
 			Game_BonusDamageType(hDlg,szDamageType,GAME_DAMAGETYPE_STORE);
 			Game_BonusSetVal(ctx->bonus.pContext->pEdit,BONUS_FLAG_REFLECTION,TRUE,szPercentage,szDamageType);
 			if (Game_BonusIsEmptyNumber(szPercentage)) break;
@@ -1080,8 +875,8 @@ LONG_PTR Game_BonusSetNextPage(HWND hDlg, BOOL bStore, GAMEEDITPAGECONTEXT *ctx)
 							{
 							WCHAR*	pszId;
 							WCHAR*	pszName;
-							pszId = Misc_StrCpyAlloc(((GAMESKILL *)lvItem.lParam)->pszId);
-							pszName = Misc_StrCpyAlloc(((GAMESKILL *)lvItem.lParam)->pszName);
+							pszId = Misc_StrCpyAlloc(((GAMEDATASKILL *)lvItem.lParam)->pszId);
+							pszName = Misc_StrCpyAlloc(((GAMEDATASKILL *)lvItem.lParam)->pszName);
 							if (!pszId)
 								{
 								if (pszId) HeapFree(App.hHeap,0,pszId);
@@ -1257,9 +1052,16 @@ int Game_BonusActivate(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 		case GAME_PAGE_BONUS_SKILLS:
 			if (!ctx->bPageSet)
 				{
+				ctx->bonus.uSort = DATA_SORT_SKILL_SCHOOL;
 				CheckDlgButton(hDlg,180,App.Config.bSkillsGroups?BST_CHECKED:BST_UNCHECKED);
 				SendDlgItemMessage(hDlg,180,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_VIEW_GROUPS));
+				SendDlgItemMessage(hDlg,193,WM_SETTEXT,0,(LPARAM)Locale_GetText(MENU_LIST));
 				if (!Dialog_ViewComboInit(hDlg,190,App.Config.uSkillsView,2,LV_VIEW_ICON,LV_VIEW_TILE))
+					{
+					Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
+					return(0);
+					}
+				if (!Game_SkillsSortComboInit(hDlg,191,ctx->bonus.uSort))
 					{
 					Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 					return(0);
@@ -1450,215 +1252,21 @@ Error:	Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR
 
 int Game_BonusInitSkills(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 {
-	LVCOLUMN	lvColumn;
-	LVGROUP		lvGroup;
-	LVITEM		lvItem;
-	LVTILEINFO	lvTileInfo;
-	LVTILEVIEWINFO	lvTileView;
-	HIMAGELIST	hImageList = NULL;
-	HINSTANCE	hSkillsIcons = NULL;
-	HICON		hIcon;
-	GAMESKILL*	pSelected;
-	WCHAR		szName[16];
-	UINT		uColumns[2];
-	static UINT	uSkillsColumns[] = { TEXT_BONUS_SKILL_COLUMN_NAME, TEXT_BONUS_SKILL_COLUMN_SCHOOL, TEXT_BONUS_SKILL_COLUMN_POINTS, 0 };
-	static UINT	uGroupsTitles[] = { TEXT_ABILITIES_WARFARE, TEXT_ABILITIES_AIR, TEXT_ABILITIES_HUNTING, TEXT_ABILITIES_ROGUES, TEXT_ABILITIES_EARTH, TEXT_ABILITIES_WATER, TEXT_ABILITIES_SUMMONING, TEXT_ABILITIES_POLYMORPH, TEXT_ABILITIES_DEATH, TEXT_ABILITIES_FIRE, TEXT_ABILITIES_SOURCE, TEXT_ABILITIES_SPECIAL, 0 };
-	int		i,j,k;
+	HIMAGELIST	hImageList;
+	GAMEDATASKILL*	pSelected;
 
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SETEXTENDEDLISTVIEWSTYLE,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER);
-
-	if (!Locale_Load(hDlg,szLangPath,App.Config.pszLocaleName,LOCALE_TYPE_MISC,(void **)&ctx->bonus.pContext->pLocale,NULL))
-		goto Error;
-
-	//--- Images
-	hImageList = ImageList_Create(64,64,ILC_COLOR32|ILC_MASK,sizeof(Skills)/sizeof(GAMESKILL),0);
-	if (!hImageList) goto Error;
-
-	//--- Icons
-	hSkillsIcons = LoadLibraryEx(szSkillsIconsPath,NULL,DONT_RESOLVE_DLL_REFERENCES|LOAD_LIBRARY_AS_DATAFILE|LOAD_WITH_ALTERED_SEARCH_PATH);
-	if (!hSkillsIcons) goto Error;
-
-	//--- Columns
-	for (i = 0; uSkillsColumns[i] != 0; i++)
-		{
-		lvColumn.mask = LVCF_FMT|LVCF_ORDER|LVCF_TEXT|LVCF_WIDTH;
-		lvColumn.fmt = LVCFMT_LEFT;
-		lvColumn.cx = 0;
-		lvColumn.pszText = Locale_GetText(uSkillsColumns[i]);
-		lvColumn.cchTextMax = wcslen(lvColumn.pszText);
-		lvColumn.iOrder = i;
-		if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTCOLUMN,i,(LPARAM)&lvColumn) == -1) goto Error;
-		}
+	//--- Initialisations
+	if (!Game_SkillsDataFileCreate(hDlg,&ctx->bonus.pContext->skills)) return(0);
+	if ((hImageList = Game_SkillsImageListCreate(hDlg,TEXT_ERR_DIALOG,&ctx->bonus.pContext->skills)) == NULL) return(0);
 
 	//--- Selected item
 	pSelected = NULL;
 	if (ctx->bonus.pContext->pEdit->uType == BONUS_FLAG_SKILL)
-		{
-		if (ctx->bonus.pContext->pEdit->skill.pszId)
-			{
-			for (i = 0; Skills[i].pszId != NULL; i++)
-				{
-				if (!wcscmp(ctx->bonus.pContext->pEdit->skill.pszId,Skills[i].pszId))
-					{
-					pSelected = &Skills[i];
-					break;
-					}
-				}
-			}
-		}
+		if (ctx->bonus.pContext->pEdit->skill.pszId) pSelected = Game_SkillsGetById(ctx->bonus.pContext->pEdit->skill.pszId,&ctx->bonus.pContext->skills);
 
-	//--- Groups
-	for (i = 0; uGroupsTitles[i] != 0; i++)
-		{
-		lvGroup.cbSize = sizeof(LVGROUP);
-		lvGroup.mask = LVGF_HEADER|LVGF_GROUPID|LVGF_STATE;
-		lvGroup.pszHeader = Locale_GetText(uGroupsTitles[i]);
-		lvGroup.iGroupId = uGroupsTitles[i];
-		lvGroup.stateMask = lvGroup.state = LVGS_COLLAPSIBLE|LVGS_COLLAPSED;
-		if (pSelected && pSelected->uSchoolLocaleID == uGroupsTitles[i]) lvGroup.state &= ~LVGS_COLLAPSED;
-		else if (!ctx->bonus.pContext->pEdit->skill.pszId) lvGroup.state &= ~LVGS_COLLAPSED;
-		if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Error;
-		}
-
-	//--- Items
-	for (i = 0; Skills[i].pszId != NULL; i++)
-		{
-		//--- Icon
-		wsprintf(szName,L"SI_%.4u",Skills[i].uIconID);
-		hIcon = LoadImage(hSkillsIcons,szName,IMAGE_ICON,64,64,LR_DEFAULTCOLOR|LR_SHARED);
-		if (!hIcon) goto Error;
-		//--- Item
-		if (!Skills[i].pszName) Locale_QueryID(ctx->bonus.pContext->pLocale->db,szDataBaseSkills,Skills[i].pszId,NULL,&Skills[i].pszName,1);
-		lvItem.mask = LVIF_IMAGE|LVIF_PARAM|LVIF_TEXT|LVIF_GROUPID;
-		lvItem.iItem = i;
-		lvItem.iSubItem = 0;
-		lvItem.pszText = Skills[i].pszName?Skills[i].pszName:Skills[i].pszId;
-		lvItem.iImage = ImageList_ReplaceIcon(hImageList,-1,hIcon);
-		lvItem.iGroupId = Skills[i].uSchoolLocaleID;
-		lvItem.lParam = (LPARAM)&Skills[i];
-		if (pSelected == &Skills[i])
-			{
-			lvItem.mask |= LVIF_STATE;
-			lvItem.state = LVIS_SELECTED;
-			lvItem.stateMask = LVIS_SELECTED;
-			}
-		if (lvItem.iImage == -1 || SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) goto Error;
-		//--- School
-		lvItem.iSubItem = 1;
-		lvItem.pszText = Locale_GetText(Skills[i].uSchoolLocaleID);
-		if (SendDlgItemMessage(hDlg,uCtlID,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == 0) goto Error;
-		//--- Points
-		for (j = 0; j != Skills[i].uSourcePoints; j++)
-			{
-			if (j > 3) break;
-			szName[j] = sSourcePoint;
-			}
-		if (j) szName[j++] = L' ';
-		for (k = 0; k != Skills[i].uActionPoints; k++)
-			{
-			if (k > 10) break;
-			szName[j++] = sActionPoint;
-			}
-		szName[j] = 0;
-		lvItem.iSubItem = 2;
-		lvItem.pszText = szName;
-		if (SendDlgItemMessage(hDlg,uCtlID,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == 0) goto Error;
-		//--- Tile info
-		uColumns[0] = 1;
-		uColumns[1] = 2;
-		lvTileInfo.cbSize = sizeof(LVTILEINFO);
-		lvTileInfo.iItem = lvItem.iItem;
-		lvTileInfo.cColumns = 2;
-		lvTileInfo.puColumns = uColumns;
-		lvTileInfo.piColFmt = NULL;
-		if (SendDlgItemMessage(hDlg,uCtlID,LVM_SETTILEINFO,0,(LPARAM)&lvTileInfo) == FALSE) goto Error;
-		}
-	FreeLibrary(hSkillsIcons);
-
-	lvTileView.cbSize = sizeof(LVTILEVIEWINFO);
-	lvTileView.dwMask = LVTVIM_COLUMNS;
-	lvTileView.dwFlags = LVTVIF_AUTOSIZE;
-	lvTileView.cLines = 3;
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SETTILEVIEWINFO,0,(LPARAM)&lvTileView);
-
-	ctx->bonus.uSort = DATA_SORT_SKILL_SCHOOL;
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SETIMAGELIST,(WPARAM)LVSIL_NORMAL,(LPARAM)hImageList);
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SETICONSPACING,0,(LPARAM)MAKELONG(64+40,64+App.Font.uFontHeight*2+20));
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SETVIEW,(WPARAM)App.Config.uSkillsView,(LPARAM)0);
-	SendDlgItemMessage(hDlg,uCtlID,LVM_ENABLEGROUPVIEW,(WPARAM)App.Config.bSkillsGroups,0);
-	SendDlgItemMessage(hDlg,uCtlID,LVM_SORTITEMS,(WPARAM)ctx->bonus.uSort,(LPARAM)Game_BonusSortSkills);
-	Locale_Unload(LOCALE_TYPE_MISC,(void **)&ctx->bonus.pContext->pLocale,NULL);
+	//--- ListView
+	if (!Game_SkillsListCreate(hDlg,uCtlID,hImageList,&ctx->bonus.pContext->skills,TEXT_ERR_DIALOG,ctx->bonus.uSort,pSelected,FALSE)) return(0);
 	return(1);
-
-	//--- Error ---
-
-Error:	Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
-	SendDlgItemMessage(hDlg,uCtlID,LVM_DELETEALLITEMS,0,0);
-	if (hSkillsIcons) FreeLibrary(hSkillsIcons);
-	if (hImageList) ImageList_Destroy(hImageList);
-	Locale_Unload(LOCALE_TYPE_MISC,(void **)&ctx->bonus.pContext->pLocale,NULL);
-	return(0);
-}
-
-
-// л╗╗╗ Tri des compщtences ллллллллллллллллллллллллллллллллллллллллллллл╗
-
-int Game_BonusSortSkills(LPARAM lFirstSkill, LPARAM lSecondSkill, LPARAM lSort)
-{
-	int	iResult = 0;
-
-	switch(lSort)
-		{
-		case DATA_SORT_ID:
-		case DATA_SORT_TEXT:
-			iResult = Game_BonusSortSkillsCmp((GAMESKILL *)lFirstSkill,(GAMESKILL *)lSecondSkill,(UINT)DATA_SORT_TEXT);
-			break;
-		case DATA_SORT_SKILL_SCHOOL:
-			iResult = Game_BonusSortSkillsCmp((GAMESKILL *)lFirstSkill,(GAMESKILL *)lSecondSkill,(UINT)lSort);
-			if (iResult == 0) iResult = Game_BonusSortSkillsCmp((GAMESKILL *)lFirstSkill,(GAMESKILL *)lSecondSkill,(UINT)DATA_SORT_TEXT);
-			break;
-		case DATA_SORT_SKILL_POINTS:
-			iResult = Game_BonusSortSkillsCmp((GAMESKILL *)lFirstSkill,(GAMESKILL *)lSecondSkill,(UINT)lSort);
-			if (iResult == 0) iResult = Game_BonusSortSkillsCmp((GAMESKILL *)lFirstSkill,(GAMESKILL *)lSecondSkill,(UINT)DATA_SORT_TEXT);
-			break;
-		}
-
-	return(iResult);
-}
-
-//--- Routine de comparaison ---
-
-int Game_BonusSortSkillsCmp(GAMESKILL *pFirstSkill, GAMESKILL *pSecondSkill, UINT uSort)
-{
-	WCHAR*	pszText1;
-	WCHAR*	pszText2;
-	int	iResult = 0;
-
-	switch(uSort)
-		{
-		case DATA_SORT_TEXT:
-			pszText1 = pFirstSkill->pszName?pFirstSkill->pszName:pFirstSkill->pszId;
-			pszText2 = pSecondSkill->pszName?pSecondSkill->pszName:pSecondSkill->pszId;
-			iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
-			if (iResult == CSTR_LESS_THAN) return(-1);
-			if (iResult == CSTR_GREATER_THAN) return(1);
-			break;
-		case DATA_SORT_SKILL_SCHOOL:
-			pszText1 = Locale_GetText(pFirstSkill->uSchoolLocaleID);
-			pszText2 = Locale_GetText(pSecondSkill->uSchoolLocaleID);
-			iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
-			if (iResult == CSTR_LESS_THAN) return(-1);
-			if (iResult == CSTR_GREATER_THAN) return(1);
-			break;
-		case DATA_SORT_SKILL_POINTS:
-			if (pFirstSkill->uSourcePoints < pSecondSkill->uSourcePoints) return(-1);
-			if (pFirstSkill->uSourcePoints > pSecondSkill->uSourcePoints) return(1);
-			if (pFirstSkill->uActionPoints < pSecondSkill->uActionPoints) return(-1);
-			if (pFirstSkill->uActionPoints > pSecondSkill->uActionPoints) return(1);
-			break;
-		}
-
-	return(0);
 }
 
 
@@ -1801,7 +1409,7 @@ void Game_BonusDrawResult(GAMEEDITPAGECONTEXT *ctx, DRAWITEMSTRUCT *pDraw)
 
 void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONTEXT *ctx)
 {
-	WCHAR	szNumber[BONUS_NUMBER_MAX_LEN+1];
+	WCHAR	szNumber[BONUS_NUMBER_MAX_LEN];
 
 	switch(ctx->uPageID)
 		{
@@ -1809,7 +1417,7 @@ void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONT
 			switch(uCtrlId)
 				{
 				case 202:
-					SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szNumber);
+					SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szNumber);
 					Game_BonusIncreaseNumber(szNumber,iIncrease,ctx->bonus.pContext->pSelected->uFlags&BONUS_FLAG_FLOAT,ctx->bonus.pContext->pSelected->uFlags&(BONUS_FLAG_FLOAT|BONUS_FLAG_INT));
 					SendDlgItemMessage(hDlg,200,WM_SETTEXT,0,(LPARAM)szNumber);
 					SendDlgItemMessage(hDlg,200,EM_SETSEL,(WPARAM)0,(LPARAM)-1);
@@ -1820,7 +1428,7 @@ void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONT
 			switch(uCtrlId)
 				{
 				case 202:
-					SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN+1,(LPARAM)szNumber);
+					SendDlgItemMessage(hDlg,200,WM_GETTEXT,(WPARAM)BONUS_NUMBER_MAX_LEN,(LPARAM)szNumber);
 					Game_BonusIncreaseNumber(szNumber,iIncrease,FALSE,FALSE);
 					SendDlgItemMessage(hDlg,200,WM_SETTEXT,0,(LPARAM)szNumber);
 					SendDlgItemMessage(hDlg,200,EM_SETSEL,(WPARAM)0,(LPARAM)-1);
@@ -1843,11 +1451,12 @@ void Game_BonusEditMove(HWND hDlg, UINT uCtrlId, int iIncrease, GAMEEDITPAGECONT
 
 WCHAR* Game_BonusGetDisplayText(GAMEEDITBONUS *pEditBonus)
 {
-	WCHAR		szNumber[BONUS_NUMBER_MAX_LEN+1];
+	WCHAR		szNumber[BONUS_NUMBER_MAX_LEN];
 	WCHAR*		pszText;
 	WCHAR*		pszFmt;
 	DWORD_PTR	vl[3];
 
+	ZeroMemory(szNumber,sizeof(szNumber));
 	pszFmt = NULL;
 	vl[0] = (DWORD_PTR)(pEditBonus->uLocaleID?Locale_GetText(pEditBonus->uLocaleID):pEditBonus->pszId);
 
@@ -1955,7 +1564,7 @@ WCHAR* Game_BonusDamageType(HWND hDlg, WCHAR *pszDamageType, UINT uAction)
 				{
 				if (uDamageType > 2 && uDamageType < 6) continue;
 				if (IsDlgButtonChecked(hDlg,uDamageType+210) != BST_CHECKED) continue;
-				wsprintf(pszDamageType,L"%.1u",uDamageType);
+				Misc_Printf(pszDamageType,2,L"%u",uDamageType);
 				break;
 				}
 			if (!wcslen(pszDamageType))
@@ -2163,13 +1772,13 @@ void Game_BonusRelease(GAMEEDITBONUS *pEditBonus, BOOL bCleanUpOnly)
 		case BONUS_FLAG_INT:
 		case BONUS_FLAG_UINT:
 		case BONUS_FLAG_FLOAT:
-			if (bCleanUpOnly) ZeroMemory(pEditBonus->value.szVal,BONUS_NUMBER_MAX_LEN);
+			if (bCleanUpOnly) ZeroMemory(pEditBonus->value.szVal,BONUS_NUMBER_MAX_LEN*sizeof(WCHAR));
 			break;
 		case BONUS_FLAG_REFLECTION:
 			if (bCleanUpOnly)
 				{
-				ZeroMemory(pEditBonus->reflection.szPercentage,BONUS_NUMBER_MAX_LEN);
-				ZeroMemory(pEditBonus->reflection.szDamageType,BONUS_NUMBER_MAX_LEN);
+				ZeroMemory(pEditBonus->reflection.szPercentage,BONUS_NUMBER_MAX_LEN*sizeof(WCHAR));
+				ZeroMemory(pEditBonus->reflection.szDamageType,BONUS_NUMBER_MAX_LEN*sizeof(WCHAR));
 				}
 			break;
 		case BONUS_FLAG_SKILL:
@@ -2215,7 +1824,7 @@ void Game_BonusRelease(GAMEEDITBONUS *pEditBonus, BOOL bCleanUpOnly)
 
 void Game_BonusIncreaseNumber(WCHAR *pszNumber, int iIncrease, BOOL bFloat, BOOL bSigned)
 {
-	WCHAR	szNumber[BONUS_NUMBER_MAX_LEN+1];
+	WCHAR	szNumber[BONUS_NUMBER_MAX_LEN];
 
 	if (bFloat)
 		{
@@ -2223,7 +1832,7 @@ void Game_BonusIncreaseNumber(WCHAR *pszNumber, int iIncrease, BOOL bFloat, BOOL
 		fNum += (double)iIncrease/100.0f;
 		if (fNum > (double)BONUS_NUMBER_MAX) fNum = (double)BONUS_NUMBER_MAX;
 		if (fNum < (double)BONUS_NUMBER_MIN) fNum = (double)BONUS_NUMBER_MIN;
-		swprintf(szNumber,BONUS_NUMBER_MAX_LEN,L"%.2f",fNum);
+		Misc_Printf(szNumber,BONUS_NUMBER_MAX_LEN,L"%.2f",fNum);
 		}
 	else
 		{
@@ -2232,7 +1841,7 @@ void Game_BonusIncreaseNumber(WCHAR *pszNumber, int iIncrease, BOOL bFloat, BOOL
 		if (lNum > BONUS_NUMBER_MAX) lNum = BONUS_NUMBER_MAX;
 		if (lNum < BONUS_NUMBER_MIN) lNum = BONUS_NUMBER_MIN;
 		if (!bSigned && lNum < 0) lNum = 0;
-		swprintf(szNumber,BONUS_NUMBER_MAX_LEN,L"%d",lNum);
+		Misc_Printf(szNumber,BONUS_NUMBER_MAX_LEN,L"%d",lNum);
 		}
 
 	Game_BonusCleanNumber(szNumber,bFloat,bSigned);
@@ -2281,7 +1890,7 @@ void Game_BonusShiftNumber(WCHAR *pszNumber, BOOL bLeft)
 	fNum = wcstod(pszNumber,NULL);
 	if (bLeft) fNum /= 100.0f;
 	else fNum *= 100.0f;
-	swprintf(pszNumber,BONUS_NUMBER_MAX_LEN,L"%.2f",fNum);
+	Misc_Printf(pszNumber,BONUS_NUMBER_MAX_LEN,L"%.2f",fNum);
 	Game_BonusCleanNumber(pszNumber,TRUE,TRUE);
 	return;
 }
@@ -2291,7 +1900,7 @@ void Game_BonusShiftNumber(WCHAR *pszNumber, BOOL bLeft)
 
 void Game_BonusCleanNumber(WCHAR *pszNumber, BOOL bFloat, BOOL bSigned)
 {
-	WCHAR	szResult[BONUS_NUMBER_MAX_LEN+1];
+	WCHAR	szResult[BONUS_NUMBER_MAX_LEN];
 	int	i,j,e,p;
 
 	// Main cleanup loop
@@ -2300,8 +1909,9 @@ void Game_BonusCleanNumber(WCHAR *pszNumber, BOOL bFloat, BOOL bSigned)
 		if (j >= BONUS_NUMBER_MAX_LEN)
 			{
 			#if _DEBUG
-			MessageBox(App.hWnd,L"Buffer overflow in Game_BonusCleanNumber(), that was not supposed to happen !",L"Debug",MB_ICONEXCLAMATION|MB_OK);
+			MessageBox(App.hWnd,L"Buffer overflow in Game_BonusCleanNumber(), that was not supposed to happen !",NULL,MB_ICONEXCLAMATION|MB_OK);
 			#endif
+			j--;
 			break;
 			}
 		if (bSigned && pszNumber[i] == L'-' && j)		// "-" only at the beginning

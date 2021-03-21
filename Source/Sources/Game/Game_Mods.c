@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Mods.h"
@@ -25,13 +25,13 @@ extern WCHAR*		ModsIgnore[];
 extern WCHAR*		ModsLarian[];
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Boîte de dialogue						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ BoÃ®te de dialogue						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Affichage «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Mods_Dialog()
 {
@@ -50,7 +50,7 @@ void Mods_Dialog()
 		return;
 		}
 
-	//--- Création de la liste des mods ---
+	//--- CrÃ©ation de la liste des mods ---
 
 	pRoot = lsv_GetMetaXML(&App.Game.Save.nodeFiles);
 	if (pRoot)
@@ -128,7 +128,7 @@ void Mods_Dialog()
 			}
 		}
 
-	//--- Boîte de dialogue ---
+	//--- BoÃ®te de dialogue ---
 
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1200),App.hWnd,Mods_Proc,(LPARAM)pContext);
 	if (!iResult || iResult == -1)
@@ -154,14 +154,14 @@ void Mods_Dialog()
 			}
 		}
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 	Mods_Release(&pContext->mods);
 	HeapFree(App.hHeap,0,pContext);
 	return;
 }
 
-//--- Libère la mémoire utilisée ---
+//--- LibÃ¨re la mÃ©moire utilisÃ©e ---
 
 void Mods_Release(NODE *pRoot)
 {
@@ -178,7 +178,7 @@ void Mods_Release(NODE *pRoot)
 }
 
 
-// «»»» Messages ««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Messages Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Mods_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -346,7 +346,7 @@ INT_PTR CALLBACK Mods_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 }
 
 
-// «»»» Active/Désactive un talent ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Active/DÃ©sactive un talent Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Mods_Check(HWND hDlg, int iItem, BOOL bToggle, MODSCONTEXT *pContext)
 {
@@ -356,7 +356,7 @@ void Mods_Check(HWND hDlg, int iItem, BOOL bToggle, MODSCONTEXT *pContext)
 
 	if (!pContext->bInitialized) return;
 
-	//--- Récupère le talent ---
+	//--- RÃ©cupÃ¨re le talent ---
 
 	lvItem.mask = LVIF_PARAM|LVIF_STATE|LVIF_GROUPID;
 	lvItem.iItem = iItem;
@@ -367,7 +367,7 @@ void Mods_Check(HWND hDlg, int iItem, BOOL bToggle, MODSCONTEXT *pContext)
 	lvItem.lParam = 0;
 	SendDlgItemMessage(hDlg,200,LVM_GETITEM,0,(LPARAM)&lvItem);
 
-	//--- Empêche la modification des mods critiques ---
+	//--- EmpÃªche la modification des mods critiques ---
 
 	if (lvItem.iGroupId == MOD_CRITICAL)
 		{
@@ -380,7 +380,7 @@ void Mods_Check(HWND hDlg, int iItem, BOOL bToggle, MODSCONTEXT *pContext)
 		return;
 		}
 
-	//--- Modifie l'état ---
+	//--- Modifie l'Ã©tat ---
 
 	pMod = (MODSTRUCT *)lvItem.lParam;
 	if (lvItem.state & INDEXTOSTATEIMAGEMASK(1)) bChecked = FALSE;
@@ -388,7 +388,7 @@ void Mods_Check(HWND hDlg, int iItem, BOOL bToggle, MODSCONTEXT *pContext)
 
 	pMod->bIsActive = bChecked;
 
-	//--- Bascule l'état ---
+	//--- Bascule l'Ã©tat ---
 
 	if (bToggle)
 		{

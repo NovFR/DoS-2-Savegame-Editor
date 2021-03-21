@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Files.h"
@@ -22,13 +22,13 @@
 extern APPLICATION		App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Chargement							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Chargement							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Charge et décompresse l'archive «««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Charge et dÃ©compresse l'archive Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 {
@@ -36,7 +36,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 	WCHAR*		pszArchiveName;
 	BOOL		bIsDone = FALSE;
 
-	//--- Création de la structure de travail ---
+	//--- CrÃ©ation de la structure de travail ---
 
 	pszArchiveName = PathFindFileName(pszArchivePath);
 
@@ -64,7 +64,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 
 	if (!ReadFile(pReader->hFile,pReader->pFileBuffer,pReader->dwFileSize,&pReader->dwBytes,NULL)) goto Done;
 
-	//--- Vérifie que le fichier est du bon format ---
+	//--- VÃ©rifie que le fichier est du bon format ---
 
 	if (strncmp("LSPK",(char *)&pReader->pFileBuffer[pReader->dwFileSize-4],4))
 		{
@@ -73,13 +73,13 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		goto Done;
 		}
 
-	//--- Récupère les données importantes ---
+	//--- RÃ©cupÃ¨re les donnÃ©es importantes ---
 
 	pReader->pHeader = (LSPKHEADER13 *)&pReader->pFileBuffer[pReader->dwFileSize-pReader->pFileBuffer[pReader->dwFileSize-8]];
 	pReader->pFileList = (BYTE *)&pReader->pFileBuffer[pReader->pHeader->FileListOffset];
 	pReader->iNumFiles = *(DWORD *)pReader->pFileList;
 
-	//--- Vérifie que l'archive est de la bonne version ---
+	//--- VÃ©rifie que l'archive est de la bonne version ---
 
 	if (pReader->pHeader->Version != 13)
 		{
@@ -95,7 +95,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		goto Done;
 		}
 
-	//--- Décompresse la liste des fichiers ---
+	//--- DÃ©compresse la liste des fichiers ---
 
 	pReader->pFileListBuffer = (FILEENTRY13 *)HeapAlloc(App.hHeap,0,sizeof(FILEENTRY13)*pReader->iNumFiles);
 	if (!pReader->pFileListBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
@@ -108,7 +108,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		goto Done;
 		}
 
-	//--- Décompresse les fichiers ---
+	//--- DÃ©compresse les fichiers ---
 
 	while (pReader->iNumFiles--)
 		{
@@ -118,7 +118,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		char*		pszName;
 		int		iSize;
 
-		//--- Vérifie les fichiers à charger
+		//--- VÃ©rifie les fichiers Ã  charger
 		bSkip = TRUE;
 		pszName = pReader->pFileListBuffer[pReader->iNumFiles].Name;
 		if (dwMode&LS_LOAD_META && !strcmp("meta.lsf",pszName)) bSkip = FALSE;
@@ -134,7 +134,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 			}
 		List_AddEntry((NODE *)pFile,pRoot);
 
-		//--- Données du fichier
+		//--- DonnÃ©es du fichier
 		pFile->uSize = pReader->pFileListBuffer[pReader->iNumFiles].UncompressedSize;
 		pFile->pData = HeapAlloc(App.hHeap,0,pFile->uSize);
 		if (!pFile->pData)
@@ -161,7 +161,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 			goto Done;
 			}
 
-		//--- Décompression
+		//--- DÃ©compression
 		pReader->uLastError = lsa_Decompress(pReader->pFileListBuffer[pReader->iNumFiles].Flags,pReader->pFileBuffer+pReader->pFileListBuffer[pReader->iNumFiles].OffsetInFile,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk,pFile->pData,pFile->uSize,0);
 		if (pReader->uLastError)
 			{
@@ -169,7 +169,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 			goto Done;
 			}
 
-		//--- Détermine le type de fichier
+		//--- DÃ©termine le type de fichier
 		if ((*(DWORD *)pFile->pData&0xFFFFFF00) == 0x474E5000) pFile->dwType |= LS_TYPE_PNG;
 		if (*(DWORD *)pFile->pData == 0x464F534C) pFile->dwType |= LS_TYPE_LSF;
 		if (!wcscmp(szMetaLSF,pFile->pszName)) pFile->dwType |= LS_TYPE_META;
@@ -179,7 +179,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 	SetLastError(ERROR_SUCCESS);
 	bIsDone = TRUE;
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_LOAD_QUIET)) Request_PrintErrorEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOAD),NULL,MB_ICONHAND,pszArchiveName);
 
@@ -197,7 +197,7 @@ Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_LOAD_QUIET)) Request_Pr
 }
 
 
-// «»»» Libère la mémoire utilisée par la liste des fichiers ««««««««««««»
+// Â«Â»Â»Â» LibÃ¨re la mÃ©moire utilisÃ©e par la liste des fichiers Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void lsv_Release(NODE *pRoot)
 {
@@ -216,13 +216,13 @@ void lsv_Release(NODE *pRoot)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Retrouve un fichier dans la liste «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve un fichier dans la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 LSFILE* lsv_FindFile(NODE *pRoot, WCHAR *pszName, WCHAR *pszExt)
 {
@@ -248,7 +248,7 @@ LSFILE* lsv_FindFile(NODE *pRoot, WCHAR *pszName, WCHAR *pszExt)
 }
 
 
-// «»»» Retrouve la structure XML des métadonnées «««««««««««««««««««««««»
+// Â«Â»Â»Â» Retrouve la structure XML des mÃ©tadonnÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 NODE* lsv_GetMetaXML(NODE *pRoot)
 {

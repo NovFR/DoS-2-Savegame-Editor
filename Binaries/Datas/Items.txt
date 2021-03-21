@@ -50,7 +50,9 @@ armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_LoneWolfMark
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SaheilaSignet
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet
 weapon_staff		WEAPON			|f|ARX_UNIQUE_Staff_Divine
-weapon_wand		WEAPON|WAND		|b|ARX_UNIQUE_Wand_
+weapon_mace		WEAPON			|f|WPN_FTJ_UNIQUE_BraccusTorch
+weapon_dagger		WEAPON			|f|WPN_FTJ_UNIQUE_GriffsKitchenKnife
+weapon_wand		WEAPON			|b|ARX_UNIQUE_Wand_
 item_aug		ITEM			|b|CON_Herb_Augmentor_
 item_mushroom		ITEM			|f|CON_Herb_Mushroom_A
 none			ITEM			|f|CONT_Backpack_A
@@ -151,6 +153,7 @@ armor_boots		ARMOR|BOOTS		|b|ARM_ |e|Legs
 armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves
 armor_gloves		ARMOR|GLOVES		|b|ARM_ |e|Gloves_Fin
 armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet
+armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet_Uncured
 armor_helmet		ARMOR|HELMET		|b|ARM_ |e|Helmet_Str
 armor_pants		ARMOR|LEGGINGS		|b|ARM_ |e|LowerBody
 armor_pants		ARMOR|LEGGINGS		|b|ARM_ |e|Pants_A
@@ -211,6 +214,26 @@ weapon_sword		WEAPON			|e|Sword
 weapon_sword		WEAPON			|e|Sword_2H
 weapon_wand		WEAPON			|e|Wand
 weapon_wand		WEAPON			|e|Wand_Poison
+
+armor_gloves		ARMOR|GLOVES		|b|ARM_SETS_ |e|Gloves
+armor_gloves		ARMOR|GLOVES		|b|ARM_SETS_ |e|Gloves_Low
+armor_gloves		ARMOR|GLOVES		|b|ARM_SETS_ |e|Gloves_Cursed
+armor_boots		ARMOR|BOOTS		|b|ARM_SETS_ |e|Boots
+armor_boots		ARMOR|BOOTS		|b|ARM_SETS_ |e|Boots_Low
+armor_boots		ARMOR|BOOTS		|b|ARM_SETS_ |e|Boots_Cursed
+armor_boots		ARMOR|BOOTS		|b|ARM_SETS_ |e|Boots_Mid
+armor_pants		ARMOR|LEGGINGS		|b|ARM_SETS_ |e|Pants
+armor_pants		ARMOR|LEGGINGS		|b|ARM_SETS_ |e|Legs
+armor_pants		ARMOR|LEGGINGS		|b|ARM_SETS_ |e|Legs_Low
+armor_pants		ARMOR|LEGGINGS		|b|ARM_SETS_ |e|Legs_Cursed
+armor_pants		ARMOR|LEGGINGS		|b|ARM_SETS_ |e|Legs_Mid
+armor_helmet		ARMOR|HELMET		|b|ARM_SETS_ |e|Helmet
+armor_helmet		ARMOR|HELMET		|b|ARM_SETS_ |e|Helmet_Low
+armor_helmet		ARMOR|HELMET		|b|ARM_SETS_ |e|Helmet_Cursed
+armor_body		ARMOR|CHEST		|b|ARM_SETS_ |e|Shirt
+armor_body		ARMOR|CHEST		|b|ARM_SETS_ |e|Armor
+armor_body		ARMOR|CHEST		|b|ARM_SETS_ |e|Armor_Low
+armor_body		ARMOR|CHEST		|b|ARM_SETS_ |e|Armor_Cursed
 
 armor_ring		ARMOR|RING		|f|Vanity_Ring_Armor
 container		ITEM			|b|Rendal_CONT_

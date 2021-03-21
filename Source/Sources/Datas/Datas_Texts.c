@@ -1,4 +1,4 @@
-﻿
+
 //<<>-<>>---------------------------------------------------------------------()
 /*
 	Textes fixes
@@ -22,6 +22,8 @@ WCHAR	szEditClass[]			= L"EDIT";
 WCHAR	szListBoxClass[]		= L"LISTBOX";
 WCHAR	szButtonClass[]			= L"BUTTON";
 WCHAR	szStaticClass[]			= L"STATIC";
+WCHAR	szThemeButton[]			= L"BUTTON";
+WCHAR	szThemeProgress[]		= L"PROGRESS";
 
 WCHAR	szRootPath[]			= L".";
 WCHAR	szParentPath[]			= L"..";
@@ -30,15 +32,16 @@ WCHAR	szLF[]				= L"\n";
 WCHAR	szZero[]			= L"0";
 WCHAR	szSpace[]			= L" ";
 WCHAR	szBlank[]			= L"";
-WCHAR	sSourcePoint			= L'◈';
-WCHAR	sActionPoint			= L'●';
+WCHAR	sSourcePoint			= L'S';
+WCHAR	sActionPoint			= L'A';
 WCHAR	szEdit[]			= L"...";
+WCHAR	szClassSpace[]			= L" - ";
+WCHAR	szGeneric[]			= L"Generic";
 
 WCHAR	szPlayerName[]			= L"%1 (%2) (%3)";
 WCHAR	szLevelFmt[]			= L"%u";
-WCHAR	szRaceFmt[]			= L"TEXT_CHR_%1_%2";
-WCHAR	szMale[]			= L"MALE";
-WCHAR	szFemale[]			= L"FEMALE";
+WCHAR	szRaceFmt[]			= L"TEXT_CHR_%1";
+WCHAR	szClassFmt[]			= L"TEXT_CLASS_%1";
 
 WCHAR	szPlus[]			= L"+";
 WCHAR	szEmpty[]			= L"";
@@ -79,6 +82,7 @@ WCHAR	szItemsDataPath[]		= L"Datas\\Items.txt";
 WCHAR	szBoostersDataPath[]		= L"Datas\\Boosters.txt";
 WCHAR	szRunesDataPath[]		= L"Datas\\Runes.txt";
 WCHAR	szTagsDataPath[]		= L"Datas\\Tags.txt";
+WCHAR	szSkillsDataPath[]		= L"Datas\\Skills.txt";
 WCHAR	szIconsPath[]			= L"Icons\\Items.icl";
 WCHAR	szSkillsIconsPath[]		= L"Icons\\Skills.icl";
 WCHAR	szRunesIconsPath[]		= L"Icons\\Runes.icl";
@@ -130,6 +134,10 @@ WCHAR	szXMLtype[]			= L"type";
 WCHAR	szXMLBoost[]			= L"Boost";
 WCHAR	szXMLObject[]			= L"Object";
 WCHAR	szXMLTarget[]			= L"Target";
+WCHAR	szXMLSkills[]			= L"Skills";
+WCHAR	szXMLTrue[]			= L"True";
+WCHAR	szXMLFalse[]			= L"False";
+
 WCHAR*	szCharactersPath[]		= { L"save",NULL, L"region",L"Characters", L"node",L"Characters", L"children",NULL, L"node",L"CharacterFactory", L"children",NULL, L"node",L"Characters", L"children",NULL, NULL };
 WCHAR*	szCharacterStatsPath[]		= { L"children",NULL, L"node",L"Stats", NULL };
 WCHAR*	szCharacterCustomDataPath[]	= { L"children",NULL, L"node",L"PlayerData", L"children",NULL, L"node",L"PlayerCustomData", NULL };
@@ -154,3 +162,6 @@ WCHAR*	szInfoGameModsPath[]		= { L"children",NULL, L"node",L"ModuleSettings", L"
 WCHAR*	szInfoGameVersionsPath[]	= { L"children",NULL, L"node",L"GameVersions", L"children",NULL };
 WCHAR*	szInfoGamePartyPath[]		= { L"children",NULL, L"node",L"PartyMetaData", L"children",NULL, NULL };
 WCHAR*	szInfoGameDatePath[]		= { L"children",NULL, L"node",L"SaveTime", NULL };
+
+WCHAR*	szSkillManagerPath[]		= { L"children",NULL, L"node",L"SkillManager", NULL };
+WCHAR*	szSkillManagerSkillsPath[]	= { L"children",NULL, L"node",L"SkillManager", L"children",NULL, NULL };

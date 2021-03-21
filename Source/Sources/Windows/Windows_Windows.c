@@ -1,15 +1,15 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Gestion des messages des fenêtres
+	Gestion des messages des fenÃªtres
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données							  	  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es							  	  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "About.h"
@@ -23,6 +23,7 @@
 #include "Divine.h"
 #include "GameEdit.h"
 #include "Utils.h"
+#include "Dialogs.h"
 
 extern APPLICATION		App;
 extern CUSTOMMENUTEMPLATE	MainMenu;
@@ -30,11 +31,11 @@ extern UINT			TextsAttr[];
 extern UINT			TextsPts[];
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Processus principal						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Processus principal						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -66,7 +67,7 @@ LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 }
 
 
-// «»»» Lecture des messages provenant de la fenêtre principale «««««««««»
+// Â«Â»Â»Â» Lecture des messages provenant de la fenÃªtre principale Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -75,10 +76,14 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 		#if _DEBUG
 		case WM_KEYDOWN:
 			if (wParam != VK_F1) break;
+			//Game_Tags();
 			//Game_Talents();
 			//Game_Bonus(hWnd,NULL,NULL);
-			Game_EditValue(hWnd,NULL,DATA_TYPE_BOOSTERS,NULL,NULL);
+			//Game_EditValue(hWnd,NULL,DATA_TYPE_BOOSTERS,NULL,NULL);
 			//Mods_Dialog();
+			//Game_EditXP(hWnd,NULL);
+			//Game_Stats(hWnd);
+			Game_Skills(hWnd);
 			break;
 		#endif
 
@@ -132,6 +137,13 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			Status_UpdateProgress(wParam,lParam);
 			break;
 
+		case WM_THEMECHANGED:
+			CloseThemeData(App.hThemeButton);
+			CloseThemeData(App.hThemeProgress);
+			App.hThemeButton = OpenThemeData(hWnd,szThemeButton);
+			App.hThemeProgress = OpenThemeData(hWnd,szThemeProgress);
+			break;
+
 		case WM_CLOSE:
 			if (App.hThread)
 				{
@@ -149,6 +161,8 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			ShowWindow(hWnd,SW_HIDE);
 			SetMenu(hWnd,NULL);
 			Menu_Release(App.hMenu,&MainMenu);
+			CloseThemeData(App.hThemeButton);
+			CloseThemeData(App.hThemeProgress);
 			App.hMenu = NULL;
 			PostQuitMessage(0);
 			break;
@@ -161,16 +175,18 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ WM_CREATE -- Création d'une nouvelle fenêtre			  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ WM_CREATE -- CrÃ©ation d'une nouvelle fenÃªtre			  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 LRESULT Window_Create(HWND hWnd)
 {
 	App.Font.hFont = GetStockObject(DEFAULT_GUI_FONT);
 	App.hWnd = hWnd;
+	App.hThemeButton = OpenThemeData(hWnd,szThemeButton);
+	App.hThemeProgress = OpenThemeData(hWnd,szThemeProgress);
 
 	if (!App.Font.hFont) goto Error_0;
 	if (!Font_GetInfo(hWnd,&App.Font)) goto Error_0;
@@ -178,7 +194,6 @@ LRESULT Window_Create(HWND hWnd)
 	if (!Game_CreateLayout()) goto Error_0;
 
 	Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
-	Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
 
 	LastFiles_LoadList();
 	return(0);
@@ -189,13 +204,13 @@ Error_0:Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_WINDOW_CREATE),NULL,MB_I
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ WM_DRAWITEM -- Affichage des différents éléments de la fenêtre	  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ WM_DRAWITEM -- Affichage des diffÃ©rents Ã©lÃ©ments de la fenÃªtre	  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-//--- Dimension des éléments ---
+//--- Dimension des Ã©lÃ©ments ---
 
 void Window_MeasureItems(HWND hWnd, UINT uCtlId, MEASUREITEMSTRUCT *pMeasure)
 {
@@ -220,7 +235,7 @@ void Window_MeasureItems(HWND hWnd, UINT uCtlId, MEASUREITEMSTRUCT *pMeasure)
 	return;
 }
 
-//--- Affichage des éléments ---
+//--- Affichage des Ã©lÃ©ments ---
 
 void Window_DrawItems(DRAWITEMSTRUCT *pDraw)
 {
@@ -265,11 +280,11 @@ void Window_DrawItems(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ WM_NOTIFY -- Messages des contrôles				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ WM_NOTIFY -- Messages des contrÃ´les				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 void Window_Notify(HWND hWnd, UINT idCtrl, NMHDR *pStruct)
 {
@@ -296,11 +311,11 @@ void Window_Notify(HWND hWnd, UINT idCtrl, NMHDR *pStruct)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ WM_COMMAND -- Déplacement de la souris				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ WM_COMMAND -- DÃ©placement de la souris				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 {
@@ -362,11 +377,8 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case IDM_INVNODES:
 					Game_InventoryMenu(NULL,IDM_INVNODES);
 					break;
-				case IDM_CONFIGCAPOVERRIDE:
-					App.Config.bCapOverride = Menu_GetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE);
-					if (App.Config.bCapOverride) App.Config.bCapOverride = FALSE;
-					else App.Config.bCapOverride = TRUE;
-					Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
+				case IDM_CONFIGMODIFY:
+					Config_Modify();
 					break;
 				case IDM_CONFIGSAVE:
 					Config_Save(FALSE,&App.Config);
@@ -379,15 +391,6 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_CONFIGLANGUAGE:
 					Config_SelectLanguage();
-					break;
-				case IDM_CONFIGTEMPLOCATION:
-					Config_SelectTempLocation();
-					break;
-				case IDM_CONFIGSAVELOCATION:
-					Config_SelectSaveLocation();
-					break;
-				case IDM_CONFIGRESETLOCATIONS:
-					Config_ResetLocations();
 					break;
 				case IDM_ABOUT:
 					About_Display(hWnd);
@@ -405,8 +408,30 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 				case CTLID_TALENTS:
 					Game_Talents();
 					break;
+				case CTLID_SKILLS:
+					Game_Skills(hWnd);
+					break;
+				case CTLID_STATS:
+					Game_Stats(hWnd);
+					break;
 				case CTLID_MENU:
 					Game_InventoryMenu(hwndCtrl,0);
+					break;
+				case CTLID_LIFE:
+					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitalityMax)) break;
+					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_LIFE),App.Game.pdcCurrent->pxaVitality,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitalityMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					break;
+				case CTLID_PHYSICAL:
+					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmorMax)) break;
+					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_PHYSICAL),App.Game.pdcCurrent->pxaArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					break;
+				case CTLID_MAGICAL:
+					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmorMax)) break;
+					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_MAGICAL),App.Game.pdcCurrent->pxaMagicArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					break;
+				case CTLID_EXPERIENCE:
+				case CTLID_NEXTLEVEL:
+					Game_EditXP(hWnd,App.Game.pdcCurrent->pxaExp);
 					break;
 				default:
 					if (idCtrl >= IDM_LASTFILES) LastFiles_Reload(idCtrl);
@@ -415,10 +440,7 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 						if (wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES]),NULL,10) > GAME_ATTRIBUTE_MAX && !App.Config.bCapOverride)
 							{
 							if (MessageBox(hWnd,Locale_GetText(TEXT_OVERRIDE_ATTRIBUTE),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES)
-								{
 								App.Config.bCapOverride = TRUE;
-								Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
-								}
 							}
 						if (Game_EditSetValue(hWnd,Locale_GetText(TextsAttr[idCtrl-CTLID_ATTRIBUTES]),App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES],GAME_ATTRIBUTE_MIN,App.Config.bCapOverride?GAME_ATTRIBUTE_OVERRIDE:GAME_ATTRIBUTE_MAX))
 							InvalidateRect(App.hWnd,NULL,FALSE);

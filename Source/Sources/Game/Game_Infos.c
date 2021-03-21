@@ -5,11 +5,11 @@
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Divine.h"
@@ -26,13 +26,13 @@ extern WCHAR*		ModsIgnore[];
 extern WCHAR*		ModsLarian[];
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Boîte de dialogue						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ BoÃ®te de dialogue						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Affichage «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Infos_Show()
 {
@@ -46,7 +46,7 @@ void Infos_Show()
 }
 
 
-// «»»» Processus de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Processus de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Infos_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -94,13 +94,13 @@ INT_PTR CALLBACK Infos_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Arborescence des métadonnées ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Arborescence des mÃ©tadonnÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Infos_Tree()
 {
@@ -113,7 +113,7 @@ void Infos_Tree()
 }
 
 
-// «»»» Chargement des métadonnées ««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Chargement des mÃ©tadonnÃ©es Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Infos_LoadMetaDatas(HWND hWnd)
 {
@@ -123,7 +123,7 @@ int Infos_LoadMetaDatas(HWND hWnd)
 	if (!App.Game.Save.pszSaveName) return(0);
 	if (App.Game.Save.nodeFiles.next) return(1);
 
-	//--- Vérifie si la sauvegarde a été modifiée ---
+	//--- VÃ©rifie si la sauvegarde a Ã©tÃ© modifiÃ©e ---
 
 	if (Divine_IsSaveGameChanged(hWnd,Locale_GetText(TEXT_MODIFIED_SGMETA),App.Config.uGame,App.Config.pszProfile,App.Game.Save.pszSaveName,App.Game.Save.pszCustomSavePath,&App.Game.Save.ftLastWrite))
 		return(0);
@@ -165,7 +165,7 @@ int Infos_LoadMetaDatas(HWND hWnd)
 }
 
 
-// «»»» Initialisations «««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Initialisations Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Infos_Initialise(HWND hDlg)
 {
@@ -184,7 +184,7 @@ int Infos_Initialise(HWND hDlg)
 	hImageList = ImageList_Create(48,48,ILC_COLOR32|ILC_MASK,INFOS_ICON_LAST,0);
 	if (!hImageList) goto Error;
 
-	//--- Chargement des icônes
+	//--- Chargement des icÃ´nes
 	for (i = 0; i != INFOS_ICON_LAST; i++) hInfosIcons[uInfosIconsIDS[i]] = App.hIcons[uInfosIconsAPP[i]];
 	for (i = 0; i != INFOS_ICON_LAST; i++) if (ImageList_ReplaceIcon(hImageList,-1,hInfosIcons[i]) == -1) goto Error;
 
@@ -210,7 +210,7 @@ int Infos_Initialise(HWND hDlg)
 		if (SendDlgItemMessage(hDlg,801,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Error;
 		}
 
-	//--- Paramètres
+	//--- ParamÃ¨tres
 	GetClientRect(GetDlgItem(hDlg,801),&rcItem);
 	lvTileView.cbSize = sizeof(LVTILEVIEWINFO);
 	lvTileView.dwMask = LVTVIM_TILESIZE|LVTVIM_COLUMNS;
@@ -232,7 +232,7 @@ Error:	if (hImageList) ImageList_Destroy(hImageList);
 }
 
 
-// «»»» Convertis les fichiers nécessaires et met à jour l'affichage ««««»
+// Â«Â»Â»Â» Convertis les fichiers nÃ©cessaires et met Ã  jour l'affichage Â«Â«Â«Â«Â»
 
 void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 {
@@ -257,14 +257,14 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 	if (!pMetaFile) goto Error;
 	if (!pMetaFile->nodeXMLRoot.next) goto Error;
 
-	//--- Réinitialisation ---
+	//--- RÃ©initialisation ---
 
 	SendDlgItemMessage(hDlg,801,LVM_DELETEALLITEMS,0,0);
 
 	pxnMeta = xml_GetNodeFromPathFirstChild((XML_NODE *)pMetaFile->nodeXMLRoot.next,szInfoMetaDataPath);
 	if (!pxnMeta) goto Error;
 
-	//--- Informations générales ---
+	//--- Informations gÃ©nÃ©rales ---
 
 	for (pszTemp = NULL, i = 0; uItems[i] != 0; i++, j++)
 		{
@@ -306,7 +306,7 @@ void Infos_PrepareAndUpdate(HWND hDlg, WCHAR *pszSaveName, NODE *pRoot)
 		if (SendDlgItemMessage(hDlg,801,LVM_SETTILEINFO,0,(LPARAM)&lvTileInfo) == -1) goto Error;
 		}
 
-	//--- Équipe ---
+	//--- Ã‰quipe ---
 
 	for (i = 0; i != 4; i++, j++)
 		{
@@ -364,7 +364,7 @@ Error:	if (pszTemp) HeapFree(App.hHeap,0,pszTemp);
 	return;
 }
 
-//--- Récupère les informations ---
+//--- RÃ©cupÃ¨re les informations ---
 
 WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 {
@@ -374,7 +374,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 
 	switch(uGroup)
 		{
-		//--- Informations générales
+		//--- Informations gÃ©nÃ©rales
 		case INFOS_GROUP_MISC:
 			switch(uID)
 				{
@@ -424,7 +424,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 								{
 								if (!uHMS[i]) continue;
 								if (uTotalLen) uTotalLen++;
-								swprintf(szBuffer,5,L"%u",uHMS[i]);
+								Misc_Printf(szBuffer,6,L"%u",uHMS[i]);
 								uTotalLen += wcslen(Locale_GetText(uHMSLocales[i]));
 								uTotalLen += wcslen(szSpace);
 								uTotalLen += wcslen(szBuffer);
@@ -438,7 +438,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 									{
 									if (!uHMS[i]) continue;
 									if (uTotalLen) wcscat(*pszTemp,szSpace);
-									swprintf(szBuffer,5,L"%u",uHMS[i]);
+									Misc_Printf(szBuffer,6,L"%u",uHMS[i]);
 									wcscat(*pszTemp,szBuffer);
 									wcscat(*pszTemp,szSpace);
 									wcscat(*pszTemp,Locale_GetText(uHMSLocales[i]));
@@ -475,7 +475,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 					wcscpy(*pszTemp,pszDate);
 					for (i = 0; i != 6; i++)
 						{
-						swprintf(szBuffer,4,i == 0?L"%04u":L"%02u",pszNumber[i]);
+						Misc_Printf(szBuffer,6,i == 0?L"%04u":L"%02u",pszNumber[i]);
 						pszDate = wcsstr(*pszTemp,pszPattern[i]);
 						if (!pszDate)
 							{
@@ -491,7 +491,7 @@ WCHAR* Infos_Get(UINT uGroup, UINT uID, WCHAR **pszTemp, XML_NODE *pRoot)
 				}
 			break;
 
-		//--- Composition de l'équipe
+		//--- Composition de l'Ã©quipe
 		case INFOS_GROUP_TEAM: {
 			int	i;
 
@@ -583,7 +583,7 @@ WCHAR* Infos_GetVersionString(WCHAR *pszVersion, WCHAR *pszExtra)
 }
 
 
-// «»»» Affichage ««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Infos_Draw(HWND hDlg, UINT uCtlId, DRAWITEMSTRUCT *pDraw, NODE *pRoot)
 {

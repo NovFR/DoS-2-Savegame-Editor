@@ -14,11 +14,11 @@
 #include "Lists.h"
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Définitions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DÃ©finitions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #define FILE_HEADER_CONFIG		0xED0000CF
 #define FILE_HEADER_LASTFILES		0xED00001F
@@ -62,12 +62,6 @@ enum {
 	APP_ICON_PROFILE,
 	APP_ICON_FOLDER,
 	APP_ICON_SAVEGAME,
-	APP_ICON_PORTRAIT_IFAN,
-	APP_ICON_PORTRAIT_LOHSE,
-	APP_ICON_PORTRAIT_REDPRINCE,
-	APP_ICON_PORTRAIT_SEBILLE,
-	APP_ICON_PORTRAIT_FANE,
-	APP_ICON_PORTRAIT_BEAST,
 	APP_ICON_INFO_EMPTY,
 	APP_ICON_INFO_SAVEGAME,
 	APP_ICON_INFO_VERSION,
@@ -78,15 +72,31 @@ enum {
 	APP_ICON_INFO_NOTCHARACTER,
 	APP_ICON_INFO_LARIAN,
 	APP_ICON_INFO_MOD,
+	APP_ICON_STAT_STR,
+	APP_ICON_STAT_DEX,
+	APP_ICON_STAT_INT,
+	APP_ICON_STAT_CON,
+	APP_ICON_STAT_MEM,
+	APP_ICON_STAT_PER,
+	APP_ICON_STAT_POINT,
+	APP_ICON_STAT_XP,
+	APP_ICON_STAT_NEXT,
+	APP_ICON_STAT_MAGICAL,
+	APP_ICON_STAT_PHYSICAL,
+	APP_ICON_STAT_LIFE,
+	APP_ICON_SOURCE_OFF,
+	APP_ICON_SOURCE_ON,
+	APP_ICON_ACTION_OFF,
+	APP_ICON_ACTION_ON,
 	APP_MAX_ICONS
 };
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Structure						  	  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Structure						  	  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 typedef struct APPICON {
 	UINT				id;
@@ -104,7 +114,7 @@ typedef struct SHORTCUT {
 typedef struct APPLICATION {
 	//--- Configuration
 	CONFIG				Config;
-	//--- Données diverses
+	//--- DonnÃ©es diverses
 	HINSTANCE			hInstance;
 	HANDLE				hHeap;
 	HWND				hWnd;
@@ -112,6 +122,8 @@ typedef struct APPLICATION {
 	HMENU				hMenu;
 	HACCEL				hShortcuts;
 	HANDLE				hThread;
+	HTHEME				hThemeButton;
+	HTHEME				hThemeProgress;
 	HICON				hIcons[APP_MAX_ICONS];
 	FONTINFO			Font;
 	WCHAR*				pszStatusText;
@@ -119,10 +131,10 @@ typedef struct APPLICATION {
 	CRITICAL_SECTION		CriticalSection;
 	XMLTREE				xmlTree;
 	NODE				nodeLastFiles;
-	//--- Données d'affichage
+	//--- DonnÃ©es d'affichage
 	UINT				uProgression;
 	DWORD				dwProgressionTime;
-	//--- Données du jeu
+	//--- DonnÃ©es du jeu
 	struct {
 		HINSTANCE		hIconsList;
 		HINSTANCE		hRunesIconsList;
@@ -134,12 +146,21 @@ typedef struct APPLICATION {
 			HWND		hwndList;
 			HWND		hwndAttrBtn[6];
 			HWND		hwndPointsBtn[4];
+			HWND		hwndLifeBtn;
+			HWND		hwndPhysicalBtn;
+			HWND		hwndMagicalBtn;
+			HWND		hwndExperienceBtn;
+			HWND		hwndNextLevelBtn;
 			HWND		hwndAbilitiesBtn;
 			HWND		hwndTagsBtn;
 			HWND		hwndTalentsBtn;
+			HWND		hwndSkillsBtn;
+			HWND		hwndInfosBtn;
 			HWND		hwndInventory;
 			HWND		hwndMenuBtn;
 			HWND		hwndInventoryName;
+			HBITMAP		hDecoTop;
+			HBITMAP		hDecoBottom;
 		} Layout;
 		struct {
 			WCHAR*		pszCustomSavePath;

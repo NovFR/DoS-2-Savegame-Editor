@@ -15,6 +15,7 @@
 #include "GameEdit.h"
 #include "Dialogs.h"
 #include "Texts.h"
+#include "Utils.h"
 
 extern APPLICATION	App;
 
@@ -40,7 +41,7 @@ void Game_Synchronize_Level(int iNewLevel, XML_ATTR *pxaLevel, XML_ATTR *pxaIsGe
 	iLevel = wcstol(pszLevel,NULL,10);
 	if (iLevel > iNewLevel) return;
 
-	wsprintf(szTemp,szLevelFmt,iNewLevel);
+	Misc_Printf(szTemp,4,szLevelFmt,iNewLevel);
 	pszLevel = HeapAlloc(App.hHeap,0,wcslen(szTemp)*sizeof(WCHAR)+sizeof(WCHAR));
 	if (pszLevel)
 		{

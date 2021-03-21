@@ -1,0 +1,295 @@
+#
+# SKILLS DEFINITIONS
+# Used by skill editor.
+# Loaded on demand (you just need to reopen the edit window to see changes)
+#
+
+#
+# [1] Skill ID
+#	Identifier of the skill.
+# [2] Source points
+#	Number of source points required to use the skill.
+# [3] Action points
+#	Number of action points required to use the skill.
+# [4] Icon
+#	Icon of the skill as defined in Icons\Skills.icl.
+#	Exemple: 32 indicates the icon "SI_0032".
+# [5] Memory slots
+#	Number of memory slots required.
+#	** NOT USED AT THIS TIME **
+# [6] School
+#	Can be one of the following:
+#		AIR
+#		DEATH
+#		EARTH
+#		FIRE
+#		HUNTING
+#		POLYMORPH
+#		ROGUES
+#		SOURCE
+#		SPECIAL
+#		SUMMONING
+#		WARFARE
+#		WATER
+# [7] Status
+#	Can be a one of the following:
+#		INNATE - Indicates an innate skill
+#		LOCKED - Skill can't be added ** IGNORED **
+#
+
+#- [1] ---------------------------------------- [2] --- [3] --- [4] --- [5] --- [6] ----------- [7] -------
+Cone_CorrosiveSpray				1	2	2	540	EARTH
+Cone_Flamebreath				0	1	0	313	SPECIAL		INNATE
+Cone_GroundSmash				0	2	1	364	WARFARE
+Cone_Shatter					0	4	1	390	WATER
+Cone_SilencingStare				0	2	1	392	DEATH
+Cone_SteamLance					2	2	2	330	WATER
+Dome_CircleOfProtection				1	1	0	382	SPECIAL		INNATE
+Jump_CloakAndDagger				0	1	1	112	ROGUES
+Jump_EnemyVoidGlide				0	1	0	106	SPECIAL		INNATE
+Jump_PhoenixDive				0	1	1	325	WARFARE
+Jump_TacticalRetreat				0	1	1	106	HUNTING
+MultiStrike_BlinkStrike				0	2	1	370	WARFARE
+MultiStrike_Vault				0	1	1	343	ROGUES
+ProjectileStrike_DazingBolt			0	3	1	448	AIR
+ProjectileStrike_HailAttack			3	4	3	172	WATER
+ProjectileStrike_HailStrike			0	3	1	353	WATER
+ProjectileStrike_MeteorShower			3	4	3	578	FIRE
+ProjectileStrike_RainOfArrows			3	3	3	581	HUNTING
+Projectile_AcidSpores				2	3	2	54	EARTH
+Projectile_ArrowSpray				1	3	2	315	HUNTING
+Projectile_BallisticShot			0	2	1	483	HUNTING
+Projectile_BouncingShield			0	2	1	472	WARFARE
+Projectile_ChainHeal				0	2	1	369	WATER
+Projectile_ChainLightning			1	3	2	12	AIR
+Projectile_Chloroform				0	1	1	318	ROGUES
+Projectile_DeployMassTraps			1	3	2	509	FIRE
+Projectile_DimensionalBolt			0	2	1	405	SUMMONING
+Projectile_DustBlast				1	3	2	555	EARTH
+Projectile_FanOfKnives				1	3	2	488	ROGUES
+Projectile_Fireball				0	2	1	355	FIRE
+Projectile_FlamingDaggers			0	2	1	362	FIRE
+Projectile_IceFan				0	3	1	452	WATER
+Projectile_InfectiousFlame			2	3	2	579	FIRE
+Projectile_LaunchBomber				0	2	1	458	ROGUES
+Projectile_LaunchExplosiveTrap			0	1	1	510	FIRE
+Projectile_LaunchOilBlob			0	2	1	484	POLYMORPH
+Projectile_LaunchPoisonSlug			0	2	1	67	SUMMONING
+Projectile_LightningBolt			0	2	1	357	AIR
+Projectile_Mark					0	1	1	350	HUNTING
+Projectile_Multishot				0	3	1	95	HUNTING
+Projectile_PiercingShot				0	2	1	317	HUNTING
+Projectile_PinDown				0	3	1	379	HUNTING
+Projectile_PoisonDartStart			0	2	1	64	EARTH
+Projectile_PyroclasticEruption			3	3	3	455	EARTH
+Projectile_PyroclasticRock			0	2	1	312	EARTH
+Projectile_Ricochet				0	2	1	100	HUNTING
+Projectile_SkyShot				0	2	1	482	HUNTING
+Projectile_Snipe				0	3	1	351	HUNTING
+Projectile_Superconductor			0	3	1	447	AIR
+Projectile_ThrowDust				0	2	1	542	EARTH
+Projectile_ThrowingKnife			0	2	1	342	ROGUES
+Quake_Earthquake				0	3	1	55	EARTH
+Rain_Blood					0	2	1	346	DEATH
+Rain_Oil					0	1	1	359	EARTH
+Rain_Water					0	1	1	180	WATER
+Rush_BatteringRam				0	2	1	324	WARFARE
+Shout_Adrenaline				0	0	1	110	ROGUES
+Shout_Apotheosis				3	2	3	544	POLYMORPH
+Shout_BarbedCoat				0	0	1	148	WARFARE
+Shout_BlindingRadiance				0	2	1	335	AIR
+Shout_BoneCage					0	1	1	456	DEATH
+Shout_BreakTheShackles				1	0	0	429	SPECIAL		INNATE
+Shout_BreathingBubble				0	1	1	526	AIR
+Shout_BullHorns					0	0	1	402	POLYMORPH
+Shout_CancelPolymorphism			0	1	0	561	POLYMORPH	INNATE
+Shout_CauseFear					0	2	1	135	DEATH
+Shout_ChameleonSkin				0	1	1	314	POLYMORPH
+Shout_CloseTheDoor				1	2	2	486	SUMMONING
+Shout_CON00_ActivateSpores			0	1	1	1017	EARTH
+Shout_Contamination				0	1	1	336	EARTH
+Shout_Cryotherapy				0	1	1	531	WATER
+Shout_Deafen					0	2	1	577	SPECIAL
+Shout_DeflectiveBarrier				0	2	1	473	WARFARE
+Shout_DemonicTutelage				0	1	0	552	SUMMONING	INNATE
+Shout_ElectricFence				2	2	2	334	AIR
+Shout_ElementalTortoise				0	0	1	153	WARFARE
+Shout_EnemyOverthrow				0	2	0	165	SPECIAL		INNATE
+Shout_EtherealSoles				0	1	1	322	ROGUES
+Shout_EvasiveAura				1	2	2	545	AIR
+Shout_FavourableWind				0	1	1	333	AIR
+Shout_FireBrand					0	1	1	438	FIRE
+Shout_FlamingSkin				1	1	2	496	POLYMORPH
+Shout_FlamingTongues				0	1	1	439	FIRE
+Shout_FleshSacrifice				0	0	0	338	SPECIAL		INNATE
+Shout_FrostAura					0	1	1	449	WATER
+Shout_GlobalCooling				0	1	1	365	WATER
+Shout_GuardianAngel				0	2	1	394	WARFARE
+Shout_HealingTears				0	1	1	535	WATER
+Shout_IceBreaker				0	1	1	538	WATER
+Shout_IceSkin					1	1	2	534	POLYMORPH
+Shout_Ignition					0	1	1	319	FIRE
+Shout_InnerDemon				1	1	2	560	SUMMONING
+Shout_InspireStart				0	1	0	158	SPECIAL		INNATE
+Shout_InvisibilitySelfRogue			0	2	2	125	ROGUES
+Shout_Invulnerability				1	6	3	137	DEATH
+Shout_JellyfishSkin				1	1	2	525	POLYMORPH
+Shout_MassBreathingBubbles			1	1	2	527	AIR
+Shout_MassCleanseWounds				1	2	2	536	WATER
+Shout_MassCorpseExplosion			1	1	2	499	FIRE
+Shout_MassCryotherapy				1	2	2	530	WATER
+Shout_MassOilyCarapace				1	2	2	559	EARTH
+Shout_MedusaHead				0	2	1	502	POLYMORPH
+Shout_MendMetal					0	1	1	459	EARTH
+Shout_NecromancerTotems				3	2	3	453	DEATH
+Shout_NullResistanceStart			0	2	1	138	DEATH
+Shout_OilyCarapace				0	1	1	558	EARTH
+Shout_PetrifyingVisage				0	2	0	518	POLYMORPH	INNATE
+Shout_PlayDead					0	0	0	501	SPECIAL		INNATE
+Shout_PoisonWave				0	2	1	464	EARTH
+Shout_PoisonousSkin				1	1	2	553	POLYMORPH
+Shout_PolymorphIntoDwarf			0	1	0	408	POLYMORPH	INNATE
+Shout_PolymorphIntoElf				0	1	0	409	POLYMORPH	INNATE
+Shout_PolymorphIntoHuman			0	1	0	406	POLYMORPH	INNATE
+Shout_PolymorphIntoLizard			0	1	0	407	POLYMORPH	INNATE
+Shout_ReactiveArmor				0	2	1	478	EARTH
+Shout_RecoverArmour				0	2	0	375	SPECIAL		INNATE
+Shout_ShedSkin					1	1	2	398	POLYMORPH
+Shout_Shout_Toggle_Sprint			0	0	0	1016	SPECIAL		INNATE
+Shout_SiphonPoison				0	1	1	457	EARTH
+Shout_SmokeCover				0	1	1	548	AIR
+Shout_SparkingSwings				0	1	1	514	FIRE
+Shout_SpiderLegs				0	0	1	515	POLYMORPH
+Shout_SpiritForm_Lucian				0	2	0	1015	SOURCE		INNATE
+Shout_SpiritVision				0	1	0	1015	SOURCE		INNATE
+Shout_SteelSkin					0	2	1	401	POLYMORPH
+Shout_Supernova					0	3	1	440	FIRE
+Shout_Taunt					0	2	1	166	WARFARE
+Shout_ThickOfTheFight				1	2	2	395	WARFARE
+Shout_VacuumAura				1	2	2	522	AIR
+Shout_VampiricHungerAura			1	1	2	533	WATER
+Shout_VenomCoating				0	1	1	556	EARTH
+Shout_VenomousAura				1	2	2	557	EARTH
+Shout_Whirlwind					0	2	1	323	WARFARE
+Shout_Wings					0	1	1	397	POLYMORPH
+Storm_Blood					3	4	3	507	DEATH
+Storm_Ethereal					3	4	3	466	SUMMONING
+Storm_Lightning					3	4	3	582	AIR
+Summon_ArtilleryPlant				1	2	2	352	EARTH
+Summon_BonePile					0	2	1	476	DEATH
+Summon_BloodHeart				0	2	0	356	SPECIAL		INNATE
+Summon_Cat					0	2	1	383	SUMMONING
+Summon_Condor					0	2	1	524	SUMMONING
+Summon_FireSlug					1	1	2	460	FIRE
+Summon_Incarnate				0	2	1	417	SUMMONING
+Summon_PlanarGateway				2	0	2	467	SUMMONING
+Summon_TotemFromSurface				0	2	1	414	SUMMONING
+Target_AcidInfusion				2	1	2	495	SUMMONING
+Target_Apportation				0	1	1	461	AIR
+Target_ArcaneStitch				1	3	2	465	WATER
+Target_BanishSummon				0	2	1	126	SUMMONING
+Target_BlackShroud				1	1	2	454	DEATH
+Target_Bless					1	1	1	368	SOURCE
+Target_BlessedSmokeCloud			2	1	2	547	AIR
+Target_BloatedCorpse				0	1	1	468	DEATH
+Target_BloodBubble				0	1	1	345	DEATH
+Target_BurnMyEyes				0	1	1	354	FIRE
+Target_Cannibalize				0	1	1	337	SUMMONING
+Target_Challenge				0	0	1	471	WARFARE
+Target_Charm					0	3	1	583	SUMMONING
+Target_ChickenTouch				0	2	1	399	POLYMORPH
+Target_CleanseWounds				0	2	1	537	WATER
+Target_Condense					0	1	1	360	EARTH
+Target_CorpseExplosion				0	1	1	498	FIRE
+Target_CorrosiveTouch				0	1	1	539	EARTH
+Target_CorruptedBlade				0	3	1	469	ROGUES
+Target_CripplingBlow				0	2	1	149	WARFARE
+Target_CryogenicStasis				0	2	1	393	WATER
+Target_Curse					0	1	1	366	SOURCE
+Target_CursedBloodInfusion			2	1	2	2000	SUMMONING
+Target_CursedElectricInfusion			2	1	2	529	SUMMONING
+Target_CursedOilInfusion			2	1	2	2001	SUMMONING
+Target_DaggersDrawn				2	4	2	114	ROGUES
+Target_DeathWish				0	2	1	445	DEATH
+Target_DeathsDoor				0	3	1	554	DEATH
+Target_DecayingTouch				0	2	1	347	DEATH
+Target_DemonicBargain				2	1	2	550	POLYMORPH
+Target_DemonicStare				1	2	0	400	SPECIAL		INNATE
+Target_DualWieldingAttack			0	2	0	603	SPECIAL		LOCKED
+Target_ElectricInfusion				0	1	1	420	SUMMONING
+Target_ElementalArrowheads			0	1	1	485	HUNTING
+Target_Enrage					0	2	1	340	WARFARE
+Target_Equalize					0	2	1	549	POLYMORPH
+Target_EvasiveManeuver				0	1	1	546	AIR
+Target_Farsight					1	1	2	505	HUNTING
+Target_Fatality					3	2	3	580	ROGUES
+Target_FireInfusion				0	1	1	424	SUMMONING
+Target_FireWhip					0	3	1	436	FIRE
+Target_Fireblood				0	1	1	361	FIRE
+Target_FirstAid					0	1	1	93	HUNTING
+Target_FlamingCrescendo				0	1	1	450	FIRE
+Target_Flurry					2	4	2	513	WARFARE
+Target_Fortify					0	1	1	358	EARTH
+Target_FrostyShell				0	1	1	326	WATER
+Target_GagOrder					0	2	1	506	ROGUES
+Target_GraspOfTheStarved			2	2	2	446	DEATH
+Target_Harmony					0	2	1	413	SUMMONING
+Target_Haste					0	1	1	79	FIRE
+Target_HeavyAttack				0	3	0	376	SPECIAL		LOCKED
+Target_IceInfusion				2	1	2	508	SUMMONING
+Target_Infect					0	3	1	348	DEATH
+Target_InvisibilityTarget			1	2	1	18	AIR
+Target_Item_ReplenishSource			0	1	0	586	SOURCE		INNATE
+Target_KneeBreaker				0	2	1	396	ROGUES
+Target_MaddeningSong				1	1	0	433	SPECIAL		INNATE
+Target_MassSabotage				1	2	2	511	FIRE
+Target_MasterOfSparks				1	1	2	497	FIRE
+Target_MosquitoSwarm				0	2	1	344	DEATH
+Target_NecrofireInfusion			2	1	2	500	SUMMONING
+Target_OilInfusion				0	1	1	427	SUMMONING
+Target_Overpower				3	2	3	339	WARFARE
+Target_PetrifyingTouch				0	1	0	332	SPECIAL		INNATE
+Target_PoisonInfusion				0	1	1	421	SUMMONING
+Target_PowerInfusion				0	1	1	415	SUMMONING
+Target_PressureSpike				0	1	1	462	AIR
+Target_RangedInfusion				0	1	1	416	SUMMONING
+Target_ReactionShot				0	2	1	481	HUNTING
+Target_Restoration				0	1	1	184	WATER
+Target_RockSpikes				0	2	1	327	EARTH
+Target_Sabotage					0	1	1	512	FIRE
+Target_SerratedEdge				0	2	1	320	ROGUES
+Target_ShacklesOfPain				0	1	1	349	DEATH
+Target_ShadowInfusion				0	1	1	475	SUMMONING
+Target_ShockingTouch				0	2	1	23	AIR
+Target_SingleHandedAttack			0	1	0	377	SPECIAL		LOCKED
+Target_Silence					0	2	1	140	SPECIAL
+Target_SleepingArms				0	2	1	380	ROGUES
+Target_SoulMate					0	1	1	470	SUMMONING
+Target_SourceDisruption				0	1	0	367	SOURCE		INNATE
+Target_SourceVampirism				0	1	0	367	SOURCE		INNATE
+Target_SpontaneousCombustion			0	2	1	363	FIRE
+Target_Squall					1	2	0	434	SPECIAL		INNATE
+Target_StripResistance				0	2	1	516	POLYMORPH
+Target_Supercharge				0	1	1	412	SUMMONING
+Target_TentacleLash				0	2	1	403	POLYMORPH
+Target_Terrify					0	2	0	551	SUMMONING	INNATE
+Target_TerrifyingCruelty			0	3	1	487	ROGUES
+Target_TimeWarp					1	2	0	435	SPECIAL		INNATE
+Target_UnlockMagic				0	1	0	108	SPECIAL		INNATE
+Target_VacuumTouch				0	1	1	528	AIR
+Target_VampiricHunger				0	1	1	532	WATER
+Target_Vaporize					0	1	1	1003	AIR
+Target_WarpInfusion				0	1	1	474	SUMMONING
+Target_WaterInfusion				0	1	1	423	SUMMONING
+Target_Windwalker				0	1	1	310	AIR
+Target_WinterBlast				0	2	1	331	WATER
+Target_WormTremor				0	3	1	479	EARTH
+Teleportation_ForcePush				0	2	1	308	SPECIAL
+Teleportation_FreeFall				0	2	1	309	AIR
+Teleportation_LastRites				0	3	1	391	DEATH
+Teleportation_Netherswap			0	1	1	20	AIR
+Teleportation_ResurrectScroll			0	6	0	139	DEATH		INNATE
+Teleportation_SwapGround			0	1	1	564	POLYMORPH
+Tornado_Air					0	2	1	27	AIR
+Wall_LivingWall					0	2	1	477	EARTH
+Zone_LaserRay					0	3	1	437	FIRE

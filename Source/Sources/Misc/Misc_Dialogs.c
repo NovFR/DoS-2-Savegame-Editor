@@ -1,15 +1,15 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Routines des boîtes de dialogue
+	Routines des boÃ®tes de dialogue
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "Dialogs.h"
@@ -18,13 +18,13 @@
 extern APPLICATION		App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Affichage d'une boîte de dialogue				  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Affichage d'une boÃ®te de dialogue				  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Ouverture ««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ouverture Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Dialog_Open(DIALOG *pDialog)
 {
@@ -41,7 +41,7 @@ int Dialog_Open(DIALOG *pDialog)
 }
 
 
-// «»»» Messages ««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Messages Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -110,6 +110,11 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 							EndDialog(hDlg,IDCANCEL);
 							return(TRUE);
 						}
+					if (pDialog->fnClick)
+						{
+						pDialog->fnClick(hDlg,LOWORD(wParam),pDialog);
+						return(TRUE);
+						}
 					break;
 				}
 			break;
@@ -123,13 +128,13 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions d'affichage						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions d'affichage						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Affichage d'un bouton composé d'un texte ««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage d'un bouton composÃ© d'un texte Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_DrawTextButton(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 {
@@ -142,115 +147,126 @@ void Dialog_DrawTextButton(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 
 	CopyRect(&rcDrawArea,&pDraw->rcItem);
 
-	uState = DFCS_ADJUSTRECT;
-	if (pDraw->itemState&ODS_DISABLED) uState = DFCS_INACTIVE;
-	if (pDraw->itemState&ODS_GRAYED) uState = DFCS_INACTIVE;
-	if (pDraw->itemState&ODS_SELECTED) uState = DFCS_PUSHED;
-	DrawFrameControl(pDraw->hDC,&rcDrawArea,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+	if (App.hThemeButton)
+		{
+		if (pDraw->itemState&ODS_DISABLED) uState = PBS_DISABLED;
+		else if (pDraw->itemState&ODS_SELECTED) uState = PBS_PRESSED;
+		else if (pDraw->itemState&ODS_HOTLIGHT) uState = PBS_HOT;
+		else if (pDraw->itemState&ODS_FOCUS) uState = PBS_DEFAULTED;
+		else uState = PBS_NORMAL;
+		DrawThemeBackground(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,NULL);
+		GetThemeBackgroundContentRect(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,&rcDrawArea);
+		DrawThemeText(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,pszText,-1,DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_END_ELLIPSIS,0,&rcDrawArea);
+		}
+	else
+		{
+		uState = DFCS_ADJUSTRECT;
+		if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
+		if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
+		DrawFrameControl(pDraw->hDC,&rcDrawArea,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
 
-	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
-	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
-	GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
-	X = rcDrawArea.left+(rcDrawArea.right-rcDrawArea.left-Size.cx)/2;
-	Y = rcDrawArea.top+(rcDrawArea.bottom-rcDrawArea.top-Size.cy)/2;
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,X,Y,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
-	SetBkMode(pDraw->hDC,iBkMode);
-	SetTextColor(pDraw->hDC,crText);
+		crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
+		iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+		GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+		X = rcDrawArea.left+(rcDrawArea.right-rcDrawArea.left-Size.cx)/2;
+		Y = rcDrawArea.top+(rcDrawArea.bottom-rcDrawArea.top-Size.cy)/2;
+		DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,X,Y,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+		SetBkMode(pDraw->hDC,iBkMode);
+		SetTextColor(pDraw->hDC,crText);
+		}
 
 	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDrawArea);
 	return;
 }
 
 
-
-// «»»» Affichage d'un bouton composé d'une flèche ««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage d'un bouton composÃ© d'une flÃ¨che Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_DrawArrowButton(UINT uScroll, DRAWITEMSTRUCT *pDraw)
 {
-	HDC		hDC;
-	UINT		uState;
+	HPEN		hPen;
 	RECT		rcDraw;
+	UINT		uState;
+	int		iColor;
 
 	CopyRect(&rcDraw,&pDraw->rcItem);
 
-	uState = DFCS_BUTTONPUSH|DFCS_ADJUSTRECT;
-	if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
-	if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
-	DrawFrameControl(pDraw->hDC,&rcDraw,DFC_BUTTON,uState);
-
-	hDC = CreateCompatibleDC(pDraw->hDC);
-	if (hDC)
+	if (App.hThemeButton)
 		{
-		HBITMAP		hBmp,hDefBmp;
-		HPEN		hPen,hDefPen;
-		HBRUSH		hDefBrush;
-		RECT		rcIcon;
-		POINT		Points[4];
-		int		iColor;
+		if (pDraw->itemState&ODS_DISABLED) uState = PBS_DISABLED;
+		else if (pDraw->itemState&ODS_SELECTED) uState = PBS_PRESSED;
+		else if (pDraw->itemState&ODS_HOTLIGHT) uState = PBS_HOT;
+		else if (pDraw->itemState&ODS_FOCUS) uState = PBS_DEFAULTED;
+		else uState = PBS_NORMAL;
+		DrawThemeBackground(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,NULL);
+		GetThemeBackgroundContentRect(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,&rcDraw);
+		}
+	else
+		{
+		uState = DFCS_BUTTONPUSH|DFCS_ADJUSTRECT;
+		if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
+		if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
+		DrawFrameControl(pDraw->hDC,&rcDraw,DFC_BUTTON,uState);
+		}
 
-		iColor = (pDraw->itemState&ODS_DISABLED)?COLOR_GRAYTEXT:COLOR_BTNTEXT;
-		hBmp = CreateCompatibleBitmap(pDraw->hDC,16,16);
-		if (hBmp)
+	iColor = (pDraw->itemState&ODS_DISABLED)?COLOR_GRAYTEXT:COLOR_BTNTEXT;
+	hPen = CreatePen(PS_SOLID,1,GetSysColor(iColor));
+	if (hPen)
+		{
+		HPEN		hDefPen;
+		HBRUSH		hDefBrush;
+		POINT		ptPoly[3];
+		int		X,Y,W,H,S;
+
+		W = rcDraw.right-rcDraw.left;
+		H = rcDraw.bottom-rcDraw.top;
+		X = rcDraw.left+W/2;
+		Y = rcDraw.top+H/2;
+		S = 4;
+
+		hDefPen = SelectObject(pDraw->hDC,hPen);
+		hDefBrush = SelectObject(pDraw->hDC,GetSysColorBrush(iColor));
+
+		switch(uScroll)
 			{
-			hDefBmp = SelectObject(hDC,hBmp);
-			hPen = CreatePen(PS_SOLID,1,GetSysColor(iColor));
-			if (hPen)
-				{
-				rcIcon.left = 0;
-				rcIcon.top = 0;
-				rcIcon.right = 16;
-				rcIcon.bottom = 16;
-				FillRect(hDC,&rcIcon,GetSysColorBrush(COLOR_BTNFACE));
-				hDefPen = SelectObject(hDC,hPen);
-				hDefBrush = SelectObject(hDC,GetSysColorBrush(iColor));
-				switch(uScroll)
-					{
-					case DFCS_SCROLLRIGHT:
-						Points[0].x = 10;
-						Points[0].y = 7;
-						Points[1].x = 6;
-						Points[1].y = 11;
-						Points[2].x = 6;
-						Points[2].y = 3;
-						break;
-					case DFCS_SCROLLDOWN:
-						Points[0].x = 11;
-						Points[0].y = 5;
-						Points[1].x = 7;
-						Points[1].y = 9;
-						Points[2].x = 3;
-						Points[2].y = 5;
-						break;
-					case DFCS_SCROLLLEFT:
-						Points[0].x = 5;
-						Points[0].y = 7;
-						Points[1].x = 9;
-						Points[1].y = 3;
-						Points[2].x = 9;
-						Points[2].y = 11;
-						break;
-					case DFCS_SCROLLUP:
-						Points[0].x = 7;
-						Points[0].y = 5;
-						Points[1].x = 11;
-						Points[1].y = 9;
-						Points[2].x = 3;
-						Points[2].y = 9;
-						break;
-					}
-				Points[3].x = Points[0].x;
-				Points[3].y = Points[0].y;
-				Polyline(hDC,Points,4);
-				FloodFill(hDC,7,7,GetSysColor(iColor));
-				SelectObject(hDC,hDefBrush);
-				SelectObject(hDC,hDefPen);
-				DeleteObject(hPen);
-				}
-			BitBlt(pDraw->hDC,rcDraw.left+(rcDraw.right-rcDraw.left-16)/2,rcDraw.top+(rcDraw.bottom-rcDraw.top-16)/2,16,16,hDC,0,0,SRCCOPY);
-			SelectObject(hDC,hDefBmp);
-			DeleteObject(hBmp);
+			case DFCS_SCROLLUP:
+				ptPoly[0].x = X;
+				ptPoly[0].y = Y-S;
+				ptPoly[1].x = X+S;
+				ptPoly[1].y = Y+S;
+				ptPoly[2].x = X-S;
+				ptPoly[2].y = Y+S;
+				break;
+			case DFCS_SCROLLDOWN:
+				ptPoly[0].x = X;
+				ptPoly[0].y = Y+S;
+				ptPoly[1].x = X+S;
+				ptPoly[1].y = Y-S;
+				ptPoly[2].x = X-S;
+				ptPoly[2].y = Y-S;
+				break;
+			case DFCS_SCROLLRIGHT:
+				ptPoly[0].x = X+S;
+				ptPoly[0].y = Y;
+				ptPoly[1].x = X-S;
+				ptPoly[1].y = Y-S;
+				ptPoly[2].x = X-S;
+				ptPoly[2].y = X+S;
+				break;
+			case DFCS_SCROLLLEFT:
+				ptPoly[0].x = X-S;
+				ptPoly[0].y = Y;
+				ptPoly[1].x = X+S;
+				ptPoly[1].y = Y-S;
+				ptPoly[2].x = X+S;
+				ptPoly[2].y = Y+S;
+				break;
 			}
-		DeleteDC(hDC);
+		Polygon(pDraw->hDC,ptPoly,3);
+
+		SelectObject(pDraw->hDC,hDefPen);
+		SelectObject(pDraw->hDC,hDefBrush);
+		DeleteObject(hPen);
 		}
 
 	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDraw);
@@ -258,7 +274,7 @@ void Dialog_DrawArrowButton(UINT uScroll, DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage d'un bouton composé uniquement d'une icône ««««««««««««»
+// Â«Â»Â»Â» Affichage d'un bouton composÃ© uniquement d'une icÃ´ne Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)
 {
@@ -268,22 +284,36 @@ void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)
 
 	CopyRect(&rcDrawArea,&pDraw->rcItem);
 
-	uState = DFCS_ADJUSTRECT;
-	if (pDraw->itemState&ODS_DISABLED) uState = DFCS_INACTIVE;
-	if (pDraw->itemState&ODS_GRAYED) uState = DFCS_INACTIVE;
-	if (pDraw->itemState&ODS_SELECTED) uState = DFCS_PUSHED;
-	DrawFrameControl(pDraw->hDC,&pDraw->rcItem,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+	if (App.hThemeButton)
+		{
+		if (pDraw->itemState&ODS_DISABLED) uState = PBS_DISABLED;
+		else if (pDraw->itemState&ODS_SELECTED) uState = PBS_PRESSED;
+		else if (pDraw->itemState&ODS_HOTLIGHT) uState = PBS_HOT;
+		else if (pDraw->itemState&ODS_FOCUS) uState = PBS_DEFAULTED;
+		else uState = PBS_NORMAL;
+		DrawThemeBackground(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,NULL);
+		GetThemeBackgroundContentRect(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,&rcDrawArea);
+		uState = uState == PBS_DISABLED?DSS_DISABLED:0;
+		}
+	else
+		{
+		uState = DFCS_ADJUSTRECT;
+		if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
+		if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
+		DrawFrameControl(pDraw->hDC,&rcDrawArea,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+		uState = uState&DFCS_INACTIVE?DSS_DISABLED:0;
+		}
 
-	X = rcDrawArea.left+(pDraw->rcItem.right-pDraw->rcItem.left-16)/2;
-	Y = rcDrawArea.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-16)/2;
-	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)App.hIcons[uIconId],0,X,Y,16,16,DST_ICON|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+	X = rcDrawArea.left+(rcDrawArea.right-rcDrawArea.left-16)/2;
+	Y = rcDrawArea.top+(rcDrawArea.bottom-rcDrawArea.top-16)/2;
+	DrawState(pDraw->hDC,NULL,NULL,(LPARAM)App.hIcons[uIconId],0,X,Y,16,16,DST_ICON|uState);
 
 	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDrawArea);
 	return;
 }
 
 
-// «»»» Affichage d'une étiquette «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage d'une Ã©tiquette Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_DrawLabel(WCHAR *pszText, DRAWITEMSTRUCT *pDraw, UINT uFormat)
 {
@@ -299,9 +329,9 @@ void Dialog_DrawLabel(WCHAR *pszText, DRAWITEMSTRUCT *pDraw, UINT uFormat)
 }
 
 
-// «»»» Affichage de l'icône "information" ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage de l'icÃ´ne "information" Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT grfFlags)
+void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT uFlags)
 {
 	RECT		rcText;
 	COLORREF	crText;
@@ -310,7 +340,7 @@ void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT grfFlags)
 	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
 	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_WINDOW));
-	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_SUNKEN,grfFlags);
+	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_SUNKEN,uFlags);
 	DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+12,LoadImage(NULL,MAKEINTRESOURCE(IDI_INFORMATION),IMAGE_ICON,32,32,LR_DEFAULTCOLOR|LR_SHARED),32,32,0,NULL,DI_NORMAL);
 	CopyRect(&rcText,&pDraw->rcItem);
 	rcText.left += 56;
@@ -324,13 +354,13 @@ void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT grfFlags)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Type d'affichage des listes					  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Type d'affichage des listes					  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Initialise les types d'affichage ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Initialise les types d'affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Dialog_ViewComboInit(HWND hDlg, UINT uCtlID, UINT uCurrent, UINT uNumViews, ...)
 {
@@ -358,25 +388,25 @@ int Dialog_ViewComboInit(HWND hDlg, UINT uCtlID, UINT uCurrent, UINT uNumViews, 
 }
 
 
-// «»»» Change l'affichage de la liste ««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Change l'affichage de la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-void Dialog_ViewComboChanged(HWND hDlg, UINT uCtlID, UINT uListID, UINT *uValue)
+int Dialog_ViewComboChanged(HWND hDlg, UINT uCtlID, UINT uListID, UINT *uValue)
 {
 	UINT	uViewType;
 	LRESULT	lResult;
 
 	lResult = SendDlgItemMessage(hDlg,uCtlID,CB_GETCURSEL,0,0);
-	if (lResult == CB_ERR) return;
+	if (lResult == CB_ERR) return(0);
 	lResult = SendDlgItemMessage(hDlg,uCtlID,CB_GETITEMDATA,(WPARAM)lResult,0);
-	if (lResult == CB_ERR) return;
+	if (lResult == CB_ERR) return(0);
 	uViewType = (UINT)lResult;
-	SendDlgItemMessage(hDlg,uListID,LVM_SETVIEW,(WPARAM)uViewType,(LPARAM)0);
+	if (uListID) SendDlgItemMessage(hDlg,uListID,LVM_SETVIEW,(WPARAM)uViewType,(LPARAM)0);
 	*uValue = uViewType;
-	return;
+	return(1);
 }
 
 
-// «»»» Calcul la hauteur de la COMBOBOX ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Calcul la hauteur de la COMBOBOX Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Dialog_ViewComboMeasureItem(UINT uCtlID, MEASUREITEMSTRUCT *pMeasure)
 {
@@ -388,7 +418,7 @@ int Dialog_ViewComboMeasureItem(UINT uCtlID, MEASUREITEMSTRUCT *pMeasure)
 }
 
 
-// «»»» Dessine un type d'affichage «««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Dessine un type d'affichage Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_ViewComboDrawItem(DRAWITEMSTRUCT *pDraw)
 {
@@ -420,7 +450,7 @@ void Dialog_ViewComboDrawItem(DRAWITEMSTRUCT *pDraw)
 		int		iBkMode;
 
 		hFont = SelectObject(pDraw->hDC,App.Font.hFont);
-		crText = SetTextColor(pDraw->hDC,GetSysColor(pDraw->itemState&ODS_SELECTED?COLOR_HIGHLIGHTTEXT:COLOR_WINDOWTEXT));
+		crText = SetTextColor(pDraw->hDC,GetSysColor(pDraw->itemState&ODS_SELECTED?COLOR_HIGHLIGHTTEXT:(pDraw->itemState&ODS_DISABLED?COLOR_GRAYTEXT:COLOR_WINDOWTEXT)));
 		iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 		CopyRect(&rcText,&pDraw->rcItem);
 		rcText.left += 2;
@@ -436,13 +466,13 @@ void Dialog_ViewComboDrawItem(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Fonctions diverses						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Fonctions diverses						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Interception des messages «««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Interception des messages Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 LRESULT CALLBACK Dialog_SubDlgProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData)
 {
@@ -466,7 +496,7 @@ LRESULT CALLBACK Dialog_SubDlgProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 }
 
 
-// «»»» Modifie la position Y d'un élément «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modifie la position Y d'un Ã©lÃ©ment Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_OffsetY(HWND hDlg, UINT uCtlId, int y)
 {
@@ -482,7 +512,7 @@ void Dialog_OffsetY(HWND hDlg, UINT uCtlId, int y)
 }
 
 
-// «»»» Détermine la hauteur du texte d'information «««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©termine la hauteur du texte d'information Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Dialog_GetInfoHeight(HWND hDlg, UINT uCtlId, WCHAR *InfoText)
 {
@@ -502,8 +532,7 @@ int Dialog_GetInfoHeight(HWND hDlg, UINT uCtlId, WCHAR *InfoText)
 		rcText.left += 56;
 		rcText.right -= 12;
 		rcText.top += 12;
-		rcText.bottom -= 12;
-		iHeight = DrawText(hDC,InfoText,-1,&rcText,DT_CALCRECT|DT_LEFT|DT_NOPREFIX|DT_WORDBREAK);
+		iHeight = DrawText(hDC,InfoText,-1,&rcText,DT_CALCRECT|DT_LEFT|DT_NOPREFIX|DT_WORDBREAK|DT_WORD_ELLIPSIS);
 		iHeight += 28;
 		if (iHeight < 32+28) iHeight = 32+28;
 		SelectObject(hDC,hDefFont);
@@ -514,7 +543,7 @@ int Dialog_GetInfoHeight(HWND hDlg, UINT uCtlId, WCHAR *InfoText)
 }
 
 
-// «»»» Centre une boîte de dialogue ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Centre une boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Dialog_CenterWindow(HWND hDlg, HWND hwndParent)
 {
@@ -522,25 +551,27 @@ void Dialog_CenterWindow(HWND hDlg, HWND hwndParent)
 	RECT	rcDialog;
 
 	GetWindowRect(hwndParent,&rcWindow);
-	GetClientRect(hDlg,&rcDialog);
+	GetWindowRect(hDlg,&rcDialog);
+	rcDialog.bottom -= rcDialog.top;
+	rcDialog.right -= rcDialog.left;
 	SetWindowPos(hDlg,NULL,rcWindow.left+(rcWindow.right-rcWindow.left-rcDialog.right)/2,rcWindow.top+(rcWindow.bottom-rcWindow.top-rcDialog.bottom)/2,0,0,SWP_NOZORDER|SWP_NOSIZE);
 	return;
 }
 
 
-// «»»» Vérifie et change une valeur ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» VÃ©rifie et change une valeur Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-int Dialog_GetIntValue(HWND hDlg, UINT uCtlId, int Min, int Max, int *pVal)
+int Dialog_GetIntValue(HWND hDlg, UINT uCtlId, int iMin, int iMax, int *pVal)
 {
 	int	iVal;
 
 	iVal = (int)GetDlgItemInt(hDlg,uCtlId,NULL,TRUE);
-	if (iVal < Min)
+	if (iVal < iMin)
 		{
 		SetFocus(GetDlgItem(hDlg,uCtlId));
 		return(0);
 		}
-	if (iVal > Max)
+	if (iVal > iMax)
 		{
 		SetFocus(GetDlgItem(hDlg,uCtlId));
 		return(0);
@@ -548,4 +579,98 @@ int Dialog_GetIntValue(HWND hDlg, UINT uCtlId, int Min, int Max, int *pVal)
 
 	*pVal = (int)iVal;
 	return(1);
+}
+
+//--- Non signÃ© ---
+
+int Dialog_GetUIntValue(HWND hDlg, UINT uCtlId, UINT uMin, UINT uMax, UINT *pVal)
+{
+	UINT	uVal;
+
+	uVal = GetDlgItemInt(hDlg,uCtlId,NULL,FALSE);
+	if (uVal < uMin)
+		{
+		SetFocus(GetDlgItem(hDlg,uCtlId));
+		return(0);
+		}
+	if (uVal > uMax)
+		{
+		SetFocus(GetDlgItem(hDlg,uCtlId));
+		return(0);
+		}
+
+	*pVal = uVal;
+	return(1);
+}
+
+
+// Â«Â»Â»Â» Processus pour les requÃªtes de TaskDialogIndirect Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
+
+HRESULT Dialog_TaskDialogProc(HWND hWnd, UINT uMsgID, WPARAM wParam, LPARAM lParam, LONG_PTR pRefData)
+{
+	switch(uMsgID)
+		{
+		case TDN_HYPERLINK_CLICKED: {
+			TASKDIALOGCONFIG	dialog;
+			TASKDIALOG_BUTTON	dialogButtons[2];
+			int			iResult;
+
+			ZeroMemory(&dialog,sizeof(TASKDIALOGCONFIG));
+			dialog.cbSize = sizeof(TASKDIALOGCONFIG);
+			dialog.hwndParent = hWnd;
+			dialog.dwFlags = TDF_ALLOW_DIALOG_CANCELLATION|TDF_EXPANDED_BY_DEFAULT|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
+			dialog.dwCommonButtons = TDCBF_CLOSE_BUTTON;
+			dialog.pszWindowTitle = Locale_GetText(TEXT_TITLE_LINK);
+			dialog.pszMainIcon = NULL;
+			dialog.pszContent = (WCHAR *)lParam;
+			dialog.nDefaultButton = IDCLOSE;
+			dialog.pszExpandedInformation = Locale_GetText(TEXT_LINK);
+			dialog.cButtons = 2;
+			dialog.pButtons = dialogButtons;
+			dialogButtons[0].nButtonID = TEXT_COPY;
+			dialogButtons[0].pszButtonText = Locale_GetText(TEXT_COPY);
+			dialogButtons[1].nButtonID = TEXT_OPEN;
+			dialogButtons[1].pszButtonText = Locale_GetText(TEXT_OPEN);;
+			TaskDialogIndirect(&dialog,&iResult,NULL,NULL);
+
+			//--- Copy to clipboard
+			switch(iResult)
+				{
+				case TEXT_OPEN:
+					ShellExecute(NULL,L"open",(WCHAR *)lParam,NULL,NULL,SW_SHOWNORMAL);
+					break;
+
+				case TEXT_COPY:
+					if (OpenClipboard(hWnd))
+						{
+						HGLOBAL hHandle = GlobalAlloc(GMEM_MOVEABLE,wcslen((WCHAR *)lParam)*sizeof(WCHAR)+sizeof(WCHAR));
+						if (hHandle)
+							{
+							WCHAR *pszLink = GlobalLock(hHandle);
+							if (pszLink)
+								{
+								wcscpy(pszLink,(WCHAR *)lParam);
+								GlobalUnlock(pszLink);
+								EmptyClipboard();
+								SetClipboardData(CF_UNICODETEXT,hHandle);
+								}
+							else GlobalFree(hHandle);
+							}
+						CloseClipboard();
+						}
+					break;
+				}
+			} break;
+		}
+
+	return(S_OK);
+}
+
+
+// Â«Â»Â»Â» Fonction non implantÃ©e Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
+
+void Dialog_NotImplemented(HWND hWnd)
+{
+	MessageBox(hWnd,Locale_GetText(TEXT_ERR_NOTIMPLEMENTED),Locale_GetText(TEXT_TITLE_INFO),MB_ICONINFORMATION|MB_OK);
+	return;
 }

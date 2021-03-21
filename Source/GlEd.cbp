@@ -51,16 +51,19 @@
 			<Add library="msimg32" />
 			<Add library="Shlwapi" />
 			<Add library="ole32" />
+			<Add library="UxTheme" />
 			<Add library="libz.a" />
 			<Add library="Compiler/Release/libSQLite3.a" />
 			<Add library="Compiler/Release/libpng.a" />
 			<Add library="Compiler/Release/libLZ4.a" />
+			<Add library="DbgHelp" />
 		</Linker>
 		<Unit filename="Application.manifest" />
 		<Unit filename="Includes/About.h" />
 		<Unit filename="Includes/AppWindows.h" />
 		<Unit filename="Includes/Application.h" />
 		<Unit filename="Includes/Config.h" />
+		<Unit filename="Includes/Debug.h" />
 		<Unit filename="Includes/Dialogs.h" />
 		<Unit filename="Includes/Divine.h" />
 		<Unit filename="Includes/Files.h" />
@@ -87,6 +90,15 @@
 		<Unit filename="Sources/Application.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Sources/Config/Config_Language.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Config/Config_Main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Config/Config_Modify.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Datas/Datas_Texts.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -111,6 +123,9 @@
 		<Unit filename="Sources/Game/Edit/Game_Edit_SetValue.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Skills.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Game/Edit/Game_Edit_Synchronize.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -118,6 +133,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Edit/Game_Edit_Talents.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_XP.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_Datas.c">
@@ -141,13 +159,16 @@
 		<Unit filename="Sources/Game/Game_Mods.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Sources/Game/Game_Stats.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Game/Game_XML.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_About.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Sources/Main/Main_Config.c">
+		<Unit filename="Sources/Main/Main_Debug.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Locale.c">

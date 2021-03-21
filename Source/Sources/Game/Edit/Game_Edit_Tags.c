@@ -1,15 +1,15 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Edition | Mots-clés
+	Edition | Mots-clÃ©s
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Données								  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DonnÃ©es								  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Application.h"
 #include "GameEdit.h"
@@ -20,13 +20,13 @@
 extern APPLICATION	App;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Boîte de dialogue						  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ BoÃ®te de dialogue						  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Création de la boîte de dialogue ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CrÃ©ation de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_Tags()
 {
@@ -46,7 +46,7 @@ void Game_Tags()
 			WCHAR*		pszText;
 
 			SetLastError(ERROR_INVALID_DATA);
-			//--- Vérifie que la liste est correct ---
+			//--- VÃ©rifie que la liste est correct ---
 			for (pxn = App.Game.pdcCurrent->pxaTags; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
 				{
 				if (List_EntryCount(&pxn->attributes) != 1) goto Done; // Too many attributes
@@ -66,13 +66,13 @@ void Game_Tags()
 				if (!pszText || wcscmp(pszText,L"22")) goto Done; // NOT <attribute type="22">
 				}
 
-			//--- Copie les mots-clés ---
+			//--- Copie les mots-clÃ©s ---
 			for (pxn = App.Game.pdcCurrent->pxaTags; pxn != NULL; pxn = (XML_NODE *)pxn->node.next)
 				{
 				pszText = xml_GetAttrValue((XML_NODE *)pxn->children.next,szXMLvalue);
 				if (!pszText) continue; // Impossible
 				pDataCopy = NULL;
-				// Ajoute le mot-clé et sa traduction
+				// Ajoute le mot-clÃ© et sa traduction
 				for (pData = (GAMEDATA *)Tags.nodeTags.next; pData != NULL; pData = (GAMEDATA *)pData->node.next)
 					{
 					if (wcscmp(pData->pszId,pszText)) continue;
@@ -87,7 +87,7 @@ void Game_Tags()
 					List_AddEntry((NODE *)pDataCopy,&Tags.nodeUsedTags);
 					break;
 					}
-				// Ajoute le mot-clé directement (non traduit)
+				// Ajoute le mot-clÃ© directement (non traduit)
 				if (!pDataCopy)
 					{
 					pDataCopy = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATA)+wcslen(pszText)*sizeof(WCHAR)+sizeof(WCHAR));
@@ -109,7 +109,7 @@ void Game_Tags()
 
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1006),App.hWnd,Game_TagsProc,(LPARAM)&Tags);
 
-	//--- Recréation de la liste des tags dans la structure du personnage ---
+	//--- RecrÃ©ation de la liste des tags dans la structure du personnage ---
 
 	if (iResult == IDOK)
 		{
@@ -155,7 +155,7 @@ void Game_Tags()
 		SetLastError(ERROR_SUCCESS);
 		}
 
-	//--- Terminé ---
+	//--- TerminÃ© ---
 
 Done:	if (GetLastError() != ERROR_SUCCESS) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 	List_ReleaseMemory(&Tags.nodeUsedTags);
@@ -164,7 +164,7 @@ Done:	if (GetLastError() != ERROR_SUCCESS) Request_PrintError(App.hWnd,Locale_Ge
 }
 
 
-// «»»» Processus de la boîte de dialogue «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Processus de la boÃ®te de dialogue Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 INT_PTR CALLBACK Game_TagsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam)
 {
@@ -184,6 +184,7 @@ INT_PTR CALLBACK Game_TagsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPa
 		CheckDlgButton(hDlg,110,App.Config.bShowHiddenTags?BST_CHECKED:BST_UNCHECKED);
 
 		SendDlgItemMessage(hDlg,110,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_TAG_SHOWHIDDEN));
+		SendDlgItemMessage(hDlg,111,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_TAG_MODIFYPROTECTED));
 		SendDlgItemMessage(hDlg,400,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_BUTTON_ADD));
 		SendDlgItemMessage(hDlg,401,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_BUTTON_EDIT));
 		SendDlgItemMessage(hDlg,402,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_BUTTON_REMOVE));
@@ -248,6 +249,11 @@ INT_PTR CALLBACK Game_TagsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPa
 						case 110:
 							Game_TagsToggle(hDlg,pTags);
 							return(TRUE);
+						case 111:
+							pTags->bModifyProtected ^= 1;
+							CheckDlgButton(hDlg,111,pTags->bModifyProtected?BST_CHECKED:BST_UNCHECKED);
+							Game_TagsSelected(hDlg,pTags);
+							return(TRUE);
 						case 400:
 							Game_TagsAdd(hDlg,pTags);
 							return(TRUE);
@@ -283,13 +289,13 @@ INT_PTR CALLBACK Game_TagsProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPa
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Modifications							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Modifications							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Affiche/Cache les mots-clés cachés ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affiche/Cache les mots-clÃ©s cachÃ©s Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsToggle(HWND hDlg, GAMETAGS *pTags)
 {
@@ -302,7 +308,7 @@ void Game_TagsToggle(HWND hDlg, GAMETAGS *pTags)
 }
 
 
-// «»»» Modification de la sélection ««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modification de la sÃ©lection Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsSelected(HWND hDlg, GAMETAGS *pTags)
 {
@@ -319,8 +325,8 @@ void Game_TagsSelected(HWND hDlg, GAMETAGS *pTags)
 			pData = (GAMEDATA *)SendDlgItemMessage(hDlg,300,LB_GETITEMDATA,(WPARAM)uSelected,0);
 			if (pData != (GAMEDATA *)LB_ERR)
 				{
-				EnableWindow(GetDlgItem(hDlg,401),pData->tag.bProtected?FALSE:TRUE);
-				EnableWindow(GetDlgItem(hDlg,402),pData->tag.bProtected?FALSE:TRUE);
+				EnableWindow(GetDlgItem(hDlg,401),pData->tag.bProtected && !pTags->bModifyProtected?FALSE:TRUE);
+				EnableWindow(GetDlgItem(hDlg,402),pData->tag.bProtected && !pTags->bModifyProtected?FALSE:TRUE);
 				EnableWindow(GetDlgItem(hDlg,403),uSelected?TRUE:FALSE);
 				EnableWindow(GetDlgItem(hDlg,404),(uCount && uSelected != uCount-1)?TRUE:FALSE);
 				return;
@@ -336,20 +342,20 @@ void Game_TagsSelected(HWND hDlg, GAMETAGS *pTags)
 }
 
 
-// «»»» Ajout d'un mot-clé ««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ajout d'un mot-clÃ© Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsAdd(HWND hDlg, GAMETAGS *pTags)
 {
 	GAMEDATA*	pDataNew;
 	WCHAR*		pszId;
 
-	pszId = Game_EditValue(hDlg,NULL,DATA_TYPE_TAGS);
+	pszId = Game_EditValue(hDlg,NULL,DATA_TYPE_TAGS,pTags->bModifyProtected);
 	if (pszId)
 		{
 		GAMEDATA*	pDataCopyFrom;
 		LRESULT		lResult;
 
-		//--- Ne pas ajouter le mot-clé si l'identifiant existe déjà dans la liste ---
+		//--- Ne pas ajouter le mot-clÃ© si l'identifiant existe dÃ©jÃ  dans la liste ---
 
 		if (Game_TagsExists(pszId,&pTags->nodeUsedTags,NULL))
 			{
@@ -358,7 +364,7 @@ void Game_TagsAdd(HWND hDlg, GAMETAGS *pTags)
 			return;
 			}
 
-		//--- Ajout du nouveau mot-clé ---
+		//--- Ajout du nouveau mot-clÃ© ---
 
 		for (pDataCopyFrom = (GAMEDATA *)pTags->nodeTags.next; pDataCopyFrom != NULL; pDataCopyFrom = (GAMEDATA *)pDataCopyFrom->node.next)
 			{
@@ -391,7 +397,7 @@ void Game_TagsAdd(HWND hDlg, GAMETAGS *pTags)
 }
 
 
-// «»»» Modification du mot-clé sélectionné «««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Modification du mot-clÃ© sÃ©lectionnÃ© Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsEdit(HWND hDlg, GAMETAGS *pTags)
 {
@@ -404,15 +410,15 @@ void Game_TagsEdit(HWND hDlg, GAMETAGS *pTags)
 
 	pData = (GAMEDATA *)SendDlgItemMessage(hDlg,300,LB_GETITEMDATA,(WPARAM)uSelected,0);
 	if (pData == (GAMEDATA *)LB_ERR) return;
-	if (pData->tag.bProtected) return;
+	if (pData->tag.bProtected && !pTags->bModifyProtected) return;
 
-	pszId = Game_EditValue(hDlg,pData->pszId,DATA_TYPE_TAGS);
+	pszId = Game_EditValue(hDlg,pData->pszId,DATA_TYPE_TAGS,pTags->bModifyProtected);
 	if (pszId)
 		{
 		NODE		nodeCopy;
 		GAMEDATA*	pDataCopy;
 
-		//--- Inutile de modifier le mot-clé si le même identifiant a été sélectionné ---
+		//--- Inutile de modifier le mot-clÃ© si le mÃªme identifiant a Ã©tÃ© sÃ©lectionnÃ© ---
 
 		if (!wcscmp(pData->pszId,pszId))
 			{
@@ -420,7 +426,7 @@ void Game_TagsEdit(HWND hDlg, GAMETAGS *pTags)
 			return;
 			}
 
-		//--- Ne pas modifier le mot-clé si l'identifiant existe déjà dans la liste ---
+		//--- Ne pas modifier le mot-clÃ© si l'identifiant existe dÃ©jÃ  dans la liste ---
 
 		if (Game_TagsExists(pszId,&pTags->nodeUsedTags,pData))
 			{
@@ -453,7 +459,7 @@ void Game_TagsEdit(HWND hDlg, GAMETAGS *pTags)
 }
 
 
-// «»»» Suppression du mot-clé sélectionné ««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Suppression du mot-clÃ© sÃ©lectionnÃ© Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsRemove(HWND hDlg, GAMETAGS *pTags)
 {
@@ -465,6 +471,7 @@ void Game_TagsRemove(HWND hDlg, GAMETAGS *pTags)
 	if (uSelected == LB_ERR) return;
 	pData = (GAMEDATA *)SendDlgItemMessage(hDlg,300,LB_GETITEMDATA,(WPARAM)uSelected,0);
 	if (pData == (GAMEDATA *)LB_ERR) return;
+	if (pData->tag.bProtected && !pTags->bModifyProtected) return;
 
 	lResult = SendDlgItemMessage(hDlg,300,LB_DELETESTRING,(WPARAM)uSelected,0);
 	if (lResult != LB_ERR)
@@ -478,7 +485,7 @@ void Game_TagsRemove(HWND hDlg, GAMETAGS *pTags)
 }
 
 
-// «»»» Déplacement d'un mot-clé ««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» DÃ©placement d'un mot-clÃ© Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void Game_TagsMove(HWND hDlg, GAMETAGS *pTags, BOOL bDown)
 {
@@ -539,7 +546,7 @@ void Game_TagsMove(HWND hDlg, GAMETAGS *pTags, BOOL bDown)
 }
 
 
-// «»»» Vérifie si un mot-clé existe déjà «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» VÃ©rifie si un mot-clÃ© existe dÃ©jÃ  Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 BOOL Game_TagsExists(WCHAR *pszId, NODE *pList, GAMEDATA *pIgnoreThis)
 {
@@ -556,13 +563,13 @@ BOOL Game_TagsExists(WCHAR *pszId, NODE *pList, GAMEDATA *pIgnoreThis)
 }
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Affichage							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Affichage							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Ajoute les entrées dans la liste ««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Ajoute les entrÃ©es dans la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int Game_TagsPopulateList(HWND hDlg, UINT uCtrlId, NODE *pTags, BOOL bIgnoreProtected, BOOL bIgnoreHidden)
 {
@@ -582,9 +589,9 @@ int Game_TagsPopulateList(HWND hDlg, UINT uCtrlId, NODE *pTags, BOOL bIgnoreProt
 }
 
 
-// «»»» Affichage des entrées de la liste «««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Affichage des entrÃ©es de la liste Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
-//--- Mesure la hauteur d'une entrée ---
+//--- Mesure la hauteur d'une entrÃ©e ---
 
 void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pMeasure)
 {
@@ -616,7 +623,7 @@ void Game_TagsMeasureItem(HWND hDlg, MEASUREITEMSTRUCT *pMeasure)
 	return;
 }
 
-//--- Affichage de l'entrée (DoubleBuffering) ---
+//--- Affichage de l'entrÃ©e (DoubleBuffering) ---
 
 void Game_TagsDrawItemBuffered(DRAWITEMSTRUCT *pDraw)
 {
@@ -650,7 +657,7 @@ void Game_TagsDrawItemBuffered(DRAWITEMSTRUCT *pDraw)
 	return;
 }
 
-//--- Affichage de l'entrée ---
+//--- Affichage de l'entrÃ©e ---
 
 void Game_TagsDrawItem(DRAWITEMSTRUCT *pDraw)
 {
@@ -813,7 +820,7 @@ void Game_TagsDrawItem(DRAWITEMSTRUCT *pDraw)
 		DrawFocusRect(pDraw->hDC,&pDraw->rcItem);
 		}
 
-	//--- Surlignage si sélectionné ---
+	//--- Surlignage si sÃ©lectionnÃ© ---
 
 	if (pDraw->itemState&ODS_SELECTED)
 		{

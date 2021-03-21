@@ -9,15 +9,15 @@
 #define _GAMEEDIT_DEFINITIONS
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Définitions							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ DÃ©finitions							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 #include "Game.h"
 
-#define BONUS_NUMBER_MAX_LEN		15
+#define BONUS_NUMBER_MAX_LEN		16
 #define BONUS_NUMBER_MAX		9999999
 #define BONUS_NUMBER_MIN		-9999999
 
@@ -107,8 +107,11 @@ enum {
 	DATA_SORT_RUNE_BONUS3,
 	DATA_SORT_BOOSTER_TYPE,
 	DATA_SORT_BOOSTER_SLOT,
+	DATA_SORT_SKILL_NAME,
 	DATA_SORT_SKILL_SCHOOL,
 	DATA_SORT_SKILL_POINTS,
+	DATA_SORT_SKILL_SOURCE,
+	DATA_SORT_SKILL_MEMORY,
 };
 
 enum {
@@ -131,17 +134,24 @@ enum {
 	GAME_TALENT_LIZARD,
 };
 
+enum {
+	SKILL_OPTION_ISLEARNED = 1,
+	SKILL_OPTION_ISACTIVATED,
+	SKILL_OPTION_ZEROMEMORY,
+};
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Structures							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Structures							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
 //--- Edition d'une valeur ---
 
 typedef struct GAMEEDITVALUE {
 	HWND			hwndParent;
+	BOOL			bIgnoreProtected;
 	UINT			uType;
 	UINT			uResId;
 	UINT			uSort;
@@ -156,9 +166,24 @@ typedef struct GAMEEDITVALUE {
 	GAMEDATA		localData;
 } GAMEEDITVALUE;
 
-//--- Edition des mots-clés ---
+typedef struct GAMEEDITXP {
+	BOOL			bInitialized;
+	HWND			hwndParent;
+	UINT			uValue;
+	UINT			uMin;
+	UINT			uMax;
+	UINT			uLevel;
+	UINT			uMinLevel;
+	UINT			uMaxLevel;
+	UINT			uNextLevel;
+	WCHAR*			pszInfo;
+	INT_PTR			iResult;
+} GAMEEDITXP;
+
+//--- Edition des mots-clÃ©s ---
 
 typedef struct GAMETAGS {
+	BOOL			bModifyProtected;
 	NODE			nodeTags;
 	NODE			nodeUsedTags;
 } GAMETAGS;
@@ -189,7 +214,7 @@ typedef struct GAMETALENTSCONTEXT {
 	GAMETALENTSTRUCT	Talents[];
 } GAMETALENTSCONTEXT;
 
-//--- Capacités ---
+//--- CapacitÃ©s ---
 
 typedef struct GAMEABILITY {
 	UINT			uIndex;
@@ -199,6 +224,32 @@ typedef struct GAMEABILITY {
 	UINT			uMax;
 } GAMEABILITY;
 
+//--- CompÃ©tences ---
+
+typedef struct GAMEEDITSKILLCONTEXT {
+	HWND			hwndParent;
+	NODE			skills;
+	HIMAGELIST		hImageList;
+	GAMEDATASKILL*		pSelected;
+	NODE			selection;
+	UINT			uSort;
+} GAMEEDITSKILLCONTEXT;
+
+typedef struct GAMESKILLSOPTIONS {
+	HWND			hwndParent;
+	GAMEDATASKILL**		pSelected;
+	int			iIsLearned;
+	int			iIsActivated;
+	int			iZeroMemory;
+} GAMESKILLOPTIONS;
+
+typedef struct GAMESKILLSCONTEXT {
+	GAMESKILLOPTIONS	options;
+	GAMEEDITSKILLCONTEXT	baseSkills;
+	GAMEEDITSKILLCONTEXT	mySkills;
+	GAMEEDITSKILLCONTEXT	selectSkills;
+} GAMESKILLSCONTEXT;
+
 //--- Bonus ---
 
 typedef struct GAMEBONUS {
@@ -206,15 +257,6 @@ typedef struct GAMEBONUS {
 	UINT			uLocaleID;
 	UINT			uFlags;
 } GAMEBONUS;
-
-typedef struct GAMESKILL {
-	WCHAR*			pszId;
-	WCHAR*			pszName;
-	UINT			uSourcePoints;
-	UINT			uActionPoints;
-	UINT			uIconID;
-	UINT			uSchoolLocaleID;
-} GAMESKILL;
 
 typedef struct GAMEITEMCOLORS {
 	WCHAR*			pszId;
@@ -253,7 +295,7 @@ typedef struct GAMEEDITBONUS {
 	UINT			uFlags;
 	// Do not use union here
 	struct {
-		WCHAR	szVal[BONUS_NUMBER_MAX_LEN+1];
+		WCHAR	szVal[BONUS_NUMBER_MAX_LEN];
 	} value;
 	struct {
 		WCHAR*	pszId;
@@ -261,8 +303,8 @@ typedef struct GAMEEDITBONUS {
 	} skill;
 	struct {
 		BOOL	bIsSet;
-		WCHAR	szPercentage[BONUS_NUMBER_MAX_LEN+1];
-		WCHAR	szDamageType[BONUS_NUMBER_MAX_LEN+1];
+		WCHAR	szPercentage[BONUS_NUMBER_MAX_LEN];
+		WCHAR	szDamageType[BONUS_NUMBER_MAX_LEN];
 	} reflection;
 	struct {
 		WCHAR*	pszId;
@@ -298,6 +340,7 @@ typedef struct GAMEEDITITEMCONTEXT {
 } GAMEEDITITEMCONTEXT;
 
 typedef struct GAMEEDITBONUSCONTEXT {
+	NODE			skills;
 	GAMEEDITBONUS*		pEdit;
 	LOCALE_MISC*		pLocale;
 	WCHAR*			pszObject;
@@ -317,8 +360,8 @@ typedef struct GAMEEDITPAGECONTEXT {
 		} item;
 		struct {
 			GAMEEDITBONUSCONTEXT*	pContext;
-			UINT			uSort;
 			HWND			hwndCtrl;
+			UINT			uSort;
 		} bonus;
 		struct {
 			struct DIVINESGCONTEXT*	pContext;
@@ -327,13 +370,13 @@ typedef struct GAMEEDITPAGECONTEXT {
 } GAMEEDITPAGECONTEXT;
 
 
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Prototypes							  ¤¤¤ //
-// ¤¤¤									  ¤¤¤ //
-// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤ Prototypes							  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤									  Â¤Â¤Â¤ //
+// Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤ //
 
-// «»»» Edition «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Edition Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_Edit(DOS2ITEM *,UINT);
 
@@ -372,7 +415,7 @@ void			Game_EditRunesDrawBonus(GAMEEDITITEMCONTEXT *,UINT,DRAWITEMSTRUCT *);
 void			Game_EditRunesChange(HWND,UINT,GAMEEDITITEMCONTEXT *);
 void			Game_EditRunesRemove(HWND,UINT,GAMEEDITITEMCONTEXT *);
 
-// «»»» Sélection des bonus «««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» SÃ©lection des bonus Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 GAMEEDITBONUS*		Game_Bonus(HWND,GAMEEDITBONUS *,WCHAR *);
 
@@ -385,8 +428,6 @@ int			Game_BonusActivate(HWND,GAMEEDITPAGECONTEXT *);
 int			Game_BonusInitColors(HWND,UINT,GAMEEDITPAGECONTEXT *);
 int			Game_BonusSortColors(LPARAM,LPARAM,LPARAM);
 int			Game_BonusInitSkills(HWND,UINT,GAMEEDITPAGECONTEXT *);
-int			Game_BonusSortSkills(LPARAM,LPARAM,LPARAM);
-int			Game_BonusSortSkillsCmp(GAMESKILL *,GAMESKILL *,UINT);
 void			Game_BonusDraw(DRAWITEMSTRUCT *);
 void			Game_BonusDrawSeparator(WCHAR *,DRAWITEMSTRUCT *);
 void			Game_BonusDrawResult(GAMEEDITPAGECONTEXT *,DRAWITEMSTRUCT *);
@@ -408,7 +449,7 @@ void			Game_BonusShiftNumber(WCHAR *,BOOL);
 void			Game_BonusCleanNumber(WCHAR *,BOOL,BOOL);
 void			Game_BonusCleanFloat(WCHAR *);
 
-// «»»» Synchronisation «««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Synchronisation Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_Synchronize_Level(int,XML_ATTR *,XML_ATTR *,XML_NODE *);
 
@@ -417,7 +458,7 @@ int			Game_SynchronizeAll_Init(HWND,RECT *,int,void *);
 BOOL			Game_SynchronizeAll_Draw(UINT,DRAWITEMSTRUCT *,void *);
 int			Game_SynchronizeAll_Ok(HWND,void *);
 
-// «»»» Mots-clés «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Mots-clÃ©s Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_Tags(void);
 INT_PTR CALLBACK	Game_TagsProc(HWND,UINT,WPARAM,LPARAM);
@@ -435,7 +476,7 @@ void			Game_TagsMeasureItem(HWND,MEASUREITEMSTRUCT *);
 void			Game_TagsDrawItemBuffered(DRAWITEMSTRUCT *);
 void			Game_TagsDrawItem(DRAWITEMSTRUCT *);
 
-// «»»» Talents «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Talents Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_Talents();
 
@@ -444,7 +485,7 @@ int CALLBACK		Game_TalentsSort(GAMETALENTSTRUCT *,GAMETALENTSTRUCT *,GAMETALENTS
 void			Game_TalentsTip(HWND,NMLVGETINFOTIP *,GAMETALENTSCONTEXT *);
 void			Game_TalentsCheck(HWND,int,BOOL,GAMETALENTSCONTEXT *);
 
-// «»»» Valeurs «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» Valeurs Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 int			Game_EditSetValue(HWND,WCHAR *,XML_ATTR *,int,int);
 int			Game_EditSetValue_Init(HWND,RECT *,int,void *);
@@ -472,12 +513,58 @@ void			Game_EditValueUpdateBooster(HWND,DWORD,BOOL,GAMEEDITVALUE *);
 int			Game_EditValueSave(HWND,GAMEEDITVALUE *);
 void			Game_EditValueClose(HWND,INT_PTR,GAMEEDITVALUE *);
 
-// «»»» Capacités «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+// Â«Â»Â»Â» CapacitÃ©s Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
 
 void			Game_Abilities(void);
 INT_PTR CALLBACK	Game_AbilitiesProc(HWND,UINT,WPARAM,LPARAM);
 
 void			Game_AbilitiesSaveValues(HWND,GAMEABILITY *);
 void			Game_AbilitiesDraw(DRAWITEMSTRUCT *,GAMEABILITY *);
+
+// Â«Â»Â»Â» ExpÃ©rience Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
+
+void			Game_EditXP(HWND,XML_ATTR *);
+INT_PTR CALLBACK	Game_EditXPProc(HWND,UINT,WPARAM,LPARAM);
+
+// Â«Â»Â»Â» CompÃ©tences Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â«Â»
+
+void			Game_Skills(HWND);
+int			Game_SkillsDataFileCreate(HWND,NODE *);
+HIMAGELIST		Game_SkillsImageListCreate(HWND,UINT,NODE *);
+int			Game_SkillsListCreate(HWND,UINT,HIMAGELIST,NODE *,UINT,UINT,GAMEDATASKILL *,BOOL);
+BOOL			Game_SkillsInsertItem(HWND,UINT,int,UINT,GAMEDATASKILL *,GAMEDATASKILL *);
+BOOL			Game_SkillsAppend(HWND,UINT,UINT,NODE *,NODE *);
+
+INT_PTR CALLBACK	Game_SkillsBookProc(HWND,UINT,WPARAM,LPARAM);
+int			Game_SkillsBookCreate(HWND,UINT,DOS2CHARACTER *,GAMESKILLSCONTEXT *);
+int			Game_SkillsBookRebuild(HWND,UINT,DOS2CHARACTER *,GAMEEDITSKILLCONTEXT *);
+void			Game_SkillsBookRebuildCopyParams(WCHAR *[], WCHAR *[], WCHAR *[]);
+void			Game_SkillsBookDelete(HWND,UINT);
+
+void			Game_SkillsOptions(HWND,UINT,GAMESKILLOPTIONS *);
+INT_PTR CALLBACK	Game_SkillsOptionsProc(HWND,UINT,WPARAM,LPARAM);
+void			Game_SkillsOptionsGet(HWND,UINT,UINT,GAMESKILLOPTIONS *);
+void			Game_SkillsOptionsSet(HWND,UINT,UINT,GAMESKILLOPTIONS *);
+
+UINT			Game_SkillsSelect(HWND,GAMEEDITSKILLCONTEXT *);
+INT_PTR CALLBACK	Game_SkillsSelectProc(HWND,UINT,WPARAM,LPARAM);
+int			Game_SkillsSelectionCollect(HWND,UINT,NMLISTVIEW *,GAMEEDITSKILLCONTEXT *);
+void			Game_SkillsDrawPoints(HWND,UINT,NODE *,GAMEDATASKILL *,DRAWITEMSTRUCT *,BOOL);
+void			Game_SkillsMenu(HWND,UINT,HWND);
+
+int			Game_SkillsSortComboInit(HWND,UINT,UINT);
+int			Game_SkillsSortComboChanged(HWND,UINT,UINT,UINT *);
+void			Game_SkillsSortComboDrawItem(DRAWITEMSTRUCT *);
+int			Game_SkillsSort(LPARAM,LPARAM,LPARAM);
+int			Game_SkillsSortCmp(GAMEDATASKILL *,GAMEDATASKILL *,UINT);
+
+int			Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *);
+GAMEDATASKILL*		Game_SkillsCopyPaste(GAMEDATASKILL *,GAMEDATASKILL *,NODE *,BOOL);
+GAMEDATASKILL*		Game_SkillsGetSelected(HWND,UINT);
+void			Game_SkillsToggleGroups(HWND,UINT,BOOL);
+void			Game_SkillsEnsureVisible(HWND,UINT,GAMEDATASKILL *);
+void			Game_SkillsCollapseSelectedGroup(HWND,UINT,GAMEDATASKILL *);
+int			Game_SkillsSetItemGroup(UINT,GAMEDATASKILL *);
+GAMEDATASKILL*		Game_SkillsGetById(WCHAR *,NODE *);
 
 #endif

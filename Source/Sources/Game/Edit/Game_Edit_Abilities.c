@@ -87,11 +87,7 @@ void Game_Abilities()
 		if (Abilities[uCount].uValue > Abilities[uCount].uMax && !App.Config.bCapOverride && !bAlreadyAsked)
 			{
 			bAlreadyAsked = TRUE;
-			if (MessageBox(App.hWnd,Locale_GetText(TEXT_OVERRIDE_ABILITIES),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES)
-				{
-				App.Config.bCapOverride = TRUE;
-				Menu_SetFlag(App.hMenu,IDM_CONFIGCAPOVERRIDE,App.Config.bCapOverride);
-				}
+			if (MessageBox(App.hWnd,Locale_GetText(TEXT_OVERRIDE_ABILITIES),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES) App.Config.bCapOverride = TRUE;
 			}
 		}
 
