@@ -32,7 +32,7 @@ extern APPLICATION		App;
 
 // «»»» Initie le chargement d'un fichier XML «««««««««««««««««««««««««««»
 
-int xml_LoadFile(WCHAR *pszFilePath)
+int xml_LoadFile(WCHAR *pszFilePath, NODE *pRoot, DWORD dwFlags)
 {
 	XML_PARSER*	pParser;
 
@@ -46,12 +46,14 @@ int xml_LoadFile(WCHAR *pszFilePath)
 		return(0);
 		}
 
+	pParser->pRoot = pRoot;
 	pParser->pszFilePath = pszFilePath;
+	pParser->dwFlags = dwFlags;
 	pParser->iResult = xml_ReadFile(pParser);
 	if (pParser->iResult != XML_ERROR_NONE)
 		{
 		xml_SendErrorMsg(pParser->iResult,pParser->dwLastErrorMsg);
-		xml_ReleaseAll(&App.Game.Save.nodeXMLRoot);
+		xml_ReleaseAll(pParser->pRoot);
 		xml_UpdateProgress(-1,-1);
 		xml_FreeParser(pParser);
 		return(0);
@@ -92,32 +94,35 @@ int xml_ReadFile(XML_PARSER *pParser)
 
 	//--- Vérification basiques ---
 
-	pParser->dwLastErrorType = xml_ReadTag(pParser);
-	if (pParser->dwLastErrorType == XML_ERROR_EOF)
+	if (pParser->dwFlags&XML_FLAG_HASHEADER)
 		{
-		pParser->dwLastErrorMsg = TEXT_ERR_XML_UNEXPECTED_EOF;
-		pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
-		}
-	if (pParser->dwLastErrorType != XML_ERROR_NONE) goto Done;
+		pParser->dwLastErrorType = xml_ReadTag(pParser);
+		if (pParser->dwLastErrorType == XML_ERROR_EOF)
+			{
+			pParser->dwLastErrorMsg = TEXT_ERR_XML_UNEXPECTED_EOF;
+			pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
+			}
+		if (pParser->dwLastErrorType != XML_ERROR_NONE) goto Done;
 
-	if (pParser->dwTagSize < strlen(szXMLHeader))
-		{
-		pParser->dwLastErrorMsg = TEXT_ERR_XML_HEADER_UNKNOWN;
-		pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
-		goto Done;
-		}
+		if (pParser->dwTagSize < strlen(szXMLHeader))
+			{
+			pParser->dwLastErrorMsg = TEXT_ERR_XML_HEADER_UNKNOWN;
+			pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
+			goto Done;
+			}
 
-	if (strncmp((char *)&pParser->pFileBuffer[pParser->dwTagBegin],szXMLHeader,strlen(szXMLHeader)))
-		{
-		pParser->dwLastErrorMsg = TEXT_ERR_XML_HEADER_UNKNOWN;
-		pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
-		goto Done;
+		if (strncmp((char *)&pParser->pFileBuffer[pParser->dwTagBegin],szXMLHeader,strlen(szXMLHeader)))
+			{
+			pParser->dwLastErrorMsg = TEXT_ERR_XML_HEADER_UNKNOWN;
+			pParser->dwLastErrorType = XML_ERROR_FROM_LOCALE;
+			goto Done;
+			}
 		}
 
 	//--- Lecture ---
 
 	xml_UpdateProgress(0,pParser->dwFileSize);
-	pParser->dwLastErrorType = xml_ParseNodes(pParser,NULL,&App.Game.Save.nodeXMLRoot);
+	pParser->dwLastErrorType = xml_ParseNodes(pParser,NULL,pParser->pRoot);
 	if (pParser->dwLastErrorType == XML_ERROR_EOF) pParser->dwLastErrorType = XML_ERROR_NONE;
 
 	//--- Terminé ! ---
@@ -168,6 +173,7 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 	XML_NODE*	pxnNew;
 	DWORD		dwCursor;
 	DWORD		dwNameSize;
+	DWORD		dwContentSize;
 
 	pParser->dwLastErrorType = XML_ERROR_NONE;
 
@@ -243,9 +249,47 @@ int xml_ParseNodes(XML_PARSER *pParser, XML_NODE *pxnParent, NODE *pRoot)
 			break;
 			}
 
+		// Stockage du contenu
+		// NOTE: Larian's savegames don't have content outside tags, so it is safe to skip that part completely
+		// NOTE: xml_WriteNodes() ignores content
+
+		if ((pParser->dwFlags&XML_FLAG_HASCONTENT) && pParser->pFileBuffer[pParser->dwTagEnd-1] != '/')
+			{
+			dwCursor = pParser->dwTagEnd+1;
+			dwContentSize = 0;
+			while(1)
+				{
+				if (dwCursor >= pParser->dwFileSize) break;
+				if ((unsigned char)pParser->pFileBuffer[dwCursor] == '<') break;
+				dwCursor++;
+				dwContentSize++;
+				}
+			dwCursor = pParser->dwTagEnd;
+			while(++dwCursor)
+				{
+				if (dwCursor >= pParser->dwFileSize) break;
+				if ((unsigned char)pParser->pFileBuffer[dwCursor] == '<') break;
+				if ((unsigned char)pParser->pFileBuffer[dwCursor] > ' ') break;
+				dwContentSize--;
+				if (!dwContentSize) break;
+				}
+			if (dwContentSize)
+				{
+				pxnNew->content = Misc_UTF8ToWideCharNZ((char *)&pParser->pFileBuffer[pParser->dwCursor],dwContentSize);
+				if (!pxnNew->content)
+					{
+					SetLastError(ERROR_NOT_ENOUGH_MEMORY);
+					pParser->dwLastErrorType = XML_ERROR_FROM_SYSTEM;
+					break;
+					}
+				}
+			}
+
 		// Recupère les tags enfants
 
 		List_AddEntry((NODE *)pxnNew,pRoot);
+		pRoot = (NODE *)pxnNew; // no need to go through the whole list everytime
+
 		if (pParser->pFileBuffer[pParser->dwTagEnd-1] != '/')
 			{
 			pParser->dwLastErrorType = xml_ParseNodes(pParser,pxnNew,&pxnNew->children);
@@ -437,7 +481,7 @@ int xml_WriteFile(XML_PARSER *pParser)
 
 	pParser->uTabsToAllocate = XML_TABS_BUFFER_LEN;
 	pParser->uWriteBufferSize = XML_WRITE_BUFFER_LEN;
-	pParser->uNodesTotal = xml_TotalNodesCount((XML_NODE *)pParser->pxnBegin);
+	pParser->uNodesTotal = xml_TotalNodesCount((XML_NODE *)pParser->pxnBegin,TRUE);
 	pParser->uNodesCount = 0;
 
 	dwLastError = xml_WriteNodes(pParser,(XML_NODE *)pParser->pxnBegin);
@@ -533,7 +577,7 @@ BOOL xml_WriteTabs(XML_PARSER *pParser)
 		if (pParser->uTabsToAllocate <= pParser->uTabsCount)
 			{
 			HeapFree(App.hHeap,0,pParser->pszTabsBuffer);
-			pParser->uTabsToAllocate *= XML_BUFFER_INCREASE_MULT;
+			pParser->uTabsToAllocate += XML_TABS_BUFFER_LEN;
 			pParser->pszTabsBuffer = NULL;
 			continue;
 			}
@@ -598,7 +642,13 @@ BOOL xml_WriteToBuffer(XML_PARSER *pParser, void *pBuffer, UINT uBufferSize, BOO
 			{
 			void*	pTemp;
 
-			pParser->uWriteBufferSize *= XML_BUFFER_INCREASE_MULT;
+			pParser->uWriteBufferSize += XML_WRITE_BUFFER_LEN;
+			if (pParser->uWriteBufferCursor+uBufferSize > pParser->uWriteBufferSize)
+				{
+				// Will lower multiple ReAllocs (Very low impact on the whole process)
+				pParser->uWriteBufferSize = pParser->uWriteBufferCursor+uBufferSize;
+				pParser->uWriteBufferSize += XML_WRITE_BUFFER_LEN;
+				}
 			pTemp = HeapAlloc(App.hHeap,0,pParser->uWriteBufferSize);
 			if (!pTemp)
 				{
@@ -663,6 +713,7 @@ void xml_ReleaseNode(XML_NODE *pxn)
 	List_RemEntry((NODE *)pxn);
 	while ((pxa = (XML_ATTR *)pxn->attributes.next) != NULL) xml_ReleaseAttr(pxa);
 	if (pxn->children.next) xml_ReleaseAll(&pxn->children);
+	if (pxn->content) HeapFree(App.hHeap,0,pxn->content);
 	HeapFree(App.hHeap,0,pxn);
 	return;
 }
@@ -844,7 +895,7 @@ BOOL xml_IsValueTrue(WCHAR *pszValue)
 
 // «»»» Calcul le nombre total de noeuds ««««««««««««««««««««««««««««««««»
 
-UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
+UINT xml_TotalNodesCount(XML_NODE *pxnBegin, BOOL bChildren)
 {
 	XML_NODE*	pxn;
 	UINT		uTotal;
@@ -853,7 +904,7 @@ UINT xml_TotalNodesCount(XML_NODE *pxnBegin)
 		{
 		uTotal++;
 		if (!pxn->children.next) continue;
-		uTotal += xml_TotalNodesCount((XML_NODE *)pxn->children.next);
+		if (bChildren) uTotal += xml_TotalNodesCount((XML_NODE *)pxn->children.next,bChildren);
 		}
 
 	return(uTotal);

@@ -152,6 +152,12 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_TEMPLOCATION_V1:
 				pData = &pConfig->pszTempPath;
 				break;
+			case CONFIG_IDENT_ITEMSDISPLAYNAME_V1:
+				pData = &pConfig->bItemsDisplayName;
+				break;
+			case CONFIG_IDENT_ITEMSRESOLVE_V1:
+				pData = &pConfig->bItemsResolve;
+				break;
 			default:pData = NULL;
 			}
 
@@ -264,6 +270,8 @@ BOOL Config_Save(BOOL bQuiet, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_CAPOVERRIDE_V1,&pConfig->bCapOverride)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_TEXT,CONFIG_IDENT_SAVELOCATION_V1,&pConfig->pszLarianPath)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_TEXT,CONFIG_IDENT_TEMPLOCATION_V1,&pConfig->pszTempPath)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_ITEMSDISPLAYNAME_V1,&pConfig->bItemsDisplayName)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_ITEMSRESOLVE_V1,&pConfig->bItemsResolve)) goto Done;
 	bCompleted = TRUE;
 
 Done:	if (!bCompleted) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITE),NULL,MB_ICONERROR);
@@ -369,6 +377,10 @@ int Config_Defaults(CONFIG *pConfig)
 
 	Config_DefaultSaveLocation(&pConfig->pszLarianPath,FALSE);
 	Config_DefaultTempLocation(&pConfig->pszTempPath,FALSE);
+
+	//--- Affichage ---
+
+	pConfig->bItemsDisplayName = TRUE;
 
 	//--- Edition ---
 

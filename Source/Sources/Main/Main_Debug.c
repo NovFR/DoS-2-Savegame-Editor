@@ -14,6 +14,7 @@
 #include "Application.h"
 #include "Debug.h"
 #include "Utils.h"
+#include "Texts.h"
 
 extern APPLICATION		App;
 
@@ -172,4 +173,49 @@ int Debug_Printf(WCHAR *pszMessage, WCHAR *pszFormat, DWORD_PTR pArgs[])
 
 	if (pszMessage) pszMessage[j] = 0;
 	return(l);
+}
+
+
+// «»»» Logs ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+
+void Debug_Log(WCHAR *pszFmt, ...)
+{
+	SYSTEMTIME	time;
+	HANDLE		hFile;
+	WCHAR*		pszBuffer;
+	WCHAR		pszTime[40];
+	DWORD		dwBytes;
+	int		n;
+	va_list		vl;
+
+	if (!pszFmt)
+		{
+		DeleteFile(szDebugLogFileName);
+		return;
+		}
+
+	va_start(vl,pszFmt);
+	n = vsnwprintf(NULL,0,pszFmt,vl);
+	va_end(vl);
+
+	va_start(vl,pszFmt);
+	pszBuffer = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,n*sizeof(WCHAR)+sizeof(WCHAR));
+	if (pszBuffer)
+		{
+		wvsprintf(pszBuffer,pszFmt,vl);
+		hFile = CreateFile(szDebugLogFileName,FILE_APPEND_DATA,0,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
+		if (hFile != INVALID_HANDLE_VALUE)
+			{
+			GetLocalTime(&time);
+			SetEndOfFile(hFile);
+			wsprintf(pszTime,szTimeFmt,time.wYear,time.wMonth,time.wDay,time.wHour,time.wMinute,time.wSecond);
+			WriteFile(hFile,pszTime,wcslen(pszTime)*sizeof(WCHAR),&dwBytes,NULL);
+			WriteFile(hFile,pszBuffer,wcslen(pszBuffer)*sizeof(WCHAR),&dwBytes,NULL);
+			WriteFile(hFile,szLF,wcslen(szLF)*sizeof(WCHAR),&dwBytes,NULL);
+			CloseHandle(hFile);
+			}
+		HeapFree(App.hHeap,0,pszBuffer);
+		}
+	va_end(vl);
+	return;
 }

@@ -70,6 +70,7 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 Done:	if (App.hShortcuts) DestroyAcceleratorTable(App.hShortcuts);
 	Reset_Icons();
 	Game_UnloadDataFile(DATA_TYPE_ITEMS,&App.Game.nodeDataItems);
+	Locale_Unload(LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
 	Locale_Unload(LOCALE_TYPE_APPLICATION,(void **)&App.pLocaleTexts,&App.pszLocaleName);
 	LastFiles_ReleaseAll();
 	Config_Release(&App.Config);

@@ -87,7 +87,8 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 
 	//--- Copie les propriétés de l'objet ---
 
-	pItemContext->pszName = xml_GetThisAttrValue(pItem->pxaName);
+	pItemContext->pItem = pItem;
+	pItemContext->pszStats = xml_GetThisAttrValue(pItem->pxaStats);
 	pItemContext->bIsGenerated = xml_IsTrue(pItem->pxaIsGenerated);
 	pItemContext->uLevel = wcstol(xml_GetThisAttrValue(pItem->pxaLevel),NULL,10);
 	pItemContext->uSlot = wcstol(xml_GetThisAttrValue(pItem->pxaSlot),NULL,10);
@@ -96,21 +97,21 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	pItemContext->uNewLevel = 1;
 	pItemContext->iAmount = pItemContext->iAmountOld = pItem->pxaAmount?wcstol(xml_GetThisAttrValue(pItem->pxaAmount),NULL,10):1;
 	pItemContext->bSetGenLevel = TRUE;
-	pItemContext->uFilter = Game_GetItemFlags(pItemContext->pszName);
+	pItemContext->uFilter = Game_GetItemFlags(pItemContext->pszStats);
 	if (!pItemContext->uFilter) pItemContext->uFilter = FILTER_ALL;
 	else pItemContext->uFilter |= (FILTER_ALL_TYPES);
 
 	//--- Retire la quantité pour les objets qui ne s'empilent pas ---
 
-	if (pItemContext->pszName && pItemContext->iAmount == 1)
+	if (pItemContext->pszStats && pItemContext->iAmount == 1)
 		{
 		static WCHAR*	pszAllowed[] = { L"WPN_Arrow_", L"WPN_ArrowHead_", L"WPN_ArrowShaft_", NULL };
 		BOOL		bAllowed = FALSE;
-		UINT		uLen = wcslen(pItemContext->pszName);
+		UINT		uLen = wcslen(pItemContext->pszStats);
 
 		for (i = 0; pszAllowed[i] != NULL; i++)
 			{
-			if (Game_CompareStrings(pszAllowed[i],pItemContext->pszName,uLen,CMP_TYPE_BEGIN))
+			if (Game_CompareStrings(pszAllowed[i],pItemContext->pszStats,uLen,CMP_TYPE_BEGIN))
 				{
 				bAllowed = TRUE;
 				break;
@@ -119,9 +120,9 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 
 		if (!bAllowed)
 			{
-			if (Game_CompareStrings(L"ARM_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
-			else if (Game_CompareStrings(L"WPN_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
-			else if (Game_CompareStrings(L"CONT_",pItemContext->pszName,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			if (Game_CompareStrings(L"ARM_",pItemContext->pszStats,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			else if (Game_CompareStrings(L"WPN_",pItemContext->pszStats,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
+			else if (Game_CompareStrings(L"CONT_",pItemContext->pszStats,uLen,CMP_TYPE_BEGIN)) pItemContext->iAmount = pItemContext->iAmountOld = -1;
 			}
 		}
 
@@ -231,6 +232,12 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 				case GAME_PAGE_NAME:
 					Game_EditNameSet(pItem,&pItem->pxaDescription,pItemContext->pszDescription,L"CustomDescription");
 					Game_EditNameSet(pItem,&pItem->pxaDisplayName,pItemContext->pszDisplayName,L"CustomDisplayName");
+					if (pItem->pszDisplayName)
+						{
+						HeapFree(App.hHeap,0,pItem->pszDisplayName);
+						pItem->pszDisplayName = NULL;
+						}
+					Game_ResolveDisplayName(pItem);
 					break;
 				case GAME_PAGE_AMOUNT:
 					if (pItemContext->iAmount == 0) pItemContext->iAmount = 1;
@@ -1139,7 +1146,7 @@ void Game_EditBoostersChange(HWND hDlg, BOOL bAdd, GAMEEDITITEMCONTEXT *pItemCon
 
 	//--- Sélectionne l'augmentation ---
 
-	pszResult = Game_EditValue(hDlg,pszBooster,DATA_TYPE_BOOSTERS,pItemContext->pszName,&pItemContext->uFilter);
+	pszResult = Game_EditValue(hDlg,pszBooster,DATA_TYPE_BOOSTERS,pItemContext->pItem,&pItemContext->uFilter);
 	if (!pszResult) return;
 
 	//--- [Ajout] Création d'une nouvelle augmentation ---
@@ -1695,7 +1702,7 @@ void Game_EditBonusChange(HWND hDlg, BOOL bAdd, GAMEEDITITEMCONTEXT *pItemContex
 
 	//--- Sélectionne le nouveau bonus ---
 
-	pEditBonusNew = Game_Bonus(hDlg,pEditBonus,pItemContext->pszName);
+	pEditBonusNew = Game_Bonus(hDlg,pEditBonus,pItemContext->pItem);
 	if (!pEditBonusNew) return;
 
 	//--- [Ajout] Ajoute le nouveau bonus dans la liste ---
@@ -1882,7 +1889,7 @@ void Game_EditRunesDrawBonus(GAMEEDITITEMCONTEXT *pItemContext, UINT uCtrlId, DR
 		DrawIconEx(pDraw->hDC,rcArea.left,rcArea.top+(rcArea.bottom-rcArea.top-16)/2,App.hIcons[uIcons[uBonusId]],15,16,0,NULL,DI_NORMAL);
 		rcArea.left += 20;
 		DrawText(pDraw->hDC,pItemContext->runes[uRuneId].pszBonuses[uBonusId],-1,&rcArea,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
-		uType = Game_GetItemType(pItemContext->pszName);
+		uType = Game_GetItemType(pItemContext->pszStats);
 		if ((uType == DATA_TYPE_IS_WEAPON && uBonusId != 0) || (uType == DATA_TYPE_IS_ARMOR && uBonusId != 1) || (uType == DATA_TYPE_IS_ACCESSORY && uBonusId != 2))
 			{
 			HDC		hDC;
@@ -1929,7 +1936,7 @@ void Game_EditRunesChange(HWND hDlg, UINT uIndex, GAMEEDITITEMCONTEXT *pItemCont
 {
 	WCHAR*	pszResult;
 
-	pszResult = Game_EditValue(hDlg,pItemContext->runes[uIndex].pszId,DATA_TYPE_RUNES,pItemContext->pszName);
+	pszResult = Game_EditValue(hDlg,pItemContext->runes[uIndex].pszId,DATA_TYPE_RUNES,pItemContext->pItem);
 	if (!pszResult) return;
 
 	Game_EditRunesRelease(&pItemContext->runes[uIndex]);

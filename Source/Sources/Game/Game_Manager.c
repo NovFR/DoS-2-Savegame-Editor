@@ -311,7 +311,7 @@ void Game_InventoryMenu(HWND hwndCtrl, UINT uMenuId)
 			if (!pItem) break;
 			if (!pItem->bIsBackPack) break;
 			Game_SaveTopIndex();
-			pInventory = Game_BuildInventory(pItem->pxaName,pItem->pxaDisplayName,pItem->pxaInventory,&App.Game.pdcCurrent->nodeInventories);
+			pInventory = Game_BuildInventory(pItem,pItem->pxaInventory,&App.Game.pdcCurrent->nodeInventories);
 			if (pInventory)
 				{
 				App.Game.pdcCurrent->pdiInventory = pInventory;
@@ -543,7 +543,7 @@ int Game_BuildPlayers()
 
 		//--- Création de l'inventaire du personnage ---
 
-		pInventory = Game_BuildInventory(NULL,NULL,pdc->pxaInventoryId,&pdc->nodeInventories);
+		pInventory = Game_BuildInventory(NULL,pdc->pxaInventoryId,&pdc->nodeInventories);
 		if (!pInventory)
 			{
 			Game_ReleasePlayers();
@@ -590,10 +590,41 @@ void Game_ReleasePlayers()
 	return;
 }
 
+//--- Réinitialise les noms des objets ---
+
+void Game_ResetDisplayNames()
+{
+	DOS2CHARACTER*	pdc;
+	DOS2INVENTORY*	pInventory;
+	DOS2ITEM*	pItem;
+
+	for (pdc = (DOS2CHARACTER *)App.Game.nodeXMLCharacters.next; pdc != NULL; pdc = (DOS2CHARACTER *)pdc->node.next)
+		{
+		for (pInventory = (DOS2INVENTORY *)pdc->nodeInventories.next; pInventory != NULL; pInventory = (DOS2INVENTORY *)pInventory->node.next)
+			{
+			for (pItem = (DOS2ITEM *)pInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next)
+				{
+				if (pItem->pszDisplayName)
+					{
+					HeapFree(App.hHeap,0,pItem->pszDisplayName);
+					pItem->pszDisplayName = NULL;
+					}
+				}
+			if (pInventory->pszDisplayNameRef && pInventory->pParentItem)
+				{
+				Game_ResolveDisplayName((DOS2ITEM *)pInventory->pParentItem);
+				pInventory->pszDisplayNameRef = ((DOS2ITEM *)pInventory->pParentItem)->pszDisplayName;
+				}
+			}
+		}
+
+	return;
+}
+
 
 // «»»» Création d'un inventaire ««««««««««««««««««««««««««««««««««««««««»
 
-DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentDisplayName, XML_ATTR *pxaInventoryId, NODE *pInventoriesRoot)
+DOS2INVENTORY* Game_BuildInventory(DOS2ITEM *pParentItem, XML_ATTR *pxaInventoryId, NODE *pInventoriesRoot)
 {
 	XML_NODE*	pxnItemsList;
 	XML_NODE*	pxnItem;
@@ -607,8 +638,13 @@ DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentD
 	pInventory = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(DOS2INVENTORY));
 	if (!pInventory) return(NULL);
 	pInventory->iSelected = -1;
-	pInventory->pszNameRef = xml_GetThisAttrValue(pxaParentName);
-	pInventory->pszDisplayName = Game_CopyDisplayName(xml_GetThisAttrValue(pxaParentDisplayName));
+	pInventory->pParentItem = pParentItem;
+	if (pParentItem)
+		{
+		Game_ResolveDisplayName(pParentItem);
+		pInventory->pszStatsRef = xml_GetThisAttrValue(pParentItem->pxaStats);
+		pInventory->pszDisplayNameRef = pParentItem->pszDisplayName;
+		}
 	List_AddEntry((NODE *)pInventory,pInventoriesRoot);
 
 	//--- Recherche l'inventaire ---
@@ -646,7 +682,7 @@ DOS2INVENTORY* Game_BuildInventory(XML_ATTR *pxaParentName, XML_ATTR *pxaParentD
 		List_AddEntry((NODE *)pItem,&pInventory->nodeItems);
 
 		// Attributs généraux
-		pItem->pxaName = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Stats");
+		pItem->pxaStats = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Stats");
 		pItem->pxaAmount = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Amount");
 		pItem->pxaIsGenerated = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"IsGenerated");
 		pItem->pxaInventory = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Inventory");
@@ -735,10 +771,15 @@ UINT Game_GetInventoryItemsCount(XML_NODE *pxnItemsList, WCHAR *pszInventoryId)
 
 void Game_ReleaseInventory(DOS2INVENTORY *pdiInventory)
 {
+	DOS2ITEM*	pItem;
+
+	for (pItem = (DOS2ITEM *)pdiInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next)
+		{
+		if (pItem->pszDisplayName) HeapFree(App.hHeap,0,pItem->pszDisplayName);
+		}
+
 	List_ReleaseMemory(&pdiInventory->nodeItems);
 	List_RemEntry((NODE *)pdiInventory);
-
-	if (pdiInventory->pszDisplayName) HeapFree(App.hHeap,0,pdiInventory->pszDisplayName);
 	HeapFree(App.hHeap,0,pdiInventory);
 	return;
 }
@@ -902,7 +943,7 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 		}
 
 	// Finally, sort by name
-	iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pItem1->pxaName->value,-1,pItem2->pxaName->value,-1,NULL,NULL,0);
+	iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pItem1->pxaStats->value,-1,pItem2->pxaStats->value,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
 
@@ -1047,19 +1088,44 @@ BOOL Game_IsItemEquipped(DOS2ITEM *pItem)
 
 // «»»» Copie le nom d'affichage d'un objet «««««««««««««««««««««««««««««»
 
-WCHAR* Game_CopyDisplayName(WCHAR *pszDisplayNameRef)
-{
-	WCHAR*	pszDisplayName = NULL;
+// This functions tries to translate the item name
+// pItem->pszDisplayName: DisplayName > LocaleName > StatsName > NULL
 
-	if (pszDisplayNameRef)
+void Game_ResolveDisplayName(DOS2ITEM *pItem)
+{
+	WCHAR*	pszID;
+
+	if (pItem->pszDisplayName) return; // Already resolved
+
+	//--- DisplayName ---
+	if (App.Config.bItemsDisplayName)
 		{
-		UINT uLen = Misc_HtmlSpecialCharsDecode(NULL,pszDisplayNameRef);
-		if (uLen)
+		pszID = xml_GetThisAttrValue(pItem->pxaDisplayName);
+		if (pszID)
 			{
-			pszDisplayName = HeapAlloc(App.hHeap,0,++uLen*sizeof(WCHAR));
-			if (pszDisplayName) Misc_HtmlSpecialCharsDecode(pszDisplayName,pszDisplayNameRef);
+			UINT uLen = Misc_HtmlSpecialCharsDecode(NULL,pszID);
+			if (uLen)
+				{
+				pItem->pszDisplayName = HeapAlloc(App.hHeap,0,++uLen*sizeof(WCHAR));
+				if (pItem->pszDisplayName) Misc_HtmlSpecialCharsDecode(pItem->pszDisplayName,pszID);
+				}
+			if (pItem->pszDisplayName) return;
 			}
 		}
 
-	return(pszDisplayName);
+	//--- LocaleName & StatsName ---
+	pszID = xml_GetThisAttrValue(pItem->pxaStats);
+	if (pszID)
+		{
+		//--- LocaleName ---
+		if (App.Config.bItemsResolve && App.Game.pItemsLocale)
+			{
+			Locale_QueryID(App.Game.pItemsLocale->db,szDataBaseItems,pszID,NULL,&pItem->pszDisplayName,1);
+			if (pItem->pszDisplayName) return;
+			}
+		//--- StatsName ---
+		pItem->pszDisplayName = Misc_StrCpyAlloc(pszID);
+		}
+
+	return;
 }

@@ -1038,7 +1038,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 	ctx->pszPath = Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSX);
 	if (ctx->pszPath)
 		{
-		if (xml_LoadFile(ctx->pszPath))
+		if (xml_LoadFile(ctx->pszPath,&App.Game.Save.nodeXMLRoot,XML_FLAG_HASHEADER))
 			{
 			Game_BuildPlayers();
 			Game_UpdateButtons();

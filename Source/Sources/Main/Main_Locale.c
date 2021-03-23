@@ -128,6 +128,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 	UINT		uId;
 
 	ZeroMemory(&Parser,sizeof(LOCALE_PARSER));
+	Parser.iFlags = SQLITE_OPEN_READONLY;
 	Parser.pszLastError = Locale_GetText(TEXT_ERR_LOCALE_MISC);
 	if (!Parser.pszLastError) Parser.pszLastError = szLocaleFatalErr;
 
@@ -149,6 +150,8 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 				((LOCALE_TEXT *)*pLocalePtr)[uId].pszUID = TextsIds[uId];
 				}
 			break;
+		case LOCALE_TYPE_MISC_WRITE:
+			Parser.iFlags = SQLITE_OPEN_READWRITE;
 		case LOCALE_TYPE_MISC:
 			*pLocalePtr = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LOCALE_MISC));
 			if (!*pLocalePtr)
@@ -170,7 +173,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 	Parser.pszLastError = Locale_GetText(TEXT_ERR_LOCALE);
 	if (!Parser.pszLastError) Parser.pszLastError = szLocaleErr;
 
-	uId = sqlite3_open_v2(Parser.pszDataBasePath,&Parser.db,SQLITE_OPEN_READONLY,NULL);
+	uId = sqlite3_open_v2(Parser.pszDataBasePath,&Parser.db,Parser.iFlags,NULL);
 	if (uId != SQLITE_OK)
 		{
 		DWORD_PTR	vl[3];
@@ -234,6 +237,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			sqlite3_close(Parser.db);
 			break;
 		case LOCALE_TYPE_MISC:
+		case LOCALE_TYPE_MISC_WRITE:
 			((LOCALE_MISC *)*pLocalePtr)->db = Parser.db;
 			break;
 		default:sqlite3_close(Parser.db);
@@ -282,6 +286,7 @@ void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 				}
 			break;
 		case LOCALE_TYPE_MISC:
+		case LOCALE_TYPE_MISC_WRITE:
 			sqlite3_close(((LOCALE_MISC *)*pLocalePtr)->db);
 			break;
 		}

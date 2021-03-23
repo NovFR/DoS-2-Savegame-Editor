@@ -257,6 +257,10 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			App.pLocaleTexts = pLocale;
 			App.pszLocaleName = pszLocaleName;
 
+			Locale_Unload(LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
+			Locale_Load(hWnd,szLangPath,pszLang,LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
+			Game_ResetDisplayNames();
+
 			//--- Recreate the menu ---
 			App.hMenu = Menu_Create(&MainMenu);
 			if (App.hMenu)
@@ -300,6 +304,8 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			SendMessage(App.Game.Layout.hwndInventory,LVM_SETGROUPINFO,(WPARAM)3,(LPARAM)&lvGroup);
 
 			//--- Update window ---
+			InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
+			InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
 			InvalidateRect(App.Game.Layout.hwndList,NULL,FALSE);
 			InvalidateRect(App.hWnd,NULL,FALSE);
 			UpdateWindow(App.hWnd);

@@ -19,6 +19,7 @@
 #include "Requests.h"
 #include "Dialogs.h"
 #include "Utils.h"
+#include "Game.h"
 
 extern APPLICATION		App;
 
@@ -94,10 +95,18 @@ void Config_Modify()
 	App.Config.bSkillsGroups = pContext->pConfig->bSkillsGroups;
 	App.Config.uSkillsView = pContext->pConfig->uSkillsView;
 	App.Config.bBoostersGroups = pContext->pConfig->bBoostersGroups;
-
 	App.Config.bCapOverride = pContext->pConfig->bCapOverride;
 
 	if (wcscmp(App.Config.pszLocaleName,pContext->pConfig->pszLocaleName)) Config_SetLanguage(App.hWnd,pContext->pConfig->pszLocaleName);
+
+	if (App.Config.bItemsDisplayName != pContext->pConfig->bItemsDisplayName || App.Config.bItemsResolve != pContext->pConfig->bItemsResolve)
+		{
+		App.Config.bItemsDisplayName = pContext->pConfig->bItemsDisplayName;
+		App.Config.bItemsResolve = pContext->pConfig->bItemsResolve;
+		Game_ResetDisplayNames();
+		InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
+		InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
+		}
 
 	//--- Terminé ---
 
@@ -161,6 +170,8 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		//--- Textes
 		SetDlgItemText(hDlg,301,Locale_GetText(TEXT_CONFIG_OVERRIDE));
 		SetDlgItemText(hDlg,302,Locale_GetText(TEXT_DIALOG_TAG_SHOWHIDDEN));
+		SetDlgItemText(hDlg,303,Locale_GetText(TEXT_CONFIG_ITEMSDISPLAYNAME));
+		SetDlgItemText(hDlg,304,Locale_GetText(TEXT_CONFIG_ITEMSRESOLVE));
 		SetDlgItemText(hDlg,310,Locale_GetText(TEXT_VIEW_GROUPS));
 		SetDlgItemText(hDlg,320,Locale_GetText(TEXT_VIEW_GROUPS));
 		SetDlgItemText(hDlg,330,Locale_GetText(TEXT_VIEW_GROUPS));
@@ -170,6 +181,8 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		//--- Drapeaux
 		CheckDlgButton(hDlg,301,pContext->pConfig->bCapOverride?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,302,pContext->pConfig->bShowHiddenTags?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,303,pContext->pConfig->bItemsDisplayName?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,304,pContext->pConfig->bItemsResolve?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,310,pContext->pConfig->bRunesGroups?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,320,pContext->pConfig->bSkillsGroups?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,330,pContext->pConfig->bBoostersGroups?BST_CHECKED:BST_UNCHECKED);
@@ -483,6 +496,8 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	pContext->pConfig->bSaveOnExit = IsDlgButtonChecked(hDlg,778) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bCapOverride = IsDlgButtonChecked(hDlg,301) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bShowHiddenTags = IsDlgButtonChecked(hDlg,302) == BST_CHECKED?TRUE:FALSE;
+	pContext->pConfig->bItemsDisplayName = IsDlgButtonChecked(hDlg,303) == BST_CHECKED?TRUE:FALSE;
+	pContext->pConfig->bItemsResolve = IsDlgButtonChecked(hDlg,304) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bRunesGroups = IsDlgButtonChecked(hDlg,310) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bSkillsGroups = IsDlgButtonChecked(hDlg,320) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bBoostersGroups = IsDlgButtonChecked(hDlg,330) == BST_CHECKED?TRUE:FALSE;

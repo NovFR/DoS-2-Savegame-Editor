@@ -150,7 +150,6 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 {
 	DOS2ITEM*	pItem;
 	WCHAR*		pszText;
-	WCHAR*		pszDisplayName;
 	HFONT		hFont;
 	RECT		rcDraw;
 	RECT		rcClient;
@@ -158,7 +157,6 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 	int		iBack;
 
 	pszText = NULL;
-	pszDisplayName = NULL;
 	pItem = (DOS2ITEM *)pDraw->itemData;
 	hFont = SelectObject(pDraw->hDC,App.Font.hFont);
 	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
@@ -207,17 +205,14 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			//--- Icon, Name and Level ---
 
-			//--- Get custom name or stats name or unknown
-			pszText = pszDisplayName = Game_CopyDisplayName(xml_GetThisAttrValue(pItem->pxaDisplayName));
-			if (!pszText)
-				{
-				pszText = xml_GetThisAttrValue(pItem->pxaName);
-				if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
-				}
+			//--- Get name or set unknown
+			Game_ResolveDisplayName(pItem);
+			pszText = pItem->pszDisplayName;
+			if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
 
 			//--- Draw icon
 			CopyRect(&rcDraw,&rcClient);
-			Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(pItem->pxaName),pItem->bIsBackPack?APP_ICON_BACKPACK:APP_ICON_EMPTY,&rcDraw,GAME_ICON_SIZE,TRUE,TRUE);
+			Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(pItem->pxaStats),pItem->bIsBackPack?APP_ICON_BACKPACK:APP_ICON_EMPTY,&rcDraw,GAME_ICON_SIZE,TRUE,TRUE);
 
 			//--- Draw name
 			CopyRect(&rcDraw,&rcClient);
@@ -246,10 +241,6 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
 				LocalFree(pszLevel);
 				}
-
-			//--- Free display name buffer
-			if (pszDisplayName)
-				HeapFree(App.hHeap,0,pszDisplayName);
 
 			//--- Runes ---
 
@@ -687,9 +678,7 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 			{
 			WCHAR*		pszText;
 
-			pszText = App.Game.pdcCurrent->pdiInventory->pszDisplayName;
-			if (!pszText) pszText = App.Game.pdcCurrent->pdiInventory->pszNameRef;
-
+			pszText = App.Game.pdcCurrent->pdiInventory->pszDisplayNameRef;
 			if (pszText)
 				{
 				HFONT		hFont;
@@ -702,7 +691,7 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 				iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.right = rcDraw.left+GAME_ICON_SIZE;
-				Game_PaintIcon(pDraw->hDC,App.Game.pdcCurrent->pdiInventory->pszNameRef,APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
+				Game_PaintIcon(pDraw->hDC,App.Game.pdcCurrent->pdiInventory->pszStatsRef,APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.left += GAME_ICON_SIZE;
 				DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_LEFT);

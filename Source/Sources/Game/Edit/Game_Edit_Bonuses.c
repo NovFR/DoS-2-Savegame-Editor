@@ -276,7 +276,7 @@ static GAMEITEMCOLORS	ItemColors[] =	{
 // Elle retourne cette copie (éventuellement modifiée) ou NULL en cas d'erreur.
 // La structure pointée par pBonus n'est JAMAIS modifiée.
 
-GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject)
+GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, DOS2ITEM *pItem)
 {
 	GAMEEDITBONUSCONTEXT*	pBonusContext;
 	GAMEEDITBONUS*		pNewEditBonus;
@@ -331,7 +331,8 @@ GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, WCHAR *pszObject
 		goto Done;
 		}
 
-	pBonusContext->pszObject = pszObject;
+	pBonusContext->pItem = pItem;
+	if (pItem) pBonusContext->pszStats = xml_GetThisAttrValue(pItem->pxaStats);
 
 	//--- Création des pages ---
 
@@ -526,7 +527,7 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				case GAME_PAGE_BONUS_TARGET:
 					if (wParam == 777)
 						{
-						Game_EditValueDrawObject(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pszObject,NULL,(DRAWITEMSTRUCT *)lParam);
+						Game_EditValueDrawObject(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pItem,NULL,(DRAWITEMSTRUCT *)lParam);
 						return(TRUE);
 						}
 					else if (wParam == 108 || wParam == 208)
@@ -958,8 +959,8 @@ int Game_BonusActivate(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 				UINT	uType;
 				UINT64	uFlags;
 
-				uType = Game_GetItemType(ctx->bonus.pContext->pszObject);
-				uFlags = Game_GetItemFlags(ctx->bonus.pContext->pszObject);
+				uType = Game_GetItemType(ctx->bonus.pContext->pszStats);
+				uFlags = Game_GetItemFlags(ctx->bonus.pContext->pszStats);
 				if (uType == DATA_TYPE_IS_WEAPON) CheckDlgButton(hDlg,201,BST_CHECKED);
 				else if (uType == DATA_TYPE_IS_ARMOR && uFlags&FILTER_SHIELDS) CheckDlgButton(hDlg,202,BST_CHECKED);
 				else CheckDlgButton(hDlg,200,BST_CHECKED);

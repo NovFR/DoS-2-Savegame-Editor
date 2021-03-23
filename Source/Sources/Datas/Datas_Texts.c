@@ -14,6 +14,7 @@ WCHAR	szTitle[]			= L"GlEd";
 #endif
 WCHAR	szTitleFmt[]			= L"%2 - %1";
 WCHAR	szTitleFmtLong[]		= L"%3 - %2 - %1";
+WCHAR	szTimeFmt[]			= L"%04d/%02d/%02d %02d:%02d:%02d - ";
 
 WCHAR	szWindowClass[]			= L"GlEdWindowClass32";
 WCHAR	szDialogClass[]			= L"GlEdDialog32";
@@ -53,6 +54,7 @@ WCHAR	szBonusFmt[]			= L"%3%2 %1";
 WCHAR	szBonusDamageTypeFmt[]		= L"%1: %2";
 WCHAR	szBonusColorsFmt[]		= L"%1: %2";
 
+WCHAR	szDebugLogFileName[]		= L"Log.txt";
 WCHAR	szConverterEXE[]		= L"C\\ConverterApp.exe";
 WCHAR	szDivineEXE[]			= L"C\\divine.exe";
 WCHAR	szDivineExtract[]		= L"divine.exe -l %1 -s \"%2\" -i lsv -d \"%3\" -a extract-package -g %4";
@@ -110,6 +112,7 @@ WCHAR	szDataBaseTags[]		= L"tags";
 WCHAR	szDataBaseBoosters[]		= L"boosters";
 WCHAR	szDataBaseSkills[]		= L"skills";
 WCHAR	szDataBaseColors[]		= L"colors";
+WCHAR	szDataBaseItems[]		= L"items";
 
 char	szLocaleLangQuery[]		= "SELECT text FROM language WHERE id = 'lang' LIMIT 1";
 char	szLocaleAppQuery[]		= "SELECT * FROM application";

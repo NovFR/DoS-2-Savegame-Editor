@@ -16,6 +16,7 @@
 #include "Texts.h"
 
 extern APPLICATION	App;
+static WCHAR*		htmlEntities[] = { L"&apos;",L"'", L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -116,7 +117,6 @@ WCHAR* Misc_FormatNumber(WCHAR *pszText)
 
 UINT Misc_HtmlSpecialCharsDecode(WCHAR *pszCopy, WCHAR *pszText)
 {
-	static WCHAR*	htmlEntities[] = { L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };
 	UINT		i,j,k,l;
 	UINT		uLen;
 
@@ -163,75 +163,29 @@ UINT Misc_HtmlSpecialCharsDecode(WCHAR *pszCopy, WCHAR *pszText)
 
 UINT Misc_HtmlSpecialChars(WCHAR *pszCopy, WCHAR *pszText)
 {
-	UINT	i,j;
+	UINT	i,j,k,l,n;
 	UINT	uLen;
 
 	if (!pszText) return(0);
 
 	for (i = 0, j = 0, uLen = 0; pszText[i] != 0; i++)
 		{
-		if (pszText[i] == L'&')
+		for (n = 0, k = 0; htmlEntities[k] != NULL; k += 2)
 			{
-			if (pszCopy)
-				{
-				pszCopy[j++] = L'&';
-				pszCopy[j++] = L'a';
-				pszCopy[j++] = L'm';
-				pszCopy[j++] = L'p';
-				pszCopy[j++] = L';';
-				}
-			uLen += 5;
+			if (pszText[i] != htmlEntities[k+1][0]) continue;
+			l = wcslen(htmlEntities[k]);
+			if (pszCopy) CopyMemory(&pszCopy[j],htmlEntities[k],l*sizeof(WCHAR));
+			j += l;
+			uLen += l;
+			n = 1;
+			break;
 			}
-		else if (pszText[i] == L'<')
-			{
-			if (pszCopy)
-				{
-				pszCopy[j++] = L'&';
-				pszCopy[j++] = L'l';
-				pszCopy[j++] = L't';
-				pszCopy[j++] = L';';
-				}
-			uLen += 4;
-			}
-		else if (pszText[i] == L'>')
-			{
-			if (pszCopy)
-				{
-				pszCopy[j++] = L'&';
-				pszCopy[j++] = L'g';
-				pszCopy[j++] = L't';
-				pszCopy[j++] = L';';
-				}
-			uLen += 4;
-			}
-		else if (pszText[i] == L'\n')
-			{
-			if (pszCopy)
-				{
-				pszCopy[j++] = L'&';
-				pszCopy[j++] = L'#';
-				pszCopy[j++] = L'x';
-				pszCopy[j++] = L'A';
-				}
-			uLen += 4;
-			}
-		else if (pszText[i] == L'"')
-			{
-			if (pszCopy)
-				{
-				pszCopy[j++] = L'&';
-				pszCopy[j++] = L'q';
-				pszCopy[j++] = L'u';
-				pszCopy[j++] = L'o';
-				pszCopy[j++] = L't';
-				pszCopy[j++] = L';';
-				}
-			uLen += 6;
-			}
+		if (n) continue;
 		else if (pszText[i] == L'\n' || pszText[i] >= L' ')
 			{
 			if (pszCopy) pszCopy[j++] = pszText[i];
 			uLen++;
+			continue;
 			}
 		}
 	if (pszCopy) pszCopy[j] = L'\0';
@@ -499,34 +453,3 @@ void Misc_Printf(WCHAR *pszBuffer, UINT uMaxLen, WCHAR *pszFormat, ...)
 
 	return;
 }
-
-
-// «»»» Données de debug dans un fichier ««««««««««««««««««««««««««««««««»
-
-#if _DEBUG
-void Misc_DebugOut(const WCHAR *pszFmt, ...)
-{
-	HANDLE	hFile;
-	WCHAR*	pszBuffer;
-	DWORD	dwBytes;
-	va_list	vl;
-
-	va_start(vl,pszFmt);
-	pszBuffer = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,65535);
-	if (pszBuffer)
-		{
-		wvsprintf(pszBuffer,pszFmt,vl);
-		hFile = CreateFile(L"debug.txt",FILE_APPEND_DATA,0,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-		if (hFile != INVALID_HANDLE_VALUE)
-			{
-			SetEndOfFile(hFile);
-			WriteFile(hFile,pszBuffer,wcslen(pszBuffer)*sizeof(WCHAR),&dwBytes,NULL);
-			WriteFile(hFile,szLF,wcslen(szLF)*sizeof(WCHAR),&dwBytes,NULL);
-			CloseHandle(hFile);
-			}
-		HeapFree(App.hHeap,0,pszBuffer);
-		}
-	va_end(vl);
-	return;
-}
-#endif

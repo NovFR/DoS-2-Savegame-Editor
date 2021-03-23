@@ -263,7 +263,9 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				if (!Parser.pSkill) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 				List_AddEntry((NODE *)Parser.pSkill,pRoot);
 				//--- Paramètres par défaut
+				Parser.pSkill->infos.uSchoolLocaleID = TEXT_ABILITIES_SPECIAL;
 				Parser.pSkill->options.bIsLearned = TRUE;
+				Parser.pSkill->options.bIsActivated = TRUE;
 				//--- Récupère l'identifiant de la compétence
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 				Parser.pSkill->pszId = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
@@ -288,6 +290,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				if (!Parser.pLineBegin) break;
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 				Parser.pSkill->infos.uMemorySlots = atol((char *)Parser.pLineBegin);
+				if (Parser.pSkill->infos.uMemorySlots) Parser.pSkill->options.bIsActivated = FALSE; // Not Innate Skill
 				//--- Récupère l'identifiant de l'icône
 				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
 				if (!Parser.pLineBegin) break;
@@ -297,21 +300,11 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
 				if (!Parser.pLineBegin) break;
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
-				Parser.pSkill->infos.uSchoolLocaleID = TEXT_ABILITIES_SPECIAL;
 				for (i = 0; GameDataSchools[i].pszSchool != NULL; i++)
 					{
 					if (strcmp(GameDataSchools[i].pszSchool,(char *)Parser.pLineBegin)) continue;
 					Parser.pSkill->infos.uSchoolLocaleID = GameDataSchools[i].uLocaleId;
 					break;
-					}
-				//--- Récupère les drapeaux
-				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
-				if (!Parser.pLineBegin) break;
-				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
-				if (!strcmp("INNATE",(char *)Parser.pLineBegin))
-					{
-					Parser.pSkill->options.bIsLearned = TRUE;
-					Parser.pSkill->options.bIsActivated = TRUE;
 					}
 				break;
 			}

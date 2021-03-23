@@ -20,6 +20,7 @@
 #include "Locale.h"
 
 extern APPLICATION	App;
+extern GAMEQUALITY	Qualities[];
 
 static GAMEEDITFILTER	GameBoostersFilters[] = {
 							{ 231, FILTER_ARMORS_ANY, TEXT_DIALOG_FILTER_ARMORS_ANY },
@@ -183,11 +184,11 @@ int Game_EditSetValue_Ok(HWND hDlg, void *pDialog)
 // Extra parameters:
 //
 //	DATA_TYPE_BOOSTERS:
-//		WCHAR* > Identifier of the object (may be NULL)
+//		DOS2ITEM* > Item (may be NULL)
 //		UINT64* > Pointer to filter flags (may be NULL)
 //
 //	DATA_TYPE_RUNES:
-//		WCHAR* > Identifier of the object (may be NULL)
+//		DOS2ITEM* > Item (may be NULL)
 //
 //	DATA_TYPE_TAGS:
 //		BOOL > Show Protected
@@ -219,17 +220,19 @@ WCHAR* Game_EditValue(HWND hWnd, WCHAR *pszValue, UINT uType, ...)
 		case DATA_TYPE_BOOSTERS:
 			pValue->pszTitle = Locale_GetText(pszValue?TEXT_DIALOG_BOOSTER_TITLE_EDIT:TEXT_DIALOG_BOOSTER_TITLE_ADD);
 			pValue->pszFileName = szBoostersDataPath;
-			pValue->pszObject = va_arg(vl,WCHAR *);
+			pValue->pItem = va_arg(vl,DOS2ITEM *);
 			pValue->pFilter = va_arg(vl,UINT64 *);
 			pValue->uResId = 1003;
+			if (pValue->pItem) pValue->pszStats = xml_GetThisAttrValue(pValue->pItem->pxaStats);
 			if (pValue->pFilter) pValue->uFilter = *pValue->pFilter;
 			break;
 		case DATA_TYPE_RUNES:
 			pValue->pszTitle = Locale_GetText(pszValue?TEXT_DIALOG_RUNE_TITLE_EDIT:TEXT_DIALOG_RUNE_TITLE_ADD);
 			pValue->pszFileName = szRunesDataPath;
-			pValue->pszObject = va_arg(vl,WCHAR *);
+			pValue->pItem = va_arg(vl,DOS2ITEM *);
 			pValue->uResId = 1004;
 			pValue->uSort = DATA_SORT_RUNE;
+			if (pValue->pItem) pValue->pszStats = xml_GetThisAttrValue(pValue->pItem->pxaStats);
 			break;
 		case DATA_TYPE_TAGS:
 			pValue->pszTitle = Locale_GetText(pszValue?TEXT_DIALOG_TAG_TITLE_EDIT:TEXT_DIALOG_TAG_TITLE_ADD);
@@ -366,7 +369,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 					}
 
 				//--- Colonnes ---
-				uType = Game_GetItemType(pValue->pszObject);
+				uType = Game_GetItemType(pValue->pszStats);
 				lvColumn.mask = LVCF_FMT|LVCF_ORDER|LVCF_TEXT|LVCF_WIDTH;
 				for (i = 0; i != 4; i++)
 					{
@@ -467,7 +470,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 							Dialog_DrawIconButton(APP_ICON_SELECT_INVERT,(DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
 						case 777:
-							Game_EditValueDrawObject(pValue->pszObject,NULL,(DRAWITEMSTRUCT *)lParam);
+							Game_EditValueDrawObject(pValue->pItem,NULL,(DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
 						}
 					break;
@@ -478,7 +481,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 							Dialog_ViewComboDrawItem((DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
 						case 777:
-							Game_EditValueDrawObject(pValue->pszObject,Game_GetItemTypeName(pValue->pszObject),(DRAWITEMSTRUCT *)lParam);
+							Game_EditValueDrawObject(pValue->pItem,Game_GetItemTypeName(pValue->pszStats),(DRAWITEMSTRUCT *)lParam);
 							return(TRUE);
 						}
 					break;
@@ -813,7 +816,7 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 				if (SendDlgItemMessage(hDlg,300,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == 0) goto Failed;
 
 				//--- Tile infos
-				uType = Game_GetItemType(pValue->pszObject);
+				uType = Game_GetItemType(pValue->pszStats);
 				uColumns[0] = 1;
 				uColumns[1] = 2;
 				uColumns[2] = 3;
@@ -1196,38 +1199,91 @@ void Game_EditValueSizeObject(HWND hDlg, UINT uCtrlID)
 
 //--- Affichage de l'objet ---
 
-void Game_EditValueDrawObject(WCHAR *pszName, WCHAR *pszMore, DRAWITEMSTRUCT *pDraw)
+void Game_EditValueDrawObject(DOS2ITEM *pItem, WCHAR *pszType, DRAWITEMSTRUCT *pDraw)
 {
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_BTNFACE));
 
-	if (pszName)
+	if (pItem)
 		{
+		WCHAR*		pszStats;
 		HFONT		hFont;
+		SIZE		size;
 		RECT		rcClient;
 		RECT		rcDraw;
 		COLORREF	crText;
 		int		iBack;
 
 		CopyRect(&rcClient,&pDraw->rcItem);
+		Game_ResolveDisplayName(pItem);
 
 		hFont = SelectObject(pDraw->hDC,App.Font.hFont);
 		crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
 		iBack = SetBkMode(pDraw->hDC,TRANSPARENT);
+		pszStats = xml_GetThisAttrValue(pItem->pxaStats);
 
-		//--- Draw item icon
+		//--- Icon ---
+
 		CopyRect(&rcDraw,&rcClient);
-		Game_PaintIcon(pDraw->hDC,pszName,APP_ICON_EMPTY,&rcDraw,GAME_ICON_SIZE,TRUE,TRUE);
+		Game_PaintIcon(pDraw->hDC,pszStats,APP_ICON_EMPTY,&rcDraw,GAME_ICON_SIZE,TRUE,TRUE);
 
-		//--- Draw item text
+		//--- Text ---
+
 		CopyRect(&rcDraw,&rcClient);
 		rcDraw.left += GAME_ICON_SIZE+8;
-		DrawText(pDraw->hDC,pszName,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 
-		//--- Draw item information
-		if (pszMore)
+		// Name
+		if (pItem)
 			{
-			rcDraw.top += App.Font.uFontHeight+2;
-			DrawText(pDraw->hDC,pszMore,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+			if (pItem->pszDisplayName)
+				{
+				DrawText(pDraw->hDC,pItem->pszDisplayName,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+				rcDraw.top += App.Font.uFontHeight+2;
+				}
+			}
+
+		// Type
+		if (pszType)
+			{
+			DrawText(pDraw->hDC,pszType,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+			GetTextExtentPoint32(pDraw->hDC,pszType,wcslen(pszType),&size);
+			rcDraw.left += size.cx+8;
+			}
+
+		// Level & Quality
+		if (pItem)
+			{
+			if (pItem->pxaLevel)
+				{
+				WCHAR*		pszLevel;
+				DWORD_PTR	dptrLevel;
+
+				if (pItem->pxaLevel->value)
+					{
+					dptrLevel = wcstol(pItem->pxaLevel->value,NULL,10);
+					if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,Locale_GetText(TEXT_OBJ_LEVEL),0,0,(WCHAR *)&pszLevel,1,(va_list *)&dptrLevel))
+						{
+						DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+						GetTextExtentPoint32(pDraw->hDC,pszLevel,wcslen(pszLevel),&size);
+						rcDraw.left += size.cx+8;
+						LocalFree(pszLevel);
+						}
+					}
+				}
+
+			if (pItem->pxaType)
+				{
+				if (pItem->pxaType->value)
+					{
+					int		i;
+
+					for (i = 0; Qualities[i].xmlName != NULL; i++)
+						{
+						if (wcscmp(pItem->pxaType->value,Qualities[i].xmlName)) continue;
+						SetTextColor(pDraw->hDC,Qualities[i].crColor);
+						DrawText(pDraw->hDC,Locale_GetText(Qualities[i].uNameId),-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+						}
+					}
+				}
 			}
 
 		SetBkMode(pDraw->hDC,iBack);
