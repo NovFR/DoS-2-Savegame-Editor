@@ -119,14 +119,6 @@ BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 		}
 	List_AddEntry((NODE *)pxnFirst,&pFile->nodeXMLRoot);
 
-	pxnNew = xml_CreateNode(L"header",pxnFirst,2,L"version",L"2",L"time",L"0");
-	if (!pxnNew)
-		{
-		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		return(FALSE);
-		}
-	List_AddEntry((NODE *)pxnNew,&pxnFirst->children);
-
 	pxnNew = xml_CreateNode(L"version",pxnFirst,0);
 	if (!pxnNew)
 		{
@@ -149,13 +141,13 @@ BOOL lsf_Create(LSFREADER *pReader, LSFILE *pFile)
 
 		switch(i)
 			{
-			case 0:	uValue = (pReader->pHeader->EngineVersion&0xFF000000)>>24;
+			case 0:	uValue = (pReader->pHeader->EngineVersion&0xF0000000)>>28;
 				break;
-			case 1:	uValue = (pReader->pHeader->EngineVersion&0x00FF0000)>>16;
+			case 1:	uValue = (pReader->pHeader->EngineVersion&0x0F000000)>>24;
 				break;
-			case 2:	uValue = (pReader->pHeader->EngineVersion&0x0000FF00)>>8;
+			case 2:	uValue = (pReader->pHeader->EngineVersion&0x00FF0000)>>16;
 				break;
-			case 3:	uValue = (pReader->pHeader->EngineVersion&0x000000FF);
+			case 3:	uValue = (pReader->pHeader->EngineVersion&0x0000FFFF);
 				break;
 			}
 		if (!xml_SetAttrValueNumber(pxa,uValue))
