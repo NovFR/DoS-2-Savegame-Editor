@@ -16,6 +16,7 @@
 #	Exemple: 32 indicates the icon "SI_0032".
 # [5] Memory slots
 #	Number of memory slots required.
+#	If 0, the skill is considered innate.
 # [6] School
 #	Can be one of the following:
 #		AIR
@@ -30,22 +31,18 @@
 #		SUMMONING
 #		WARFARE
 #		WATER
-# [7] Status
-#	Can be a one of the following:
-#		INNATE - Indicates an innate skill
-#		LOCKED - Skill can't be added ** IGNORED **
 #
 
-#- [1] ---------------------------------------- [2] --- [3] --- [4] --- [5] --- [6] ----------- [7] -------
+#- [1] ---------------------------------------- [2] --- [3] --- [4] --- [5] --- [6] -----------
 Cone_CorrosiveSpray				1	2	2	540	EARTH
-Cone_Flamebreath				0	1	0	313	SPECIAL		INNATE
+Cone_Flamebreath				0	1	0	313	SPECIAL
 Cone_GroundSmash				0	2	1	364	WARFARE
 Cone_Shatter					0	4	1	390	WATER
 Cone_SilencingStare				0	2	1	392	DEATH
 Cone_SteamLance					2	2	2	330	WATER
-Dome_CircleOfProtection				1	1	0	382	SPECIAL		INNATE
+Dome_CircleOfProtection				1	1	0	382	SPECIAL
 Jump_CloakAndDagger				0	1	1	112	ROGUES
-Jump_EnemyVoidGlide				0	1	0	106	SPECIAL		INNATE
+Jump_EnemyVoidGlide				0	1	0	106	SPECIAL
 Jump_PhoenixDive				0	1	1	325	WARFARE
 Jump_TacticalRetreat				0	1	1	106	HUNTING
 MultiStrike_BlinkStrike				0	2	1	370	WARFARE
@@ -98,10 +95,10 @@ Shout_Apotheosis				3	2	3	544	POLYMORPH
 Shout_BarbedCoat				0	0	1	148	WARFARE
 Shout_BlindingRadiance				0	2	1	335	AIR
 Shout_BoneCage					0	1	1	456	DEATH
-Shout_BreakTheShackles				1	0	0	429	SPECIAL		INNATE
+Shout_BreakTheShackles				1	0	0	429	SPECIAL
 Shout_BreathingBubble				0	1	1	526	AIR
 Shout_BullHorns					0	0	1	402	POLYMORPH
-Shout_CancelPolymorphism			0	1	0	561	POLYMORPH	INNATE
+Shout_CancelPolymorphism			0	1	0	561	POLYMORPH
 Shout_CauseFear					0	2	1	135	DEATH
 Shout_ChameleonSkin				0	1	1	314	POLYMORPH
 Shout_CloseTheDoor				1	2	2	486	SUMMONING
@@ -110,17 +107,17 @@ Shout_Contamination				0	1	1	336	EARTH
 Shout_Cryotherapy				0	1	1	531	WATER
 Shout_Deafen					0	2	1	577	SPECIAL
 Shout_DeflectiveBarrier				0	2	1	473	WARFARE
-Shout_DemonicTutelage				0	1	0	552	SUMMONING	INNATE
+Shout_DemonicTutelage				0	1	0	552	SUMMONING
 Shout_ElectricFence				2	2	2	334	AIR
 Shout_ElementalTortoise				0	0	1	153	WARFARE
-Shout_EnemyOverthrow				0	2	0	165	SPECIAL		INNATE
+Shout_EnemyOverthrow				0	2	0	165	SPECIAL
 Shout_EtherealSoles				0	1	1	322	ROGUES
 Shout_EvasiveAura				1	2	2	545	AIR
 Shout_FavourableWind				0	1	1	333	AIR
 Shout_FireBrand					0	1	1	438	FIRE
 Shout_FlamingSkin				1	1	2	496	POLYMORPH
 Shout_FlamingTongues				0	1	1	439	FIRE
-Shout_FleshSacrifice				0	0	0	338	SPECIAL		INNATE
+Shout_FleshSacrifice				0	0	0	338	SPECIAL
 Shout_FrostAura					0	1	1	449	WATER
 Shout_GlobalCooling				0	1	1	365	WATER
 Shout_GuardianAngel				0	2	1	394	WARFARE
@@ -129,7 +126,7 @@ Shout_IceBreaker				0	1	1	538	WATER
 Shout_IceSkin					1	1	2	534	POLYMORPH
 Shout_Ignition					0	1	1	319	FIRE
 Shout_InnerDemon				1	1	2	560	SUMMONING
-Shout_InspireStart				0	1	0	158	SPECIAL		INNATE
+Shout_InspireStart				0	1	0	158	SPECIAL
 Shout_InvisibilitySelfRogue			0	2	2	125	ROGUES
 Shout_Invulnerability				1	6	3	137	DEATH
 Shout_JellyfishSkin				1	1	2	525	POLYMORPH
@@ -143,24 +140,24 @@ Shout_MendMetal					0	1	1	459	EARTH
 Shout_NecromancerTotems				3	2	3	453	DEATH
 Shout_NullResistanceStart			0	2	1	138	DEATH
 Shout_OilyCarapace				0	1	1	558	EARTH
-Shout_PetrifyingVisage				0	2	0	518	POLYMORPH	INNATE
-Shout_PlayDead					0	0	0	501	SPECIAL		INNATE
+Shout_PetrifyingVisage				0	2	0	518	POLYMORPH
+Shout_PlayDead					0	0	0	501	SPECIAL
 Shout_PoisonWave				0	2	1	464	EARTH
 Shout_PoisonousSkin				1	1	2	553	POLYMORPH
-Shout_PolymorphIntoDwarf			0	1	0	408	POLYMORPH	INNATE
-Shout_PolymorphIntoElf				0	1	0	409	POLYMORPH	INNATE
-Shout_PolymorphIntoHuman			0	1	0	406	POLYMORPH	INNATE
-Shout_PolymorphIntoLizard			0	1	0	407	POLYMORPH	INNATE
+Shout_PolymorphIntoDwarf			0	1	0	408	POLYMORPH
+Shout_PolymorphIntoElf				0	1	0	409	POLYMORPH
+Shout_PolymorphIntoHuman			0	1	0	406	POLYMORPH
+Shout_PolymorphIntoLizard			0	1	0	407	POLYMORPH
 Shout_ReactiveArmor				0	2	1	478	EARTH
-Shout_RecoverArmour				0	2	0	375	SPECIAL		INNATE
+Shout_RecoverArmour				0	2	0	375	SPECIAL
 Shout_ShedSkin					1	1	2	398	POLYMORPH
-Shout_Shout_Toggle_Sprint			0	0	0	1016	SPECIAL		INNATE
+Shout_Shout_Toggle_Sprint			0	0	0	1016	SPECIAL
 Shout_SiphonPoison				0	1	1	457	EARTH
 Shout_SmokeCover				0	1	1	548	AIR
 Shout_SparkingSwings				0	1	1	514	FIRE
 Shout_SpiderLegs				0	0	1	515	POLYMORPH
-Shout_SpiritForm_Lucian				0	2	0	1015	SOURCE		INNATE
-Shout_SpiritVision				0	1	0	1015	SOURCE		INNATE
+Shout_SpiritForm_Lucian				0	2	0	1015	SOURCE
+Shout_SpiritVision				0	1	0	1015	SOURCE
 Shout_SteelSkin					0	2	1	401	POLYMORPH
 Shout_Supernova					0	3	1	440	FIRE
 Shout_Taunt					0	2	1	166	WARFARE
@@ -176,13 +173,13 @@ Storm_Ethereal					3	4	3	466	SUMMONING
 Storm_Lightning					3	4	3	582	AIR
 Summon_ArtilleryPlant				1	2	2	352	EARTH
 Summon_BonePile					0	2	1	476	DEATH
-Summon_BloodHeart				0	2	0	356	SPECIAL		INNATE
+Summon_BloodHeart				0	2	0	356	SPECIAL
 Summon_Cat					0	2	1	383	SUMMONING
 Summon_Condor					0	2	1	524	SUMMONING
 Summon_FireSlug					1	1	2	460	FIRE
 Summon_Incarnate				0	2	1	417	SUMMONING
 Summon_PlanarGateway				2	0	2	467	SUMMONING
-Summon_SoulWolf					1	3	0	431	SPECIAL		INNATE
+Summon_SoulWolf					1	3	0	431	SPECIAL
 Summon_TotemFromSurface				0	2	1	414	SUMMONING
 Target_AcidInfusion				2	1	2	495	SUMMONING
 Target_Apportation				0	1	1	461	AIR
@@ -214,8 +211,8 @@ Target_DeathWish				0	2	1	445	DEATH
 Target_DeathsDoor				0	3	1	554	DEATH
 Target_DecayingTouch				0	2	1	347	DEATH
 Target_DemonicBargain				2	1	2	550	POLYMORPH
-Target_DemonicStare				1	2	0	400	SPECIAL		INNATE
-Target_DualWieldingAttack			0	2	0	603	SPECIAL		LOCKED
+Target_DemonicStare				1	2	0	400	SPECIAL
+Target_DualWieldingAttack			0	2	0	603	SPECIAL
 Target_ElectricInfusion				0	1	1	420	SUMMONING
 Target_ElementalArrowheads			0	1	1	485	HUNTING
 Target_Enrage					0	2	1	340	WARFARE
@@ -235,20 +232,20 @@ Target_GagOrder					0	2	1	506	ROGUES
 Target_GraspOfTheStarved			2	2	2	446	DEATH
 Target_Harmony					0	2	1	413	SUMMONING
 Target_Haste					0	1	1	79	FIRE
-Target_HeavyAttack				0	3	0	376	SPECIAL		LOCKED
+Target_HeavyAttack				0	3	0	376	SPECIAL
 Target_IceInfusion				2	1	2	508	SUMMONING
 Target_Infect					0	3	1	348	DEATH
 Target_InvisibilityTarget			1	2	1	18	AIR
-Target_Item_ReplenishSource			0	1	0	586	SOURCE		INNATE
+Target_Item_ReplenishSource			0	1	0	586	SOURCE
 Target_KneeBreaker				0	2	1	396	ROGUES
-Target_MaddeningSong				1	1	0	433	SPECIAL		INNATE
+Target_MaddeningSong				1	1	0	433	SPECIAL
 Target_MassSabotage				1	2	2	511	FIRE
 Target_MasterOfSparks				1	1	2	497	FIRE
 Target_MosquitoSwarm				0	2	1	344	DEATH
 Target_NecrofireInfusion			2	1	2	500	SUMMONING
 Target_OilInfusion				0	1	1	427	SUMMONING
 Target_Overpower				3	2	3	339	WARFARE
-Target_PetrifyingTouch				0	1	0	332	SPECIAL		INNATE
+Target_PetrifyingTouch				0	1	0	332	SPECIAL
 Target_PoisonInfusion				0	1	1	421	SUMMONING
 Target_PowerInfusion				0	1	1	415	SUMMONING
 Target_PressureSpike				0	1	1	462	AIR
@@ -261,21 +258,21 @@ Target_SerratedEdge				0	2	1	320	ROGUES
 Target_ShacklesOfPain				0	1	1	349	DEATH
 Target_ShadowInfusion				0	1	1	475	SUMMONING
 Target_ShockingTouch				0	2	1	23	AIR
-Target_SingleHandedAttack			0	1	0	377	SPECIAL		LOCKED
+Target_SingleHandedAttack			0	1	0	377	SPECIAL
 Target_Silence					0	2	1	140	SPECIAL
 Target_SleepingArms				0	2	1	380	ROGUES
 Target_SoulMate					0	1	1	470	SUMMONING
-Target_SourceDisruption				0	1	0	367	SOURCE		INNATE
-Target_SourceVampirism				0	1	0	367	SOURCE		INNATE
+Target_SourceDisruption				0	1	0	367	SOURCE
+Target_SourceVampirism				0	1	0	367	SOURCE
 Target_SpontaneousCombustion			0	2	1	363	FIRE
-Target_Squall					1	2	0	434	SPECIAL		INNATE
+Target_Squall					1	2	0	434	SPECIAL
 Target_StripResistance				0	2	1	516	POLYMORPH
 Target_Supercharge				0	1	1	412	SUMMONING
 Target_TentacleLash				0	2	1	403	POLYMORPH
-Target_Terrify					0	2	0	551	SUMMONING	INNATE
+Target_Terrify					0	2	0	551	SUMMONING
 Target_TerrifyingCruelty			0	3	1	487	ROGUES
-Target_TimeWarp					1	2	0	435	SPECIAL		INNATE
-Target_UnlockMagic				0	1	0	108	SPECIAL		INNATE
+Target_TimeWarp					1	2	0	435	SPECIAL
+Target_UnlockMagic				0	1	0	108	SPECIAL
 Target_VacuumTouch				0	1	1	528	AIR
 Target_VampiricHunger				0	1	1	532	WATER
 Target_Vaporize					0	1	1	1003	AIR
@@ -288,7 +285,7 @@ Teleportation_ForcePush				0	2	1	308	SPECIAL
 Teleportation_FreeFall				0	2	1	309	AIR
 Teleportation_LastRites				0	3	1	391	DEATH
 Teleportation_Netherswap			0	1	1	20	AIR
-Teleportation_ResurrectScroll			0	6	0	139	DEATH		INNATE
+Teleportation_ResurrectScroll			0	6	0	139	DEATH
 Teleportation_SwapGround			0	1	1	564	POLYMORPH
 Tornado_Air					0	2	1	27	AIR
 Wall_LivingWall					0	2	1	477	EARTH
