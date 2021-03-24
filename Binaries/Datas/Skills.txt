@@ -65,6 +65,7 @@ Projectile_DustBlast				1	3	2	555	EARTH
 Projectile_FanOfKnives				1	3	2	488	ROGUES
 Projectile_Fireball				0	2	1	355	FIRE
 Projectile_FlamingDaggers			0	2	1	362	FIRE
+Projectile_Flight				0	1	0	419	SUMMONING
 Projectile_IceFan				0	3	1	452	WATER
 Projectile_InfectiousFlame			2	3	2	579	FIRE
 Projectile_LaunchBomber				0	2	1	458	ROGUES
@@ -179,6 +180,7 @@ Summon_Condor					0	2	1	524	SUMMONING
 Summon_FireSlug					1	1	2	460	FIRE
 Summon_Incarnate				0	2	1	417	SUMMONING
 Summon_PlanarGateway				2	0	2	467	SUMMONING
+Summon_Quest_SummonNewt				0	2	2	584	POLYMORPH
 Summon_SoulWolf					1	3	0	431	SPECIAL
 Summon_TotemFromSurface				0	2	1	414	SUMMONING
 Target_AcidInfusion				2	1	2	495	SUMMONING
@@ -276,6 +278,7 @@ Target_UnlockMagic				0	1	0	108	SPECIAL
 Target_VacuumTouch				0	1	1	528	AIR
 Target_VampiricHunger				0	1	1	532	WATER
 Target_Vaporize					0	1	1	1003	AIR
+Target_Vulture_ConsumeCorpse			0	2	0	1018	DEATH
 Target_WarpInfusion				0	1	1	474	SUMMONING
 Target_WaterInfusion				0	1	1	423	SUMMONING
 Target_Windwalker				0	1	1	310	AIR
