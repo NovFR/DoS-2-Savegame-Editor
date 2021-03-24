@@ -2,5 +2,5 @@
 <CodeBlocks_workspace_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveProject path="GlEd.cbp" />
-	<PreferredTarget name="Debug" />
+	<PreferredTarget name="Release" />
 </CodeBlocks_workspace_layout_file>
