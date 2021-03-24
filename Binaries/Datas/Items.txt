@@ -51,6 +51,7 @@ armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_LoneWolfMark
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SaheilaSignet
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet
 weapon_staff		WEAPON			|f|ARX_UNIQUE_Staff_Divine
+weapon_axe		WEAPON			|f|FTJ_Trompdoy_Hatchet
 weapon_mace		WEAPON			|f|WPN_FTJ_UNIQUE_BraccusTorch
 weapon_dagger		WEAPON			|f|WPN_FTJ_UNIQUE_GriffsKitchenKnife
 weapon_dagger		WEAPON			|f|WPN_RC_UNIQUE_Abstinence
