@@ -53,6 +53,8 @@ armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet
 weapon_staff		WEAPON			|f|ARX_UNIQUE_Staff_Divine
 weapon_mace		WEAPON			|f|WPN_FTJ_UNIQUE_BraccusTorch
 weapon_dagger		WEAPON			|f|WPN_FTJ_UNIQUE_GriffsKitchenKnife
+weapon_dagger		WEAPON			|f|WPN_RC_UNIQUE_Abstinence
+weapon_dagger		WEAPON			|f|WPN_RC_UNIQUE_Chastity
 weapon_spear		WEAPON			|f|GLO_Malady_Spear
 weapon_wand		WEAPON			|b|ARX_UNIQUE_Wand_
 item_aug		ITEM			|b|CON_Herb_Augmentor_
@@ -103,6 +105,7 @@ item_disarm		ITEM			|f|TOOL_Trap_DisarmToolkit
 item			ITEM			|f|UNIQUE_ARX_ToyScenery_Barrel
 item_pyramid		ITEM			|f|UNIQUE_Pyramid
 item_clawpoison		ITEM			|f|LOOT_ClawFinger_A
+item_bucket		ITEM			|f|FUR_Bucket_A
 
 gold_large		ITEM			|f|Trader_Bank_Gold
 gold_large		ITEM			|f|InBetween_Gold
@@ -167,6 +170,7 @@ armor_amulet		ACCESSORY|AMULET	|b|ARM_UNIQUE_ |e|Amulet
 armor_body		ARMOR|CHEST		|b|ARM_UNIQUE_ |e|Armor
 armor_body		ARMOR|CHEST		|b|ARM_UNIQUE_ |e|Armour
 armor_pants		ARMOR|LEGGINGS		|b|ARM_UNIQUE_ |e|Pantaloons
+armor_gloves		ARMOR|GLOVES		|b|ARM_UNIQUE_ |e|Arms
 armor_amulet		ACCESSORY|AMULET	|b|ARM_UNIQUE_ArxAmulet
 armor_boots		ARMOR|BOOTS		|b|ARM_UNIQUE_ArxBoots
 armor_helmet		ARMOR|HELMET		|b|ARM_UNIQUE_ArxHelmet
