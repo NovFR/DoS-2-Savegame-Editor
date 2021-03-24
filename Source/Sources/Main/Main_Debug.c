@@ -18,6 +18,12 @@
 
 extern APPLICATION		App;
 
+static DEBUGTYPE		DebugLogTypes[] = {	{ DEBUG_LOG_INFO, L"[INFO]" },
+							{ DEBUG_LOG_WARNING, L"[WARNING]" },
+							{ DEBUG_LOG_ERROR, L"[ERROR]" },
+							{ 0, NULL },
+						};
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
@@ -178,11 +184,13 @@ int Debug_Printf(WCHAR *pszMessage, WCHAR *pszFormat, DWORD_PTR pArgs[])
 
 // «»»» Logs ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 
-void Debug_Log(WCHAR *pszFmt, ...)
+void Debug_Log(UINT uLogType, WCHAR *pszFmt, ...)
 {
 	SYSTEMTIME	time;
 	HANDLE		hFile;
 	WCHAR*		pszBuffer;
+	WCHAR*		pszWriteBuffer;
+	WCHAR*		pszType;
 	WCHAR		pszTime[40];
 	DWORD		dwBytes;
 	int		n;
@@ -206,12 +214,32 @@ void Debug_Log(WCHAR *pszFmt, ...)
 		hFile = CreateFile(szDebugLogFileName,FILE_APPEND_DATA,0,NULL,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
 		if (hFile != INVALID_HANDLE_VALUE)
 			{
+			//--- Time
 			GetLocalTime(&time);
-			SetEndOfFile(hFile);
 			wsprintf(pszTime,szTimeFmt,time.wYear,time.wMonth,time.wDay,time.wHour,time.wMinute,time.wSecond);
-			WriteFile(hFile,pszTime,wcslen(pszTime)*sizeof(WCHAR),&dwBytes,NULL);
-			WriteFile(hFile,pszBuffer,wcslen(pszBuffer)*sizeof(WCHAR),&dwBytes,NULL);
-			WriteFile(hFile,szLF,wcslen(szLF)*sizeof(WCHAR),&dwBytes,NULL);
+			//--- Type
+			for (pszType = NULL, n = 0; DebugLogTypes[n].pszType != NULL; n++)
+				{
+				if (DebugLogTypes[n].uType != uLogType) continue;
+				pszType = DebugLogTypes[n].pszType;
+				break;
+				}
+			if (pszType == NULL) pszType = DebugLogTypes[0].pszType;
+			//--- Write line
+			n = wcslen(pszTime)+wcslen(pszType)+wcslen(szSpace)+wcslen(pszBuffer)+wcslen(szLF);
+			n *= sizeof(WCHAR);
+			pszWriteBuffer = HeapAlloc(App.hHeap,0,n+sizeof(WCHAR));
+			if (pszWriteBuffer)
+				{
+				wcscpy(pszWriteBuffer,pszTime);
+				wcscat(pszWriteBuffer,pszType);
+				wcscat(pszWriteBuffer,szSpace);
+				wcscat(pszWriteBuffer,pszBuffer);
+				wcscat(pszWriteBuffer,szLF);
+				SetEndOfFile(hFile);
+				WriteFile(hFile,pszWriteBuffer,n,&dwBytes,NULL);
+				HeapFree(App.hHeap,0,pszWriteBuffer);
+				}
 			CloseHandle(hFile);
 			}
 		HeapFree(App.hHeap,0,pszBuffer);

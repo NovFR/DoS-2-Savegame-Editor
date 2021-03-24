@@ -18,6 +18,12 @@
 #define	DEBUG_MAXTRACE		32
 #define DEBUG_NAMELEN		256
 
+enum {
+	DEBUG_LOG_INFO = 1,
+	DEBUG_LOG_WARNING,
+	DEBUG_LOG_ERROR,
+};
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
@@ -35,6 +41,11 @@ typedef struct DEBUGHELP {
 	WCHAR		pszNames[DEBUG_MAXTRACE][DEBUG_NAMELEN];
 } DEBUGHELP;
 
+typedef struct DEBUGTYPE {
+	UINT		uType;
+	WCHAR*		pszType;
+} DEBUGTYPE;
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
@@ -44,5 +55,6 @@ typedef struct DEBUGHELP {
 
 LONG WINAPI		Debug_ExceptionHandler(EXCEPTION_POINTERS *);
 int			Debug_Printf(WCHAR *,WCHAR *,DWORD_PTR []);
+void			Debug_Log(UINT,WCHAR *, ...);
 
 #endif
