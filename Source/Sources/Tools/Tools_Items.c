@@ -96,22 +96,40 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 	UINT		uTotal;
 	UINT		uCount;
 	GUID		guid;
+	int		i;
 
-	static WCHAR*	szTLSContentPath[] = { L"save",NULL, L"region",L"TranslatedStringKeys", L"node",L"root", L"children",NULL, NULL };
-	static WCHAR*	szTLSLocalePath[] = { L"contentList",NULL, NULL };
+	static WCHAR*		szTLSContentPath[] = { L"save",NULL, L"region",L"TranslatedStringKeys", L"node",L"root", L"children",NULL, NULL };
+	static WCHAR*		szTLSLocalePath[] = { L"contentList",NULL, NULL };
+
+	// Those items won't be in player's inventory
+	// Uses wcsncmp
+	static TLSBLACKLIST	ItemsBlackList[] = {	{ 0, L"Arena_" },
+							{ 0, L"SKILLBOOST_" },
+							{ 0, L"TOTEM_" },
+							{ 0, L"Stats_" },
+							{ 0, L"ObjectCategories_" },
+							{ 0, L"ItemCombinationProperty_" },
+							{ 0, NULL },
+						};
 
 	Game_Lock(GAME_LOCK_DISABLED|GAME_LOCK_APP);
 	Taskbar_SetProgressState(TBPF_INDETERMINATE);
 
-	Debug_Log(NULL);
-	Debug_Log(L"------ ITEM LOCALIZATION ---------------------------------------------- BEGIN ---");
-	Debug_Log(L"Items: %s",ctx->pszStatsLSXPath);
-	Debug_Log(L"Translation: %s",ctx->pszLocaleXMLPath);
-	if (ctx->pLocale) Debug_Log(L"Database: '%s'",ctx->pszLocale);
-	else Debug_Log(L"NOTE: Simulation mode - No DB");
+	Debug_Log(0,NULL);
+	Debug_Log(DEBUG_LOG_INFO,L"- ITEMS LOCALIZATION -");
+	Debug_Log(DEBUG_LOG_INFO,L"Items: %s",ctx->pszStatsLSXPath);
+	Debug_Log(DEBUG_LOG_INFO,L"Translation: %s",ctx->pszLocaleXMLPath);
+	if (ctx->pLocale) Debug_Log(DEBUG_LOG_INFO,L"Database: '%s'",ctx->pszLocale);
+	else Debug_Log(DEBUG_LOG_INFO,L"Simulation mode - No DB");
+
+	for (i = 0; ItemsBlackList[i].pszBegin != NULL; i++) ItemsBlackList[i].uLen = wcslen(ItemsBlackList[i].pszBegin);
+
+	//--- Target DB ---
 
 	if (ctx->pszLocale && !Locale_Load(ctx->hwndParent,szLangPath,ctx->pszLocale,LOCALE_TYPE_MISC_WRITE,(void **)&ctx->pLocale,NULL)) goto Done;
-	if (!xml_LoadFile(ctx->pszStatsLSXPath,&ctx->nodeStats,XML_FLAG_HASHEADER)) goto Done;
+
+	//--- Load and parse XML locale ---
+
 	if (!xml_LoadFile(ctx->pszLocaleXMLPath,&ctx->nodeLocale,XML_FLAG_HASCONTENT)) goto Done;
 
 	pxn = xml_GetNodeFromPathFirstChild((XML_NODE *)ctx->nodeLocale.next,szTLSLocalePath);
@@ -134,19 +152,19 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 				if (!pszValue) continue;
 				if (!Tools_LarianStringToGUID(pszValue,&pTable->guid))
 					{
-					Debug_Log(L"ERROR: Failed to create GUID for HANDLE '%s'",pszValue);
+					Debug_Log(DEBUG_LOG_ERROR,L"Failed to create GUID for HANDLE '%s'",pszValue);
 					continue;
 					}
 				uLen = Misc_HtmlSpecialCharsDecode(NULL,pxn->content);
 				if (!uLen)
 					{
-					Debug_Log(L"WARNING: HANDLE '%s' has no string",pszValue);
+					Debug_Log(DEBUG_LOG_WARNING,L"HANDLE '%s' has no string",pszValue);
 					continue;
 					}
 				pTable->pszText = HeapAlloc(App.hHeap,0,++uLen*sizeof(WCHAR));
 				if (!pTable->pszText)
 					{
-					Debug_Log(L"ERROR: Not enough memory for HANDLE '%s'",pszValue);
+					Debug_Log(DEBUG_LOG_ERROR,L"Not enough memory for HANDLE '%s'",pszValue);
 					SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 					goto Done;
 					}
@@ -155,6 +173,10 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 				}
 			}
 		}
+
+	//--- Load and parse LSX items ---
+
+	if (!xml_LoadFile(ctx->pszStatsLSXPath,&ctx->nodeStats,XML_FLAG_HASHEADER)) goto Done;
 
 	pxn = xml_GetNodeFromPathFirstChild((XML_NODE *)ctx->nodeStats.next,szTLSContentPath);
 	if (pxn)
@@ -177,6 +199,7 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 			pszValue = xml_GetAttrValue(xml_GetNode((XML_NODE *)pxn->children.next,szXMLattribute,szXMLid,L"Content"),L"handle");
 			if (!pszValue) continue;
 			if (!Tools_LarianStringToGUID(pszValue,&guid)) continue;
+			// GUID
 			for (bMatch = FALSE, pTable = ctx->pTable; pTable->pszText != NULL; pTable++)
 				{
 				if (pTable->guid.Data1 != guid.Data1) continue;
@@ -193,16 +216,24 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 				bMatch = TRUE;
 				break;
 				}
-			if (!bMatch) Debug_Log(L"WARNING: %s not found in translation table",pszValue);
+			if (!bMatch) Debug_Log(DEBUG_LOG_WARNING,L"%s not found in translation table",pszValue);
+			// UUID
 			pszValue = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pxn->children.next,szXMLattribute,szXMLid,L"UUID"));
 			if (!pszValue) continue;
 			if (!bMatch)
 				{
-				Debug_Log(L"WARNING: %s has no translation",pszValue);
+				Debug_Log(DEBUG_LOG_WARNING,L"%s has no translation",pszValue);
 				continue;
 				}
+			// Blacklist
+			for (bMatch = FALSE, i = 0; ItemsBlackList[i].pszBegin != NULL; i++) if (!wcsncmp(pszValue,ItemsBlackList[i].pszBegin,ItemsBlackList[i].uLen)) bMatch = TRUE;
+			if (bMatch)
+				{
+				Debug_Log(DEBUG_LOG_INFO,L"%s has been ignored",pszValue);
+				continue;
+				}
+			// Add item into DB
 			if (!ctx->pLocale) continue;
-			Debug_Log(L"Adding translation for %s",pszValue);
 			pszUTF8ID = Misc_WideCharToUTF8(pszValue);
 			pszUTF8Text = Misc_WideCharToUTF8(pTable->pszText);
 			if (pszUTF8ID && pszUTF8Text && sqlite3_prepare_v2(ctx->pLocale->db,"INSERT OR IGNORE INTO items (id,text) VALUES(?,?)",-1,&stmt,NULL) == SQLITE_OK)
@@ -216,20 +247,22 @@ DWORD WINAPI Tools_TranslateItemsThread(TLSCONTEXT *ctx)
 					WCHAR *pszError = Misc_UTF8ToWideChar(sqlite3_errmsg(ctx->pLocale->db));
 					if (pszError)
 						{
-						Debug_Log(L"ERROR: SQLITE %s",pszError);
+						Debug_Log(DEBUG_LOG_ERROR,L"SQLITE %s",pszError);
 						HeapFree(App.hHeap,0,pszError);
 						}
-					else Debug_Log(L"ERROR: SQLITE FAILED");
+					else Debug_Log(DEBUG_LOG_ERROR,L"SQLITE FAILED");
 					}
 				sqlite3_finalize(stmt);
 				}
 			if (pszUTF8Text) HeapFree(App.hHeap,0,pszUTF8Text);
 			if (pszUTF8ID) HeapFree(App.hHeap,0,pszUTF8ID);
 			}
+		Debug_Log(DEBUG_LOG_INFO,L"DONE: Parsed %ld items",uCount-1);
 		}
 
-Done:	Debug_Log(L"------ ITEM LOCALIZATION ---------------------------------------------- END -----");
-	xml_UpdateProgress(-1,-1);
+	//--- Done ---
+
+Done:	xml_UpdateProgress(-1,-1);
 	Taskbar_SetProgressState(TBPF_NOPROGRESS);
 	Status_SetText(Locale_GetText(TEXT_DONE));
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_APP);

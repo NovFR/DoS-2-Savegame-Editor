@@ -31,6 +31,11 @@ typedef struct TLSCONTEXT {
 	NODE		nodeLocale;
 } TLSCONTEXT;
 
+typedef struct TLSBLACKLIST {
+	UINT		uLen;
+	WCHAR*		pszBegin;
+} TLSBLACKLIST;
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
