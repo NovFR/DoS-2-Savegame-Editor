@@ -91,6 +91,7 @@ Rain_Blood					0	2	1	346	DEATH
 Rain_Oil					0	1	1	359	EARTH
 Rain_Water					0	1	1	180	WATER
 Rush_BatteringRam				0	2	1	324	WARFARE
+Rush_BullRush					0	2	0	418	POLYMORPH
 Shout_Adrenaline				0	0	1	110	ROGUES
 Shout_Apotheosis				3	2	3	544	POLYMORPH
 Shout_BarbedCoat				0	0	1	148	WARFARE
@@ -286,7 +287,6 @@ Target_WaterInfusion				0	1	1	423	SUMMONING
 Target_Windwalker				0	1	1	310	AIR
 Target_WinterBlast				0	2	1	331	WATER
 Target_WormTremor				0	3	1	479	EARTH
-Teleportation_EnemyResurrect_Alexandar		0	2	0	0	DEATH
 Teleportation_ForcePush				0	2	1	308	SPECIAL
 Teleportation_FreeFall				0	2	1	309	AIR
 Teleportation_LastRites				0	3	1	391	DEATH
