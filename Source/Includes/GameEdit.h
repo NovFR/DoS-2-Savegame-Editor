@@ -158,9 +158,10 @@ typedef struct GAMEEDITVALUE {
 	UINT64			uFilter;
 	UINT64*			pFilter;
 	NODE			nodeData;
+	DOS2ITEM*		pItem;
 	WCHAR*			pszFileName;
+	WCHAR*			pszStats;
 	WCHAR*			pszValue;
-	WCHAR*			pszObject;
 	WCHAR*			pszResult;
 	WCHAR*			pszTitle;
 	GAMEDATA		localData;
@@ -319,7 +320,8 @@ typedef struct GAMEEDITRUNE {
 } GAMEEDITRUNE;
 
 typedef struct GAMEEDITITEMCONTEXT {
-	WCHAR*			pszName;
+	DOS2ITEM*		pItem;
+	WCHAR*			pszStats;
 	WCHAR*			pszDisplayName;
 	WCHAR*			pszDescription;
 	BOOL			bIsGenerated;
@@ -341,9 +343,10 @@ typedef struct GAMEEDITITEMCONTEXT {
 
 typedef struct GAMEEDITBONUSCONTEXT {
 	NODE			skills;
+	DOS2ITEM*		pItem;
 	GAMEEDITBONUS*		pEdit;
 	LOCALE_MISC*		pLocale;
-	WCHAR*			pszObject;
+	WCHAR*			pszStats;
 	GAMEBONUS*		pSelected;
 	DWORD			uNewListMask;
 	DWORD			uListMask;
@@ -417,7 +420,7 @@ void			Game_EditRunesRemove(HWND,UINT,GAMEEDITITEMCONTEXT *);
 
 // «»»» Sélection des bonus «««««««««««««««««««««««««««««««««««««««««««««»
 
-GAMEEDITBONUS*		Game_Bonus(HWND,GAMEEDITBONUS *,WCHAR *);
+GAMEEDITBONUS*		Game_Bonus(HWND,GAMEEDITBONUS *,DOS2ITEM *);
 
 BOOL CALLBACK		Game_BonusProc(HWND,UINT,WPARAM,LPARAM);
 LRESULT	CALLBACK	Game_BonusEditSubclass(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
@@ -504,7 +507,7 @@ void			Game_EditValueUpdateBoostersFilters(HWND,UINT,UINT64,GAMEEDITVALUE *);
 void			Game_EditValueDrawBoostersFilter(DRAWITEMSTRUCT *);
 void			Game_EditValueDrawSeparator(DRAWITEMSTRUCT *);
 void			Game_EditValueSizeObject(HWND,UINT);
-void			Game_EditValueDrawObject(WCHAR *,WCHAR *,DRAWITEMSTRUCT *);
+void			Game_EditValueDrawObject(DOS2ITEM *,WCHAR *,DRAWITEMSTRUCT *);
 void			Game_EditValueSelectLB(HWND,GAMEEDITVALUE *);
 void			Game_EditValueSelectLV(HWND,GAMEEDITVALUE *);
 void			Game_EditValueSelectListEntry(HWND,WCHAR *);
@@ -558,7 +561,7 @@ void			Game_SkillsSortComboDrawItem(DRAWITEMSTRUCT *);
 int			Game_SkillsSort(LPARAM,LPARAM,LPARAM);
 int			Game_SkillsSortCmp(GAMEDATASKILL *,GAMEDATASKILL *,UINT);
 
-int			Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *);
+int			Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *,WCHAR *[]);
 GAMEDATASKILL*		Game_SkillsCopyPaste(GAMEDATASKILL *,GAMEDATASKILL *,NODE *,BOOL);
 GAMEDATASKILL*		Game_SkillsGetSelected(HWND,UINT);
 void			Game_SkillsToggleGroups(HWND,UINT,BOOL);

@@ -104,6 +104,7 @@ void Config_Modify()
 		App.Config.bItemsDisplayName = pContext->pConfig->bItemsDisplayName;
 		App.Config.bItemsResolve = pContext->pConfig->bItemsResolve;
 		Game_ResetDisplayNames();
+		SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
 		InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
 		InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
 		}

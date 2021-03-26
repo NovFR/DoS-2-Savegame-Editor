@@ -908,6 +908,8 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 {
 	DOS2ITEM*	pItem1;
 	DOS2ITEM*	pItem2;
+	WCHAR*		pszItem1Name;
+	WCHAR*		pszItem2Name;
 	BOOL		bItem1eq;
 	BOOL		bItem2eq;
 	int		iResult;
@@ -943,7 +945,11 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 		}
 
 	// Finally, sort by name
-	iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pItem1->pxaStats->value,-1,pItem2->pxaStats->value,-1,NULL,NULL,0);
+	Game_ResolveDisplayName(pItem1);
+	Game_ResolveDisplayName(pItem2);
+	pszItem1Name = pItem1->pszDisplayName?pItem1->pszDisplayName:pItem1->pxaStats->value;
+	pszItem2Name = pItem2->pszDisplayName?pItem2->pszDisplayName:pItem2->pxaStats->value;
+	iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszItem1Name,-1,pszItem2Name,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
 

@@ -304,6 +304,7 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			SendMessage(App.Game.Layout.hwndInventory,LVM_SETGROUPINFO,(WPARAM)3,(LPARAM)&lvGroup);
 
 			//--- Update window ---
+			SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
 			InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
 			InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
 			InvalidateRect(App.Game.Layout.hwndList,NULL,FALSE);

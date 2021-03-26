@@ -23,7 +23,16 @@
 
 extern APPLICATION		App;
 extern CUSTOMMENUTEMPLATE	SkillsListMenu[];
+
 static UINT			SkillsSort[] = { DATA_SORT_SKILL_NAME, DATA_SORT_SKILL_SCHOOL, DATA_SORT_SKILL_POINTS, DATA_SORT_SKILL_SOURCE, DATA_SORT_SKILL_MEMORY, 0 };
+
+static WCHAR*			SkillsBlackList[] = {	// List of skills known to be broken/unusable
+							L"Shout_RecoverArmour",
+							L"Target_SingleHandedAttack",
+							L"Target_HeavyAttack",
+							L"Target_DualWieldingAttack",
+							NULL
+						};
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -161,7 +170,8 @@ int Game_SkillsListCreate(HWND hDlg, UINT uCtlID, HIMAGELIST hImageList, NODE *p
 		lvGroup.pszHeader = Locale_GetText(uGroupsTitles[i]);
 		lvGroup.iGroupId = uGroupsTitles[i];
 		lvGroup.stateMask = lvGroup.state = LVGS_COLLAPSIBLE|LVGS_COLLAPSED;
-		if (!pSelected) lvGroup.state &= ~LVGS_COLLAPSED;
+		lvGroup.state &= ~LVGS_COLLAPSED; // Expand always
+		//if (!pSelected) lvGroup.state &= ~LVGS_COLLAPSED;
 		if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Error;
 		}
 
@@ -408,7 +418,7 @@ INT_PTR CALLBACK Game_SkillsBookProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPAR
 							return(TRUE);
 						case 300:
 							pCtx->baseSkills.hwndParent = hDlg;
-							if (Game_SkillsCopyList(&pCtx->selectSkills,&pCtx->baseSkills,&pCtx->mySkills))
+							if (Game_SkillsCopyList(&pCtx->selectSkills,&pCtx->baseSkills,&pCtx->mySkills,SkillsBlackList))
 								{
 								if (Game_SkillsSelect(hDlg,&pCtx->selectSkills)) Game_SkillsAppend(hDlg,200,pCtx->mySkills.uSort,&pCtx->mySkills.skills,&pCtx->selectSkills.selection);
 								Game_UnloadDataFile(DATA_TYPE_SKILLS,&pCtx->selectSkills.selection);
@@ -1620,7 +1630,7 @@ int Game_SkillsSortCmp(GAMEDATASKILL *pFirstSkill, GAMEDATASKILL *pSecondSkill, 
 
 // «»»» Copie une liste de compétences ««««««««««««««««««««««««««««««««««»
 
-int Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *pDest, GAMEEDITSKILLCONTEXT *pSrc, GAMEEDITSKILLCONTEXT *pExclude)
+int Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *pDest, GAMEEDITSKILLCONTEXT *pSrc, GAMEEDITSKILLCONTEXT *pExclude, WCHAR *pszBlackList[])
 {
 	GAMEDATASKILL*	pSkill;
 
@@ -1632,6 +1642,19 @@ int Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *pDest, GAMEEDITSKILLCONTEXT *pSrc,
 
 	for (pSkill = (GAMEDATASKILL *)pSrc->skills.next; pSkill != NULL; pSkill = (GAMEDATASKILL *)pSkill->node.next)
 		{
+		if (pszBlackList)
+			{
+			int	i;
+			BOOL	bBlackListed;
+
+			for (bBlackListed = FALSE, i = 0; pszBlackList[i] != NULL; i++)
+				{
+				if (wcscmp(pSkill->pszId,pszBlackList[i])) continue;
+				bBlackListed = TRUE;
+				break;
+				}
+			if (bBlackListed) continue;
+			}
 		if (Game_SkillsGetById(pSkill->pszId,&pExclude->skills)) continue;
 		if (!Game_SkillsCopyPaste(NULL,pSkill,&pDest->skills,TRUE)) goto Error;
 		}

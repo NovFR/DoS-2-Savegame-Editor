@@ -505,7 +505,7 @@ INT_PTR CALLBACK Game_EditValueProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARA
 
 				case LVN_ITEMCHANGED:
 					if (pValue->uType == DATA_TYPE_BOOSTERS) Game_EditValueUpdateBooster(hDlg,BOOSTER_UPDATE_FROMLIST,TRUE,pValue);
-					else EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
+					EnableWindow(GetDlgItem(hDlg,IDOK),Game_EditValueGetSelected(hDlg,TRUE,pValue)?TRUE:FALSE);
 					return(TRUE);
 
 				case LVN_COLUMNCLICK:
@@ -718,8 +718,9 @@ BOOL Game_EditValueBuildList(HWND hDlg, BOOL bQuiet, GAMEEDITVALUE *pValue)
 			lvGroup.pszHeader = Locale_GetText(uBoostersGTitles[i]);
 			lvGroup.iGroupId = i;
 			lvGroup.stateMask = lvGroup.state = LVGS_COLLAPSIBLE|LVGS_COLLAPSED;
-			if (!pValue->pszValue) lvGroup.stateMask &= ~LVGS_COLLAPSED;
-			else if (Game_EditValueIsBoosterValid(pValue->pszValue,uBoostersGFilters[i],FALSE)) lvGroup.stateMask &= ~LVGS_COLLAPSED;
+			lvGroup.stateMask &= ~LVGS_COLLAPSED; // Expand always
+			//if (!pValue->pszValue) lvGroup.stateMask &= ~LVGS_COLLAPSED;
+			//else if (Game_EditValueIsBoosterValid(pValue->pszValue,uBoostersGFilters[i],FALSE)) lvGroup.stateMask &= ~LVGS_COLLAPSED;
 			if (SendDlgItemMessage(hDlg,300,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) goto Failed;
 			}
 		}
@@ -1512,7 +1513,9 @@ void Game_EditValueUpdateBooster(HWND hDlg, DWORD dwFlags, BOOL bUpdateEditBox, 
 			} break;
 		}
 
-	if (bUpdateEditBox) SetDlgItemText(hDlg,246,pValue->localData.pszId);
+	if (bUpdateEditBox)
+		SetDlgItemText(hDlg,246,pValue->localData.pszId);
+
 	return;
 }
 
