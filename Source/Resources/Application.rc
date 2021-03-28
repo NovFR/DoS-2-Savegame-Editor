@@ -42,6 +42,7 @@
 41 ICON "Icons\\Action1.ico"
 42 ICON "Icons\\Source0.ico"
 43 ICON "Icons\\Source1.ico"
+44 ICON "Icons\\SkillActivated.ico"
 
 50 ICON "Icons\\Infos\\Empty.ico"
 51 ICON "Icons\\Infos\\Savegame.ico"

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1616816945 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
+1616935938 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
 	"_Global.h"
 	"_Version.h"
 
@@ -18,12 +18,12 @@
 
 1616589912 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
 
-1616816336 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
+1616933927 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
 	"Application.h"
 	"Game.h"
 	"Menus.h"
 
-1616818654 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
+1616933927 f:\programmation\sources\jeux\divinity original sin ii\includes\application.h
 	"_Global.h"
 	"SQLite3.h"
 	"Locale.h"
@@ -135,12 +135,12 @@
 	"Menus.h"
 	"Requests.h"
 
-1616895313 f:\programmation\sources\jeux\divinity original sin ii\includes\gameedit.h
+1616936715 f:\programmation\sources\jeux\divinity original sin ii\includes\gameedit.h
 	"Game.h"
 
 1616812016 f:\programmation\sources\jeux\divinity original sin ii\includes\dialogs.h
 
-1616899208 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_bonuses.c
+1616936997 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_bonuses.c
 	"Application.h"
 	"GameEdit.h"
 	"Dialogs.h"
@@ -238,7 +238,7 @@
 	"Utils.h"
 	"Requests.h"
 
-1616887654 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_manager.c
+1616900467 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\game_manager.c
 	"Application.h"
 	"Locale.h"
 	"Texts.h"
@@ -372,7 +372,7 @@
 	"Utils.h"
 	"Taskbar.h"
 
-1616899953 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
+1616938346 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_windows.c
 	"Application.h"
 	"About.h"
 	"Texts.h"
@@ -449,7 +449,7 @@
 
 1616589089 f:\programmation\sources\jeux\divinity original sin ii\includes\debug.h
 
-1616865197 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
+1616938308 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_skills.c
 	"Application.h"
 	"Game.h"
 	"GameEdit.h"

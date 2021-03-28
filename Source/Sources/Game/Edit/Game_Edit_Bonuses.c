@@ -1266,7 +1266,7 @@ int Game_BonusInitSkills(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 		if (ctx->bonus.pContext->pEdit->skill.pszId) pSelected = Game_SkillsGetById(ctx->bonus.pContext->pEdit->skill.pszId,&ctx->bonus.pContext->skills);
 
 	//--- ListView
-	if (!Game_SkillsListCreate(hDlg,uCtlID,hImageList,&ctx->bonus.pContext->skills,TEXT_ERR_DIALOG,ctx->bonus.uSort,pSelected,FALSE)) return(0);
+	if (!Game_SkillsListCreate(hDlg,uCtlID,hImageList,&ctx->bonus.pContext->skills,TEXT_ERR_DIALOG,ctx->bonus.uSort,pSelected,0)) return(0);
 	return(1);
 }
 

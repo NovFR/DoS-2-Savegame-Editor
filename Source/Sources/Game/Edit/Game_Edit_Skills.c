@@ -104,22 +104,29 @@ HIMAGELIST Game_SkillsImageListCreate(HWND hDlg, UINT uMsgId, NODE *pRoot)
 	if (!hSkillsIcons) goto Done;
 
 	//--- ImageList
-	hImageList = ImageList_Create(64,64,ILC_COLOR32|ILC_MASK,List_EntryCount(pRoot)+1,0);
+	hImageList = ImageList_Create(64,64,ILC_COLOR32|ILC_MASK,List_EntryCount(pRoot)+2,0);
 	if (!hImageList) goto Done;
 
-	//--- "Unknown" icon
+	//--- [0] "Unknown" icon
 	hIcon = LoadImage(hSkillsIcons,L"SI_0000",IMAGE_ICON,64,64,LR_DEFAULTCOLOR|LR_SHARED);
 	if (!hIcon) goto Done;
 	if (ImageList_ReplaceIcon(hImageList,-1,hIcon) == -1) goto Done;
 
-	//--- Icons
+	//--- [1] Overlay
+	if (ImageList_ReplaceIcon(hImageList,-1,App.hIcons[APP_ICON_SKILLACTIVATED]) == -1) goto Done;
+
+	//--- [2+] Icons
 	for (pSkill = (GAMEDATASKILL *)pRoot->next; pSkill != NULL; pSkill = (GAMEDATASKILL *)pSkill->node.next)
 		{
+		if (pSkill->infos.uIconID > 9999) continue;
 		Misc_Printf(szName,16,L"SI_%.4u",pSkill->infos.uIconID);
 		hIcon = LoadImage(hSkillsIcons,szName,IMAGE_ICON,64,64,LR_DEFAULTCOLOR|LR_SHARED);
 		if (!hIcon) continue; // Use the "Unknown" icon
 		if ((pSkill->iIconIndex = ImageList_ReplaceIcon(hImageList,-1,hIcon)) == -1) goto Done;
 		}
+
+	//--- Set overlay image
+	if (!ImageList_SetOverlayImage(hImageList,1,1)) goto Done;
 
 	//--- OK
 	bSet = TRUE;
@@ -138,7 +145,7 @@ Done:	if (!bSet)
 
 // «»»» Création de la liste ««««««««««««««««««««««««««««««««««««««««««««»
 
-int Game_SkillsListCreate(HWND hDlg, UINT uCtlID, HIMAGELIST hImageList, NODE *pRoot, UINT uMsgId, UINT uSort, GAMEDATASKILL *pSelected, BOOL bShareImageList)
+int Game_SkillsListCreate(HWND hDlg, UINT uCtlID, HIMAGELIST hImageList, NODE *pRoot, UINT uMsgId, UINT uSort, GAMEDATASKILL *pSelected, DWORD dwFlags)
 {
 	LVCOLUMN	lvColumn;
 	LVGROUP		lvGroup;
@@ -179,7 +186,7 @@ int Game_SkillsListCreate(HWND hDlg, UINT uCtlID, HIMAGELIST hImageList, NODE *p
 	//--- Items
 	for (pSkill = (GAMEDATASKILL *)pRoot->next, i = 0; pSkill != NULL; pSkill = (GAMEDATASKILL *)pSkill->node.next, i++)
 		{
-		if (!Game_SkillsInsertItem(hDlg,uCtlID,i,uSort,pSkill,pSelected)) goto Error;
+		if (!Game_SkillsInsertItem(hDlg,uCtlID,i,uSort,pSkill,pSelected,dwFlags)) goto Error;
 		}
 
 	//--- Selected
@@ -203,13 +210,13 @@ int Game_SkillsListCreate(HWND hDlg, UINT uCtlID, HIMAGELIST hImageList, NODE *p
 	//--- Error
 Error:	Request_PrintError(hDlg,Locale_GetText(uMsgId),NULL,MB_ICONERROR);
 	SendDlgItemMessage(hDlg,uCtlID,LVM_DELETEALLITEMS,0,0);
-	if (!bShareImageList) ImageList_Destroy(hImageList);
+	if (!(dwFlags&SKILL_LIST_SHAREIMAGELIST)) ImageList_Destroy(hImageList);
 	return(0);
 }
 
 //--- Insère une compétence dans la liste ---
 
-BOOL Game_SkillsInsertItem(HWND hDlg, UINT uCtlID, int i, UINT uSort, GAMEDATASKILL *pSkill, GAMEDATASKILL *pSelected)
+BOOL Game_SkillsInsertItem(HWND hDlg, UINT uCtlID, int i, UINT uSort, GAMEDATASKILL *pSkill, GAMEDATASKILL *pSelected, DWORD dwFlags)
 {
 	LVITEM		lvItem;
 	LVTILEINFO	lvTileInfo;
@@ -225,11 +232,19 @@ BOOL Game_SkillsInsertItem(HWND hDlg, UINT uCtlID, int i, UINT uSort, GAMEDATASK
 	lvItem.iImage = pSkill->iIconIndex;
 	lvItem.iGroupId = Game_SkillsSetItemGroup(uSort,pSkill);
 	lvItem.lParam = (LPARAM)pSkill;
+	lvItem.state = 0;
+	lvItem.stateMask = 0;
 	if (pSelected == pSkill)
 		{
 		lvItem.mask |= LVIF_STATE;
 		lvItem.state = LVIS_SELECTED;
 		lvItem.stateMask = LVIS_SELECTED;
+		}
+	if ((dwFlags&SKILL_LIST_ACTIVATEDOVERLAY) && pSkill->options.bIsActivated)
+		{
+		lvItem.mask |= LVIF_STATE;
+		lvItem.state |= INDEXTOOVERLAYMASK(1);
+		lvItem.stateMask |= LVIS_OVERLAYMASK;
 		}
 	if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) return(FALSE);
 	//--- School
@@ -292,7 +307,7 @@ BOOL Game_SkillsInsertItem(HWND hDlg, UINT uCtlID, int i, UINT uSort, GAMEDATASK
 
 // «»»» Ajout d'une sélection à la liste ««««««««««««««««««««««««««««««««»
 
-BOOL Game_SkillsAppend(HWND hDlg, UINT uListID, UINT uSort, NODE *pDestRoot, NODE *pSrcRoot)
+BOOL Game_SkillsAppend(HWND hDlg, UINT uListID, UINT uSort, NODE *pDestRoot, NODE *pSrcRoot, DWORD dwFlags)
 {
 	GAMEDATASKILL*	pSkill;
 	GAMEDATASKILL*	pNext;
@@ -303,7 +318,7 @@ BOOL Game_SkillsAppend(HWND hDlg, UINT uListID, UINT uSort, NODE *pDestRoot, NOD
 
 	for (pSkill = (GAMEDATASKILL *)pSrcRoot->next; pSkill != NULL; pSkill = pNext)
 		{
-		bAdded = Game_SkillsInsertItem(hDlg,uListID,i,uSort,pSkill,NULL);
+		bAdded = Game_SkillsInsertItem(hDlg,uListID,i,uSort,pSkill,NULL,dwFlags);
 		pNext = (GAMEDATASKILL *)pSkill->node.next;
 		if (bAdded)
 			{
@@ -313,6 +328,7 @@ BOOL Game_SkillsAppend(HWND hDlg, UINT uListID, UINT uSort, NODE *pDestRoot, NOD
 			}
 		}
 
+	SendDlgItemMessage(hDlg,uListID,LVM_SORTITEMS,(WPARAM)uSort,(LPARAM)Game_SkillsSort);
 	return(1);
 }
 
@@ -356,7 +372,7 @@ INT_PTR CALLBACK Game_SkillsBookProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPAR
 			return(0);
 			}
 
-		if (!Game_SkillsListCreate(hDlg,200,pCtx->baseSkills.hImageList,&pCtx->mySkills.skills,TEXT_ERR_SKILLS_LIST,pCtx->mySkills.uSort,NULL,TRUE))
+		if (!Game_SkillsListCreate(hDlg,200,pCtx->baseSkills.hImageList,&pCtx->mySkills.skills,TEXT_ERR_SKILLS_LIST,pCtx->mySkills.uSort,NULL,SKILL_LIST_SHAREIMAGELIST|SKILL_LIST_ACTIVATEDOVERLAY))
 			{
 			EndDialog(hDlg,IDCANCEL);
 			return(FALSE);
@@ -421,7 +437,7 @@ INT_PTR CALLBACK Game_SkillsBookProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPAR
 							pCtx->baseSkills.hwndParent = hDlg;
 							if (Game_SkillsCopyList(&pCtx->selectSkills,&pCtx->baseSkills,&pCtx->mySkills,SkillsBlackList))
 								{
-								if (Game_SkillsSelect(hDlg,&pCtx->selectSkills)) Game_SkillsAppend(hDlg,200,pCtx->mySkills.uSort,&pCtx->mySkills.skills,&pCtx->selectSkills.selection);
+								if (Game_SkillsSelect(hDlg,&pCtx->selectSkills)) Game_SkillsAppend(hDlg,200,pCtx->mySkills.uSort,&pCtx->mySkills.skills,&pCtx->selectSkills.selection,SKILL_LIST_ACTIVATEDOVERLAY);
 								Game_UnloadDataFile(DATA_TYPE_SKILLS,&pCtx->selectSkills.selection);
 								Game_UnloadDataFile(DATA_TYPE_SKILLS,&pCtx->selectSkills.skills);
 								}
@@ -833,6 +849,25 @@ void Game_SkillsOptions(HWND hDlg, UINT uListID, GAMESKILLOPTIONS *pOptions)
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1104),hDlg,Game_SkillsOptionsProc,(LPARAM)pOptions);
 	if (iResult == -1) Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 
+	//--- Met à jour l'overlay ---
+
+	if (iResult == IDOK)
+		{
+		LVFINDINFO	lvFind;
+
+		for (i = 0; pOptions->pSelected[i] != NULL; i++)
+			{
+			lvFind.flags = LVFI_PARAM;
+			lvFind.lParam = (LPARAM)pOptions->pSelected[i];
+			if ((lvItem.iItem = SendDlgItemMessage(hDlg,uListID,LVM_FINDITEM,(WPARAM)-1,(LPARAM)&lvFind)) == -1) continue;
+			lvItem.stateMask = LVIS_OVERLAYMASK;
+			lvItem.state = pOptions->pSelected[i]->options.bIsActivated?INDEXTOOVERLAYMASK(1):0;
+			SendDlgItemMessage(hDlg,uListID,LVM_SETITEMSTATE,(WPARAM)lvItem.iItem,(LPARAM)&lvItem);
+			}
+		}
+
+	//--- Terminé ---
+
 Done:	HeapFree(App.hHeap,0,pOptions->pSelected);
 	return;
 }
@@ -1093,7 +1128,7 @@ INT_PTR CALLBACK Game_SkillsSelectProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 			return(0);
 			}
 
-		if (!Game_SkillsListCreate(hDlg,200,pSkillEdit->hImageList,&pSkillEdit->skills,TEXT_ERR_DIALOG,pSkillEdit->uSort,pSkillEdit->pSelected,TRUE))
+		if (!Game_SkillsListCreate(hDlg,200,pSkillEdit->hImageList,&pSkillEdit->skills,TEXT_ERR_DIALOG,pSkillEdit->uSort,pSkillEdit->pSelected,SKILL_LIST_SHAREIMAGELIST|SKILL_LIST_ACTIVATEDOVERLAY))
 			{
 			EndDialog(hDlg,-1);
 			return(FALSE);
