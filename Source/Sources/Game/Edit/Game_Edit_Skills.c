@@ -1412,6 +1412,8 @@ void Game_SkillsMenu(HWND hDlg, UINT uListID, HWND hwndCtrl)
 	HMENU		hMenu;
 	UINT		uMenuId = 0;
 
+	//--- Menu ---
+
 	pSelected = Game_SkillsGetSelected(hDlg,uListID);
 	hMenu = Menu_Create(SkillsListMenu);
 	if (hMenu)
@@ -1419,7 +1421,6 @@ void Game_SkillsMenu(HWND hDlg, UINT uListID, HWND hwndCtrl)
 		HMENU		hSubMenu;
 		POINT		ptCursor;
 		UINT		uFlags;
-		BOOL		bGroupView;
 
 		if (hwndCtrl)
 			{
@@ -1436,19 +1437,36 @@ void Game_SkillsMenu(HWND hDlg, UINT uListID, HWND hwndCtrl)
 			uFlags = TPM_LEFTALIGN|TPM_TOPALIGN;
 			}
 
-		bGroupView = SendDlgItemMessage(hDlg,uListID,LVM_ISGROUPVIEWENABLED,0,0);
-		EnableMenuItem(hMenu,IDM_LIST_SKILLSELECT,MF_BYCOMMAND|(pSelected?0:MF_GRAYED));
-		EnableMenuItem(hMenu,IDM_LIST_COLLAPSE,MF_BYCOMMAND|(bGroupView?0:MF_GRAYED));
-		EnableMenuItem(hMenu,IDM_LIST_EXPAND,MF_BYCOMMAND|(bGroupView?0:MF_GRAYED));
+		// (Selected)
+		if (pSelected) EnableMenuItem(hMenu,IDM_LIST_SELECTED,MF_BYCOMMAND);
+
+		// (Group)
+		if (SendDlgItemMessage(hDlg,uListID,LVM_ISGROUPVIEWENABLED,0,0))
+			{
+			EnableMenuItem(hMenu,IDM_LIST_COLLAPSE,MF_BYCOMMAND);
+			EnableMenuItem(hMenu,IDM_LIST_EXPAND,MF_BYCOMMAND);
+			}
+
+		// (Selection)
+		if (!(GetWindowLongPtr(GetDlgItem(hDlg,uListID),GWL_STYLE)&LVS_SINGLESEL))
+			{
+			LRESULT lItemCount = SendDlgItemMessage(hDlg,uListID,LVM_GETITEMCOUNT,0,0);
+			LRESULT lSelectedCount = SendDlgItemMessage(hDlg,uListID,LVM_GETSELECTEDCOUNT,0,0);
+			if (lItemCount > 0 && lItemCount != lSelectedCount) EnableMenuItem(hMenu,IDM_LIST_SELECTALL,MF_BYCOMMAND);
+			if (lItemCount > 0 && lSelectedCount != 0) EnableMenuItem(hMenu,IDM_LIST_SELECTNONE,MF_BYCOMMAND);
+			if (lItemCount > 1 && lSelectedCount != 0 && lItemCount != lSelectedCount) EnableMenuItem(hMenu,IDM_LIST_SELECTINVERT,MF_BYCOMMAND);
+			}
 
 		hSubMenu = GetSubMenu(hMenu,0);
 		uMenuId = TrackPopupMenu(hSubMenu,uFlags|TPM_NOANIMATION|TPM_NONOTIFY|TPM_RETURNCMD,ptCursor.x,ptCursor.y,0,App.hWnd,NULL);
 		Menu_Release(hMenu,SkillsListMenu);
 		}
 
+	//--- Execute command ---
+
 	switch(uMenuId)
 		{
-		case IDM_LIST_SKILLSELECT:
+		case IDM_LIST_SELECTED:
 			if (!pSelected) break;
 			Game_SkillsCollapseSelectedGroup(hDlg,uListID,pSelected);
 			Game_SkillsEnsureVisible(hDlg,uListID,pSelected);
@@ -1460,6 +1478,12 @@ void Game_SkillsMenu(HWND hDlg, UINT uListID, HWND hwndCtrl)
 			break;
 		case IDM_LIST_EXPAND:
 			Game_SkillsToggleGroups(hDlg,uListID,TRUE);
+			break;
+
+		case IDM_LIST_SELECTALL:
+		case IDM_LIST_SELECTNONE:
+		case IDM_LIST_SELECTINVERT:
+			Game_SKillsToggleSelection(hDlg,uListID,uMenuId);
 			break;
 		}
 
@@ -1788,6 +1812,40 @@ void Game_SkillsToggleGroups(HWND hDlg, UINT uCtlID, BOOL bExpand)
 				else lvGroup.state = LVGS_COLLAPSED;
 				SendDlgItemMessage(hDlg,uCtlID,LVM_SETGROUPINFO,(WPARAM)lvItem.iGroupId,(LPARAM)&lvGroup);
 				}
+			}
+		}
+
+	return;
+}
+
+
+// «»»» Modifie la sélection ««««««««««««««««««««««««««««««««««««««««««««»
+
+void Game_SKillsToggleSelection(HWND hDlg, UINT uCtlID, UINT uCmd)
+{
+	LVITEM	lvItem;
+
+	lvItem.iItem = -1;
+	while ((lvItem.iItem = SendDlgItemMessage(hDlg,uCtlID,LVM_GETNEXTITEM,(WPARAM)lvItem.iItem,MAKELPARAM(LVNI_ALL,0))) != -1)
+		{
+		lvItem.mask = LVIF_STATE;
+		lvItem.stateMask = LVIS_SELECTED;
+		lvItem.iSubItem = 0;
+		if (SendDlgItemMessage(hDlg,uCtlID,LVM_GETITEM,0,(LPARAM)&lvItem))
+			{
+			switch(uCmd)
+				{
+				case IDM_LIST_SELECTALL:
+					lvItem.state = LVIS_SELECTED;
+					break;
+				case IDM_LIST_SELECTNONE:
+					lvItem.state = 0;
+					break;
+				case IDM_LIST_SELECTINVERT:
+					lvItem.state ^= LVIS_SELECTED;
+					break;
+				}
+			SendDlgItemMessage(hDlg,uCtlID,LVM_SETITEMSTATE,(WPARAM)lvItem.iItem,(LPARAM)&lvItem);
 			}
 		}
 

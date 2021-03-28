@@ -568,6 +568,7 @@ int			Game_SkillsCopyList(GAMEEDITSKILLCONTEXT *,GAMEEDITSKILLCONTEXT *,GAMEEDIT
 GAMEDATASKILL*		Game_SkillsCopyPaste(GAMEDATASKILL *,GAMEDATASKILL *,NODE *,BOOL);
 GAMEDATASKILL*		Game_SkillsGetSelected(HWND,UINT);
 void			Game_SkillsToggleGroups(HWND,UINT,BOOL);
+void			Game_SKillsToggleSelection(HWND,UINT,UINT);
 void			Game_SkillsEnsureVisible(HWND,UINT,GAMEDATASKILL *);
 void			Game_SkillsCollapseSelectedGroup(HWND,UINT,GAMEDATASKILL *);
 int			Game_SkillsSetItemGroup(UINT,GAMEDATASKILL *);
