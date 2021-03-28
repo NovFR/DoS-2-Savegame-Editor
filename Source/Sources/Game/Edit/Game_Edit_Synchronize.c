@@ -28,7 +28,7 @@ extern APPLICATION	App;
 
 // «»»» Synchronize un objet sur le niveau désiré «««««««««««««««««««««««»
 
-void Game_Synchronize_Level(int iNewLevel, XML_ATTR *pxaLevel, XML_ATTR *pxaIsGenerated, XML_NODE *pxnGeneration)
+void Game_Synchronize_Level(int iNewLevel, BOOL bOnlyLowerLevels, XML_ATTR *pxaLevel, XML_ATTR *pxaIsGenerated, XML_NODE *pxnGeneration, XML_NODE **pxnLevelOverride)
 {
 	WCHAR*		pszLevel;
 	WCHAR		szTemp[4];
@@ -39,7 +39,9 @@ void Game_Synchronize_Level(int iNewLevel, XML_ATTR *pxaLevel, XML_ATTR *pxaIsGe
 	pszLevel = xml_GetThisAttrValue(pxaLevel);
 	if (!pszLevel) return;
 	iLevel = wcstol(pszLevel,NULL,10);
-	if (iLevel > iNewLevel) return;
+	if (bOnlyLowerLevels && iLevel > iNewLevel) return;
+
+	//--- Change level ---
 
 	Misc_Printf(szTemp,4,szLevelFmt,iNewLevel);
 	pszLevel = HeapAlloc(App.hHeap,0,wcslen(szTemp)*sizeof(WCHAR)+sizeof(WCHAR));
@@ -50,11 +52,22 @@ void Game_Synchronize_Level(int iNewLevel, XML_ATTR *pxaLevel, XML_ATTR *pxaIsGe
 		pxaLevel->value = pszLevel;
 		}
 
+	//--- Change Item Generation's level ---
+
 	if (xml_IsTrue(pxaIsGenerated) && pxnGeneration)
 		{
 		XML_ATTR* Attr = xml_GetXMLValueAttr((XML_NODE *)pxnGeneration->children.next,L"attribute",L"id",L"Level");
-		Game_Synchronize_Level(iNewLevel,Attr,NULL,NULL);
+		Game_Synchronize_Level(iNewLevel,bOnlyLowerLevels,Attr,NULL,NULL,NULL);
 		}
+
+	//--- Remove Level Override ---
+
+        if (pxnLevelOverride && *pxnLevelOverride)
+		{
+		xml_ReleaseNode(*pxnLevelOverride);
+		*pxnLevelOverride = NULL;
+		}
+
 	return;
 }
 
@@ -84,6 +97,8 @@ void Game_SynchronizeAll()
 	Synchro.iLevelMin = GAME_LEVEL_MIN;
 	Synchro.iLevelMax = GAME_LEVEL_MAX;
 	Synchro.iLevel = 1;
+	Synchro.bOnlyEquipped = FALSE;
+	Synchro.bOnlyLowerLevels = TRUE;
 
 	if (App.Game.pdcCurrent)
 		{
@@ -109,6 +124,9 @@ int Game_SynchronizeAll_Init(HWND hDlg, RECT *rcDialog, int iHeight, void *pDial
 	pSynchro = (DIALOGSYNCHRO *)pDialog;
 	Dialog_OffsetY(hDlg,200,iHeight);
 	Dialog_OffsetY(hDlg,201,iHeight);
+	Dialog_OffsetY(hDlg,202,iHeight);
+	Dialog_OffsetY(hDlg,203,iHeight);
+
 	SetDlgItemInt(hDlg,200,pSynchro->iLevel,FALSE);
 
 	hwndCtrl = CreateWindowEx(0,UPDOWN_CLASS,NULL,WS_CHILD|WS_VISIBLE|UDS_ALIGNRIGHT|UDS_ARROWKEYS|UDS_SETBUDDYINT|UDS_NOTHOUSANDS,0,0,0,0,hDlg,NULL,App.hInstance,0);
@@ -118,6 +136,12 @@ int Game_SynchronizeAll_Init(HWND hDlg, RECT *rcDialog, int iHeight, void *pDial
 		SendMessage(hwndCtrl,UDM_SETRANGE32,pSynchro->iLevelMin,pSynchro->iLevelMax);
 		SendMessage(hwndCtrl,UDM_SETPOS32,0,pSynchro->iLevel);
 		}
+
+	CheckDlgButton(hDlg,202,pSynchro->bOnlyEquipped?BST_CHECKED:BST_UNCHECKED);
+	CheckDlgButton(hDlg,203,pSynchro->bOnlyLowerLevels?BST_CHECKED:BST_UNCHECKED);
+
+	SetDlgItemText(hDlg,202,Locale_GetText(TEXT_DIALOG_SYNCHRO_EQUIPPED));
+	SetDlgItemText(hDlg,203,Locale_GetText(TEXT_DIALOG_SYNCHRO_LOWERLEVELS));
 
 	SendDlgItemMessage(hDlg,200,EM_SETSEL,0,(LPARAM)-1);
 	SetFocus(GetDlgItem(hDlg,200));
@@ -160,11 +184,16 @@ int Game_SynchronizeAll_Ok(HWND hDlg, void *pDialog)
 		SetFocus(GetDlgItem(hDlg,200));
 		return(0);
 		}
+	pSynchro->bOnlyEquipped = IsDlgButtonChecked(hDlg,202) == BST_CHECKED?TRUE:FALSE;
+	pSynchro->bOnlyLowerLevels = IsDlgButtonChecked(hDlg,203) == BST_CHECKED?TRUE:FALSE;
 
 	//--- Modifie les objets de l'inventaire actuel ---
 
 	for (pItem = (DOS2ITEM *)App.Game.pdcCurrent->pdiInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next)
-		Game_Synchronize_Level(iLevel,pItem->pxaLevel,pItem->pxaIsGenerated,pItem->pxnGeneration);
+		{
+		if (pSynchro->bOnlyEquipped && !Game_IsItemEquipped(pItem)) continue;
+		Game_Synchronize_Level(iLevel,pSynchro->bOnlyLowerLevels,pItem->pxaLevel,pItem->pxaIsGenerated,pItem->pxnGeneration,&pItem->pxnLevelOverride);
+		}
 
 	//--- Mise à jour de l'affichage ---
 

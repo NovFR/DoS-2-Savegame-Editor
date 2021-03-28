@@ -84,7 +84,7 @@ void LastFiles_Add(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *psz
 			{
 			if (!pFile->pszCustomSavePath) continue;
 			if (wcsncmp(pFile->pszCustomSavePath,pszCustomSavePath,uCustomLen)) continue;
-			return;
+			break;
 			}
 
 		if (pszProfile)
@@ -94,7 +94,17 @@ void LastFiles_Add(UINT uGame, WCHAR *pszProfile, WCHAR *pszSaveName, WCHAR *psz
 			}
 
 		if (wcsncmp(pFile->pszSaveName,pszSaveName,uSaveLen)) continue;
-		return;
+		break;
+		}
+
+	//--- Déplace l'entrée existante à la fin de la liste ---
+
+	if (pFile)
+		{
+		if (!pFile->node.next) return;
+		LastFiles_RemoveMenuItem(pFile);
+		List_RemEntry((NODE *)pFile);
+		LastFiles_Release(pFile);
 		}
 
 	//--- Ajoute la nouvelle entrée ---

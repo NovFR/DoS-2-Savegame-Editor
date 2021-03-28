@@ -116,7 +116,10 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_SAVEONEXIT_V1:
 				pData = &pConfig->bSaveOnExit;
 				break;
-			case CONFIG_IDENT_LOCALENAME_V1:
+			case CONFIG_IDENT_LOCALENAME_V1:				// V2: Ignored
+				pData = NULL;
+				break;
+			case CONFIG_IDENT_LOCALENAME_V2:
 				pData = &pConfig->pszLocaleName;
 				break;
 			case CONFIG_IDENT_GAME_V1:
@@ -326,7 +329,6 @@ int Config_Defaults(CONFIG *pConfig)
 {
 	WCHAR*			pszError;
 	WCHAR*			pszTemp;
-	int			iSize;
 
 	pszError = Locale_GetText(TEXT_ERR_CONFIG);
 	if (!pszError) pszError = szConfigErr;
@@ -343,15 +345,14 @@ int Config_Defaults(CONFIG *pConfig)
 
 	//--- Locale database ---
 
-	iSize = GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,LOCALE_SISO639LANGNAME2,NULL,0);
-	pConfig->pszLocaleName = HeapAlloc(App.hHeap,0,iSize*sizeof(WCHAR));
+	pConfig->pszLocaleName = HeapAlloc(App.hHeap,0,LOCALE_NAME_MAX_LENGTH*sizeof(WCHAR));
 	if (!pConfig->pszLocaleName)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		Request_PrintError(NULL,pszError,NULL,MB_ICONHAND);
 		return(0);
 		}
-	GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT,LOCALE_SISO639LANGNAME2,pConfig->pszLocaleName,iSize);
+	GetUserDefaultLocaleName(pConfig->pszLocaleName,LOCALE_NAME_MAX_LENGTH);
 
 	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,szLangPath,0,0,(WCHAR *)&pszTemp,1,(va_list *)&pConfig->pszLocaleName))
 		{

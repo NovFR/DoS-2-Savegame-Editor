@@ -47,6 +47,7 @@ armor_belt		ARMOR|BELT		|f|ARM_WithermooreGirdle
 armor_ring		ACCESSORY|RING		|f|ARM_UNIQUE_ArxRingOfHealing
 armor_helmet		ARMOR|HELMET		|f|ARM_UNIQUE_DispelCowl
 armor_helmet		ARMOT|HELMET		|f|ARM_UNIQUE_BeastBicorne
+armor_helmet		ARMOR|HELMET		|f|ARM_UNIQUE_BraccusHelmet_Cured
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_LoneWolfMark
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SaheilaSignet
 armor_amulet		ACCESSORY|AMULET	|f|ARM_UNIQUE_SpymasterSignet

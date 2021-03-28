@@ -47,6 +47,8 @@ typedef struct DIALOGSYNCHRO {
 	int		iLevel;
 	int		iLevelMin;
 	int		iLevelMax;
+	BOOL		bOnlyEquipped;
+	BOOL		bOnlyLowerLevels;
 } DIALOGSYNCHRO;
 
 typedef struct DIALOGVALUE {

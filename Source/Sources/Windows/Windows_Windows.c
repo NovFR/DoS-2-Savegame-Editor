@@ -86,7 +86,8 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			//Game_EditXP(hWnd,NULL);
 			//Game_Stats(hWnd);
 			//Game_Skills(hWnd);
-			Tools_TranslateItems(hWnd,L"D:\\Depack6\\Stats.lsx",L"D:\\Depack6\\english.xml",NULL);
+			//Game_SynchronizeAll();
+			//Tools_TranslateItems(hWnd,L"Debug\\Stats.lsx",L"Debug\\french.xml",NULL);
 			break;
 		#endif
 
@@ -192,8 +193,6 @@ LRESULT Window_Create(HWND hWnd)
 	App.hWnd = hWnd;
 	App.hThemeButton = OpenThemeData(hWnd,szThemeButton);
 	App.hThemeProgress = OpenThemeData(hWnd,szThemeProgress);
-
-	Locale_Load(NULL,szLangPath,App.Config.pszLocaleName,LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
 
 	if (!App.Font.hFont) goto Error_0;
 	if (!Font_GetInfo(hWnd,&App.Font)) goto Error_0;

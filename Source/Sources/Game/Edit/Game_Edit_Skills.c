@@ -27,6 +27,7 @@ extern CUSTOMMENUTEMPLATE	SkillsListMenu[];
 static UINT			SkillsSort[] = { DATA_SORT_SKILL_NAME, DATA_SORT_SKILL_SCHOOL, DATA_SORT_SKILL_POINTS, DATA_SORT_SKILL_SOURCE, DATA_SORT_SKILL_MEMORY, 0 };
 
 static WCHAR*			SkillsBlackList[] = {	// List of skills known to be broken/unusable
+							L"Projectile_StaffOfMagus",
 							L"Shout_RecoverArmour",
 							L"Target_SingleHandedAttack",
 							L"Target_HeavyAttack",
@@ -1593,14 +1594,14 @@ int Game_SkillsSortCmp(GAMEDATASKILL *pFirstSkill, GAMEDATASKILL *pSecondSkill, 
 		case DATA_SORT_TEXT:
 			pszText1 = pFirstSkill->pszName?pFirstSkill->pszName:pFirstSkill->pszId;
 			pszText2 = pSecondSkill->pszName?pSecondSkill->pszName:pSecondSkill->pszId;
-			iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
+			iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
 			if (iResult == CSTR_LESS_THAN) return(-1);
 			if (iResult == CSTR_GREATER_THAN) return(1);
 			break;
 		case DATA_SORT_SKILL_SCHOOL:
 			pszText1 = Locale_GetText(pFirstSkill->infos.uSchoolLocaleID);
 			pszText2 = Locale_GetText(pSecondSkill->infos.uSchoolLocaleID);
-			iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
+			iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
 			if (iResult == CSTR_LESS_THAN) return(-1);
 			if (iResult == CSTR_GREATER_THAN) return(1);
 			break;

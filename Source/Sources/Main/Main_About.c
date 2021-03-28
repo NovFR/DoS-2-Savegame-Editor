@@ -17,6 +17,8 @@
 #include "Locale.h"
 #include "Dialogs.h"
 
+extern APPLICATION		App;
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //

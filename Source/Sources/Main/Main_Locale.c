@@ -66,10 +66,10 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 	do {
 
 		if (Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) continue;
-		if (wcslen(Find.cFileName) > LOCALE_LANG_MAX_LENGTH) continue;
 
 		pszExt = StrRChr(Find.cFileName,NULL,L'.');
 		if (!pszExt) continue;
+		if (pszExt-Find.cFileName > LOCALE_NAME_MAX_LENGTH-1) continue;
 
 		pEnum = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(LOCALE_ENUM));
 		if (!pEnum)

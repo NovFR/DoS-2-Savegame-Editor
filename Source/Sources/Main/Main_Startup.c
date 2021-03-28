@@ -70,7 +70,6 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 Done:	if (App.hShortcuts) DestroyAcceleratorTable(App.hShortcuts);
 	Reset_Icons();
 	Game_UnloadDataFile(DATA_TYPE_ITEMS,&App.Game.nodeDataItems);
-	Locale_Unload(LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
 	Locale_Unload(LOCALE_TYPE_APPLICATION,(void **)&App.pLocaleTexts,&App.pszLocaleName);
 	LastFiles_ReleaseAll();
 	Config_Release(&App.Config);
@@ -190,8 +189,10 @@ int Initialise_Window()
 
 int Initialise_Icons()
 {
-	int	i;
+	SHSTOCKICONINFO	info;
+	int		i;
 
+	//--- App Icons
 	for (i = 0; i != APP_MAX_ICONS-1; i++)
 		{
 		#if _DEBUG
@@ -205,6 +206,12 @@ int Initialise_Icons()
 		if (App.hIcons[AppIcons[i].id]) continue;
 		return(0);
 		}
+
+	//--- System Icon
+	info.cbSize = sizeof(SHSTOCKICONINFO);
+	info.hIcon = NULL;
+	SHGetStockIconInfo(SIID_INFO,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
+	App.hIconInfo = info.hIcon;
 	return(1);
 }
 
@@ -219,6 +226,8 @@ void Reset_Icons()
 		if (!App.hIcons[AppIcons[i].id]) continue;
 		DestroyIcon(App.hIcons[AppIcons[i].id]);
 		}
+
+	if (App.hIconInfo) DestroyIcon(App.hIconInfo);
 	return;
 }
 

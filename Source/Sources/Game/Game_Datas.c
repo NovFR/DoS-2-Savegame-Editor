@@ -493,7 +493,7 @@ WCHAR* Game_GetItemTypeName(WCHAR *pszObjectName)
 			}
 		}
 
-	return(uLocaleID != TEXT_LAST?Locale_GetText(uLocaleID):szBlank);
+	return(uLocaleID != TEXT_LAST?Locale_GetText(uLocaleID):NULL);
 }
 
 

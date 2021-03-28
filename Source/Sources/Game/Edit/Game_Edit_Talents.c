@@ -378,7 +378,7 @@ int CALLBACK Game_TalentsSort(GAMETALENTSTRUCT *pTalent1, GAMETALENTSTRUCT *pTal
 	else if (!pTalent1 && pTalent2) return(1);
 	else if (!pTalent1 && !pTalent2) return(0);
 
-	int iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pTalent1->pszName,-1,pTalent2->pszName,-1,NULL,NULL,0);
+	int iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pTalent1->pszName,-1,pTalent2->pszName,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
 	return(0);

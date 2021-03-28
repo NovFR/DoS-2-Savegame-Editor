@@ -68,6 +68,7 @@ void Config_Modify()
 	pContext->pConfig->pszProfile = Misc_StrCpyAlloc(App.Config.pszProfile); // Unused but needed when saving config
 	pContext->pConfig->pszLarianPath = Misc_StrCpyAlloc(App.Config.pszLarianPath);
 	pContext->pConfig->pszTempPath = Misc_StrCpyAlloc(App.Config.pszTempPath);
+	pContext->pConfig->bItemsResolve = FALSE; // Not implemented
 
 	// NOTE: No error check here because NULL ptr is a possibility.
 
@@ -103,7 +104,7 @@ void Config_Modify()
 		{
 		App.Config.bItemsDisplayName = pContext->pConfig->bItemsDisplayName;
 		App.Config.bItemsResolve = pContext->pConfig->bItemsResolve;
-		Game_ResetDisplayNames();
+		Game_ReleaseDisplayNames();
 		SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
 		InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
 		InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);

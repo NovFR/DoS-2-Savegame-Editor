@@ -96,7 +96,6 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	pItemContext->bHasRunes = (pItem->pxaRunes[0] && pItem->pxaRunes[1] && pItem->pxaRunes[2])?TRUE:FALSE;
 	pItemContext->uNewLevel = 1;
 	pItemContext->iAmount = pItemContext->iAmountOld = pItem->pxaAmount?wcstol(xml_GetThisAttrValue(pItem->pxaAmount),NULL,10):1;
-	pItemContext->bSetGenLevel = TRUE;
 	pItemContext->uFilter = Game_GetItemFlags(pItemContext->pszStats);
 	if (!pItemContext->uFilter) pItemContext->uFilter = FILTER_ALL;
 	else pItemContext->uFilter |= (FILTER_ALL_TYPES);
@@ -232,12 +231,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 				case GAME_PAGE_NAME:
 					Game_EditNameSet(pItem,&pItem->pxaDescription,pItemContext->pszDescription,L"CustomDescription");
 					Game_EditNameSet(pItem,&pItem->pxaDisplayName,pItemContext->pszDisplayName,L"CustomDisplayName");
-					if (pItem->pszDisplayName)
-						{
-						HeapFree(App.hHeap,0,pItem->pszDisplayName);
-						pItem->pszDisplayName = NULL;
-						}
-					Game_ResolveDisplayName(pItem);
+					Game_ItemDisplayNameRelease(pItem);
 					break;
 				case GAME_PAGE_AMOUNT:
 					if (pItemContext->iAmount == 0) pItemContext->iAmount = 1;
@@ -273,10 +267,11 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 					xml_SetAttrValue(pItem->pxaRunes[2],pItemContext->runes[2].pszId);
 					break;
 				case GAME_PAGE_SYNCHRONIZE:
-					if (pItemContext->bSetLevel) Game_Synchronize_Level(pItemContext->uNewLevel,pItem->pxaLevel,(pItemContext->bSetGenLevel)?pItem->pxaIsGenerated:NULL,pItem->pxnGeneration);
+					if (pItemContext->bSetLevel) Game_Synchronize_Level(pItemContext->uNewLevel,FALSE,pItem->pxaLevel,pItem->pxaIsGenerated,pItem->pxnGeneration,&pItem->pxnLevelOverride);
 					break;
 				}
 			}
+		SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
 		InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
 		}
 
@@ -384,9 +379,7 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				Dialog_OffsetY(hDlg,202,Height);
 				Dialog_OffsetY(hDlg,203,Height);
 				Dialog_OffsetY(hDlg,204,Height);
-				Dialog_OffsetY(hDlg,205,Height);
 				SendDlgItemMessage(hDlg,204,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_SYNCHRO_ENABLE));
-				SendDlgItemMessage(hDlg,205,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_SYNCHRO_GEN));
 				break;
 			}
 
@@ -562,7 +555,6 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 									BOOL bEnable = (IsDlgButtonChecked(hDlg,204) == BST_CHECKED);
 									EnableWindow(((GAMEEDITPAGECONTEXT *)psp->lParam)->item.hwndCtrl[1],bEnable);
 									EnableWindow(GetDlgItem(hDlg,202),bEnable);
-									EnableWindow(GetDlgItem(hDlg,205),bEnable);
 									} return(TRUE);
 								}
 							break;
@@ -701,16 +693,13 @@ BOOL Game_EditInit(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 				EnableWindow(ctx->item.hwndCtrl[1],FALSE);
 				EnableWindow(GetDlgItem(hDlg,202),FALSE);
 				EnableWindow(GetDlgItem(hDlg,204),FALSE);
-				EnableWindow(GetDlgItem(hDlg,205),FALSE);
 				}
 			else if (!ctx->item.pContext->bSetLevel)
 				{
 				EnableWindow(ctx->item.hwndCtrl[1],FALSE);
 				EnableWindow(GetDlgItem(hDlg,202),FALSE);
-				EnableWindow(GetDlgItem(hDlg,205),FALSE);
 				}
 			CheckDlgButton(hDlg,204,ctx->item.pContext->bSetLevel?BST_CHECKED:BST_UNCHECKED);
-			CheckDlgButton(hDlg,205,ctx->item.pContext->bSetGenLevel?BST_CHECKED:BST_UNCHECKED);
 			} break;
 		}
 
@@ -778,7 +767,6 @@ int Game_EditApply(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 			if (!ctx->bPageSet) break;
 			ctx->item.pContext->uNewLevel = GetDlgItemInt(hDlg,202,NULL,FALSE);
 			ctx->item.pContext->bSetLevel = (IsDlgButtonChecked(hDlg,204) == BST_CHECKED);
-			ctx->item.pContext->bSetGenLevel = (IsDlgButtonChecked(hDlg,205) == BST_CHECKED);
 			break;
 		}
 

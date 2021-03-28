@@ -527,7 +527,7 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				case GAME_PAGE_BONUS_TARGET:
 					if (wParam == 777)
 						{
-						Game_EditValueDrawObject(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pItem,NULL,(DRAWITEMSTRUCT *)lParam);
+						Game_EditValueDrawObject(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pItem,(DRAWITEMSTRUCT *)lParam);
 						return(TRUE);
 						}
 					else if (wParam == 108 || wParam == 208)
@@ -647,11 +647,11 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 					return(TRUE);
 				case LVN_ITEMACTIVATE:
 					SendMessage(GetParent(hDlg),PSM_PRESSBUTTON,(WPARAM)PSBTN_FINISH,0);
-					InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
+					if (((GAMEEDITPAGECONTEXT *)psp->lParam)->uPageID == GAME_PAGE_BONUS_SKILLS) InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
 					return(TRUE);
 				case LVN_ITEMCHANGED:
 					SendMessage(GetParent(hDlg),PSM_SETWIZBUTTONS,0,(LPARAM)PSWIZB_BACK|(Game_BonusSetNextPage(hDlg,FALSE,(GAMEEDITPAGECONTEXT *)psp->lParam) != -1?PSWIZB_FINISH:PSWIZB_DISABLEDFINISH));
-					InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
+					if (((GAMEEDITPAGECONTEXT *)psp->lParam)->uPageID == GAME_PAGE_BONUS_SKILLS) InvalidateRect(GetDlgItem(hDlg,192),NULL,FALSE);
 					return(TRUE);
 				case PSN_SETACTIVE:
 					SetWindowLongPtr(hDlg,DWLP_MSGRESULT,Game_BonusActivate(hDlg,(GAMEEDITPAGECONTEXT *)psp->lParam)?0:7001);
@@ -1096,7 +1096,7 @@ int Game_BonusSortColors(LPARAM lFirstColor, LPARAM lSecondColor, LPARAM _unused
 
 	pszText1 = ((GAMEITEMCOLORS *)lFirstColor)->pszName?((GAMEITEMCOLORS *)lFirstColor)->pszName:((GAMEITEMCOLORS *)lFirstColor)->pszId;
 	pszText2 = ((GAMEITEMCOLORS *)lSecondColor)->pszName?((GAMEITEMCOLORS *)lSecondColor)->pszName:((GAMEITEMCOLORS *)lSecondColor)->pszId;
-	iResult = CompareStringEx(LOCALE_NAME_SYSTEM_DEFAULT,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
+	iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
 	return(0);
@@ -1115,12 +1115,14 @@ int Game_BonusInitColors(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 	HBITMAP		hbitmapMask = NULL;
 	HBITMAP		hbitmapDefault = NULL;
 	ICONINFO	IconInfo;
-	HPEN		hPen;
 	HBRUSH		hBrush;
 	HICON		hIcon;
 	RECT		rcIcon;
 	GAMEITEMCOLORS*	pSelected;
-	int		i,j,X;
+	int		iIconWidth,iIconHeight;
+	int		iIconPadding,iIconSpacing;
+	float		fIconColorWidth,X;
+	int		i,j;
 
 	SendDlgItemMessage(hDlg,uCtlID,LVM_SETEXTENDEDLISTVIEWSTYLE,LVS_EX_DOUBLEBUFFER,LVS_EX_DOUBLEBUFFER);
 
@@ -1149,18 +1151,22 @@ int Game_BonusInitColors(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 		}
 
 	//--- Icons
+	iIconWidth = GetSystemMetrics(SM_CXICON);
+	iIconHeight = GetSystemMetrics(SM_CYICON);
+	iIconPadding = 1;
+	iIconSpacing = 1;
 	rcIcon.left = 0;
-	rcIcon.right = 52;
+	rcIcon.right = iIconWidth;
 	rcIcon.top = 0;
-	rcIcon.bottom = 52;
+	rcIcon.bottom = iIconHeight;
 	hDC = GetDC(hDlg);
 	if (hDC)
 		{
 		hdcIcon = CreateCompatibleDC(hDC);
 		if (hdcIcon)
 			{
-			hbitmapIcon = CreateCompatibleBitmap(hDC,52,52);
-			hbitmapMask = CreateBitmap(52,52,1,1,NULL);
+			hbitmapIcon = CreateCompatibleBitmap(hDC,iIconWidth,iIconHeight);
+			hbitmapMask = CreateBitmap(iIconWidth,iIconHeight,1,1,NULL);
 			if (!hbitmapIcon || !hbitmapMask) goto Error;
 			}
 		else goto Error;
@@ -1173,30 +1179,24 @@ int Game_BonusInitColors(HWND hDlg, UINT uCtlID, GAMEEDITPAGECONTEXT *ctx)
 		//--- Icon
 		hbitmapDefault = SelectObject(hdcIcon,hbitmapIcon);
 		FillRect(hdcIcon,&rcIcon,GetStockObject(BLACK_BRUSH));
-		//FillRect(hdcIcon,&rcIcon,GetSysColorBrush(COLOR_WINDOW));
-		//DrawIconEx(hdcIcon,0,0,App.hIcons[APP_ICON_BACKGROUND],52,52,0,NULL,DI_NORMAL);
-		for (X = 4, j = 0; j != 3; j++)
+		fIconColorWidth = ((float)(iIconWidth-iIconPadding*2-iIconSpacing*2))/3;
+		for (X = (float)iIconPadding, j = 0; j != 3; j++)
 			{
 			COLORREF crColor = ItemColors[i].colors[j];
 			crColor = ((crColor&0x000000FF)<<16) | (crColor&0x0000FF00) | ((crColor&0x00FF0000)>>16);
-			hPen = CreatePen(PS_SOLID,1,crColor);
-			if (hPen)
+			hBrush = CreateSolidBrush(crColor);
+			if (hBrush)
 				{
-				hBrush = CreateSolidBrush(crColor);
-				if (hBrush)
-					{
-					HPEN hpenDef = SelectObject(hdcIcon,hPen);
-					HBRUSH hbrushDef = SelectObject(hdcIcon,hBrush);
-					RoundRect(hdcIcon,X,4,X+12,48,4,4);
-					SelectObject(hdcIcon,hbrushDef);
-					SelectObject(hdcIcon,hpenDef);
-					DeleteObject(hBrush);
-					}
-				DeleteObject(hPen);
+				RECT rcFill;
+				rcFill.left = X;
+				rcFill.top = iIconPadding;
+				rcFill.right = (int)(X+fIconColorWidth);
+				rcFill.bottom = iIconHeight-iIconPadding;
+				FillRect(hdcIcon,&rcFill,hBrush);
+				DeleteObject(hBrush);
 				}
-			X += 16;
+			X += fIconColorWidth+(float)iIconSpacing;
 			}
-		//DrawIconEx(hdcIcon,2,2,App.hIcons[APP_ICON_FRAME],48,48,0,NULL,DI_NORMAL);
 		SelectObject(hdcIcon,hbitmapDefault);
 		IconInfo.fIcon = TRUE;
 		IconInfo.xHotspot = 0;

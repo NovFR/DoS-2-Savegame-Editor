@@ -81,8 +81,7 @@ enum {
 typedef struct DOS2INVENTORY {
 	NODE			node;
 	NODE			nodeItems;
-	WCHAR*			pszNameRef;
-	WCHAR*			pszDisplayName;
+	void*			pParentItem;
 	int			iTopIndex;
 	int			iSelected;
 } DOS2INVENTORY;
@@ -121,9 +120,10 @@ typedef struct DOS2ITEM {
 	NODE			node;
 	BOOL			bIsBackPack;
 	UINT			uNumItems;
+	WCHAR*			pszDisplayName;
 	//--- References
 	XML_NODE*		pxnRoot;
-	XML_ATTR*		pxaName;
+	XML_ATTR*		pxaStats;
 	XML_ATTR*		pxaDisplayName;
 	XML_ATTR*		pxaDescription;
 	XML_ATTR*		pxaAmount;
@@ -137,6 +137,7 @@ typedef struct DOS2ITEM {
 	XML_NODE*		pxnGeneration;
 	XML_NODE*		pxnPermanentBoost;
 	XML_NODE*		pxnBase;
+	XML_NODE*		pxnLevelOverride;
 } DOS2ITEM;
 
 //--- Affichage ---
@@ -303,9 +304,10 @@ int CALLBACK		Game_ItemsListSort(LPARAM,LPARAM,LPARAM);
 void			Game_Setup(DOS2CHARACTER *,BOOL,BOOL);
 int			Game_BuildPlayers(void);
 void			Game_ReleasePlayers(void);
-DOS2INVENTORY*		Game_BuildInventory(XML_ATTR *,XML_ATTR *,XML_ATTR *,NODE *);
+DOS2INVENTORY*		Game_BuildInventory(DOS2ITEM *,XML_ATTR *,NODE *);
 UINT			Game_GetInventoryItemsCount(XML_NODE *,WCHAR *);
 void			Game_ReleaseInventory(DOS2INVENTORY *);
+void			Game_ReleaseDisplayNames(void);
 void			Game_CharacterChanged(BOOL);
 void			Game_UpdateButtons(void);
 void			Game_SaveTopIndex(void);
@@ -317,7 +319,8 @@ UINT			Game_GetNextLevelFromExp(UINT);
 UINT			Game_GetMaxXP(void);
 UINT			Game_GetMaxLevel(void);
 BOOL			Game_IsItemEquipped(DOS2ITEM *);
-WCHAR*			Game_CopyDisplayName(WCHAR *);
+void			Game_ItemDisplayName(DOS2ITEM *);
+void			Game_ItemDisplayNameRelease(DOS2ITEM *);
 
 // «»»» Affichage «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 

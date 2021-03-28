@@ -341,9 +341,9 @@ void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT uFlags)
 	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_WINDOW));
 	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_SUNKEN,uFlags);
-	DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+12,LoadImage(NULL,MAKEINTRESOURCE(IDI_INFORMATION),IMAGE_ICON,32,32,LR_DEFAULTCOLOR|LR_SHARED),32,32,0,NULL,DI_NORMAL);
+	if (App.hIconInfo) DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+12,App.hIconInfo,32,32,0,NULL,DI_NORMAL);
 	CopyRect(&rcText,&pDraw->rcItem);
-	rcText.left += 56;
+	rcText.left += 32+24;
 	rcText.right -= 12;
 	rcText.top += 12;
 	rcText.bottom -= 12;

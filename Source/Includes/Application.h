@@ -123,6 +123,7 @@ typedef struct APPLICATION {
 	HTHEME				hThemeButton;
 	HTHEME				hThemeProgress;
 	HICON				hIcons[APP_MAX_ICONS];
+	HICON				hIconInfo;
 	FONTINFO			Font;
 	WCHAR*				pszStatusText;
 	WCHAR*				pszWindowTitle;

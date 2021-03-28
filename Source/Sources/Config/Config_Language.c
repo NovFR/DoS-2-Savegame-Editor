@@ -257,10 +257,6 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 			App.pLocaleTexts = pLocale;
 			App.pszLocaleName = pszLocaleName;
 
-			Locale_Unload(LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
-			Locale_Load(hWnd,szLangPath,pszLang,LOCALE_TYPE_MISC,(void **)&App.Game.pItemsLocale,NULL);
-			Game_ResetDisplayNames();
-
 			//--- Recreate the menu ---
 			App.hMenu = Menu_Create(&MainMenu);
 			if (App.hMenu)

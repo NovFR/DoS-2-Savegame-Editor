@@ -83,6 +83,7 @@ Projectile_PyroclasticRock			0	2	1	312	EARTH
 Projectile_Ricochet				0	2	1	100	HUNTING
 Projectile_SkyShot				0	2	1	482	HUNTING
 Projectile_Snipe				0	3	1	351	HUNTING
+Projectile_StaffOfMagus				0	2	0	147	SPECIAL
 Projectile_Superconductor			0	3	1	447	AIR
 Projectile_ThrowDust				0	2	1	542	EARTH
 Projectile_ThrowingKnife			0	2	1	342	ROGUES
@@ -193,6 +194,7 @@ Target_Bless					1	1	1	368	SOURCE
 Target_BlessedSmokeCloud			2	1	2	547	AIR
 Target_BloatedCorpse				0	1	1	468	DEATH
 Target_BloodBubble				0	1	1	345	DEATH
+Target_BloodInfusion				0	1	1	422	SUMMONING
 Target_BurnMyEyes				0	1	1	354	FIRE
 Target_Cannibalize				0	1	1	337	SUMMONING
 Target_Challenge				0	0	1	471	WARFARE

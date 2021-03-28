@@ -206,7 +206,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 			//--- Icon, Name and Level ---
 
 			//--- Get name or set unknown
-			Game_ResolveDisplayName(pItem);
+			Game_ItemDisplayName(pItem);
 			pszText = pItem->pszDisplayName;
 			if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
 
@@ -676,9 +676,14 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 		{
 		if (App.Game.pdcCurrent->pdiInventory)
 			{
-			WCHAR*		pszText;
+			WCHAR*		pszText = NULL;
 
-			pszText = App.Game.pdcCurrent->pdiInventory->pszDisplayNameRef;
+			if (App.Game.pdcCurrent->pdiInventory->pParentItem)
+				{
+				Game_ItemDisplayName(App.Game.pdcCurrent->pdiInventory->pParentItem);
+				pszText = ((DOS2ITEM *)App.Game.pdcCurrent->pdiInventory->pParentItem)->pszDisplayName;
+				}
+
 			if (pszText)
 				{
 				HFONT		hFont;
@@ -691,7 +696,7 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 				iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.right = rcDraw.left+GAME_ICON_SIZE;
-				Game_PaintIcon(pDraw->hDC,App.Game.pdcCurrent->pdiInventory->pszStatsRef,APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
+				Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(((DOS2ITEM *)App.Game.pdcCurrent->pdiInventory->pParentItem)->pxaStats),APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.left += GAME_ICON_SIZE;
 				DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_LEFT);

@@ -17,7 +17,7 @@
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-#define CONFIG_THIS_VERSION	1
+#define CONFIG_THIS_VERSION	2
 
 enum {
 	CONFIG_TYPE_TEXT = 0,
@@ -39,6 +39,9 @@ enum {
 	CONFIG_IDENT_CAPOVERRIDE_V1,
 	CONFIG_IDENT_SAVELOCATION_V1,
 	CONFIG_IDENT_TEMPLOCATION_V1,
+	CONFIG_IDENT_ITEMSDISPLAYNAME_V1,
+	CONFIG_IDENT_ITEMSRESOLVE_V1,
+	CONFIG_IDENT_LOCALENAME_V2
 };
 
 
@@ -59,6 +62,9 @@ typedef struct CONFIG {
 	WCHAR*			pszLarianPath;
 	UINT			uGame;
 	WCHAR*			pszProfile;
+	//--- Affichage
+	BOOL			bItemsDisplayName;
+	BOOL			bItemsResolve;
 	//--- Edition
 	BOOL			bShowHiddenTags;
 	BOOL			bRunesGroups;

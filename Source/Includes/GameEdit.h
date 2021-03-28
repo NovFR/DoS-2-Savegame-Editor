@@ -333,7 +333,6 @@ typedef struct GAMEEDITITEMCONTEXT {
 	UINT			uLevel;
 	UINT			uNewLevel;
 	BOOL			bSetLevel;
-	BOOL			bSetGenLevel;
 	LOCALE_MISC*		pLocale;
 	UINT64			uFilter;
 	NODE			nodeBoosters;
@@ -454,7 +453,7 @@ void			Game_BonusCleanFloat(WCHAR *);
 
 // «»»» Synchronisation «««««««««««««««««««««««««««««««««««««««««««««««««»
 
-void			Game_Synchronize_Level(int,XML_ATTR *,XML_ATTR *,XML_NODE *);
+void			Game_Synchronize_Level(int,BOOL,XML_ATTR *,XML_ATTR *,XML_NODE *,XML_NODE **);
 
 void			Game_SynchronizeAll(void);
 int			Game_SynchronizeAll_Init(HWND,RECT *,int,void *);
@@ -507,7 +506,8 @@ void			Game_EditValueUpdateBoostersFilters(HWND,UINT,UINT64,GAMEEDITVALUE *);
 void			Game_EditValueDrawBoostersFilter(DRAWITEMSTRUCT *);
 void			Game_EditValueDrawSeparator(DRAWITEMSTRUCT *);
 void			Game_EditValueSizeObject(HWND,UINT);
-void			Game_EditValueDrawObject(DOS2ITEM *,WCHAR *,DRAWITEMSTRUCT *);
+void			Game_EditValueDrawObject(DOS2ITEM *,DRAWITEMSTRUCT *);
+int			Game_EditValueDrawObjectSpace(HDC, RECT *);
 void			Game_EditValueSelectLB(HWND,GAMEEDITVALUE *);
 void			Game_EditValueSelectLV(HWND,GAMEEDITVALUE *);
 void			Game_EditValueSelectListEntry(HWND,WCHAR *);
