@@ -165,6 +165,7 @@ typedef struct GAMEDRAWCONTEXT {
 	RECT			rcArea;
 	RECT			rcWork;
 	RECT			rcText;
+	RECT			rcRgn;
 	COLORREF		crColor;
 	int			iBack;
 	//--- Game
@@ -172,9 +173,6 @@ typedef struct GAMEDRAWCONTEXT {
 	WCHAR*			pszExp;
 	WCHAR*			pszLevel;
 	WCHAR			szLevel[4];
-	WCHAR*			pszDamages;
-	WCHAR*			pszHeal;
-	WCHAR*			pszKills;
 	WCHAR*			pszArmor;
 	WCHAR*			pszMagicArmor;
 	WCHAR*			pszVitality;
@@ -296,7 +294,8 @@ typedef struct GAMEDATAPARSER {
 // «»»» Gestion «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 
 int			Game_CreateLayout(void);
-int			Game_CreateButton(int,int,int,int,WCHAR *,UINT,HWND *,UINT);
+int			Game_CreateButton(HWND,int,int,int,int,WCHAR *,UINT,HWND *,UINT);
+void			Game_Resize(void);
 
 void			Game_InventoryMenu(HWND,UINT);
 int CALLBACK		Game_ItemsListSort(LPARAM,LPARAM,LPARAM);
@@ -331,11 +330,29 @@ void			Game_MeasureInventory(MEASUREITEMSTRUCT *);
 void			Game_DrawInventory(DRAWITEMSTRUCT *);
 
 void			Game_Paint(HWND,HDC,RECT *);
+void			Game_PaintDecorationBorder(DRAWITEMSTRUCT *,BOOL);
 void			Game_PaintDecoration(HDC,int,int,HBITMAP);
+void			Game_PaintAttributes(HWND,HDC,RECT *);
+int			Game_PaintStat(HDC,HWND,RECT *,UINT,WCHAR *,UINT);
 void			Game_PaintValue(HDC,LONG,HWND,WCHAR *,WCHAR *,UINT);
+
 void			Game_PaintButton(DRAWITEMSTRUCT *);
 void			Game_PaintBag(DRAWITEMSTRUCT *);
 void			Game_PaintIcon(HDC,WCHAR *,UINT,RECT *,int,BOOL,BOOL);
+
+// «»»» Fenêtre des attributs «««««««««««««««««««««««««««««««««««««««««««»
+
+LRESULT			Game_ContainerCreate(HWND);
+LRESULT			Game_ProcessContainerMessages(HWND,UINT,WPARAM,LPARAM);
+void			Game_ContainerResize(HWND,int,int);
+void			Game_ContainerMouseWheel(HWND,int);
+void			Game_ContainerScroll(UINT);
+long			Game_ContainerTopOffset(LONG,RECT *);
+void			Game_ContainerScrollInfo(UINT);
+
+LRESULT			Game_AttributesCreate(HWND);
+LRESULT			Game_ProcessAttributesMessages(HWND,UINT,WPARAM,LPARAM);
+void			Game_AttributesResize(HWND,int,int);
 
 // «»»» Fichiers de données «««««««««««««««««««««««««««««««««««««««««««««»
 

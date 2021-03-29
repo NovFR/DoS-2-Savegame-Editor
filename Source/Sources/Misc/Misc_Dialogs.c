@@ -549,12 +549,17 @@ void Dialog_CenterWindow(HWND hDlg, HWND hwndParent)
 {
 	RECT	rcWindow;
 	RECT	rcDialog;
+	int	X,Y;
 
 	GetWindowRect(hwndParent,&rcWindow);
 	GetWindowRect(hDlg,&rcDialog);
 	rcDialog.bottom -= rcDialog.top;
 	rcDialog.right -= rcDialog.left;
-	SetWindowPos(hDlg,NULL,rcWindow.left+(rcWindow.right-rcWindow.left-rcDialog.right)/2,rcWindow.top+(rcWindow.bottom-rcWindow.top-rcDialog.bottom)/2,0,0,SWP_NOZORDER|SWP_NOSIZE);
+	X = rcWindow.left+(rcWindow.right-rcWindow.left-rcDialog.right)/2;
+	Y = rcWindow.top+(rcWindow.bottom-rcWindow.top-rcDialog.bottom)/2;
+	if (X < 0) X = 0;
+	if (Y < 0) Y = 0;
+	SetWindowPos(hDlg,NULL,X,Y,0,0,SWP_NOZORDER|SWP_NOSIZE);
 	return;
 }
 

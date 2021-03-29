@@ -27,13 +27,11 @@ extern UINT		TextsPts[];
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Affichage							  ¤¤¤ //
+// ¤¤¤ Affichage de la liste des personnages				  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-// «»»» Affichage de la liste des personnages «««««««««««««««««««««««««««»
-
-//--- Mesure la hauteur des éléments ---
+// «»»» Mesure la hauteur des éléments ««««««««««««««««««««««««««««««««««»
 
 void Game_MeasureList(MEASUREITEMSTRUCT *pMeasure)
 {
@@ -43,7 +41,8 @@ void Game_MeasureList(MEASUREITEMSTRUCT *pMeasure)
 	return;
 }
 
-//--- Affichage d'un élément ---
+
+// «»»» Affichage d'un élément ««««««««««««««««««««««««««««««««««««««««««»
 
 void Game_DrawList(DRAWITEMSTRUCT *pDraw)
 {
@@ -132,9 +131,13 @@ void Game_DrawList(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage de la liste des objets ««««««««««««««««««««««««««««««««»
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Affichage de la liste des objets					  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-//--- Mesure la hauteur des éléments ---
+// «»»» Mesure la hauteur des éléments ««««««««««««««««««««««««««««««««««»
 
 void Game_MeasureInventory(MEASUREITEMSTRUCT *pMeasure)
 {
@@ -144,7 +147,8 @@ void Game_MeasureInventory(MEASUREITEMSTRUCT *pMeasure)
 	return;
 }
 
-//--- Affichage d'un élément ---
+
+// «»»» Affichage d'un élément ««««««««««««««««««««««««««««««««««««««««««»
 
 void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 {
@@ -418,13 +422,17 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 }
 
 
-// «»»» Affichage de la fenêtre «««««««««««««««««««««««««««««««««««««««««»
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Affichage de la fenêtre						  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// «»»» Mise-à-jour de l'affichage (WM_PAINT) «««««««««««««««««««««««««««»
 
 void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 {
-	static UINT	uAttrIcons[] = { APP_ICON_STAT_STR, APP_ICON_STAT_DEX, APP_ICON_STAT_INT, APP_ICON_STAT_CON, APP_ICON_STAT_MEM, APP_ICON_STAT_PER };
 	GAMEDRAWCONTEXT	ctx;
-	int		i;
 
 	ZeroMemory(&ctx,sizeof(GAMEDRAWCONTEXT));
 
@@ -433,18 +441,8 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 		ctx.pszLevel = ctx.szLevel;
 		ctx.pszClass = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaClass);
 		ctx.pszExp = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaExp);
-		ctx.pszDamages = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaDamageCount);
-		ctx.pszHeal = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaHealCount);
-		ctx.pszKills = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaKillCount);
-		ctx.pszArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmor);
-		ctx.pszMagicArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmor);
-		ctx.pszVitality = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitality);
 		if (!ctx.pszExp) ctx.pszExp = ctx.pszLevel = Locale_GetText(TEXT_UNKNOWN);
-		else
-			{
-			Misc_Printf(ctx.szLevel,4,szLevelFmt,Game_GetLevelFromExp(wcstol(ctx.pszExp,NULL,10)));
-			Misc_Printf(ctx.szNextLevel,12,szLevelFmt,Game_GetNextLevelFromExp(wcstol(ctx.pszExp,NULL,10)));
-			}
+		else Misc_Printf(ctx.szLevel,4,szLevelFmt,Game_GetLevelFromExp(wcstol(ctx.pszExp,NULL,10)));
 		if (ctx.pszClass)
 			{
 			WCHAR*		pszBuffer;
@@ -508,67 +506,16 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	ctx.rcText.left += ctx.level.sizeSpace.cx;
 	DrawText(hDC,ctx.level.pszText,-1,&ctx.rcText,DT_LEFT|DT_NOPREFIX|DT_SINGLELINE);
 
-	ctx.rcText.left = ctx.rcArea.left;
-	ctx.rcText.right = ctx.rcArea.right;
-	ctx.rcText.top += ctx.level.sizeLabel.cy > ctx.level.sizeLevel.cy?ctx.level.sizeLabel.cy:ctx.level.sizeLevel.cy+10;
-	ctx.rcText.bottom = ctx.rcText.top+2;
-	DrawEdge(hDC,&ctx.rcText,EDGE_RAISED,BF_TOP|BF_BOTTOM);
-	Game_PaintDecoration(hDC,ctx.rcText.left-8,ctx.rcText.top-4,App.Game.Layout.hDecoTop);
-	ctx.rcText.top = ctx.rcText.bottom+10;
-
 	//--- Attributs
 
-	ctx.rcText.bottom += 20;
-	for (i = 0; i != 6; i++)
-		{
-		SetWindowPos(App.Game.Layout.hwndAttrBtn[i],NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndAttrBtn[i],Locale_GetText(TextsAttr[i]),App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAttributes[i]):NULL,uAttrIcons[i]);
-		ctx.rcText.bottom += App.Font.uFontHeight+20;
-		}
-
-	//--- Points à dépenser
-
-	ctx.rcText.bottom += 10;
-	for (i = 0; i != 4; i++)
-		{
-		SetWindowPos(App.Game.Layout.hwndPointsBtn[i],NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-		Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndPointsBtn[i],Locale_GetText(TextsPts[i]),App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaPoints[i]):NULL,APP_ICON_STAT_POINT);
-		ctx.rcText.bottom += App.Font.uFontHeight+20;
-		}
-
-	//--- Vitalité/Armures
-
-	ctx.rcText.bottom += 10;
-	SetWindowPos(App.Game.Layout.hwndLifeBtn,NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndLifeBtn,Locale_GetText(TEXT_CHR_LIFE),ctx.pszVitality,APP_ICON_STAT_LIFE);
-	ctx.rcText.bottom += App.Font.uFontHeight+20;
-	SetWindowPos(App.Game.Layout.hwndPhysicalBtn,NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndPhysicalBtn,Locale_GetText(TEXT_CHR_PHYSICAL),ctx.pszArmor,APP_ICON_STAT_PHYSICAL);
-	ctx.rcText.bottom += App.Font.uFontHeight+20;
-	SetWindowPos(App.Game.Layout.hwndMagicalBtn,NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndMagicalBtn,Locale_GetText(TEXT_CHR_MAGICAL),ctx.pszMagicArmor,APP_ICON_STAT_MAGICAL);
-	ctx.rcText.bottom += App.Font.uFontHeight+20;
-
-	//--- Expérience
-
-	ctx.rcText.bottom += 10;
-	SetWindowPos(App.Game.Layout.hwndExperienceBtn,NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndExperienceBtn,Locale_GetText(TEXT_CHR_EXP),ctx.pszExp,APP_ICON_STAT_XP);
-	ctx.rcText.bottom += App.Font.uFontHeight+20;
-	SetWindowPos(App.Game.Layout.hwndNextLevelBtn,NULL,ctx.rcArea.right-MAIN_ATTR_BTN_WIDTH-20,ctx.rcText.bottom,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,ctx.rcArea.left+24,App.Game.Layout.hwndNextLevelBtn,Locale_GetText(TEXT_CHR_NEXTLEVEL),ctx.szNextLevel,APP_ICON_STAT_NEXT);
-	//ctx.rcText.bottom += App.Font.uFontHeight+20;
-
-	//--- Séparateur
-
-	GetWindowRect(App.Game.Layout.hwndAbilitiesBtn,&ctx.rcText);
-	MapWindowPoints(NULL,hWnd,(POINT *)&ctx.rcText,2);
-	ctx.rcText.left = ctx.rcArea.left;
-	ctx.rcText.right = ctx.rcArea.right;
-	ctx.rcText.top -= 20;
-	ctx.rcText.bottom = ctx.rcText.top+2;
-	DrawEdge(hDC,&ctx.rcText,EDGE_RAISED,BF_TOP|BF_BOTTOM);
-	Game_PaintDecoration(hDC,ctx.rcText.left-8,ctx.rcText.top-24,App.Game.Layout.hDecoBottom);
+	GetWindowRect(App.Game.Layout.hwndAbilitiesBtn,&ctx.rcRgn);
+	MapWindowPoints(NULL,hWnd,(POINT *)&ctx.rcRgn,2);
+	ctx.rcRgn.bottom = ctx.rcRgn.top-20;
+	ctx.rcRgn.top = ctx.rcText.top+(ctx.level.sizeLabel.cy > ctx.level.sizeLevel.cy?ctx.level.sizeLabel.cy:ctx.level.sizeLevel.cy+10);
+	ctx.rcRgn.left = ctx.rcArea.left+1;
+	ctx.rcRgn.right = ctx.rcArea.right-1;
+	SetWindowPos(App.Game.Layout.hwndContainer,NULL,ctx.rcRgn.left,ctx.rcRgn.top,ctx.rcRgn.right-ctx.rcRgn.left,ctx.rcRgn.bottom-ctx.rcRgn.top,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+	InvalidateRect(App.Game.Layout.hwndContainer,NULL,FALSE);
 
 	//--- Inventaire ---
 
@@ -576,13 +523,14 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	ctx.rcArea.left += 432;
 	ctx.rcArea.top += 16;
 	ctx.rcArea.bottom -= 16;
-	ctx.rcArea.right = ctx.rcArea.left+570;
+	ctx.rcArea.right -= 16;
 	DrawEdge(hDC,&ctx.rcArea,BDR_RAISEDINNER,BF_RECT);
 
 	if (!IsWindowEnabled(App.Game.Layout.hwndInventory))
 		{
 		GetWindowRect(App.Game.Layout.hwndInventory,&ctx.rcArea);
 		MapWindowPoints(NULL,hWnd,(POINT *)&ctx.rcArea,2);
+		FillRect(hDC,&ctx.rcArea,GetSysColorBrush(COLOR_WINDOW));
 		DrawEdge(hDC,&ctx.rcArea,BDR_SUNKEN,BF_RECT);
 		}
 
@@ -592,7 +540,37 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	return;
 }
 
-//--- Affichage d'une décoration ---
+
+// «»»» Affichage d'une décoration ««««««««««««««««««««««««««««««««««««««»
+
+//--- Affichage des bordures ---
+
+void Game_PaintDecorationBorder(DRAWITEMSTRUCT *pDraw, BOOL bTop)
+{
+	RECT	rcDraw;
+
+	CopyRect(&rcDraw,&pDraw->rcItem);
+	if (bTop)
+		{
+		rcDraw.bottom = rcDraw.top+4;
+		FillRect(pDraw->hDC,&rcDraw,GetSysColorBrush(COLOR_BTNFACE));
+		rcDraw.top += 4;
+		rcDraw.bottom = rcDraw.top+2;
+		DrawEdge(pDraw->hDC,&rcDraw,EDGE_RAISED,BF_TOP|BF_BOTTOM);
+		}
+	else
+		{
+		rcDraw.top = rcDraw.bottom-4;
+		FillRect(pDraw->hDC,&rcDraw,GetSysColorBrush(COLOR_BTNFACE));
+		rcDraw.top -= 2;
+		rcDraw.bottom = rcDraw.top+2;
+		DrawEdge(pDraw->hDC,&rcDraw,EDGE_RAISED,BF_TOP|BF_BOTTOM);
+		}
+
+	return;
+}
+
+//--- Affichage du PNG ---
 
 void Game_PaintDecoration(HDC hDC, int X, int Y, HBITMAP hImage)
 {
@@ -607,7 +585,7 @@ void Game_PaintDecoration(HDC hDC, int X, int Y, HBITMAP hImage)
 			blendfn.BlendFlags = 0;
 			blendfn.SourceConstantAlpha = 255;
 			blendfn.AlphaFormat = AC_SRC_ALPHA;
-			AlphaBlend(hDC,X,Y,415,30,hDrawDC,0,0,415,30,blendfn);
+			AlphaBlend(hDC,X,Y,WINDOW_DECO_WIDTH,WINDOW_DECO_HEIGHT,hDrawDC,0,0,WINDOW_DECO_WIDTH,WINDOW_DECO_HEIGHT,blendfn);
 			SelectObject(hDC,hDrawBitmap);
 			DeleteDC(hDrawDC);
 			}
@@ -615,7 +593,84 @@ void Game_PaintDecoration(HDC hDC, int X, int Y, HBITMAP hImage)
 	return;
 }
 
-//--- Affichage des attributs et des points ---
+
+// «»»» Affichage des attributs «««««««««««««««««««««««««««««««««««««««««»
+
+void Game_PaintAttributes(HWND hWnd, HDC hDC, RECT *rcClient)
+{
+	static UINT	uAttrIcons[] = { APP_ICON_STAT_STR, APP_ICON_STAT_DEX, APP_ICON_STAT_INT, APP_ICON_STAT_CON, APP_ICON_STAT_MEM, APP_ICON_STAT_PER };
+	GAMEDRAWCONTEXT	ctx;
+	int		i;
+
+	ZeroMemory(&ctx,sizeof(GAMEDRAWCONTEXT));
+
+	if (App.Game.pdcCurrent)
+		{
+		ctx.pszArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmor);
+		ctx.pszMagicArmor = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmor);
+		ctx.pszVitality = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitality);
+		ctx.pszExp = xml_GetThisAttrValue(App.Game.pdcCurrent->pxaExp);
+		if (!ctx.pszExp)
+			{
+			ctx.pszExp = szZero;
+			wcscpy(ctx.szNextLevel,szZero);
+			}
+		else Misc_Printf(ctx.szNextLevel,12,szLevelFmt,Game_GetNextLevelFromExp(wcstol(ctx.pszExp,NULL,10)));
+		}
+
+	ctx.hFont = SelectObject(hDC,App.Font.hFont);
+	ctx.crColor = SetTextColor(hDC,GetSysColor(COLOR_WINDOWTEXT));
+	ctx.iBack = SetBkMode(hDC,TRANSPARENT);
+
+	GetClientRect(hWnd,&ctx.rcArea);
+	ctx.rcArea.top += 20;
+
+	// Attributs
+	for (i = 0; i != 6; i++) ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndAttrBtn[i],&ctx.rcArea,TextsAttr[i],App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaAttributes[i]):NULL,uAttrIcons[i]);
+
+	// Points à dépenser
+	ctx.rcArea.top += 10;
+	for (i = 0; i != 4; i++) ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndPointsBtn[i],&ctx.rcArea,TextsPts[i],App.Game.pdcCurrent?xml_GetThisAttrValue(App.Game.pdcCurrent->pxaPoints[i]):NULL,APP_ICON_STAT_POINT);
+
+	// Vitalité/Armures
+	ctx.rcArea.top += 10;
+	ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndLifeBtn,&ctx.rcArea,TEXT_CHR_LIFE,ctx.pszVitality,APP_ICON_STAT_LIFE);
+	ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndPhysicalBtn,&ctx.rcArea,TEXT_CHR_PHYSICAL,ctx.pszArmor,APP_ICON_STAT_PHYSICAL);
+	ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndMagicalBtn,&ctx.rcArea,TEXT_CHR_MAGICAL,ctx.pszMagicArmor,APP_ICON_STAT_MAGICAL);
+
+	// Expérience
+	ctx.rcArea.top += 10;
+	ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndExperienceBtn,&ctx.rcArea,TEXT_CHR_EXP,ctx.pszExp,APP_ICON_STAT_XP);
+	ctx.rcArea.top = Game_PaintStat(hDC,App.Game.Layout.hwndNextLevelBtn,&ctx.rcArea,TEXT_CHR_NEXTLEVEL,ctx.szNextLevel,APP_ICON_STAT_NEXT);
+
+	ctx.rcArea.top += 20;
+	if (ctx.rcArea.top != ctx.rcArea.bottom)
+		{
+		RECT	rcContainer;
+
+		GetClientRect(App.Game.Layout.hwndContainer,&rcContainer);
+		if (rcContainer.bottom < ctx.rcArea.top) ctx.rcArea.right -= MAIN_ATTR_SCROLLBAR_TOTALWIDTH-MAIN_ATTR_RIGHTMARGIN;
+		SetWindowPos(hWnd,NULL,0,0,ctx.rcArea.right,ctx.rcArea.top,SWP_NOMOVE|SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+		}
+
+	SetBkMode(hDC,ctx.iBack);
+	SetTextColor(hDC,ctx.crColor);
+	SelectObject(hDC,ctx.hFont);
+	return;
+}
+
+
+// «»»» Affichage d'un attribut «««««««««««««««««««««««««««««««««««««««««»
+
+int Game_PaintStat(HDC hDC, HWND hwndButton, RECT *rcDrawArea, UINT uLocaleLabelId, WCHAR *pszValue, UINT uIconId)
+{
+	SetWindowPos(hwndButton,NULL,rcDrawArea->right-MAIN_ATTR_BTN_WIDTH-MAIN_ATTR_RIGHTMARGIN,rcDrawArea->top,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
+	Game_PaintValue(hDC,rcDrawArea->left+24,hwndButton,Locale_GetText(uLocaleLabelId),pszValue,uIconId);
+	return(rcDrawArea->top+App.Font.uFontHeight+20);
+}
+
+
+// «»»» Affichage des attributs et des points «««««««««««««««««««««««««««»
 
 void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *pszValue, UINT uIconId)
 {
@@ -624,7 +679,7 @@ void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *
 	RECT	rcEdge;
 
 	GetWindowRect(hButton,&rcArea);
-	MapWindowPoints(NULL,App.hWnd,(POINT *)&rcArea,2);
+	MapWindowPoints(NULL,App.Game.Layout.hwndAttributes,(POINT *)&rcArea,2);
 	rcArea.top += 4;
 	rcArea.bottom -= 6;
 	CopyRect(&rcEdge,&rcArea);
@@ -657,7 +712,14 @@ void Game_PaintValue(HDC hDC, LONG iLeft, HWND hButton, WCHAR *pszLabel, WCHAR *
 	return;
 }
 
-//--- Affichage des boutons ---
+
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Affichages divers						  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+// «»»» Affichage des boutons «««««««««««««««««««««««««««««««««««««««««««»
 
 void Game_PaintButton(DRAWITEMSTRUCT *pDraw)
 {
@@ -666,7 +728,8 @@ void Game_PaintButton(DRAWITEMSTRUCT *pDraw)
 	return;
 }
 
-//--- Affichage du sac en cours ---
+
+// «»»» Affichage du sac en cours «««««««««««««««««««««««««««««««««««««««»
 
 void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 {
@@ -713,7 +776,8 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 	return;
 }
 
-//--- Affichage de l'icône ---
+
+// «»»» Affichage de l'icône ««««««««««««««««««««««««««««««««««««««««««««»
 
 //!\ Modifie RECT
 

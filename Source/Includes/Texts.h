@@ -11,6 +11,7 @@
 extern WCHAR	szTitle[];
 extern WCHAR	szTitleFmt[];
 extern WCHAR	szTitleFmtLong[];
+extern WCHAR	szTimeFmt[];
 
 extern WCHAR	szWindowClass[];
 extern WCHAR	szDialogClass[];
@@ -19,6 +20,7 @@ extern WCHAR	szEditClass[];
 extern WCHAR	szListBoxClass[];
 extern WCHAR	szButtonClass[];
 extern WCHAR	szStaticClass[];
+extern WCHAR	szScrollClass[];
 extern WCHAR	szThemeButton[];
 extern WCHAR	szThemeProgress[];
 
@@ -51,6 +53,7 @@ extern WCHAR	szBonusFmt[];
 extern WCHAR	szBonusDamageTypeFmt[];
 extern WCHAR	szBonusColorsFmt[];
 
+extern WCHAR	szDebugLogFileName[];
 extern WCHAR	szConverterEXE[];
 extern WCHAR	szDivineEXE[];
 extern WCHAR	szDivineExtract[];
@@ -108,6 +111,7 @@ extern WCHAR	szDataBaseTags[];
 extern WCHAR	szDataBaseBoosters[];
 extern WCHAR	szDataBaseSkills[];
 extern WCHAR	szDataBaseColors[];
+extern WCHAR	szDataBaseItems[];
 
 extern char	szLocaleLangQuery[];
 extern char	szLocaleAppQuery[];

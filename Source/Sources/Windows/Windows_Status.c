@@ -44,11 +44,21 @@ void Status_UpdateParts()
 	int	iStatusParts[2] = {0,0};
 
 	GetClientRect(App.hWnd,&rcClient);
-	iStatusParts[0] = rcClient.right-128;
-	iStatusParts[1] = rcClient.right;
+	iStatusParts[1] = rcClient.right-GetSystemMetrics(SM_CXSMICON)-4;
+	iStatusParts[0] = iStatusParts[1]-128;
 	SendMessage(App.hwndStatus,SB_SETPARTS,(WPARAM)2,(LPARAM)&iStatusParts);
 	SendMessage(App.hwndStatus,SB_SETTEXT,(WPARAM)STATUS_TEXT|SBT_OWNERDRAW,(LPARAM)NULL);
 	SendMessage(App.hwndStatus,SB_SETTEXT,(WPARAM)STATUS_PROGRESS|SBT_OWNERDRAW,(LPARAM)NULL);
+	return;
+}
+
+
+// «»»» Modifie la taille des parties de la barre de statut «««««««««««««»
+
+void Status_Resize(int iWidth)
+{
+	SetWindowPos(App.hwndStatus,NULL,0,0,iWidth,0,SWP_NOMOVE|SWP_NOZORDER);
+	Status_UpdateParts();
 	return;
 }
 

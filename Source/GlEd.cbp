@@ -80,9 +80,6 @@
 		<Unit filename="Includes/Startup.h" />
 		<Unit filename="Includes/Taskbar.h" />
 		<Unit filename="Includes/Texts.h" />
-		<Unit filename="Includes/Tools.h">
-			<Option target="Debug" />
-		</Unit>
 		<Unit filename="Includes/Utils.h" />
 		<Unit filename="Includes/XML.h" />
 		<Unit filename="Includes/XMLTree.h" />
@@ -205,9 +202,8 @@
 		<Unit filename="Sources/Misc/Misc_Utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Sources/Tools/Tools_Items.c">
+		<Unit filename="Sources/Windows/Windows_Game.c">
 			<Option compilerVar="CC" />
-			<Option target="Debug" />
 		</Unit>
 		<Unit filename="Sources/Windows/Windows_Status.c">
 			<Option compilerVar="CC" />

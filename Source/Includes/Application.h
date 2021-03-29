@@ -146,6 +146,11 @@ typedef struct APPLICATION {
 		struct DOS2CHARACTER*	pdcCurrent;
 		struct {
 			HWND		hwndList;
+			HWND		hwndContainer;
+			HWND		hwndDecoTop;
+			HWND		hwndDecoBottom;
+			HWND		hwndScrollbar;
+			HWND		hwndAttributes;
 			HWND		hwndAttrBtn[6];
 			HWND		hwndPointsBtn[4];
 			HWND		hwndLifeBtn;

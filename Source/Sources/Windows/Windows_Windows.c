@@ -25,7 +25,6 @@
 #include "Utils.h"
 #include "Dialogs.h"
 #include "Taskbar.h"
-#include "Tools.h"
 
 extern APPLICATION		App;
 extern CUSTOMMENUTEMPLATE	MainMenu;
@@ -52,6 +51,10 @@ LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				return(Window_Create(hWnd));
 			case WINDOW_TREE:
 				return(Tree_Create(hWnd));
+			case WINDOW_GAME_CONTAINER:
+				return(Game_ContainerCreate(hWnd));
+			case WINDOW_GAME_ATTRIBUTES:
+				return(Game_AttributesCreate(hWnd));
 			}
 		return(-1);
 		}
@@ -63,6 +66,10 @@ LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 			return(Window_ProcessMessages(hWnd,uMsgId,wParam,lParam));
 		case WINDOW_TREE:
 			return(Tree_ProcessMessages(hWnd,uMsgId,wParam,lParam));
+		case WINDOW_GAME_CONTAINER:
+			return(Game_ProcessContainerMessages(hWnd,uMsgId,wParam,lParam));
+		case WINDOW_GAME_ATTRIBUTES:
+			return(Game_ProcessAttributesMessages(hWnd,uMsgId,wParam,lParam));
 		}
 
 	return(DefWindowProc(hWnd,uMsgId,wParam,lParam));
@@ -87,7 +94,6 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			//Game_Stats(hWnd);
 			//Game_Skills(hWnd);
 			//Game_SynchronizeAll();
-			//Tools_TranslateItems(hWnd,L"Debug\\Stats.lsx",L"Debug\\french.xml",NULL);
 			break;
 		#endif
 
@@ -97,19 +103,46 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 				HDC		hDC;
 				PAINTSTRUCT	paintStruct;
 				RECT		rcWindow;
+				HRGN		hrgnWindow;
 
 				hDC = BeginPaint(hWnd,&paintStruct);
 				GetClientRect(hWnd,&rcWindow);
-				FillRect(hDC,&rcWindow,GetSysColorBrush(COLOR_BTNFACE));
+
 				if (App.hwndStatus)
 					{
 					RECT	rcStatus;
 					RECT	rcTemp;
+
 					CopyRect(&rcTemp,&rcWindow);
 					GetWindowRect(App.hwndStatus,&rcStatus);
 					MapWindowPoints(NULL,hWnd,(POINT *)&rcStatus,2);
 					SubtractRect(&rcWindow,&rcTemp,&rcStatus);
 					}
+
+				hrgnWindow = CreateRectRgnIndirect(&rcWindow);
+				if (App.Game.Layout.hwndContainer)
+					{
+					HRGN	hrgnContainer;
+					RECT	rcContainer;
+
+					GetWindowRect(App.Game.Layout.hwndContainer,&rcContainer);
+					MapWindowPoints(NULL,hWnd,(POINT *)&rcContainer,2);
+
+					hrgnContainer = CreateRectRgnIndirect(&rcContainer);
+					if (hrgnContainer)
+						{
+						CombineRgn(hrgnWindow,hrgnWindow,hrgnContainer,RGN_DIFF);
+						DeleteObject(hrgnContainer);
+						}
+					}
+				if (hrgnWindow) SelectClipRgn(hDC,hrgnWindow);
+				FillRect(hDC,&rcWindow,GetSysColorBrush(COLOR_BTNFACE));
+				if (hrgnWindow)
+					{
+					SelectClipRgn(hDC,NULL);
+					DeleteObject(hrgnWindow);
+					}
+
 				Game_Paint(hWnd,hDC,&rcWindow);
 				DrawEdge(hDC,&rcWindow,EDGE_SUNKEN,BF_BOTTOM);
 				EndPaint(hWnd,&paintStruct);
@@ -122,6 +155,17 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 
 		case WM_DRAWITEM:
 			Window_DrawItems((DRAWITEMSTRUCT *)lParam);
+			break;
+
+		case WM_SIZING:
+			if (((RECT *)lParam)->right-((RECT *)lParam)->left < MAIN_WINDOW_MINWIDTH) ((RECT *)lParam)->right = ((RECT *)lParam)->left+MAIN_WINDOW_MINWIDTH;
+			if (((RECT *)lParam)->bottom-((RECT *)lParam)->top < MAIN_WINDOW_MINHEIGHT) ((RECT *)lParam)->bottom = ((RECT *)lParam)->top+MAIN_WINDOW_MINHEIGHT;
+			if (((RECT *)lParam)->right-((RECT *)lParam)->left > MAIN_WINDOW_MAXWIDTH) ((RECT *)lParam)->right = ((RECT *)lParam)->left+MAIN_WINDOW_MAXWIDTH;
+			if (((RECT *)lParam)->bottom-((RECT *)lParam)->top > MAIN_WINDOW_MAXHEIGHT) ((RECT *)lParam)->bottom = ((RECT *)lParam)->top+MAIN_WINDOW_MAXHEIGHT;
+			break;
+
+		case WM_SIZE:
+			Window_Resize(hWnd,LOWORD(lParam),HIWORD(lParam));
 			break;
 
 		case WM_NOTIFY:
@@ -208,6 +252,21 @@ LRESULT Window_Create(HWND hWnd)
 Error_0:Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_WINDOW_CREATE),NULL,MB_ICONHAND);
 	App.hWnd = NULL;
 	return(-1);
+}
+
+
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ WM_CREATE -- Création d'une nouvelle fenêtre			  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+void Window_Resize(HWND hWnd, int iWidth, int iHeight)
+{
+	Status_Resize(iWidth);
+	Game_Resize();
+	InvalidateRect(hWnd,NULL,FALSE);
+	return;
 }
 
 

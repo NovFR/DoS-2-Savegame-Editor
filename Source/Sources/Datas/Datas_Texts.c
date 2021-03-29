@@ -23,6 +23,7 @@ WCHAR	szEditClass[]			= L"EDIT";
 WCHAR	szListBoxClass[]		= L"LISTBOX";
 WCHAR	szButtonClass[]			= L"BUTTON";
 WCHAR	szStaticClass[]			= L"STATIC";
+WCHAR	szScrollClass[]			= L"SCROLLBAR";
 WCHAR	szThemeButton[]			= L"BUTTON";
 WCHAR	szThemeProgress[]		= L"PROGRESS";
 

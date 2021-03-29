@@ -94,7 +94,7 @@ int Initialise_WindowsClasses()
 	WNDCLASSEX		wndClass;
 
 	wndClass.cbSize = sizeof(wndClass);
-	wndClass.style = CS_OWNDC|CS_DBLCLKS;
+	wndClass.style = CS_DBLCLKS;
 	wndClass.lpfnWndProc = (WNDPROC)Window_Proc;
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
@@ -167,9 +167,11 @@ int Initialise_Window()
 		GetMonitorInfo(hMonitor,&Info);
 		if (X == CW_USEDEFAULT) X = ((Info.rcMonitor.right-Info.rcMonitor.left)-MAIN_WINDOW_WIDTH)/2;
 		if (Y == CW_USEDEFAULT) Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-MAIN_WINDOW_HEIGHT)/2;
+		if (X < 0) X = 0;
+		if (Y < 0) Y = 0;
 		}
 
-	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT,NULL,App.hMenu,App.hInstance,(LONG_PTR)WINDOW_MAIN);
+	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_SIZEBOX,X,Y,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT,NULL,App.hMenu,App.hInstance,(void *)WINDOW_MAIN);
 	if (!hWnd)
 		{
 		// NO DIALOG HERE because WM_QUIT has been posted

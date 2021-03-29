@@ -20,13 +20,27 @@
 #define STATUS_REFRESH_MS		25
 
 #define MAIN_WINDOW_WIDTH		1024
-#define MAIN_WINDOW_HEIGHT		942
+#define MAIN_WINDOW_HEIGHT		930
 
-#define MAIN_ATTR_BTN_WIDTH		20
+#define MAIN_WINDOW_MINWIDTH		900
+#define MAIN_WINDOW_MINHEIGHT		800
+#define MAIN_WINDOW_MAXWIDTH		32767
+#define MAIN_WINDOW_MAXHEIGHT		32767
+
+#define MAIN_ATTR_BTN_WIDTH		20		// Attributes/Points buttons width
+#define MAIN_ATTR_RIGHTMARGIN		20		// Attributes/Points buttons margin right (no scrollbar)
+#define MAIN_ATTR_SCROLLBAR_WIDTH	14		// Scrollbar control width
+#define MAIN_ATTR_SCROLLBAR_TOTALWIDTH	28		// Total scrollbar area (left margin + scrollbar width + right margin)
+#define MAIN_ATTR_SCROLLBAR_VERTMARGIN	28		// Top and bottom scrollbar margins
+
+#define WINDOW_DECO_WIDTH		415
+#define WINDOW_DECO_HEIGHT		30
 
 enum {
 	WINDOW_MAIN			= 0,
-	WINDOW_TREE
+	WINDOW_TREE,
+	WINDOW_GAME_CONTAINER,
+	WINDOW_GAME_ATTRIBUTES
 };
 
 enum {
@@ -62,7 +76,10 @@ enum {
 	CTLID_STATUSWND,
 	CTLID_TREESAVE,
 	CTLID_TREEHELP,
-	CTLID_TREECLOSE
+	CTLID_TREECLOSE,
+	CTLID_ATTRS_DECOTOP,
+	CTLID_ATTRS_DECOBOTTOM,
+	CTLID_ATTRS_SCROLLBAR,
 };
 
 
@@ -78,6 +95,7 @@ LRESULT CALLBACK	Window_Proc(HWND,UINT,WPARAM,LPARAM);
 LRESULT			Window_ProcessMessages(HWND,UINT,WPARAM,LPARAM);
 
 LRESULT			Window_Create(HWND);
+void			Window_Resize(HWND,int,int);
 void			Window_MeasureItems(HWND,UINT,MEASUREITEMSTRUCT *);
 void			Window_DrawItems(DRAWITEMSTRUCT *);
 void			Window_Notify(HWND,UINT,NMHDR *);
@@ -87,6 +105,7 @@ void			Window_Command(HWND,UINT,UINT,HWND);
 
 int			Status_CreateWindow(void);
 void			Status_UpdateParts(void);
+void			Status_Resize(int);
 
 void			Status_DrawStatusText(DRAWITEMSTRUCT *);
 void			Status_SetText(WCHAR *,...);
