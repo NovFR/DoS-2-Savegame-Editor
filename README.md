@@ -1,19 +1,19 @@
 # Savegame Editor for Divinity Original Sin II
 
-This program allows you to modify various things in a Divinity Original Sin II savegame.
+This program allows you to modify various things in a **Divinity Original Sin II** savegame.
 
-It is technically, more a front end for Norbyte's LSlib than a real savegame editor.
+It is technically, more a front end for [Norbyte's LSlib](https://github.com/Norbyte/lslib) than a real savegame editor.
 
 
 ## Language
 
-Only English and French languages are available at this time.
+Only _English_ and _French_ languages are available.
 
-You can create more translations by adding new databases in the Locales folder.
+You can create more translations by adding new databases in the **Locales** folder.
 
 Databases use SQLite format. I personnaly use [DB Browser for SQLite](https://sqlitebrowser.org/).
 
-It is highly suggested (but not required) to use [ISO 639-2 format](https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes) for databases filenames.
+Starting with version 1.1.0.2, language files must match naming convention as described here: [Locale Names](https://docs.microsoft.com/en-us/windows/win32/intl/locale-names).
 
 
 ## Savegame corruption
@@ -36,6 +36,7 @@ Use a special save to make your modifications. Save your game once then a second
 
 ## Requirements
 
-Base application requires Windows 7 or better.
+- Windows 7 or better.
+- [Norbyte's LSlib](https://github.com/Norbyte/lslib) (used to load and write savegames) (included)
 
-It requires [Norbyte LSlib](https://github.com/Norbyte/lslib) to load and modify savegames (included in Binaries/C/)
+The game is **not** required. This program does not communicate with the game or modify any files related to the game (aside the savegames obviously). Don't touch your game installation if you have an issue with this program, post an [issue](https://github.com/NovFR/DoS-2-Savegame-Editor/issues) instead.
