@@ -120,21 +120,15 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 					}
 
 				hrgnWindow = CreateRectRgnIndirect(&rcWindow);
-				if (hrgnWindow && App.Game.Layout.hwndContainer)
-					{
-					HRGN	hrgnContainer;
-					RECT	rcContainer;
-
-					GetWindowRect(App.Game.Layout.hwndContainer,&rcContainer);
-					MapWindowPoints(NULL,hWnd,(POINT *)&rcContainer,2);
-
-					hrgnContainer = CreateRectRgnIndirect(&rcContainer);
-					if (hrgnContainer)
-						{
-						CombineRgn(hrgnWindow,hrgnWindow,hrgnContainer,RGN_DIFF);
-						DeleteObject(hrgnContainer);
-						}
-					}
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndContainer,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndAbilitiesBtn,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndTagsBtn,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndTalentsBtn,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndSkillsBtn,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndInfosBtn,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndInventory,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndInventoryName,hWnd);
+				Window_CombineRegions(hrgnWindow,App.Game.Layout.hwndMenuBtn,hWnd);
 				if (hrgnWindow) SelectClipRgn(hDC,hrgnWindow);
 				FillRect(hDC,&rcWindow,GetSysColorBrush(COLOR_BTNFACE));
 				if (hrgnWindow)
@@ -222,6 +216,28 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 		}
 
 	return(0);
+}
+
+//--- Combine deux régions (antiflicker) ---
+
+void Window_CombineRegions(HRGN hrgnDest, HWND hwndFrom, HWND hwndTo)
+{
+	HRGN	hrgnWindow;
+	RECT	rcWindow;
+
+	if (!hrgnDest) return;
+	if (!hwndFrom) return;
+
+	GetWindowRect(hwndFrom,&rcWindow);
+	MapWindowPoints(NULL,hwndTo,(POINT *)&rcWindow,2);
+
+	hrgnWindow = CreateRectRgnIndirect(&rcWindow);
+	if (hrgnWindow)
+		{
+		CombineRgn(hrgnDest,hrgnDest,hrgnWindow,RGN_DIFF);
+		DeleteObject(hrgnWindow);
+		}
+	return;
 }
 
 

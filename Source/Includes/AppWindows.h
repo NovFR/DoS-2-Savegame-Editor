@@ -93,6 +93,7 @@ enum {
 
 LRESULT CALLBACK	Window_Proc(HWND,UINT,WPARAM,LPARAM);
 LRESULT			Window_ProcessMessages(HWND,UINT,WPARAM,LPARAM);
+void			Window_CombineRegions(HRGN,HWND,HWND);
 
 LRESULT			Window_Create(HWND);
 void			Window_Resize(HWND,int,int);
