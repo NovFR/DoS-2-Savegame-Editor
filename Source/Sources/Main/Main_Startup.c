@@ -62,7 +62,22 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 			continue;
 			}
 		if (App.hShortcuts && TranslateAccelerator(App.hWnd,App.hShortcuts,&msg)) continue;
-		if (IsDialogMessage(App.hWnd,&msg)) continue;
+		if (IsDialogMessage(App.hWnd,&msg))
+			{
+			if (msg.message == WM_KEYDOWN)
+				{
+				static WPARAM	vkKeys[] = { VK_TAB, VK_LEFT, VK_RIGHT, VK_UP, VK_DOWN, 0 };
+				int		i;
+
+				for (i = 0; vkKeys[i] != 0; i++)
+					{
+					if (msg.wParam != vkKeys[i]) continue;
+					Game_AttributesMakeFocusVisible();
+					break;
+					}
+				}
+			continue;
+			}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 		}

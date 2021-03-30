@@ -120,7 +120,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 					}
 
 				hrgnWindow = CreateRectRgnIndirect(&rcWindow);
-				if (App.Game.Layout.hwndContainer)
+				if (hrgnWindow && App.Game.Layout.hwndContainer)
 					{
 					HRGN	hrgnContainer;
 					RECT	rcContainer;

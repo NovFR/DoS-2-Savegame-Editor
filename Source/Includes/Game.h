@@ -353,6 +353,7 @@ void			Game_ContainerScrollInfo(UINT);
 LRESULT			Game_AttributesCreate(HWND);
 LRESULT			Game_ProcessAttributesMessages(HWND,UINT,WPARAM,LPARAM);
 void			Game_AttributesResize(HWND,int,int);
+void			Game_AttributesMakeFocusVisible(void);
 
 // «»»» Fichiers de données «««««««««««««««««««««««««««««««««««««««««««««»
 

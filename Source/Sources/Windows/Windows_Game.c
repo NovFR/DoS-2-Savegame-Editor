@@ -184,16 +184,14 @@ void Game_ContainerScroll(UINT uRequest)
 		}
 
 	scrollInfo.fMask = SIF_POS;
-        SetScrollInfo(App.Game.Layout.hwndScrollbar,SB_CTL,&scrollInfo,TRUE);
-        GetScrollInfo(App.Game.Layout.hwndScrollbar,SB_CTL,&scrollInfo);
+	SetScrollInfo(App.Game.Layout.hwndScrollbar,SB_CTL,&scrollInfo,TRUE);
+	GetScrollInfo(App.Game.Layout.hwndScrollbar,SB_CTL,&scrollInfo);
 
 	GetWindowRect(App.Game.Layout.hwndAttributes,&rcAttributes);
 	MapWindowPoints(NULL,App.Game.Layout.hwndContainer,(POINT *)&rcAttributes,2);
 
 	if (rcAttributes.top != -scrollInfo.nPos)
-		{
 		SetWindowPos(App.Game.Layout.hwndAttributes,NULL,0,-scrollInfo.nPos,0,0,SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
-		}
 
 	return;
 }
@@ -311,7 +309,7 @@ LRESULT Game_ProcessAttributesMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LP
 				}
 			break;
 
-		case WM_MOVE:
+ 		case WM_MOVE:
 			Game_ContainerScrollInfo(SIF_POS);
 			break;
 
@@ -343,5 +341,54 @@ void Game_AttributesResize(HWND hWnd, int iWidth, int iHeight)
 		Game_ContainerScrollInfo(SIF_PAGE|SIF_RANGE);
 		}
 	else ShowWindow(App.Game.Layout.hwndScrollbar,SW_HIDE);
+	return;
+}
+
+
+// «»»» Fait en sorte que le bouton en focus soit visible «««««««««««««««»
+
+void Game_AttributesMakeFocusVisible()
+{
+	if (IsWindow(App.Game.Layout.hwndAttributes))
+		{
+		HWND	hwndFocus;
+		RECT	rcControl;
+		RECT	rcContainer;
+		RECT	rcAttributes;
+		LONG	lTop;
+
+		hwndFocus = GetFocus();
+		if (!hwndFocus) return;
+
+		if (GetParent(hwndFocus) != App.Game.Layout.hwndAttributes) return;
+
+		GetWindowRect(hwndFocus,&rcControl);
+		GetClientRect(App.Game.Layout.hwndContainer,&rcContainer);
+		GetWindowRect(App.Game.Layout.hwndAttributes,&rcAttributes);
+		MapWindowPoints(NULL,App.Game.Layout.hwndContainer,(POINT *)&rcControl,2);
+		MapWindowPoints(NULL,App.Game.Layout.hwndContainer,(POINT *)&rcAttributes,2);
+
+		rcContainer.top += rcControl.bottom-rcControl.top;
+		rcContainer.bottom -= rcControl.bottom-rcControl.top;
+		lTop = rcAttributes.top;
+
+		if (rcControl.top < rcContainer.top) // Above the visible area
+			{
+			lTop += rcContainer.top-rcControl.top;
+			}
+		else if (rcControl.bottom > rcContainer.bottom) // Below the visible area
+			{
+			lTop -= rcControl.bottom-rcContainer.bottom;
+			}
+		else return;
+
+		rcAttributes.bottom = rcAttributes.bottom-rcAttributes.top;
+		rcAttributes.top = lTop;
+		rcAttributes.bottom += rcAttributes.top;
+
+		lTop = Game_ContainerTopOffset(lTop,&rcAttributes);
+		SetWindowPos(App.Game.Layout.hwndAttributes,NULL,0,lTop,0,0,SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+		}
+
 	return;
 }
