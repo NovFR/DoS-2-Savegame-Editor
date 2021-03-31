@@ -557,8 +557,6 @@ void Dialog_CenterWindow(HWND hDlg, HWND hwndParent)
 	rcDialog.right -= rcDialog.left;
 	X = rcWindow.left+(rcWindow.right-rcWindow.left-rcDialog.right)/2;
 	Y = rcWindow.top+(rcWindow.bottom-rcWindow.top-rcDialog.bottom)/2;
-	if (X < 0) X = 0;
-	if (Y < 0) Y = 0;
 	SetWindowPos(hDlg,NULL,X,Y,0,0,SWP_NOZORDER|SWP_NOSIZE);
 	return;
 }
