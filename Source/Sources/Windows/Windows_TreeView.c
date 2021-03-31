@@ -17,7 +17,6 @@
 #include "Texts.h"
 #include "Requests.h"
 #include "Utils.h"
-#include "Taskbar.h"
 
 extern APPLICATION		App;
 
@@ -33,20 +32,37 @@ extern APPLICATION		App;
 void Tree_Open(XML_NODE *pxn)
 {
 	HWND		hWnd;
-	HMONITOR	hMonitor;
-	MONITORINFO	Info;
-	int		X,Y;
+	int		X,Y,W,H;
 
 	Tree_Destroy();
 	App.xmlTree.pxn = pxn;
 
-	hMonitor = MonitorFromWindow(NULL,MONITOR_DEFAULTTOPRIMARY);
-	Info.cbSize = sizeof(MONITORINFO);
-	GetMonitorInfo(hMonitor,&Info);
-	X = ((Info.rcMonitor.right-Info.rcMonitor.left)-800)/2;
-	Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-800)/2;
+	if (App.Config.windowTreeView.usedefault.bSize)
+		{
+		W = TREEVIEW_WIDTH;
+		H = TREEVIEW_HEIGHT;
+		}
+	else
+		{
+		W = App.Config.windowTreeView.position.iWidth;
+		H = App.Config.windowTreeView.position.iHeight;
+		}
 
-	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_CLIPCHILDREN,X,Y,800,800,NULL,NULL,App.hInstance,(void *)WINDOW_TREE);
+	if (App.Config.windowTreeView.usedefault.bCoords)
+		{
+		RECT	rcWindow;
+
+		GetWindowRect(App.hWnd,&rcWindow);
+		X = rcWindow.left+((rcWindow.right-rcWindow.left)-W)/2;
+		Y = rcWindow.top+((rcWindow.bottom-rcWindow.top)-H)/2;
+		}
+	else
+		{
+		X = App.Config.windowTreeView.position.iLeft;
+		Y = App.Config.windowTreeView.position.iTop;
+		}
+
+	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_SIZEBOX,X,Y,W,H,NULL,NULL,App.hInstance,(void *)WINDOW_TREE);
 	if (!hWnd)
 		{
 		App.xmlTree.pxn = NULL;
@@ -65,29 +81,30 @@ void Tree_Open(XML_NODE *pxn)
 LRESULT Tree_Create(HWND hWnd)
 {
 	RECT	rcClient;
-	int	X,Y,W,H;
+	int	iButtonWidth,iButtonHeight;
+	int	X,Y;
 
 	App.xmlTree.hWnd = hWnd;
 
-	W = 150;
-	H = App.Font.uFontHeight+16;
+	iButtonWidth = TREEVIEW_BUTTON_WIDTH;
+	iButtonHeight = App.Font.uFontHeight+TREEVIEW_BUTTON_PADDING;
 
 	GetClientRect(hWnd,&rcClient);
-	rcClient.left += 16;
-	rcClient.right -= 16;
-	rcClient.top += 16;
-	rcClient.bottom -= 16+H+14;
+	rcClient.left += TREEVIEW_MARGIN_LEFT;
+	rcClient.right -= TREEVIEW_MARGIN_RIGHT;
+	rcClient.top += TREEVIEW_MARGIN_TOP;
+	rcClient.bottom -= TREEVIEW_MARGIN_BOTTOM+iButtonHeight+TREEVIEW_BUTTON_MARGIN_BOTTOM;
 
 	App.xmlTree.hwndTree = CreateWindowEx(WS_EX_STATICEDGE,WC_TREEVIEW,NULL,WS_CHILD|TVS_DISABLEDRAGDROP|TVS_HASBUTTONS|TVS_HASLINES|TVS_LINESATROOT|TVS_SHOWSELALWAYS|TVS_EDITLABELS,rcClient.left,rcClient.top,rcClient.right-rcClient.left,rcClient.bottom-rcClient.top,hWnd,(HMENU)CTLID_TREEVIEW,App.hInstance,NULL);
 	if (!App.xmlTree.hwndTree) return(0);
 	if (!Tree_CreateTreeView(App.xmlTree.pxn)) return(0);
 
-	X = rcClient.right-W-4;
-	Y = rcClient.bottom+14;
+	X = rcClient.right-iButtonWidth-TREEVIEW_BUTTON_MARGIN_RIGHT;
+	Y = rcClient.bottom+TREEVIEW_BUTTON_MARGIN_BOTTOM;
 
-	App.xmlTree.hwndClose = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREECLOSE,App.hInstance,NULL);
+	App.xmlTree.hwndClose = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X,Y,iButtonWidth,iButtonHeight,hWnd,(HMENU)(UINT_PTR)CTLID_TREECLOSE,App.hInstance,NULL);
 	if (!App.xmlTree.hwndClose) return(0);
-	App.xmlTree.hwndHelp = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREEHELP,App.hInstance,NULL);
+	App.xmlTree.hwndHelp = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-iButtonWidth-TREEVIEW_BUTTON_SPACING,Y,iButtonWidth,iButtonHeight,hWnd,(HMENU)(UINT_PTR)CTLID_TREEHELP,App.hInstance,NULL);
 	if (!App.xmlTree.hwndHelp) return(0);
 
 	SendMessage(App.xmlTree.hwndClose,WM_SETFONT,(WPARAM)App.Font.hFont,0);
@@ -302,6 +319,19 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				}
 			break;
 
+		case WM_MOVE:
+			Tree_Move(hWnd);
+			break;
+
+		case WM_SIZING:
+			if (((RECT *)lParam)->right-((RECT *)lParam)->left < TREEVIEW_MIN_WIDTH) ((RECT *)lParam)->right = ((RECT *)lParam)->left+TREEVIEW_MIN_WIDTH;
+			if (((RECT *)lParam)->bottom-((RECT *)lParam)->top < TREEVIEW_MIN_HEIGHT) ((RECT *)lParam)->bottom = ((RECT *)lParam)->top+TREEVIEW_MIN_HEIGHT;
+			break;
+
+		case WM_SIZE:
+			Tree_Resize(hWnd);
+			break;
+
 		case WM_NOTIFY:
 			switch(((NMHDR *)lParam)->code)
 				{
@@ -315,6 +345,10 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 
 						switch(((TV_KEYDOWN *)lParam)->wVKey)
 							{
+							case VK_ESCAPE:
+								DestroyWindow(hWnd);
+								break;
+
 							case VK_RETURN:
 								hTreeItem = (HTREEITEM)SendMessage(hwndTree,TVM_GETNEXTITEM,TVGN_CARET,0);
 								if (hTreeItem)
@@ -387,6 +421,7 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 						HWND		hwndEdit;
 
 						pDispInfo = (NMTVDISPINFO *)lParam;
+						if (!pDispInfo->item.lParam) break;
 						switch(((NODE *)pDispInfo->item.lParam)->type)
 							{
 							case XML_TYPE_NODE:
@@ -409,6 +444,7 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 
 						pDispInfo = (NMTVDISPINFO *)lParam;
 						pxa = (XML_ATTR *)pDispInfo->item.lParam;
+						if (!pDispInfo->item.lParam) break;
 						if (pDispInfo->item.pszText)
 							{
 							if (wcslen(pDispInfo->item.pszText))
@@ -550,4 +586,52 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 		}
 
 	return(0);
+}
+
+
+// «»»» Déplacement de la fenêtre «««««««««««««««««««««««««««««««««««««««»
+
+void Tree_Move(HWND hWnd)
+{
+	RECT	rcWindow;
+
+	GetWindowRect(hWnd,&rcWindow);
+	App.Config.windowTreeView.position.iLeft = rcWindow.left;
+	App.Config.windowTreeView.position.iTop = rcWindow.top;
+	return;
+}
+
+
+// «»»» Redimension de la fenêtre «««««««««««««««««««««««««««««««««««««««»
+
+void Tree_Resize(HWND hWnd)
+{
+	RECT	rcWindow;
+	RECT	rcClient;
+	int	iButtonWidth,iButtonHeight;
+	int	X,Y;
+
+	GetWindowRect(hWnd,&rcWindow);
+	App.Config.windowTreeView.position.iWidth = rcWindow.right-rcWindow.left;
+	App.Config.windowTreeView.position.iHeight = rcWindow.bottom-rcWindow.top;
+
+	GetClientRect(hWnd,&rcWindow);
+	iButtonWidth = TREEVIEW_BUTTON_WIDTH;
+	iButtonHeight = App.Font.uFontHeight+TREEVIEW_BUTTON_PADDING;
+
+	rcClient.left = TREEVIEW_MARGIN_LEFT;
+	rcClient.top = TREEVIEW_MARGIN_TOP;
+	rcClient.right = rcWindow.right-TREEVIEW_MARGIN_RIGHT;
+	rcClient.bottom = rcWindow.bottom-(TREEVIEW_MARGIN_BOTTOM+iButtonHeight+TREEVIEW_BUTTON_MARGIN_BOTTOM);
+
+	SetWindowPos(App.xmlTree.hwndTree,NULL,rcClient.left,rcClient.top,rcClient.right-rcClient.left,rcClient.bottom-rcClient.top,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+
+	X = rcClient.right-iButtonWidth-TREEVIEW_BUTTON_MARGIN_RIGHT;
+	Y = rcClient.bottom+TREEVIEW_BUTTON_MARGIN_BOTTOM;
+
+	SetWindowPos(App.xmlTree.hwndClose,NULL,X,Y,0,0,SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+	SetWindowPos(App.xmlTree.hwndHelp,NULL,X-iButtonWidth-TREEVIEW_BUTTON_SPACING,Y,0,0,SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOZORDER);
+
+	InvalidateRect(hWnd,NULL,FALSE);
+	return;
 }
