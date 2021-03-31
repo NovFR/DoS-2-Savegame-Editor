@@ -2,7 +2,7 @@
 #define VERSION_MAJOR		1
 #define REVISION_MAJOR		1
 #define VERSION_MINOR		0
-#define REVISION_MINOR		3
+#define REVISION_MINOR		4
 
 #define TOSTRINGTMP(x)		#x
 #define TOSTRING(x)		TOSTRINGTMP(x)

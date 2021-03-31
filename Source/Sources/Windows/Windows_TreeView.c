@@ -89,15 +89,11 @@ LRESULT Tree_Create(HWND hWnd)
 	if (!App.xmlTree.hwndClose) return(0);
 	App.xmlTree.hwndHelp = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREEHELP,App.hInstance,NULL);
 	if (!App.xmlTree.hwndHelp) return(0);
-	// App.xmlTree.hwndSave = CreateWindowEx(0,szButtonClass,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_TABSTOP|BS_PUSHBUTTON|BS_TEXT|BS_CENTER|BS_VCENTER,X-W-8-W-8,Y,W,H,hWnd,(HMENU)(UINT_PTR)CTLID_TREESAVE,App.hInstance,NULL);
-	// if (!App.xmlTree.hwndSave) return(0);
 
 	SendMessage(App.xmlTree.hwndClose,WM_SETFONT,(WPARAM)App.Font.hFont,0);
 	SendMessage(App.xmlTree.hwndClose,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_CLOSE));
 	SendMessage(App.xmlTree.hwndHelp,WM_SETFONT,(WPARAM)App.Font.hFont,0);
 	SendMessage(App.xmlTree.hwndHelp,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_HELP));
-	// SendMessage(App.xmlTree.hwndSave,WM_SETFONT,(WPARAM)App.Font.hFont,0);
-	// SendMessage(App.xmlTree.hwndSave,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_SAVE));
 
 	ShowWindow(App.xmlTree.hwndTree,SW_SHOWNORMAL);
 	return(1);
@@ -122,17 +118,14 @@ int Tree_CreateTreeView(XML_NODE *pxn)
 	#if _DEBUG
 	if (pxn->parent) Tree_CreateDebugInfos(pxn->parent,TRUE,TVI_ROOT);
 	#endif
-	Taskbar_SetProgressState(TBPF_INDETERMINATE);
 
 	if (!Tree_CreateNodeTree(pxn,NULL))
 		{
-		Taskbar_SetProgressState(TBPF_NOPROGRESS);
 		Tree_DestroyTreeView();
 		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_TREE_CREATE),NULL,MB_ICONERROR);
 		return(0);
 		}
 
-	Taskbar_SetProgressState(TBPF_NOPROGRESS);
 	if (pxn->parent)
 		{
 		WCHAR *Text = xml_AttrToWideChar((XML_NODE *)pxn->parent);
@@ -161,15 +154,10 @@ int Tree_CreateNodeTree(XML_NODE *pxn, HTREEITEM hParent)
 		tvItem.hInsertAfter = TVI_LAST;
 		tvItem.itemex.mask = TVIF_CHILDREN|TVIF_PARAM|TVIF_TEXT;
 		tvItem.itemex.pszText = LPSTR_TEXTCALLBACK;
-		tvItem.itemex.cChildren = (pxnCurrent->children.next || pxnCurrent->attributes.next)?1:0;
+		tvItem.itemex.cChildren = (pxnCurrent->children.next || pxnCurrent->attributes.next)?I_CHILDRENCALLBACK:0;
 		tvItem.itemex.lParam = (LPARAM)pxnCurrent;
 		hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_INSERTITEM,0,(LPARAM)&tvItem);
 		if (!hItem) return(0);
-		#if _DEBUG
-		Tree_CreateDebugInfos(pxnCurrent,TRUE,hItem);
-		#endif
-		if (pxnCurrent->attributes.next) Tree_CreateAttrTree(pxnCurrent,hItem);
-		if (pxnCurrent->children.next) { if (!Tree_CreateNodeTree((XML_NODE *)pxnCurrent->children.next,hItem)) return(0); }
 		}
 
 	return(1);
@@ -444,6 +432,28 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 						}
 					break;
 
+				case TVN_ITEMEXPANDING:
+					if (((NMHDR *)lParam)->idFrom == CTLID_TREEVIEW)
+						{
+						NMTREEVIEW*	pTreeView;
+						XML_NODE*	pxn;
+
+						pTreeView = (NMTREEVIEW *)lParam;
+						if (pTreeView->action&TVE_EXPAND && !SendMessage(pTreeView->hdr.hwndFrom,TVM_GETNEXTITEM,(WPARAM)TVGN_CHILD,(LPARAM)pTreeView->itemNew.hItem))
+							{
+							pxn = (XML_NODE *)pTreeView->itemNew.lParam;
+							if (pxn && pxn->node.type == XML_TYPE_NODE)
+								{
+								#if _DEBUG
+								Tree_CreateDebugInfos(pxn,TRUE,pTreeView->itemNew.hItem);
+								#endif
+								if (pxn->attributes.next) Tree_CreateAttrTree(pxn,pTreeView->itemNew.hItem);
+								if (pxn->children.next) Tree_CreateNodeTree((XML_NODE *)pxn->children.next,pTreeView->itemNew.hItem);
+								}
+							}
+						}
+					break;
+
 				case TVN_GETDISPINFO:
 					if (((NMHDR *)lParam)->idFrom == CTLID_TREEVIEW)
 						{
@@ -459,21 +469,39 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 							{
 							case XML_TYPE_NODE:
 								pxn = (XML_NODE *)pDispInfo->item.lParam;
-								Misc_StrCpy(pDispInfo->item.pszText,iMax,pxn->name);
-								pszText = xml_GetAttrValue(pxn,szXMLid);
-								if (!pszText) break;
-								Misc_StrCat(pDispInfo->item.pszText,iMax,L"[");
-								Misc_StrCat(pDispInfo->item.pszText,iMax,szXMLid);
-								Misc_StrCat(pDispInfo->item.pszText,iMax,L"=");
-								Misc_StrCat(pDispInfo->item.pszText,iMax,pszText);
-								Misc_StrCat(pDispInfo->item.pszText,iMax,L"]");
+								if (pDispInfo->item.mask&TVIF_CHILDREN)
+									{
+									#if _DEBUG
+									pDispInfo->item.cChildren = 1;
+									#else
+									pDispInfo->item.cChildren = (pxn->children.next || pxn->attributes.next)?1:0;
+									#endif
+									}
+								if (pDispInfo->item.mask&TVIF_TEXT)
+									{
+									Misc_StrCpy(pDispInfo->item.pszText,iMax,pxn->name);
+									pszText = xml_GetAttrValue(pxn,szXMLid);
+									if (!pszText) break;
+									Misc_StrCat(pDispInfo->item.pszText,iMax,L"[");
+									Misc_StrCat(pDispInfo->item.pszText,iMax,szXMLid);
+									Misc_StrCat(pDispInfo->item.pszText,iMax,L"=");
+									Misc_StrCat(pDispInfo->item.pszText,iMax,pszText);
+									Misc_StrCat(pDispInfo->item.pszText,iMax,L"]");
+									}
 								break;
 							case XML_TYPE_ATTR:
 								pxa = (XML_ATTR *)pDispInfo->item.lParam;
-								Misc_StrCpy(pDispInfo->item.pszText,iMax,pxa->name);
-								Misc_StrCat(pDispInfo->item.pszText,iMax,L"=\"");
-								if (pxa->value) Misc_StrCat(pDispInfo->item.pszText,iMax,pxa->value);
-								Misc_StrCat(pDispInfo->item.pszText,iMax,L"\"");
+								if (pDispInfo->item.mask&TVIF_CHILDREN)
+									{
+									pDispInfo->item.cChildren = 0;
+									}
+								if (pDispInfo->item.mask&TVIF_TEXT)
+									{
+									Misc_StrCpy(pDispInfo->item.pszText,iMax,pxa->name);
+									Misc_StrCat(pDispInfo->item.pszText,iMax,L"=\"");
+									if (pxa->value) Misc_StrCat(pDispInfo->item.pszText,iMax,pxa->value);
+									Misc_StrCat(pDispInfo->item.pszText,iMax,L"\"");
+									}
 								break;
 							}
 						}
