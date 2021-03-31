@@ -94,6 +94,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			//Game_Stats(hWnd);
 			//Game_Skills(hWnd);
 			//Game_SynchronizeAll();
+			Tree_Open(NULL);
 			break;
 		#endif
 
@@ -151,6 +152,10 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			Window_DrawItems((DRAWITEMSTRUCT *)lParam);
 			break;
 
+		case WM_MOVE:
+			Window_Moved(hWnd);
+			break;
+
 		case WM_SIZING:
 			if (((RECT *)lParam)->right-((RECT *)lParam)->left < MAIN_WINDOW_MINWIDTH) ((RECT *)lParam)->right = ((RECT *)lParam)->left+MAIN_WINDOW_MINWIDTH;
 			if (((RECT *)lParam)->bottom-((RECT *)lParam)->top < MAIN_WINDOW_MINHEIGHT) ((RECT *)lParam)->bottom = ((RECT *)lParam)->top+MAIN_WINDOW_MINHEIGHT;
@@ -159,7 +164,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			break;
 
 		case WM_SIZE:
-			Window_Resize(hWnd,LOWORD(lParam),HIWORD(lParam));
+			Window_Resized(hWnd);
 			break;
 
 		case WM_NOTIFY:
@@ -273,13 +278,37 @@ Error_0:Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_WINDOW_CREATE),NULL,MB_I
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
-// ¤¤¤ WM_CREATE -- Création d'une nouvelle fenêtre			  ¤¤¤ //
+// ¤¤¤ WM_MOVE -- Déplacement de la fenêtre				  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-void Window_Resize(HWND hWnd, int iWidth, int iHeight)
+void Window_Moved(HWND hWnd)
 {
-	Status_Resize(iWidth);
+	RECT	rcClient;
+
+	GetWindowRect(hWnd,&rcClient);
+	App.Config.windowMain.position.iLeft = rcClient.left;
+	App.Config.windowMain.position.iTop = rcClient.top;
+	return;
+}
+
+
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ WM_SIZE -- Redimension de la fenêtre				  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+void Window_Resized(HWND hWnd)
+{
+	RECT	rcWindow;
+
+	GetWindowRect(hWnd,&rcWindow);
+	App.Config.windowMain.position.iWidth = rcWindow.right-rcWindow.left;
+	App.Config.windowMain.position.iHeight = rcWindow.bottom-rcWindow.top;
+
+	GetClientRect(hWnd,&rcWindow);
+	Status_Resize(rcWindow.right);
 	Game_Resize();
 	InvalidateRect(hWnd,NULL,FALSE);
 	return;

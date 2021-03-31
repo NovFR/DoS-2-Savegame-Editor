@@ -96,7 +96,8 @@ LRESULT			Window_ProcessMessages(HWND,UINT,WPARAM,LPARAM);
 void			Window_CombineRegions(HRGN,HWND,HWND);
 
 LRESULT			Window_Create(HWND);
-void			Window_Resize(HWND,int,int);
+void			Window_Moved(HWND);
+void			Window_Resized(HWND);
 void			Window_MeasureItems(HWND,UINT,MEASUREITEMSTRUCT *);
 void			Window_DrawItems(DRAWITEMSTRUCT *);
 void			Window_Notify(HWND,UINT,NMHDR *);

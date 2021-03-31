@@ -104,6 +104,10 @@ void Config_Load(CONFIG *pConfig)
 				if (!ReadFile(hFile,&pEntry->bValue,sizeof(BOOL),&dwRead,NULL)) goto Done;
 				if (dwRead != sizeof(BOOL)) goto Done;
 				break;
+			case CONFIG_TYPE_WINDOW:
+				if (!ReadFile(hFile,&pEntry->window,sizeof(CONFIGWINDOW),&dwRead,NULL)) goto Done;
+				if (dwRead != sizeof(CONFIGWINDOW)) goto Done;
+				break;
 			}
 		}
 
@@ -161,6 +165,12 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_ITEMSRESOLVE_V1:
 				pData = &pConfig->bItemsResolve;
 				break;
+			case CONFIG_IDENT_WINDOW_MAIN_V1:
+				pData = &pConfig->windowMain;
+				break;
+			case CONFIG_IDENT_WINDOW_TV_V1:
+				pData = &pConfig->windowTreeView;
+				break;
 			default:pData = NULL;
 			}
 
@@ -178,6 +188,9 @@ void Config_Load(CONFIG *pConfig)
 				break;
 			case CONFIG_TYPE_BOOL:
 				*(BOOL *)pData = pEntry->bValue;
+				break;
+			case CONFIG_TYPE_WINDOW:
+				CopyMemory(pData,&pEntry->window,sizeof(CONFIGWINDOW));
 				break;
 			}
 		}
@@ -275,6 +288,8 @@ BOOL Config_Save(BOOL bQuiet, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_TEXT,CONFIG_IDENT_TEMPLOCATION_V1,&pConfig->pszTempPath)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_ITEMSDISPLAYNAME_V1,&pConfig->bItemsDisplayName)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_ITEMSRESOLVE_V1,&pConfig->bItemsResolve)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_WINDOW,CONFIG_IDENT_WINDOW_MAIN_V1,&pConfig->windowMain)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_WINDOW,CONFIG_IDENT_WINDOW_TV_V1,&pConfig->windowTreeView)) goto Done;
 	bCompleted = TRUE;
 
 Done:	if (!bCompleted) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITE),NULL,MB_ICONERROR);
@@ -310,6 +325,9 @@ int Config_WriteEntry(HANDLE hFile, UINT uType, UINT uIdent, void *pData)
 			break;
 		case CONFIG_TYPE_BOOL:
 			if (!WriteFile(hFile,pData,sizeof(BOOL),&dwWrite,NULL)) return(0);
+			break;
+		case CONFIG_TYPE_WINDOW:
+			if (!WriteFile(hFile,pData,sizeof(CONFIGWINDOW),&dwWrite,NULL)) return(0);
 			break;
 		}
 
@@ -378,6 +396,17 @@ int Config_Defaults(CONFIG *pConfig)
 
 	Config_DefaultSaveLocation(&pConfig->pszLarianPath,FALSE);
 	Config_DefaultTempLocation(&pConfig->pszTempPath,FALSE);
+
+	//--- Fenêtre ---
+
+	pConfig->windowMain.position.iWidth = MAIN_WINDOW_WIDTH;
+	pConfig->windowMain.position.iHeight = MAIN_WINDOW_HEIGHT;
+	pConfig->windowMain.usedefault.bCoords = TRUE;
+	pConfig->windowMain.usedefault.bSize = TRUE;
+	pConfig->windowTreeView.position.iWidth = TREEVIEW_WIDTH;
+	pConfig->windowTreeView.position.iHeight = TREEVIEW_HEIGHT;
+	pConfig->windowTreeView.usedefault.bCoords = TRUE;
+	pConfig->windowTreeView.usedefault.bSize = TRUE;
 
 	//--- Affichage ---
 

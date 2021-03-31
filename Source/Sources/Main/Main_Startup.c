@@ -160,7 +160,7 @@ int Initialise_WindowsClasses()
 int Initialise_Window()
 {
 	HWND	hWnd;
-	int	X,Y;
+	int	X,Y,W,H;
 
 	App.hMenu = Menu_Create(&MainMenu);
 	if (!App.hMenu)
@@ -169,10 +169,18 @@ int Initialise_Window()
 		return(0);
 		}
 
-	X = CW_USEDEFAULT;
-	Y = CW_USEDEFAULT;
+	if (App.Config.windowMain.usedefault.bSize)
+		{
+		W = MAIN_WINDOW_WIDTH;
+		H = MAIN_WINDOW_HEIGHT;
+		}
+	else
+		{
+		W = App.Config.windowMain.position.iWidth;
+		H = App.Config.windowMain.position.iHeight;
+		}
 
-	if (X == CW_USEDEFAULT || Y == CW_USEDEFAULT)
+	if (App.Config.windowMain.usedefault.bCoords)
 		{
 		HMONITOR	hMonitor;
 		MONITORINFO	Info;
@@ -180,13 +188,16 @@ int Initialise_Window()
 		hMonitor = MonitorFromWindow(NULL,MONITOR_DEFAULTTOPRIMARY);
 		Info.cbSize = sizeof(MONITORINFO);
 		GetMonitorInfo(hMonitor,&Info);
-		if (X == CW_USEDEFAULT) X = ((Info.rcMonitor.right-Info.rcMonitor.left)-MAIN_WINDOW_WIDTH)/2;
-		if (Y == CW_USEDEFAULT) Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-MAIN_WINDOW_HEIGHT)/2;
-		if (X < 0) X = 0;
-		if (Y < 0) Y = 0;
+		X = ((Info.rcMonitor.right-Info.rcMonitor.left)-W)/2;
+		Y = ((Info.rcMonitor.bottom-Info.rcMonitor.top)-H)/2;
+		}
+	else
+		{
+		X = App.Config.windowMain.position.iLeft;
+		Y = App.Config.windowMain.position.iTop;
 		}
 
-	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_SIZEBOX,X,Y,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT,NULL,App.hMenu,App.hInstance,(void *)WINDOW_MAIN);
+	hWnd = CreateWindowEx(0,szWindowClass,szTitle,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX|WS_SIZEBOX,X,Y,W,H,NULL,App.hMenu,App.hInstance,(void *)WINDOW_MAIN);
 	if (!hWnd)
 		{
 		// NO DIALOG HERE because WM_QUIT has been posted

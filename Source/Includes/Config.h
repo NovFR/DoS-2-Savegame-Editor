@@ -22,7 +22,8 @@
 enum {
 	CONFIG_TYPE_TEXT = 0,
 	CONFIG_TYPE_UINT,
-	CONFIG_TYPE_BOOL
+	CONFIG_TYPE_BOOL,
+	CONFIG_TYPE_WINDOW,
 };
 
 enum {
@@ -41,7 +42,9 @@ enum {
 	CONFIG_IDENT_TEMPLOCATION_V1,
 	CONFIG_IDENT_ITEMSDISPLAYNAME_V1,
 	CONFIG_IDENT_ITEMSRESOLVE_V1,
-	CONFIG_IDENT_LOCALENAME_V2
+	CONFIG_IDENT_LOCALENAME_V2,
+	CONFIG_IDENT_WINDOW_MAIN_V1,
+	CONFIG_IDENT_WINDOW_TV_V1,
 };
 
 
@@ -50,6 +53,19 @@ enum {
 // ¤¤¤ Structures							  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
+typedef struct CONFIGWINDOW {
+	struct {
+		int		iLeft;
+		int		iTop;
+		int		iWidth;
+		int		iHeight;
+	} position;
+	struct {
+		BOOL		bCoords;
+		BOOL		bSize;
+	} usedefault;
+} CONFIGWINDOW;
 
 typedef struct CONFIG {
 	FILEHEADER		header;
@@ -62,6 +78,9 @@ typedef struct CONFIG {
 	WCHAR*			pszLarianPath;
 	UINT			uGame;
 	WCHAR*			pszProfile;
+	//--- Fenêtre
+	CONFIGWINDOW		windowMain;
+	CONFIGWINDOW		windowTreeView;
 	//--- Affichage
 	BOOL			bItemsDisplayName;
 	BOOL			bItemsResolve;
@@ -90,6 +109,7 @@ typedef struct CONFIGENTRY {
 		WCHAR*		pszValue;
 		UINT		uValue;
 		BOOL		bValue;
+		CONFIGWINDOW	window;
 	};
 } CONFIGENTRY;
 
