@@ -42,10 +42,10 @@ void About_Display(HWND hWnd)
 		ZeroMemory(&dialog,sizeof(TASKDIALOGCONFIG));
 		dialog.cbSize = sizeof(TASKDIALOGCONFIG);
 		dialog.hwndParent = hWnd;
-		dialog.dwFlags = TDF_ENABLE_HYPERLINKS|TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
+		dialog.dwFlags = TDF_USE_HICON_MAIN|TDF_ENABLE_HYPERLINKS|TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
 		dialog.dwCommonButtons = TDCBF_CLOSE_BUTTON;
 		dialog.pszWindowTitle = Locale_GetText(IDM_ABOUT);
-		dialog.pszMainIcon = TD_INFORMATION_ICON;
+		dialog.hMainIcon = App.hIcons[APP_ICON_APP_LARGE];
 		dialog.pszContent = pszAbout;
 		dialog.nDefaultButton = IDCLOSE;
 		dialog.pfCallback = Dialog_TaskDialogProc;
