@@ -272,7 +272,7 @@ BOOL lsf_CreateNode(LSFREADER *pReader, UINT uParentIndex, XML_NODE *pxnParent, 
 		{
 		XML_NODE *pxnTmp;
 		pxnTmp = pxnNew;
-		pxnNew = xml_CreateNode(L"children",pxnParent,0);
+		pxnNew = xml_CreateNode(L"children",pxnTmp,0);
 		if (!pxnNew) goto No_Memory;
 		List_AddEntry((NODE *)pxnNew,&pxnTmp->children);
 		}
