@@ -195,7 +195,7 @@ int Tree_InsertXML_Ok(HWND hDlg, void *pDialog)
 					pCurrentNode->node.prev->next = (NODE *)pFirstNode;
 					pFirstNode->node.prev = pCurrentNode->node.prev;
 					pLastNode->node.next = (NODE *)pCurrentNode;
-					pCurrentNode->node.prev = (NODE *)pFirstNode;
+					pCurrentNode->node.prev = (NODE *)pLastNode;
 					root.next = NULL;
 					break;
 				case TV_INSERT_AFTER:
