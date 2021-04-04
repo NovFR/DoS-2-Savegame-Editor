@@ -1,0 +1,20 @@
+
+#
+# Templates for XML insertions
+# (loaded on demand)
+#
+#	Name		Content
+#
+# Name can't contain spaces (you can use Alt+0160 however)
+# Content can be anything, use \n for a newline.
+#
+# If content is empty, the line is a separator.
+# If name is - and content is empty, a separator line is drawn.
+# If name is * and content is empty, a blank separator is drawn.
+#
+
+CurrentTemplate		<attribute id="CurrentTemplate" type="31" value=""/>\n<attribute id="CurrentTemplateType" type="1" value=""/>
+OriginalTemplate	<attribute id="OriginalTemplate" type="31" value="" />\n<attribute id="OriginalTemplateType" type="1" value=""/>
+-
+Amount			<attribute id="Amount" type="4" value=""/>
+LevelOverride		<attribute id="LevelOverride" type="4" value=""/>
