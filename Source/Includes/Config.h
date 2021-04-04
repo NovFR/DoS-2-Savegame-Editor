@@ -81,6 +81,7 @@ typedef struct CONFIG {
 	//--- Fenêtre
 	CONFIGWINDOW		windowMain;
 	CONFIGWINDOW		windowTreeView;
+	BOOL			bTreeDebug;
 	//--- Affichage
 	BOOL			bItemsDisplayName;
 	BOOL			bItemsResolve;

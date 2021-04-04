@@ -16,7 +16,6 @@
 #include "Texts.h"
 
 extern APPLICATION	App;
-static WCHAR*		htmlEntities[] = { L"&apos;",L"'", L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //

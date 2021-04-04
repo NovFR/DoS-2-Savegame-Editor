@@ -55,6 +55,8 @@ LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				return(Game_ContainerCreate(hWnd));
 			case WINDOW_GAME_ATTRIBUTES:
 				return(Game_AttributesCreate(hWnd));
+			case WINDOW_TREE_DEBUG:
+				return(Tree_DebugCreate(hWnd));
 			}
 		return(-1);
 		}
@@ -70,6 +72,8 @@ LRESULT CALLBACK Window_Proc(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 			return(Game_ProcessContainerMessages(hWnd,uMsgId,wParam,lParam));
 		case WINDOW_GAME_ATTRIBUTES:
 			return(Game_ProcessAttributesMessages(hWnd,uMsgId,wParam,lParam));
+		case WINDOW_TREE_DEBUG:
+			return(Tree_DebugMessages(hWnd,uMsgId,wParam,lParam));
 		}
 
 	return(DefWindowProc(hWnd,uMsgId,wParam,lParam));

@@ -35,6 +35,7 @@ extern CUSTOMMENUTEMPLATE	MainMenu;
 int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR CmdLine, int CmdShow)
 {
 	MSG	msg;
+	BOOL	bResult;
 
 	ZeroMemory(&msg,sizeof(MSG));
 	App.hInstance = hWinCInstance;
@@ -52,11 +53,23 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 	if (!Initialise_WindowsClasses()) goto Done;
 	if (!Initialise_Window()) goto Done;
 
-	while (GetMessage(&msg,NULL,0,0))
+	while ((bResult = GetMessage(&msg,NULL,0,0)))
 		{
+		if (bResult == -1)
+			{
+			Request_PrintError(NULL,Locale_GetText(TEXT_ERR_GETMSG),szTitle,MB_ICONHAND|MB_OK);
+			break;
+			}
 		if (IsWindow(App.xmlTree.hWnd) && GetActiveWindow() == App.xmlTree.hWnd)
 			{
-			if (IsDialogMessage(App.hWnd,&msg)) continue;
+			if (IsDialogMessage(App.xmlTree.hWnd,&msg)) continue;
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+			continue;
+			}
+		if (IsWindow(App.xmlTree.search.hDlg) && GetActiveWindow() == App.xmlTree.search.hDlg)
+			{
+			if (IsDialogMessage(App.xmlTree.search.hDlg,&msg)) continue;
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 			continue;
@@ -240,6 +253,9 @@ int Initialise_Icons()
 	info.hIcon = NULL;
 	SHGetStockIconInfo(SIID_INFO,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
 	App.hIconInfo = info.hIcon;
+	info.hIcon = NULL;
+	SHGetStockIconInfo(SIID_ERROR,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
+	App.hIconError = info.hIcon;
 	return(1);
 }
 
@@ -256,6 +272,7 @@ void Reset_Icons()
 		}
 
 	if (App.hIconInfo) DestroyIcon(App.hIconInfo);
+	if (App.hIconError) DestroyIcon(App.hIconError);
 	return;
 }
 

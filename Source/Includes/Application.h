@@ -126,6 +126,7 @@ typedef struct APPLICATION {
 	HTHEME				hThemeProgress;
 	HICON				hIcons[APP_MAX_ICONS];
 	HICON				hIconInfo;
+	HICON				hIconError;
 	FONTINFO			Font;
 	WCHAR*				pszStatusText;
 	WCHAR*				pszWindowTitle;

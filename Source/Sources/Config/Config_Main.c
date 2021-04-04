@@ -407,6 +407,11 @@ int Config_Defaults(CONFIG *pConfig)
 	pConfig->windowTreeView.position.iHeight = TREEVIEW_HEIGHT;
 	pConfig->windowTreeView.usedefault.bCoords = TRUE;
 	pConfig->windowTreeView.usedefault.bSize = TRUE;
+	#if _DEBUG
+	pConfig->bTreeDebug = TRUE;
+	#else
+	pConfig->bTreeDebug = FALSE;
+	#endif
 
 	//--- Affichage ---
 

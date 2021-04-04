@@ -259,7 +259,7 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.bSuccess = FALSE;
 				Parser.pszResults[0] = NULL;
 				//--- Alloue la structure
-				Parser.pSkill = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATAITEM));
+				Parser.pSkill = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATASKILL));
 				if (!Parser.pSkill) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 				List_AddEntry((NODE *)Parser.pSkill,pRoot);
 				//--- Paramètres par défaut
@@ -306,6 +306,41 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 					Parser.pSkill->infos.uSchoolLocaleID = GameDataSchools[i].uLocaleId;
 					break;
 					}
+				break;
+
+			//--- Insertions (TreeView) ---
+			case DATA_TYPE_INSERTIONS:
+				Parser.bSuccess = FALSE;
+				//--- Alloue la structure
+				Parser.pInsert = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATAINSERT));
+				if (!Parser.pInsert) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+				List_AddEntry((NODE *)Parser.pInsert,pRoot);
+				//--- Récupère l'identifiant
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pInsert->pszName = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
+				if (!Parser.pInsert->pszName) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+				//--- Récupère le contenu
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (Parser.pLineBegin)
+					{
+					for (Parser.pLineEnd = Parser.pLineBegin; *Parser.pLineEnd != 0; Parser.pLineEnd++)
+						{
+						if (*Parser.pLineEnd == 0x07) continue;
+						if (*Parser.pLineEnd < ' ') break;
+						if (*Parser.pLineEnd != '\\') continue;
+						if (*(Parser.pLineEnd+1) != 'n') continue;
+						*Parser.pLineEnd++ = 0x0D;
+						*Parser.pLineEnd++ = 0x0A;
+						}
+					*Parser.pLineEnd = 0;
+					if (*Parser.pLineBegin)
+						{
+						Parser.pInsert->pszContent = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
+						if (!Parser.pInsert->pszName) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+						}
+					}
+				Parser.bSuccess = TRUE;
+				SetLastError(ERROR_SUCCESS);
 				break;
 			}
 		}
@@ -397,6 +432,7 @@ void Game_UnloadDataFile(UINT uType, NODE *pRoot)
 	GAMEDATAITEM*	pItem;
 	GAMEDATA*	pData;
 	GAMEDATASKILL*	pSkill;
+	GAMEDATAINSERT*	pInsert;
 
 	switch(uType)
 		{
@@ -443,6 +479,15 @@ void Game_UnloadDataFile(UINT uType, NODE *pRoot)
 				{
 				if (pSkill->pszId) HeapFree(App.hHeap,0,pSkill->pszId);
 				if (pSkill->pszName) HeapFree(App.hHeap,0,pSkill->pszName);
+				}
+			List_ReleaseMemory(pRoot);
+			break;
+
+		case DATA_TYPE_INSERTIONS:
+			for (pInsert = (GAMEDATAINSERT *)pRoot->next; pInsert != NULL; pInsert = (GAMEDATAINSERT *)pInsert->node.next)
+				{
+				if (pInsert->pszName) HeapFree(App.hHeap,0,pInsert->pszName);
+				if (pInsert->pszContent) HeapFree(App.hHeap,0,pInsert->pszContent);
 				}
 			List_ReleaseMemory(pRoot);
 			break;

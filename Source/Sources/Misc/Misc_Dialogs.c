@@ -102,11 +102,11 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 					switch(LOWORD(wParam))
 						{
 						case IDOK:
-							if (pDialog->fnOk) { if (!pDialog->fnOk(hDlg,pDialog)) break; }
+							if (pDialog->fnOk) { if (!pDialog->fnOk(hDlg,pDialog)) return(TRUE); }
 							EndDialog(hDlg,IDOK);
 							return(TRUE);
 						case IDCANCEL:
-							if (pDialog->fnCancel) { if (!pDialog->fnCancel(hDlg,pDialog)) break; }
+							if (pDialog->fnCancel) { if (!pDialog->fnCancel(hDlg,pDialog)) return(TRUE); }
 							EndDialog(hDlg,IDCANCEL);
 							return(TRUE);
 						}

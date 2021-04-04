@@ -84,6 +84,7 @@ extern WCHAR	szBoostersDataPath[];
 extern WCHAR	szRunesDataPath[];
 extern WCHAR	szTagsDataPath[];
 extern WCHAR	szSkillsDataPath[];
+extern WCHAR	szInsertsDataPath[];
 extern WCHAR	szIconsPath[];
 extern WCHAR	szSkillsIconsPath[];
 extern WCHAR	szRunesIconsPath[];
@@ -129,6 +130,7 @@ extern WCHAR	szXMLregion[];
 extern WCHAR	szXMLnode[];
 extern WCHAR	szXMLid[];
 extern WCHAR	szXMLvalue[];
+extern WCHAR	szXMLhandle[];
 extern WCHAR	szXMLattribute[];
 extern WCHAR	szXMLCharacter[];
 extern WCHAR	szXMLLevel[];
@@ -168,5 +170,7 @@ extern WCHAR*	szInfoGameDatePath[];
 
 extern WCHAR*	szSkillManagerPath[];
 extern WCHAR*	szSkillManagerSkillsPath[];
+
+extern WCHAR*	htmlEntities[];
 
 #endif

@@ -86,6 +86,7 @@ WCHAR	szBoostersDataPath[]		= L"Datas\\Boosters.txt";
 WCHAR	szRunesDataPath[]		= L"Datas\\Runes.txt";
 WCHAR	szTagsDataPath[]		= L"Datas\\Tags.txt";
 WCHAR	szSkillsDataPath[]		= L"Datas\\Skills.txt";
+WCHAR	szInsertsDataPath[]		= L"Datas\\Inserts.txt";
 WCHAR	szIconsPath[]			= L"Icons\\Items.icl";
 WCHAR	szSkillsIconsPath[]		= L"Icons\\Skills.icl";
 WCHAR	szRunesIconsPath[]		= L"Icons\\Runes.icl";
@@ -131,6 +132,7 @@ WCHAR	szXMLregion[]			= L"region";
 WCHAR	szXMLnode[]			= L"node";
 WCHAR	szXMLid[]			= L"id";
 WCHAR	szXMLvalue[]			= L"value";
+WCHAR	szXMLhandle[]			= L"handle";
 WCHAR	szXMLattribute[]		= L"attribute";
 WCHAR	szXMLCharacter[]		= L"Character";
 WCHAR	szXMLLevel[]			= L"Level";
@@ -169,3 +171,5 @@ WCHAR*	szInfoGameDatePath[]		= { L"children",NULL, L"node",L"SaveTime", NULL };
 
 WCHAR*	szSkillManagerPath[]		= { L"children",NULL, L"node",L"SkillManager", NULL };
 WCHAR*	szSkillManagerSkillsPath[]	= { L"children",NULL, L"node",L"SkillManager", L"children",NULL, NULL };
+
+WCHAR*	htmlEntities[]			= { L"&apos;",L"'", L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };

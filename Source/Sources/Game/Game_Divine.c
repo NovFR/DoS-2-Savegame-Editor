@@ -1038,7 +1038,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 	ctx->pszPath = Divine_GetTempPath(4,szTempPath,szSavegames,ctx->pszSaveName,szGlobalsLSX);
 	if (ctx->pszPath)
 		{
-		if (xml_LoadFile(ctx->pszPath,&App.Game.Save.nodeXMLRoot,XML_FLAG_HASHEADER))
+		if (xml_LoadFile(NULL,ctx->pszPath,&App.Game.Save.nodeXMLRoot,XML_FLAG_HASHEADER))
 			{
 			Game_BuildPlayers();
 			Game_UpdateButtons();
@@ -1065,12 +1065,12 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 			ctx->pszCustomSavePath = NULL;
 			}
 		}
-	else xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+	else xml_SendErrorMsg(NULL,XML_ERROR_FROM_SYSTEM,0,0);
 
 Done:	if (ctx->dwResult != ERROR_SUCCESS)
 		{
 		SetLastError(ctx->dwResult);
-		if (!ctx->bNoErrorMsg) xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+		if (!ctx->bNoErrorMsg) xml_SendErrorMsg(NULL,XML_ERROR_FROM_SYSTEM,0,0);
 		}
 
 	Taskbar_SetProgressState(TBPF_NOPROGRESS);
@@ -1292,7 +1292,7 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 		}
 	else
 		{
-		xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+		xml_SendErrorMsg(NULL,XML_ERROR_FROM_SYSTEM,0,0);
 		goto Done;
 		}
 	ctx->dwResult = Divine_Execute(DIVINE_GLOBALSLSXTOLSF,ctx);
@@ -1310,7 +1310,7 @@ DWORD WINAPI Divine_SaveThread(DIVINECONTEXT *ctx)
 			}
 		else
 			{
-			xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+			xml_SendErrorMsg(NULL,XML_ERROR_FROM_SYSTEM,0,0);
 			goto Done;
 			}
 		ctx->dwResult = Divine_Execute(DIVINE_METALSXTOLSF,ctx);

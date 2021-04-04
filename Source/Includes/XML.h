@@ -16,8 +16,14 @@
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
 #define XML_TABS_BUFFER_LEN		128
-#define XML_WRITE_BUFFER_LEN		2048
-#define XML_BUFFER_INCREASE_MULT	2
+#define XML_WRITE_BUFFER_LEN		65535
+
+#define XML_FLAG_HASHEADER		0x00000001
+#define XML_FLAG_HASCONTENT		0x00000002
+#define XML_FLAG_FROMMEMORY		0x00000004
+#define XML_FLAG_DISPLAYMSG		0x00000008
+#define XML_FLAG_NOSTATUSMSG		0x40000000
+#define XML_FLAG_NOPROGRESS		0x80000000
 
 #include "Lists.h"
 
@@ -51,6 +57,7 @@ typedef struct XML_NODE {
 	NODE		children;
 	NODE		attributes;
 	void*		parent;
+	WCHAR*		content;
 	WCHAR		name[];
 } XML_NODE;
 
@@ -62,12 +69,15 @@ typedef struct XML_ATTR {
 } XML_ATTR;
 
 typedef struct XML_PARSER {
+	HWND		hWnd;
 	WCHAR*		pszFilePath;
+	DWORD		dwFlags;
 	HANDLE		hFile;
 	DWORD		dwLastErrorType;
 	DWORD		dwLastErrorMsg;
 	int		iResult;
 	//--- Load
+	NODE*		pRoot;
 	BYTE*		pFileBuffer;
 	DWORD		dwFileSize;
 	DWORD		dwCursor;
@@ -93,7 +103,7 @@ typedef struct XML_PARSER {
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
-int			xml_LoadFile(WCHAR *);
+int			xml_LoadFile(HWND,WCHAR *,NODE *,DWORD);
 int			xml_ReadFile(XML_PARSER *);
 int			xml_ReadTag(XML_PARSER *);
 int			xml_ParseNodes(XML_PARSER *,XML_NODE *,NODE *);
@@ -121,7 +131,7 @@ WCHAR*			xml_GetAttrValue(XML_NODE *,WCHAR *);
 WCHAR*			xml_GetThisAttrValue(XML_ATTR *);
 BOOL			xml_IsTrue(XML_ATTR *);
 BOOL			xml_IsValueTrue(WCHAR *);
-UINT			xml_TotalNodesCount(XML_NODE *);
+UINT			xml_TotalNodesCount(XML_NODE *,BOOL);
 
 BOOL			xml_InsertChildNode(XML_NODE *,XML_NODE *,WCHAR *,WCHAR *,WCHAR *,BOOL);
 XML_NODE*		xml_CreateNode(WCHAR *,XML_NODE *,UINT,...);
@@ -134,7 +144,7 @@ WCHAR*			xml_AttrToWideChar(XML_NODE *);
 WCHAR*			xml_ValueToWideChar(XML_ATTR *);
 WCHAR*			xml_AppendWideCharValue(XML_ATTR *,WCHAR *);
 
-void			xml_SendErrorMsg(UINT,UINT);
-void			xml_UpdateProgress(UINT,UINT);
+void			xml_SendErrorMsg(HWND,UINT,UINT,DWORD);
+void			xml_UpdateProgress(UINT,UINT,DWORD);
 
 #endif

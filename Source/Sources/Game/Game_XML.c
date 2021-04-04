@@ -32,34 +32,35 @@ extern APPLICATION		App;
 
 // «»»» Initie le chargement d'un fichier XML «««««««««««««««««««««««««««»
 
-int xml_LoadFile(WCHAR *pszFilePath, NODE *pRoot, DWORD dwFlags)
+int xml_LoadFile(HWND hWnd, WCHAR *pszFilePath, NODE *pRoot, DWORD dwFlags)
 {
 	XML_PARSER*	pParser;
 
-	Status_SetText(Locale_GetText(TEXT_LOADING),PathFindFileName(pszFilePath));
+	if (!(dwFlags&XML_FLAG_NOSTATUSMSG)) Status_SetText(Locale_GetText(TEXT_LOADING),PathFindFileName(pszFilePath));
 
 	pParser = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(XML_PARSER));
 	if (!pParser)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+		xml_SendErrorMsg(hWnd,XML_ERROR_FROM_SYSTEM,0,dwFlags);
 		return(0);
 		}
 
+	pParser->hWnd = hWnd;
 	pParser->pRoot = pRoot;
 	pParser->pszFilePath = pszFilePath;
 	pParser->dwFlags = dwFlags;
 	pParser->iResult = xml_ReadFile(pParser);
 	if (pParser->iResult != XML_ERROR_NONE)
 		{
-		xml_SendErrorMsg(pParser->iResult,pParser->dwLastErrorMsg);
+		xml_SendErrorMsg(pParser->hWnd,pParser->iResult,pParser->dwLastErrorMsg,dwFlags);
 		xml_ReleaseAll(pParser->pRoot);
-		xml_UpdateProgress(-1,-1);
+		xml_UpdateProgress(-1,-1,pParser->dwFlags);
 		xml_FreeParser(pParser);
 		return(0);
 		}
 
-	xml_UpdateProgress(-1,-1);
+	xml_UpdateProgress(-1,-1,pParser->dwFlags);
 	xml_FreeParser(pParser);
 	return(1);
 }
@@ -78,17 +79,27 @@ int xml_ReadFile(XML_PARSER *pParser)
 
 	//--- Chargement du fichier ---
 
-	pParser->hFile = CreateFile(pParser->pszFilePath,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_FLAG_SEQUENTIAL_SCAN,NULL);
-	if (pParser->hFile == INVALID_HANDLE_VALUE) goto Done;
+	if (pParser->dwFlags&XML_FLAG_FROMMEMORY)
+		{
+		pParser->dwFileSize = WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,NULL,0,NULL,NULL);
+		pParser->pFileBuffer = HeapAlloc(App.hHeap,0,pParser->dwFileSize);
+		if (!pParser->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+		WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,(char *)pParser->pFileBuffer,pParser->dwFileSize,NULL,NULL);
+		}
+	else
+		{
+		pParser->hFile = CreateFile(pParser->pszFilePath,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_FLAG_SEQUENTIAL_SCAN,NULL);
+		if (pParser->hFile == INVALID_HANDLE_VALUE) goto Done;
 
-	pParser->dwFileSize = GetFileSize(pParser->hFile,NULL);
-	if (pParser->dwFileSize == 0xFFFFFFFF) goto Done;
+		pParser->dwFileSize = GetFileSize(pParser->hFile,NULL);
+		if (pParser->dwFileSize == 0xFFFFFFFF) goto Done;
 
-	pParser->pFileBuffer = HeapAlloc(App.hHeap,0,pParser->dwFileSize);
-	if (!pParser->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+		pParser->pFileBuffer = HeapAlloc(App.hHeap,0,pParser->dwFileSize);
+		if (!pParser->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 
-	ReadFile(pParser->hFile,pParser->pFileBuffer,pParser->dwFileSize,&dwBytes,NULL);
-	if (dwBytes != pParser->dwFileSize) goto Done;
+		ReadFile(pParser->hFile,pParser->pFileBuffer,pParser->dwFileSize,&dwBytes,NULL);
+		if (dwBytes != pParser->dwFileSize) goto Done;
+		}
 
 	pParser->dwLastErrorType = XML_ERROR_NONE;
 
@@ -121,7 +132,7 @@ int xml_ReadFile(XML_PARSER *pParser)
 
 	//--- Lecture ---
 
-	xml_UpdateProgress(0,pParser->dwFileSize);
+	xml_UpdateProgress(0,pParser->dwFileSize,pParser->dwFlags);
 	pParser->dwLastErrorType = xml_ParseNodes(pParser,NULL,pParser->pRoot);
 	if (pParser->dwLastErrorType == XML_ERROR_EOF) pParser->dwLastErrorType = XML_ERROR_NONE;
 
@@ -161,7 +172,7 @@ int xml_ReadTag(XML_PARSER *pParser)
 	pParser->dwTagSize = pParser->dwTagEnd-pParser->dwTagBegin;
 	pParser->dwCursor = dwCursor+1;
 
-	xml_UpdateProgress(pParser->dwCursor,pParser->dwFileSize);
+	xml_UpdateProgress(pParser->dwCursor,pParser->dwFileSize,pParser->dwFlags);
 	return(XML_ERROR_NONE);
 }
 
@@ -428,7 +439,7 @@ int xml_SaveFile(WCHAR *pszFilePath, UINT uTarget, XML_NODE *pxn)
 	if (!pParser)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		xml_SendErrorMsg(XML_ERROR_FROM_SYSTEM,0);
+		xml_SendErrorMsg(NULL,XML_ERROR_FROM_SYSTEM,0,0);
 		return(0);
 		}
 
@@ -451,11 +462,11 @@ int xml_SaveFile(WCHAR *pszFilePath, UINT uTarget, XML_NODE *pxn)
 		}
 
 	pParser->iResult = xml_WriteFile(pParser);
-	xml_UpdateProgress(-1,-1);
+	xml_UpdateProgress(-1,-1,0);
 
 	if (pParser->iResult != XML_ERROR_NONE)
 		{
-		xml_SendErrorMsg(pParser->iResult,pParser->dwLastErrorMsg);
+		xml_SendErrorMsg(NULL,pParser->iResult,pParser->dwLastErrorMsg,0);
 		xml_FreeParser(pParser);
 		return(0);
 		}
@@ -548,7 +559,7 @@ DWORD xml_WriteNodes(XML_PARSER *pParser, XML_NODE *pxnRoot)
 		if (!xml_WriteToBuffer(pParser,">",1,TRUE)) return(XML_ERROR_FROM_SYSTEM);
 
 		pParser->uNodesCount++;
-		xml_UpdateProgress(pParser->uNodesCount,pParser->uNodesTotal);
+		xml_UpdateProgress(pParser->uNodesCount,pParser->uNodesTotal,0);
 		}
 
 	return(XML_ERROR_NONE);
@@ -853,6 +864,7 @@ WCHAR* xml_GetAttrValue(XML_NODE *pxn, WCHAR *pszAttrName)
 {
 	XML_ATTR*	pxa;
 
+	if (!pxn) return(NULL);
 	if (!pxn->attributes.next) return(NULL);
 	if (!pszAttrName) return(NULL);
 
@@ -1283,7 +1295,7 @@ WCHAR* xml_AppendWideCharValue(XML_ATTR *pxa, WCHAR *pszText)
 
 // «»»» Envoie un message d'erreur à la fenêtre principale ««««««««««««««»
 
-void xml_SendErrorMsg(UINT uLastErrorType, UINT uLastErrorMsg)
+void xml_SendErrorMsg(HWND hWnd, UINT uLastErrorType, UINT uLastErrorMsg, DWORD dwFlags)
 {
 	WCHAR*		pszMsg;
 	DWORD_PTR	vl;
@@ -1296,15 +1308,25 @@ void xml_SendErrorMsg(UINT uLastErrorType, UINT uLastErrorMsg)
 	else
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,L"%1",0,0,(WCHAR *)&pszMsg,1,(va_list *)&vl);
 
-	if (pszMsg) SendMessage(App.hWnd,WM_MESSAGEBOX,(WPARAM)MB_ICONHAND,(LPARAM)pszMsg);
+	if (pszMsg)
+		{
+		if (dwFlags&XML_FLAG_DISPLAYMSG)
+			{
+			MessageBox(hWnd,pszMsg,NULL,MB_ICONERROR|MB_OK);
+			LocalFree(pszMsg);
+			}
+		else SendMessage(App.hWnd,WM_MESSAGEBOX,(WPARAM)MB_ICONHAND,(LPARAM)pszMsg);
+		}
+
 	return;
 }
 
 
 // «»»» Mise-à-jour de la barre de progression ««««««««««««««««««««««««««»
 
-void xml_UpdateProgress(UINT uCurrent, UINT uMax)
+void xml_UpdateProgress(UINT uCurrent, UINT uMax, DWORD dwFlags)
 {
+	if (dwFlags&XML_FLAG_NOPROGRESS) return;
 	if (uCurrent == -1 && uMax == -1) SendMessage(App.hWnd,WM_UPDATEPROGRESS,-1,-1);
 	if ((UINT)(((float)uCurrent/(float)uMax)*100.0f) != App.uProgression) SendMessage(App.hWnd,WM_UPDATEPROGRESS,uCurrent,uMax);
 	return;

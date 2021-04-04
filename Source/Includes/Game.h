@@ -16,6 +16,7 @@
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
 #include "XML.h"
+#include "Menus.h"
 
 #define GAME_ICON_SIZE			48
 #define GAME_EQUIPPED_SLOT_MAX		10
@@ -53,6 +54,7 @@ enum {
 	DATA_TYPE_RUNES,
 	DATA_TYPE_TAGS,
 	DATA_TYPE_SKILLS,
+	DATA_TYPE_INSERTIONS,
 };
 
 enum {
@@ -266,6 +268,13 @@ typedef struct GAMEDATASKILL {
 	GAMEDATASKILLOPTIONS	options;
 } GAMEDATASKILL;
 
+typedef struct GAMEDATAINSERT {
+	NODE			node;
+	WCHAR*			pszName;
+	WCHAR*			pszContent;
+	CUSTOMMENUTEMPLATE	cMenu;
+} GAMEDATAINSERT;
+
 typedef struct GAMEDATAPARSER {
 	BOOL			bSuccess;
 	HANDLE			hFile;
@@ -281,6 +290,7 @@ typedef struct GAMEDATAPARSER {
 		GAMEDATAITEM*	pItem;
 		GAMEDATA*	pData;
 		GAMEDATASKILL*	pSkill;
+		GAMEDATAINSERT*	pInsert;
 	};
 } GAMEDATAPARSER;
 
