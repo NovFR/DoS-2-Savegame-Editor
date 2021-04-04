@@ -275,12 +275,13 @@
 	"LastFiles.h"
 	"Utils.h"
 
-1617552976 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_about.c
+1617555676 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_about.c
 	"_Version.h"
 	"Application.h"
 	"About.h"
 	"Locale.h"
 	"Dialogs.h"
+	"Utils.h"
 
 1616264984 f:\programmation\sources\jeux\divinity original sin ii\includes\about.h
 

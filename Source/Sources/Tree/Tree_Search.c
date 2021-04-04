@@ -219,6 +219,7 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 			return(TRUE);
 
 		case WM_DESTROY:
+			SetActiveWindow(App.xmlTree.hWnd);
 			App.xmlTree.search.hDlg = NULL;
 			return(TRUE);
 		}
