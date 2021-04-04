@@ -15,7 +15,6 @@
 #include "Application.h"
 #include "Requests.h"
 #include "Texts.h"
-#include "Taskbar.h"
 
 extern APPLICATION	App;
 
@@ -42,15 +41,7 @@ int Request_MessageBoxEx(HWND hWnd, WCHAR *pszWindowText, WCHAR *pszWindowTitle,
 		return(0);
 		}
 
-	if (uFlags&(MB_ICONHAND|MB_ICONERROR))
-		{
-		Taskbar_SetProgressValue(1,1);
-		Taskbar_SetProgressState(TBPF_ERROR);
-		}
-
 	iResult = MessageBox(hWnd,pszErrorMsg,pszWindowTitle,uFlags);
-
-	if (uFlags&(MB_ICONHAND|MB_ICONERROR)) Taskbar_SetProgressState(TBPF_NOPROGRESS);
 
 	LocalFree(pszErrorMsg);
 	va_end(vl);
@@ -97,14 +88,11 @@ void Request_PrintError(HWND hWnd, WCHAR *pszWindowText, WCHAR *pszWindowTitle, 
 	if (!pszFinalMsg)
 		goto Failed;
 
-	Taskbar_SetProgressValue(1,1);
-	Taskbar_SetProgressState(TBPF_ERROR);
 	wcscpy(pszFinalMsg,pszWindowText);
 	wcscat(pszFinalMsg,szLF);
 	wcscat(pszFinalMsg,szLF);
 	wcscat(pszFinalMsg,pszErrorMsg);
 	MessageBox(hWnd,pszFinalMsg,pszWindowTitle,MB_OK|uFlags);
-	Taskbar_SetProgressState(TBPF_NOPROGRESS);
 
 	HeapFree(App.hHeap,0,pszFinalMsg);
 	LocalFree(pszErrorMsg);
@@ -113,9 +101,6 @@ void Request_PrintError(HWND hWnd, WCHAR *pszWindowText, WCHAR *pszWindowTitle, 
 //--- Affichage du message brut ---
 
 Failed:	LocalFree(pszErrorMsg);
-Simple:	Taskbar_SetProgressValue(1,1);
-	Taskbar_SetProgressState(TBPF_ERROR);
-	MessageBox(hWnd,pszWindowText,pszWindowTitle,MB_OK|uFlags);
-	Taskbar_SetProgressState(TBPF_NOPROGRESS);
+Simple:	MessageBox(hWnd,pszWindowText,pszWindowTitle,MB_OK|uFlags);
 	return;
 }
