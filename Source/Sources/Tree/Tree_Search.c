@@ -109,6 +109,7 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 		SetDlgItemText(hDlg,IDOK,Locale_GetText(TEXT_DIALOG_TV_SEARCH_NEXT));
 		SetDlgItemText(hDlg,IDCANCEL,Locale_GetText(TEXT_CLOSE));
 
+		Tree_SearchGetType(hDlg,TRUE);
 		Tree_SearchEnableOk(hDlg);
 		SetWindowText(hDlg,Locale_GetText(TEXT_DIALOG_TV_SEARCH_TITLE));
 		SetLayeredWindowAttributes(hDlg,0,255,LWA_ALPHA);
@@ -438,6 +439,7 @@ void Tree_Search(HWND hWnd)
 		if (bMatch)
 			{
 			Tree_SearchSelectItem(pNode);
+			SetActiveWindow(App.xmlTree.hWnd);
 			break;
 			}
 
