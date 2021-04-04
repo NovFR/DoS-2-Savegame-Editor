@@ -140,7 +140,10 @@ int			Tree_InsertAttr_Ok(HWND,void *);
 
 void			Tree_SearchDialog(HWND);
 INT_PTR CALLBACK	Tree_SearchDialogProc(HWND,UINT,WPARAM,LPARAM);
-BOOL			Tree_SearchGetString(HWND,UINT);
+void			Tree_SearchGetType(HWND,BOOL);
+void			Tree_SearchGetParams(HWND);
+void			Tree_SearchGetString(HWND,UINT);
+void			Tree_SearchEnableOk(HWND);
 DWORD			Tree_SearchIsEnabled(void);
 void			Tree_Search(HWND);
 DWORD			Tree_SearchStringIsOk(WCHAR *,DWORD);

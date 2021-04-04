@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1617513666 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
+1617546149 source:f:\programmation\sources\jeux\divinity original sin ii\resources\application.rc
 	"_Global.h"
 	"_Version.h"
 
@@ -16,7 +16,7 @@
 	<stdio.h>
 	<DbgHelp.h>
 
-1617157533 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
+1617554378 f:\programmation\sources\jeux\divinity original sin ii\includes\_version.h
 
 1617311559 source:f:\programmation\sources\jeux\divinity original sin ii\sources\application.c
 	"Application.h"
@@ -36,7 +36,7 @@
 1593072788 f:\programmation\sources\jeux\divinity original sin ii\sources\libs\sqlite3\includes\sqlite3.h
 	<stdarg.h>
 
-1617513261 f:\programmation\sources\jeux\divinity original sin ii\includes\locale.h
+1617548098 f:\programmation\sources\jeux\divinity original sin ii\includes\locale.h
 	"Lists.h"
 
 1616266490 f:\programmation\sources\jeux\divinity original sin ii\includes\lists.h
@@ -52,7 +52,7 @@
 1617279564 f:\programmation\sources\jeux\divinity original sin ii\includes\xml.h
 	"Lists.h"
 
-1617515513 f:\programmation\sources\jeux\divinity original sin ii\includes\xmltree.h
+1617545352 f:\programmation\sources\jeux\divinity original sin ii\includes\xmltree.h
 	"Dialogs.h"
 
 1617310935 f:\programmation\sources\jeux\divinity original sin ii\includes\game.h
@@ -140,7 +140,7 @@
 1617128035 f:\programmation\sources\jeux\divinity original sin ii\includes\gameedit.h
 	"Game.h"
 
-1617130579 f:\programmation\sources\jeux\divinity original sin ii\includes\dialogs.h
+1617519445 f:\programmation\sources\jeux\divinity original sin ii\includes\dialogs.h
 
 1616936997 source:f:\programmation\sources\jeux\divinity original sin ii\sources\game\edit\game_edit_bonuses.c
 	"Application.h"
@@ -275,7 +275,7 @@
 	"LastFiles.h"
 	"Utils.h"
 
-1617207195 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_about.c
+1617552976 source:f:\programmation\sources\jeux\divinity original sin ii\sources\main\main_about.c
 	"_Version.h"
 	"Application.h"
 	"About.h"
@@ -317,7 +317,7 @@
 	"Requests.h"
 	"Debug.h"
 
-1617287668 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_dialogs.c
+1617519445 source:f:\programmation\sources\jeux\divinity original sin ii\sources\misc\misc_dialogs.c
 	"Application.h"
 	"Dialogs.h"
 	"Requests.h"
@@ -364,7 +364,7 @@
 	"Locale.h"
 	"Texts.h"
 
-1617511811 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
+1617515513 source:f:\programmation\sources\jeux\divinity original sin ii\sources\windows\windows_treeview.c
 	"Application.h"
 	"XMLTree.h"
 	"Texts.h"
@@ -412,7 +412,7 @@
 	"Requests.h"
 	"Dialogs.h"
 
-1616887330 source:f:\programmation\sources\jeux\divinity original sin ii\sources\config\config_modify.c
+1617519445 source:f:\programmation\sources\jeux\divinity original sin ii\sources\config\config_modify.c
 	"_Global.h"
 	"Application.h"
 	"Locale.h"
@@ -492,7 +492,7 @@
 	"XMLTree.h"
 	"Utils.h"
 
-1617513261 source:f:\programmation\sources\jeux\divinity original sin ii\sources\tree\tree_search.c
+1617548110 source:f:\programmation\sources\jeux\divinity original sin ii\sources\tree\tree_search.c
 	"Application.h"
 	"XMLTree.h"
 	"Dialogs.h"

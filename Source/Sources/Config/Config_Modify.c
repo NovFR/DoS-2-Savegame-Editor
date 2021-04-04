@@ -250,7 +250,7 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 			switch(wParam)
 				{
 				case 100:
-					Config_ModifyDrawTitle((DRAWITEMSTRUCT *)lParam,TEXT_CONFIG_PATHS);
+					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_PATHS),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 101:
 					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_TEMP),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
@@ -266,13 +266,13 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 					Config_ModifyDrawWarning(Locale_GetText(TEXT_CONFIG_OPENEDSAVEGAME),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 200:
-					Config_ModifyDrawTitle((DRAWITEMSTRUCT *)lParam,TEXT_CONFIG_LANG);
+					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_LANG),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 201:
 					Config_SelectLanguageDrawItem((DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 300:
-					Config_ModifyDrawTitle((DRAWITEMSTRUCT *)lParam,TEXT_CONFIG_EDITION);
+					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_EDITION),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 311:
 				case 321:
@@ -368,36 +368,6 @@ void Config_ModifyDrawWarning(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 		DrawText(pDraw->hDC,pszText,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
 		SetTextColor(pDraw->hDC,crColor);
 		SetBkMode(pDraw->hDC,iBkMode);
-		}
-
-	return;
-}
-
-
-// «»»» Affichage d'un titre ««««««««««««««««««««««««««««««««««««««««««««»
-
-void Config_ModifyDrawTitle(DRAWITEMSTRUCT *pDraw, UINT uLocaleId)
-{
-	WCHAR*	pszText;
-	RECT	rcDraw;
-	SIZE	sizeText;
-
-	pszText = Locale_GetText(uLocaleId);
-
-	CopyRect(&rcDraw,&pDraw->rcItem);
-	rcDraw.left = 0;
-	rcDraw.top = rcDraw.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-2)/2+1;
-	rcDraw.bottom = rcDraw.top+2;
-	if (pszText) rcDraw.right = 24;
-	DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_TOP|BF_BOTTOM);
-
-	if (pszText)
-		{
-		GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&sizeText);
-		DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,30,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-sizeText.cy)/2,0,0,DST_TEXT|DSS_DISABLED);
-		rcDraw.left = 30+sizeText.cx+6;
-		rcDraw.right = pDraw->rcItem.right;
-		DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_TOP|BF_BOTTOM);
 		}
 
 	return;

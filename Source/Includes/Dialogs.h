@@ -93,6 +93,7 @@ void			Dialog_DrawArrowButton(UINT,DRAWITEMSTRUCT *);
 void			Dialog_DrawIconButton(UINT,DRAWITEMSTRUCT *);
 void			Dialog_DrawLabel(WCHAR *,DRAWITEMSTRUCT *,UINT);
 void			Dialog_DrawInfo(WCHAR *,DRAWITEMSTRUCT *,UINT);
+void			Dialog_DrawTitle(WCHAR *,DRAWITEMSTRUCT *);
 
 int			Dialog_ViewComboInit(HWND,UINT,UINT,UINT,...);
 int			Dialog_ViewComboChanged(HWND,UINT,UINT,UINT *);

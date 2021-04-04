@@ -18,6 +18,7 @@
 #include "Texts.h"
 
 extern APPLICATION		App;
+static WCHAR*			lsfTypes[] = { L"DT_None", L"DT_Byte", L"DT_Short", L"DT_UShort", L"DT_Int", L"DT_UInt", L"DT_Float", L"DT_Double", L"DT_IVec2", L"DT_IVec3", L"DT_IVec4", L"DT_Vec2", L"DT_Vec3", L"DT_Vec4", L"DT_Mat2", L"DT_Mat3", L"DT_Mat3x4", L"DT_Mat4x3", L"DT_Mat4", L"DT_Bool", L"DT_String", L"DT_Path", L"DT_FixedString", L"DT_LSString", L"DT_ULongLong", L"DT_ScratchBuffer", L"DT_Long", L"DT_Int8", L"DT_TranslatedString", L"DT_WString", L"DT_LSWString", L"DT_UUID", L"DT_Unknown32", L"DT_TranslatedFSString", NULL };
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -54,7 +55,7 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 		RECT		rcDialog;
 		int		i;
 		int		iHeight = 0;
-		static UINT	uCtlIds[] = { 150, 200, 201, 202, 203, 204, 205, 206, 207, 210, 250, 300, 301, 310, 0 };
+		static UINT	uCtlIds[] = { 150, 151, 199, 200, 201, 202, 203, 204, 205, 206, 207, 210, 211, 299, 300, 301, 310, 777, 0 };
 
 		iHeight = Dialog_GetInfoHeight(hDlg,100,Locale_GetText(TEXT_DIALOG_TV_SEARCH_INFO));
 		GetWindowRect(hDlg,&rcDialog);
@@ -95,17 +96,22 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 		SetDlgItemText(hDlg,204,App.xmlTree.search.pszValue);
 		SetDlgItemText(hDlg,206,App.xmlTree.search.pszHandle);
 		SetDlgItemText(hDlg,300,App.xmlTree.search.pszAll);
-		CheckRadioButton(hDlg,150,250,App.xmlTree.search.uMode == TV_SEARCH_NODE?150:250);
 		CheckDlgButton(hDlg,210,App.xmlTree.search.bMatchAny?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,310,App.xmlTree.search.bCaseSensitive?BST_CHECKED:BST_UNCHECKED);
+		CheckRadioButton(hDlg,150,151,App.xmlTree.search.uMode == TV_SEARCH_NODE?150:151);
+		SendDlgItemMessage(hDlg,211,CB_ADDSTRING,0,(LPARAM)L"");
+		for (i = 0; lsfTypes[i] != NULL; i++) SendDlgItemMessage(hDlg,211,CB_ADDSTRING,0,(LPARAM)lsfTypes[i]);
 
 		SetDlgItemText(hDlg,150,Locale_GetText(TEXT_DIALOG_TV_SEARCH_NODE));
-		SetDlgItemText(hDlg,250,Locale_GetText(TEXT_DIALOG_TV_SEARCH_ATTR));
+		SetDlgItemText(hDlg,151,Locale_GetText(TEXT_DIALOG_TV_SEARCH_ATTR));
 		SetDlgItemText(hDlg,210,Locale_GetText(TEXT_DIALOG_TV_SEARCH_ANY));
 		SetDlgItemText(hDlg,310,Locale_GetText(TEXT_DIALOG_TV_SEARCH_CASE));
 		SetDlgItemText(hDlg,IDOK,Locale_GetText(TEXT_DIALOG_TV_SEARCH_NEXT));
 		SetDlgItemText(hDlg,IDCANCEL,Locale_GetText(TEXT_CLOSE));
 
+		Tree_SearchEnableOk(hDlg);
 		SetWindowText(hDlg,Locale_GetText(TEXT_DIALOG_TV_SEARCH_TITLE));
+		SetLayeredWindowAttributes(hDlg,0,255,LWA_ALPHA);
 		return(FALSE);
 		}
 
@@ -116,6 +122,9 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 				{
 				case 100:
 					Dialog_DrawInfo(Locale_GetText(TEXT_DIALOG_TV_SEARCH_INFO),(DRAWITEMSTRUCT *)lParam,BF_BOTTOM);
+					return(TRUE);
+				case 199:
+					Dialog_DrawTitle(Locale_GetText(TEXT_DIALOG_TV_SEARCH_NODE),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 201:
 					Dialog_DrawLabel(szXMLid,(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
@@ -129,14 +138,21 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 				case 207:
 					Dialog_DrawLabel(szXMLhandle,(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
 					return(TRUE);
+				case 299:
+					Dialog_DrawTitle(Locale_GetText(TEXT_DIALOG_TV_SEARCH_ATTR),(DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
 				case 301:
 					Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_TV_SEARCH_STRING),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					return(TRUE);
+				case 777:
+					Dialog_DrawTitle(NULL,(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				}
 
 		case WM_COMMAND:
 			switch(HIWORD(wParam))
 				{
+				case CBN_SELCHANGE:
 				case EN_CHANGE:
 					switch(LOWORD(wParam))
 						{
@@ -145,7 +161,11 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 						case 204:
 						case 206:
 						case 300:
-							EnableWindow(GetDlgItem(hDlg,IDOK),Tree_SearchGetString(hDlg,LOWORD(wParam)));
+							Tree_SearchGetType(hDlg,TRUE);
+							Tree_SearchEnableOk(hDlg);
+							break;
+						case 211:
+							Tree_SearchGetType(hDlg,FALSE);
 							break;
 						}
 					break;
@@ -154,24 +174,16 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 					switch(LOWORD(wParam))
 						{
 						case 150:
-							App.xmlTree.search.uMode = TV_SEARCH_NODE;
-							EnableWindow(GetDlgItem(hDlg,IDOK),Tree_SearchIsEnabled()?TRUE:FALSE);
-							break;
-						case 210:
-							App.xmlTree.search.bMatchAny = IsDlgButtonChecked(hDlg,210) == BST_CHECKED?TRUE:FALSE;
-							break;
-						case 250:
-							App.xmlTree.search.uMode = TV_SEARCH_ATTR;
-							EnableWindow(GetDlgItem(hDlg,IDOK),Tree_SearchIsEnabled()?TRUE:FALSE);
-							break;
-						case 310:
-							App.xmlTree.search.bCaseSensitive = IsDlgButtonChecked(hDlg,310) == BST_CHECKED?TRUE:FALSE;
+						case 151:
+							Tree_SearchEnableOk(hDlg);
 							break;
 						case IDOK:
+							Tree_SearchGetParams(hDlg);
 							Tree_Search(hDlg);
 							return(TRUE);
 
 						case IDCANCEL:
+							Tree_SearchGetParams(hDlg);
 							DestroyWindow(hDlg);
 							return(TRUE);
 						}
@@ -183,9 +195,26 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 			App.xmlTree.search.bMoved = TRUE;
 			App.xmlTree.search.lLeft = ((RECT *)lParam)->left;
 			App.xmlTree.search.lTop = ((RECT *)lParam)->top;
-			return(FALSE);
+			break;
+
+		case WM_ACTIVATE:
+			switch(LOWORD(wParam))
+				{
+				case WA_ACTIVE:
+				case WA_CLICKACTIVE:
+					SetLayeredWindowAttributes(hDlg,0,255,LWA_ALPHA);
+					break;
+				case WA_INACTIVE:
+					SetLayeredWindowAttributes(hDlg,0,150,LWA_ALPHA);
+					break;
+				}
+			break;
+
+		case WM_MOVE:
+			break;
 
 		case WM_CLOSE:
+			Tree_SearchGetParams(hDlg);
 			DestroyWindow(hDlg);
 			return(TRUE);
 
@@ -198,9 +227,57 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 }
 
 
+// «»»» Type ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+
+void Tree_SearchGetType(HWND hDlg, BOOL bSet)
+{
+	UINT	uType = 0;
+
+	if (bSet)
+		{
+		if (SendDlgItemMessage(hDlg,202,WM_GETTEXTLENGTH,0,0))
+			{
+			uType = GetDlgItemInt(hDlg,202,NULL,FALSE);
+			if (uType+1 > sizeof(lsfTypes)/sizeof(WCHAR *)-1) uType = 0;
+			else uType++;
+			}
+		SendDlgItemMessage(hDlg,211,CB_SETCURSEL,(WPARAM)uType,0);
+		}
+	else
+		{
+		uType = SendDlgItemMessage(hDlg,211,CB_GETCURSEL,0,0);
+		if (uType == CB_ERR) return;
+		if (!uType) return;
+		uType--;
+		SetDlgItemInt(hDlg,202,uType,FALSE);
+		}
+
+	return;
+}
+
+
+// «»»» Stockage des paramètres «««««««««««««««««««««««««««««««««««««««««»
+
+void Tree_SearchGetParams(HWND hDlg)
+{
+	if (IsDlgButtonChecked(hDlg,150) == BST_CHECKED) App.xmlTree.search.uMode = TV_SEARCH_NODE;
+	else App.xmlTree.search.uMode = TV_SEARCH_ATTR;
+
+	App.xmlTree.search.bMatchAny = IsDlgButtonChecked(hDlg,210) == BST_CHECKED?TRUE:FALSE;
+	App.xmlTree.search.bCaseSensitive = IsDlgButtonChecked(hDlg,310) == BST_CHECKED?TRUE:FALSE;
+
+	Tree_SearchGetString(hDlg,200);
+	Tree_SearchGetString(hDlg,202);
+	Tree_SearchGetString(hDlg,204);
+	Tree_SearchGetString(hDlg,206);
+	Tree_SearchGetString(hDlg,300);
+	return;
+}
+
+
 // «»»» Stockage des chaînes ««««««««««««««««««««««««««««««««««««««««««««»
 
-BOOL Tree_SearchGetString(HWND hDlg, UINT uCtlId)
+void Tree_SearchGetString(HWND hDlg, UINT uCtlId)
 {
 	WCHAR**	pszBuffer;
 	UINT	uLen;
@@ -222,7 +299,7 @@ BOOL Tree_SearchGetString(HWND hDlg, UINT uCtlId)
 		case 300:
 			pszBuffer = &App.xmlTree.search.pszAll;
 			break;
-		default:return(FALSE);
+		default:return;
 		}
 
 	if (*pszBuffer)
@@ -237,11 +314,49 @@ BOOL Tree_SearchGetString(HWND hDlg, UINT uCtlId)
 		if (*pszBuffer) SendDlgItemMessage(hDlg,uCtlId,WM_GETTEXT,(WPARAM)uLen,(LPARAM)*pszBuffer);
 		}
 
-	return(Tree_SearchIsEnabled()?TRUE:FALSE);
+	return;
 }
 
 
 // «»»» Vérifie qu'il y a quelque chose à rechercher ««««««««««««««««««««»
+
+//--- Active le bouton de recherche ---
+
+void Tree_SearchEnableOk(HWND hDlg)
+{
+	UINT	uMode;
+	UINT	uLen;
+	BOOL	bActivated = TRUE;
+
+	if (IsDlgButtonChecked(hDlg,150) == BST_CHECKED) uMode = TV_SEARCH_NODE;
+	else uMode = TV_SEARCH_ATTR;
+
+	switch(uMode)
+		{
+		case TV_SEARCH_NODE:
+			uLen = SendDlgItemMessage(hDlg,200,WM_GETTEXTLENGTH,0,0);
+			if (uLen) break;
+			uLen = SendDlgItemMessage(hDlg,202,WM_GETTEXTLENGTH,0,0);
+			if (uLen) break;
+			uLen = SendDlgItemMessage(hDlg,204,WM_GETTEXTLENGTH,0,0);
+			if (uLen) break;
+			uLen = SendDlgItemMessage(hDlg,206,WM_GETTEXTLENGTH,0,0);
+			if (uLen) break;
+			bActivated = FALSE;
+			break;
+		case TV_SEARCH_ATTR:
+			uLen = SendDlgItemMessage(hDlg,300,WM_GETTEXTLENGTH,0,0);
+			if (uLen) break;
+			bActivated = FALSE;
+			break;
+		default:return;
+		}
+
+	EnableWindow(GetDlgItem(hDlg,IDOK),bActivated);
+	return;
+}
+
+//--- Retourne les options de recherche ---
 
 DWORD Tree_SearchIsEnabled()
 {
@@ -274,6 +389,7 @@ void Tree_Search(HWND hWnd)
 {
 	TVITEMEX	tvItem;
 	HTREEITEM	hItem;
+	XML_NODE*	pxnRoot;
 	NODE*		pCursor;
 	NODE*		pNode;
 	BOOL		bMatch;
@@ -290,6 +406,7 @@ void Tree_Search(HWND hWnd)
 	SendMessage(App.xmlTree.hwndTree,TVM_GETITEM,0,(LPARAM)&tvItem);
 	if (!(pNode = pCursor = (NODE *)tvItem.lParam)) return;
 
+	pxnRoot = Tree_GetRootNode(NULL);
 	dwWatch = Tree_SearchIsEnabled();
 	if (!dwWatch) return;
 
@@ -321,6 +438,15 @@ void Tree_Search(HWND hWnd)
 			{
 			Tree_SearchSelectItem(pNode);
 			break;
+			}
+
+		if (pNode == (NODE *)pxnRoot)
+			{
+			if (MessageBox(hWnd,Locale_GetText(TEXT_DIALOG_TV_SEARCH_EOF),Locale_GetText(TEXT_TITLE_INFO),MB_ICONQUESTION|MB_YESNO) != IDYES)
+				{
+				bMatch = TRUE; // No need to display another msg
+				break;
+				}
 			}
 		}
 
@@ -458,12 +584,32 @@ void Tree_SearchSelectItem(NODE *pEntry)
 			tvItem.hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_GETNEXTITEM,(WPARAM)TVGN_NEXT,(LPARAM)tvItem.hItem);
 			continue;
 			}
+		//--- Sélectionne l'entrée
 		SendMessage(App.xmlTree.hwndTree,TVM_SELECTITEM,(WPARAM)TVGN_CARET,(LPARAM)tvItem.hItem);
+		//--- Ajustements supplémentaires
 		if (pEntry->type == XML_TYPE_NODE)
 			{
-			SendMessage(App.xmlTree.hwndTree,TVM_EXPAND,(WPARAM)TVE_COLLAPSE,(LPARAM)tvItem.hItem);
+			HTREEITEM	hItem;
+			HTREEITEM	hPrevItem;
+
+			//--- Déplie la liste
 			SendMessage(App.xmlTree.hwndTree,TVM_EXPAND,(WPARAM)TVE_EXPAND,(LPARAM)tvItem.hItem);
-			SendMessage(App.xmlTree.hwndTree,TVM_ENSUREVISIBLE,0,(LPARAM)tvItem.hItem);
+			//--- Fait en sorte que le dernier attribut soit visible
+			hPrevItem = tvItem.hItem;
+			hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_GETNEXTITEM,(WPARAM)TVGN_CHILD,(LPARAM)tvItem.hItem);
+			while (hItem)
+				{
+				tvItem.hItem = hItem;
+				tvItem.lParam = 0;
+				SendMessage(App.xmlTree.hwndTree,TVM_GETITEM,0,(LPARAM)&tvItem);
+				if (tvItem.lParam)
+					{
+					if (((NODE *)tvItem.lParam)->type == XML_TYPE_NODE) break;
+					hPrevItem = hItem;
+					}
+				hItem = (HTREEITEM)SendMessage(App.xmlTree.hwndTree,TVM_GETNEXTITEM,(WPARAM)TVGN_NEXT,(LPARAM)hItem);
+				}
+			SendMessage(App.xmlTree.hwndTree,TVM_ENSUREVISIBLE,0,(LPARAM)hPrevItem);
 			}
 		break;
 		}

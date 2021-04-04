@@ -354,6 +354,33 @@ void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT uFlags)
 }
 
 
+// «»»» Affichage d'un titre ««««««««««««««««««««««««««««««««««««««««««««»
+
+void Dialog_DrawTitle(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
+{
+	RECT	rcDraw;
+	SIZE	sizeText;
+
+	CopyRect(&rcDraw,&pDraw->rcItem);
+	rcDraw.left = 0;
+	rcDraw.top = rcDraw.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-2)/2+1;
+	rcDraw.bottom = rcDraw.top+2;
+	if (pszText) rcDraw.right = 24;
+	DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_TOP|BF_BOTTOM);
+
+	if (pszText)
+		{
+		GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&sizeText);
+		DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,30,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-sizeText.cy)/2,0,0,DST_TEXT|DSS_DISABLED);
+		rcDraw.left = 30+sizeText.cx+6;
+		rcDraw.right = pDraw->rcItem.right;
+		DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_TOP|BF_BOTTOM);
+		}
+
+	return;
+}
+
+
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤ Type d'affichage des listes					  ¤¤¤ //
