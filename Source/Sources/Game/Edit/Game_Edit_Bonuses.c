@@ -546,14 +546,14 @@ BOOL CALLBACK Game_BonusProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 				case GAME_PAGE_BONUS_VALUE:
 					if (wParam == 201)
 						{
-						Dialog_DrawLabel(Locale_GetText(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pSelected->uLocaleID),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+						Dialog_DrawLabel(Locale_GetText(((GAMEEDITPAGECONTEXT *)psp->lParam)->bonus.pContext->pSelected->uLocaleID),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 						return(TRUE);
 						}
 					break;
 				case GAME_PAGE_BONUS_REFLECTION:
 					if (wParam == 201)
 						{
-						Dialog_DrawLabel(Locale_GetText(TEXT_BONUS_REFLECTIONPERCENT),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+						Dialog_DrawLabel(Locale_GetText(TEXT_BONUS_REFLECTIONPERCENT),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 						return(TRUE);
 						}
 					else if (wParam == 208)

@@ -77,6 +77,8 @@ extern WCHAR	szLSVwext[];
 extern WCHAR	szDefinitiveEdition[];
 extern WCHAR	szStandardEdition[];
 
+extern WCHAR	szConfigFolderPath[];
+extern WCHAR	szTVSearchHistoryPath[];
 extern WCHAR	szLastFilesPath[];
 extern WCHAR	szConfigPath[];
 extern WCHAR	szItemsDataPath[];

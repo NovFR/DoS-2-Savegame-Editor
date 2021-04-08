@@ -221,31 +221,31 @@ BOOL Game_Stats_Draw(UINT uCtrlId, DRAWITEMSTRUCT *pDraw, void *pDialog)
 	switch(uCtrlId)
 		{
 		case 200:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_NAME),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_NAME),pDraw,NULL,DT_RIGHT);
 			break;
 		case 210:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_ORIGIN),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_ORIGIN),pDraw,NULL,DT_RIGHT);
 			break;
 		case 220:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_RACE),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_RACE),pDraw,NULL,DT_RIGHT);
 			break;
 		case 230:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_CLASS),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_CLASS),pDraw,NULL,DT_RIGHT);
 			break;
 		case 240:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_LEVEL),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_LEVEL),pDraw,NULL,DT_RIGHT);
 			break;
 		case 250:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_MAP),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_MAP),pDraw,NULL,DT_RIGHT);
 			break;
 		case 260:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_DAMAGES),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_DAMAGES),pDraw,NULL,DT_RIGHT);
 			break;
 		case 270:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_HEAL),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_HEAL),pDraw,NULL,DT_RIGHT);
 			break;
 		case 280:
-			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_KILLS),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_CHR_KILLS),pDraw,NULL,DT_RIGHT);
 			break;
 		case 700:
 			Dialog_DrawArrowButton(DFCS_SCROLLLEFT,pDraw);

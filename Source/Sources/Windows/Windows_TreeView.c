@@ -73,7 +73,7 @@ void Tree_Open(XML_NODE *pxn)
 	ShowWindow(hWnd,SW_SHOWNORMAL);
 	UpdateWindow(hWnd);
 
-	if (App.Config.bTreeDebug) Tree_Debug(FALSE);
+	if (App.Config.bTVDebug) Tree_Debug(FALSE);
 	return;
 }
 
@@ -421,7 +421,7 @@ LRESULT Tree_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPara
 							PostMessage(App.xmlTree.hWnd,WM_CLOSE,0,0);
 							break;
 						case CTLID_TREEDEBUG:
-							App.Config.bTreeDebug = SendMessage(App.xmlTree.hwndDebug,BM_GETCHECK,0,0) == BST_CHECKED?FALSE:TRUE;
+							App.Config.bTVDebug = SendMessage(App.xmlTree.hwndDebug,BM_GETCHECK,0,0) == BST_CHECKED?FALSE:TRUE;
 							Tree_Debug(FALSE);
 							break;
 						case IDOK:

@@ -146,13 +146,13 @@ INT_PTR CALLBACK Game_EditXPProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM l
 					Dialog_DrawInfo(pXP->pszInfo,(DRAWITEMSTRUCT *)lParam,BF_BOTTOM);
 					return(TRUE);
 				case 201:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_LEVEL),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_LEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 211:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_EXP),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_EXP),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 221:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_NEXTLEVEL),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_NEXTLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				}
 			break;

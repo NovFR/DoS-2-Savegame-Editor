@@ -91,7 +91,7 @@ INT_PTR CALLBACK	Dialog_Proc(HWND,UINT,WPARAM,LPARAM);
 void			Dialog_DrawTextButton(WCHAR *,DRAWITEMSTRUCT *);
 void			Dialog_DrawArrowButton(UINT,DRAWITEMSTRUCT *);
 void			Dialog_DrawIconButton(UINT,DRAWITEMSTRUCT *);
-void			Dialog_DrawLabel(WCHAR *,DRAWITEMSTRUCT *,UINT);
+void			Dialog_DrawLabel(WCHAR *,DRAWITEMSTRUCT *,HBRUSH,UINT);
 void			Dialog_DrawInfo(WCHAR *,DRAWITEMSTRUCT *,UINT);
 void			Dialog_DrawTitle(WCHAR *,DRAWITEMSTRUCT *);
 

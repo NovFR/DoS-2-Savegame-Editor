@@ -34,6 +34,9 @@
 #define TREEVIEW_MARGIN_RIGHT		16
 #define TREEVIEW_MARGIN_BOTTOM		16
 
+#define TREEVIEW_TAB_VPADDING		20
+#define TREEVIEW_TAB_VMARGIN		16
+
 #define TREEVIEW_DEBUG_PADDING		16
 
 #define TREEVIEW_WATCH_ID		0x00000001
@@ -50,6 +53,24 @@ enum {
 enum {
 	TV_SEARCH_NODE = 0,
 	TV_SEARCH_ATTR,
+	TV_SEARCH_OPTIONS,
+	TV_SEARCH_NONE,
+};
+
+enum {
+	TV_SEARCH_TAB_HIDE = 0,
+	TV_SEARCH_TAB_SHOW,
+	TV_SEARCH_TAB_FOCUS,
+	TV_SEARCH_TAB_SETPOS,
+	TV_SEARCH_TAB_GETSEL,
+};
+
+enum { // Saved in history file, don't remove entries and don't change their order
+	TV_SEARCH_HISTORY_NONE = 0,
+	TV_SEARCH_HISTORY_ID,
+	TV_SEARCH_HISTORY_VALUE,
+	TV_SEARCH_HISTORY_HANDLE,
+	TV_SEARCH_HISTORY_ALL,
 };
 
 typedef struct XMLTREE {
@@ -69,17 +90,19 @@ typedef struct XMLTREE {
 	} debug;
 	struct {
 		HWND		hDlg;
+		HWND		hwndTab;
 		BOOL		bMoved;
 		LONG		lLeft;
 		LONG		lTop;
 		UINT		uMode;
 		BOOL		bMatchAny;
-		BOOL		bCaseSensitive;
+		BOOL		bSearchHistory;
 		WCHAR*		pszId;
 		WCHAR*		pszType;
 		WCHAR*		pszValue;
 		WCHAR*		pszHandle;
 		WCHAR*		pszAll;
+		NODE		history;
 	} search;
 } XMLTREE;
 
@@ -98,6 +121,11 @@ typedef struct XMLNAMES {
 	UINT			uCount;
 	WCHAR*			pszNames[];
 } XMLNAMES;
+
+typedef struct TVSEARCHSTRING {
+	NODE			node;
+	WCHAR			szText[];
+} TVSEARCHSTRING;
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -145,6 +173,12 @@ void			Tree_SearchGetParams(HWND);
 void			Tree_SearchGetString(HWND,UINT);
 void			Tree_SearchEnableOk(HWND);
 DWORD			Tree_SearchIsEnabled(void);
+void			Tree_SearchTabControl(HWND,UINT,...);
+void			Tree_SearchHistoryLoad(HWND);
+void			Tree_SearchHistoryClear(HWND);
+void			Tree_SearchHistoryRelease(void);
+void			Tree_SearchHistoryAdd(HWND,UINT,WCHAR *,UINT);
+
 void			Tree_Search(HWND);
 DWORD			Tree_SearchStringIsOk(WCHAR *,DWORD);
 DWORD			Tree_SearchMatch(WCHAR *,WCHAR *,DWORD,BOOL,BOOL);

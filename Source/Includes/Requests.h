@@ -16,7 +16,7 @@
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
 int			Request_MessageBoxEx(HWND,WCHAR *,WCHAR *,UINT,...);
-void			Request_PrintErrorEx(HWND,WCHAR *,WCHAR *,UINT,...);
-void			Request_PrintError(HWND,WCHAR *,WCHAR *,UINT);
+int			Request_PrintErrorEx(HWND,WCHAR *,WCHAR *,UINT,...);
+int			Request_PrintError(HWND,WCHAR *,WCHAR *,UINT);
 
 #endif

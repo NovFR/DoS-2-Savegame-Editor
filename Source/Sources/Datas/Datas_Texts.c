@@ -79,6 +79,8 @@ WCHAR	szLSVwext[]			= L"*.lsv";
 WCHAR	szDefinitiveEdition[]		= L" (Definitive Edition)";
 WCHAR	szStandardEdition[]		= L" (Standard Edition)";
 
+WCHAR	szConfigFolderPath[]		= L"Prefs\\";
+WCHAR	szTVSearchHistoryPath[]		= L"Prefs\\GlEd.history";
 WCHAR	szLastFilesPath[]		= L"Prefs\\GlEd.recents";
 WCHAR	szConfigPath[]			= L"Prefs\\GlEd.config";
 WCHAR	szItemsDataPath[]		= L"Datas\\Items.txt";

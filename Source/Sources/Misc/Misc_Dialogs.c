@@ -315,15 +315,13 @@ void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)
 
 // «»»» Affichage d'une étiquette «««««««««««««««««««««««««««««««««««««««»
 
-void Dialog_DrawLabel(WCHAR *pszText, DRAWITEMSTRUCT *pDraw, UINT uFormat)
+void Dialog_DrawLabel(WCHAR *pszText, DRAWITEMSTRUCT *pDraw, HBRUSH hBckgnd, UINT uFormat)
 {
 	COLORREF	crText;
-	int		iBkMode;
 
 	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
-	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+	FillRect(pDraw->hDC,&pDraw->rcItem,hBckgnd?hBckgnd:GetSysColorBrush(COLOR_BTNFACE));
 	DrawText(pDraw->hDC,pszText,-1,&pDraw->rcItem,DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER|uFormat);
-	SetBkMode(pDraw->hDC,iBkMode);
 	SetTextColor(pDraw->hDC,crText);
 	return;
 }

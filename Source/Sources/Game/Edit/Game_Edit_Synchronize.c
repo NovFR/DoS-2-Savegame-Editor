@@ -153,7 +153,7 @@ int Game_SynchronizeAll_Init(HWND hDlg, RECT *rcDialog, int iHeight, void *pDial
 
 BOOL Game_SynchronizeAll_Draw(UINT uCtrlId, DRAWITEMSTRUCT *pDraw, void *pDialog)
 {
-	Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_SYNCHROLEVEL),pDraw,DT_RIGHT);
+	Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_SYNCHROLEVEL),pDraw,NULL,DT_RIGHT);
 	return(TRUE);
 }
 

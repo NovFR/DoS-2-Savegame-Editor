@@ -45,6 +45,10 @@ enum {
 	CONFIG_IDENT_LOCALENAME_V2,
 	CONFIG_IDENT_WINDOW_MAIN_V1,
 	CONFIG_IDENT_WINDOW_TV_V1,
+	CONFIG_IDENT_TVSEARCHCASESENSITIVE_V1,
+	CONFIG_IDENT_TVSEARCHOPACITY_V1,
+	CONFIG_IDENT_TVSEARCHALPHA_V1,
+	CONFIG_IDENT_TVSEARCHHISTORY_V1,
 };
 
 
@@ -81,10 +85,15 @@ typedef struct CONFIG {
 	//--- Fenêtre
 	CONFIGWINDOW		windowMain;
 	CONFIGWINDOW		windowTreeView;
-	BOOL			bTreeDebug;
+	BOOL			bTVDebug;
 	//--- Affichage
 	BOOL			bItemsDisplayName;
 	BOOL			bItemsResolve;
+	//--- Recherche (TreeView)
+	BOOL			bTVSearchCaseSensitive;
+	BOOL			bTVSearchOpacity;
+	UINT			uTVSearchAlpha;
+	BOOL			bTVSearchHistory;
 	//--- Edition
 	BOOL			bShowHiddenTags;
 	BOOL			bRunesGroups;

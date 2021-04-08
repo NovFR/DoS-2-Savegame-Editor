@@ -448,6 +448,12 @@ void LastFiles_SaveList()
 		return;
 		}
 
+	if (!PathFileExists(szConfigFolderPath))
+		{
+		CreateDirectory(szConfigFolderPath,NULL);
+		SetLastError(ERROR_SUCCESS);
+		}
+
 	hFile = CreateFile(szLastFilesPath,GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN,NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 		{

@@ -171,6 +171,18 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_WINDOW_TV_V1:
 				pData = &pConfig->windowTreeView;
 				break;
+			case CONFIG_IDENT_TVSEARCHCASESENSITIVE_V1:
+				pData = &pConfig->bTVSearchCaseSensitive;
+				break;
+			case CONFIG_IDENT_TVSEARCHOPACITY_V1:
+				pData = &pConfig->bTVSearchOpacity;
+				break;
+			case CONFIG_IDENT_TVSEARCHALPHA_V1:
+				pData = &pConfig->uTVSearchAlpha;
+				break;
+			case CONFIG_IDENT_TVSEARCHHISTORY_V1:
+				pData = &pConfig->bTVSearchHistory;
+				break;
 			default:pData = NULL;
 			}
 
@@ -263,11 +275,18 @@ Done:	if (!bCompleted) Request_PrintError(App.hWnd,pszErrorMsg,NULL,MB_ICONERROR
 
 // «»»» Sauvegarde «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 
-BOOL Config_Save(BOOL bQuiet, CONFIG *pConfig)
+BOOL Config_Save(BOOL bOnExit, CONFIG *pConfig)
 {
 	HANDLE		hFile;
 	DWORD		dwWrite;
 	BOOL		bCompleted;
+	DWORD		dwLastError;
+
+	if (!PathFileExists(szConfigFolderPath))
+		{
+		CreateDirectory(szConfigFolderPath,NULL);
+		SetLastError(ERROR_SUCCESS);
+		}
 
 	bCompleted = FALSE;
 	hFile = CreateFile(szConfigPath,GENERIC_WRITE,FILE_SHARE_WRITE,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
@@ -290,15 +309,27 @@ BOOL Config_Save(BOOL bQuiet, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_ITEMSRESOLVE_V1,&pConfig->bItemsResolve)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_WINDOW,CONFIG_IDENT_WINDOW_MAIN_V1,&pConfig->windowMain)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_WINDOW,CONFIG_IDENT_WINDOW_TV_V1,&pConfig->windowTreeView)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_TVSEARCHCASESENSITIVE_V1,&pConfig->bTVSearchCaseSensitive)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_TVSEARCHOPACITY_V1,&pConfig->bTVSearchOpacity)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_TVSEARCHALPHA_V1,&pConfig->uTVSearchAlpha)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_TVSEARCHHISTORY_V1,&pConfig->bTVSearchHistory)) goto Done;
 	bCompleted = TRUE;
 
-Done:	if (!bCompleted) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITE),NULL,MB_ICONERROR);
+Done:	dwLastError = GetLastError();
 	if (hFile != INVALID_HANDLE_VALUE)
 		{
 		CloseHandle(hFile);
 		if (!bCompleted) DeleteFile(szConfigPath);
 		}
-	if (bCompleted && !bQuiet) MessageBox(App.hWnd,Locale_GetText(TEXT_CONFIG_WRITTEN),Locale_GetText(TEXT_TITLE_INFO),MB_ICONINFORMATION|MB_OK);
+	SetLastError(dwLastError);
+
+	if (!bCompleted)
+		{
+		if (bOnExit) bCompleted = Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITEONEXIT),NULL,MB_ICONERROR|MB_YESNO) == IDYES?TRUE:FALSE;
+		else Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_CONFIGWRITE),NULL,MB_ICONERROR);
+		}
+	else if (!bOnExit) MessageBox(App.hWnd,Locale_GetText(TEXT_CONFIG_WRITTEN),Locale_GetText(TEXT_TITLE_INFO),MB_ICONINFORMATION|MB_OK);
+
 	return(bCompleted);
 }
 
@@ -408,14 +439,20 @@ int Config_Defaults(CONFIG *pConfig)
 	pConfig->windowTreeView.usedefault.bCoords = TRUE;
 	pConfig->windowTreeView.usedefault.bSize = TRUE;
 	#if _DEBUG
-	pConfig->bTreeDebug = TRUE;
+	pConfig->bTVDebug = TRUE;
 	#else
-	pConfig->bTreeDebug = FALSE;
+	pConfig->bTVDebug = FALSE;
 	#endif
 
 	//--- Affichage ---
 
 	pConfig->bItemsDisplayName = TRUE;
+
+	//--- Recherche (TreeView) ---
+
+	pConfig->bTVSearchOpacity = TRUE;
+	pConfig->uTVSearchAlpha = 200;
+	pConfig->bTVSearchHistory = TRUE;
 
 	//--- Edition ---
 

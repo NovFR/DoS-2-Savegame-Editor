@@ -253,14 +253,14 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_PATHS),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 101:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_TEMP),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_TEMP),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 106:
 				case 116:
 					Config_ModifyDrawArrow(hDlg,wParam-2,(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 111:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_SAVEGAMES),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_SAVEGAMES),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 199:
 					Config_ModifyDrawWarning(Locale_GetText(TEXT_CONFIG_OPENEDSAVEGAME),(DRAWITEMSTRUCT *)lParam);

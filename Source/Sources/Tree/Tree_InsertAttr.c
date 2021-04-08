@@ -93,10 +93,10 @@ BOOL Tree_InsertAttr_Draw(UINT uCtlId, DRAWITEMSTRUCT *pDraw, void *pInsert)
 	switch(uCtlId)
 		{
 		case 201:
-			Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_TV_ATTR_NAME),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_TV_ATTR_NAME),pDraw,NULL,DT_RIGHT);
 			return(TRUE);
 		case 203:
-			Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_TV_ATTR_VALUE),pDraw,DT_RIGHT);
+			Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_TV_ATTR_VALUE),pDraw,NULL,DT_RIGHT);
 			return(TRUE);
 		}
 	return(FALSE);

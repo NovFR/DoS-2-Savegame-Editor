@@ -144,7 +144,7 @@ int Game_EditSetValue_Init(HWND hDlg, RECT *rcDialog, int iHeight, void *pDialog
 
 BOOL Game_EditSetValue_Draw(UINT uCtrlId, DRAWITEMSTRUCT *pDraw, void *pDialog)
 {
-	Dialog_DrawLabel(((DIALOGVALUE *)pDialog)->pszLabel,pDraw,DT_RIGHT);
+	Dialog_DrawLabel(((DIALOGVALUE *)pDialog)->pszLabel,pDraw,NULL,DT_RIGHT);
 	return(TRUE);
 }
 

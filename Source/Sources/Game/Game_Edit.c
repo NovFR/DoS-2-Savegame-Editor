@@ -406,7 +406,7 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 					switch(wParam)
 						{
 						case 201:
-							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_AMOUNT),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_AMOUNT),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 							return(TRUE);
 						}
 					break;
@@ -466,10 +466,10 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 					switch(wParam)
 						{
 						case 201:
-							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECTLEVEL),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECTLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 							return(TRUE);
 						case 203:
-							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_SYNCHROLEVEL),(DRAWITEMSTRUCT *)lParam,DT_RIGHT);
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_SYNCHROLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 							return(TRUE);
 						}
 					break;
