@@ -68,7 +68,7 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 		GetWindowRect(GetDlgItem(hDlg,IDOK),&rcTab);
 		MapWindowPoints(NULL,hDlg,(POINT *)&rcTab,2);
 		rcDialog.bottom = rcTab.top-TREEVIEW_TAB_VMARGIN;
-		App.xmlTree.search.hwndTab = CreateWindowEx(0,WC_TABCONTROL,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP,0,rcDialog.top,rcDialog.right,rcDialog.bottom-rcDialog.top,hDlg,(HMENU)999,NULL,NULL);
+		App.xmlTree.search.hwndTab = CreateWindowEx(0,WC_TABCONTROL,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|TCS_FOCUSONBUTTONDOWN,0,rcDialog.top,rcDialog.right,rcDialog.bottom-rcDialog.top,hDlg,(HMENU)999,NULL,NULL);
 		if (!App.xmlTree.search.hwndTab)
 			{
 			Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR|MB_OK);
@@ -671,11 +671,14 @@ void Tree_SearchHistoryClear(HWND hDlg)
 {
 	DeleteFile(szTVSearchHistoryPath);
 	Tree_SearchHistoryRelease();
-	SendDlgItemMessage(hDlg,200,CB_RESETCONTENT,0,0);
-	SendDlgItemMessage(hDlg,204,CB_RESETCONTENT,0,0);
-	SendDlgItemMessage(hDlg,206,CB_RESETCONTENT,0,0);
-	SendDlgItemMessage(hDlg,300,CB_RESETCONTENT,0,0);
-	EnableWindow(GetDlgItem(hDlg,403),FALSE);
+	if (hDlg)
+		{
+		SendDlgItemMessage(hDlg,200,CB_RESETCONTENT,0,0);
+		SendDlgItemMessage(hDlg,204,CB_RESETCONTENT,0,0);
+		SendDlgItemMessage(hDlg,206,CB_RESETCONTENT,0,0);
+		SendDlgItemMessage(hDlg,300,CB_RESETCONTENT,0,0);
+		EnableWindow(GetDlgItem(hDlg,403),FALSE);
+		}
 	return;
 }
 

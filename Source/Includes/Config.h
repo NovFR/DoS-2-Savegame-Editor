@@ -27,6 +27,12 @@ enum {
 };
 
 enum {
+	CONFIG_CATEGORY_INIT = 1,
+	CONFIG_CATEGORY_HIDE,
+	CONFIG_CATEGORY_SHOW,
+};
+
+enum {
 	CONFIG_IDENT_SAVEONEXIT_V1 = 1, // Don't change order
 	CONFIG_IDENT_LOCALENAME_V1,
 	CONFIG_IDENT_GAME_V1,
@@ -110,6 +116,7 @@ typedef struct CONFIGCONTEXT {
 	CONFIG*			pConfig;
 	WCHAR*			pszLarianPath;
 	WCHAR*			pszTempPath;
+	UINT			uCategory;
 } CONFIGCONTEXT;
 
 typedef struct CONFIGENTRY {
@@ -159,6 +166,9 @@ void			Config_ModifyDrawWarning(WCHAR *,DRAWITEMSTRUCT *);
 void			Config_ModifyDrawTitle(DRAWITEMSTRUCT *,UINT);
 void			Config_ModifyDrawArrow(HWND,UINT,DRAWITEMSTRUCT *);
 void			Config_ModifyDrawLabel(DRAWITEMSTRUCT *,UINT);
+
+int			Config_ModifyCategories(HWND,UINT,CONFIGCONTEXT *);
+void			Config_ModifyCategoriesDraw(DRAWITEMSTRUCT *);
 
 int			Config_ModifyApplyChanges(HWND,CONFIGCONTEXT *);
 void			Config_ModifyCopyDlgText(HWND,UINT,UINT);

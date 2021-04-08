@@ -96,7 +96,6 @@ typedef struct XMLTREE {
 		LONG		lTop;
 		UINT		uMode;
 		BOOL		bMatchAny;
-		BOOL		bSearchHistory;
 		WCHAR*		pszId;
 		WCHAR*		pszType;
 		WCHAR*		pszValue;
