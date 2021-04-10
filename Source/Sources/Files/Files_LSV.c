@@ -47,60 +47,73 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		goto Done;
 		}
 
-	//--- Chargement du fichier ---
+	//--- Ouverture du fichier ---
 
-	pReader->hFile = CreateFile(pszArchivePath,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_FLAG_SEQUENTIAL_SCAN,NULL);
+	pReader->hFile = CreateFile(pszArchivePath,GENERIC_READ,FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_FLAG_RANDOM_ACCESS,NULL);
 	if (pReader->hFile == INVALID_HANDLE_VALUE) goto Done;
-
-	pReader->dwFileSize = GetFileSize(pReader->hFile,NULL);
-	if (pReader->dwFileSize == 0xFFFFFFFF) goto Done;
-
-	pReader->pFileBuffer = HeapAlloc(App.hHeap,0,pReader->dwFileSize);
-	if (!pReader->pFileBuffer)
-		{
-		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-		goto Done;
-		}
-
-	if (!ReadFile(pReader->hFile,pReader->pFileBuffer,pReader->dwFileSize,&pReader->dwBytes,NULL)) goto Done;
 
 	//--- Vérifie que le fichier est du bon format ---
 
-	if (strncmp("LSPK",(char *)&pReader->pFileBuffer[pReader->dwFileSize-4],4))
+	if (SetFilePointer(pReader->hFile,-4,NULL,FILE_END) == INVALID_SET_FILE_POINTER) goto Done;
+	if (!ReadFile(pReader->hFile,&pReader->dwSignature,4,&pReader->dwBytes,NULL)) goto Done;
+	if (pReader->dwBytes != 4) goto Done;
+	if (pReader->dwSignature != 0x4B50534C) // 'LSPK' (KPSL in the Intel world)
 		{
 		SetLastError(ERROR_SUCCESS);
 		pReader->uLastError = TEXT_ERR_LSV_UNKNOWN;
 		goto Done;
 		}
 
-	//--- Récupère les données importantes ---
+	//--- Charge l'en-tête ---
 
-	pReader->pHeader = (LSPKHEADER13 *)&pReader->pFileBuffer[pReader->dwFileSize-pReader->pFileBuffer[pReader->dwFileSize-8]];
-	pReader->pFileList = (BYTE *)&pReader->pFileBuffer[pReader->pHeader->FileListOffset];
-	pReader->iNumFiles = *(DWORD *)pReader->pFileList;
+	if (SetFilePointer(pReader->hFile,-8,NULL,FILE_END) == INVALID_SET_FILE_POINTER) goto Done;
+	if (!ReadFile(pReader->hFile,&pReader->dwHeaderSize,4,&pReader->dwBytes,NULL)) goto Done;
+	if (pReader->dwBytes != 4) goto Done;
+	if (pReader->dwHeaderSize-8 != sizeof(LSPKHEADER13))
+		{
+		SetLastError(ERROR_SUCCESS);
+		pReader->uLastError = TEXT_ERR_LSV_UNKNOWN;
+		goto Done;
+		}
+
+	if (SetFilePointer(pReader->hFile,-pReader->dwHeaderSize,NULL,FILE_END) == INVALID_SET_FILE_POINTER) goto Done;
+	if (!ReadFile(pReader->hFile,&pReader->header,pReader->dwHeaderSize-8,&pReader->dwBytes,NULL)) goto Done;
+	if (pReader->dwBytes != pReader->dwHeaderSize-8) goto Done;
 
 	//--- Vérifie que l'archive est de la bonne version ---
 
-	if (pReader->pHeader->Version != 13)
+	if (pReader->header.Version != 13)
 		{
 		SetLastError(ERROR_SUCCESS);
 		pReader->uLastError = TEXT_ERR_LSV_VERSION;
 		goto Done;
 		}
 
+	//--- Charge la liste des fichiers ---
+
+	if (SetFilePointer(pReader->hFile,pReader->header.FileListOffset,NULL,FILE_BEGIN) == INVALID_SET_FILE_POINTER) goto Done;
+
+	if (!ReadFile(pReader->hFile,&pReader->iNumFiles,4,&pReader->dwBytes,NULL)) goto Done;
+	if (pReader->dwBytes != 4) goto Done;
 	if (pReader->iNumFiles < 1)
 		{
 		SetLastError(ERROR_SUCCESS);
 		pReader->uLastError = TEXT_ERR_LSV_EMPTY;
 		goto Done;
 		}
+	pReader->header.FileListSize -= 4; // Remove ListSize (4) from TotalSize
+
+	pReader->pFileList = HeapAlloc(App.hHeap,0,pReader->header.FileListSize);
+	if (!pReader->pFileList) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+	if (!ReadFile(pReader->hFile,pReader->pFileList,pReader->header.FileListSize,&pReader->dwBytes,NULL)) goto Done;
+	if (pReader->dwBytes != pReader->header.FileListSize) goto Done;
 
 	//--- Décompresse la liste des fichiers ---
 
 	pReader->pFileListBuffer = (FILEENTRY13 *)HeapAlloc(App.hHeap,0,sizeof(FILEENTRY13)*pReader->iNumFiles);
 	if (!pReader->pFileListBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
 
-	pReader->iDecompressed = LZ4_decompress_safe((const char *)pReader->pFileList+4,(char *)pReader->pFileListBuffer,pReader->pHeader->FileListSize-4,sizeof(FILEENTRY13)*pReader->iNumFiles);
+	pReader->iDecompressed = LZ4_decompress_safe((const char *)pReader->pFileList,(char *)pReader->pFileListBuffer,pReader->header.FileListSize,sizeof(FILEENTRY13)*pReader->iNumFiles);
 	if (pReader->iDecompressed != sizeof(FILEENTRY13)*pReader->iNumFiles)
 		{
 		SetLastError(ERROR_SUCCESS);
@@ -143,6 +156,12 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 			goto Done;
 			}
 
+		pReader->pFileBuffer = HeapAlloc(App.hHeap,0,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk);
+		if (!pReader->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+		if (SetFilePointer(pReader->hFile,pReader->pFileListBuffer[pReader->iNumFiles].OffsetInFile,NULL,FILE_BEGIN) == INVALID_SET_FILE_POINTER) goto Done;
+		if (!ReadFile(pReader->hFile,pReader->pFileBuffer,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk,&pReader->dwBytes,NULL)) goto Done;
+		if (pReader->dwBytes != pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk) goto Done;
+
 		//--- Nom du fichier
 		iSize = MultiByteToWideChar(CP_ACP,0,pReader->pFileListBuffer[pReader->iNumFiles].Name,-1,NULL,0);
 		if (!iSize) goto Done;
@@ -153,7 +172,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 
 		//--- CRC32
 		crc = crc32(0,NULL,0);
-		crc = crc32(crc,pReader->pFileBuffer+pReader->pFileListBuffer[pReader->iNumFiles].OffsetInFile,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk);
+		crc = crc32(crc,pReader->pFileBuffer,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk);
 		if (crc != pReader->pFileListBuffer[pReader->iNumFiles].CRC)
 			{
 			SetLastError(ERROR_SUCCESS);
@@ -162,7 +181,7 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 			}
 
 		//--- Décompression
-		pReader->uLastError = lsa_Decompress(pReader->pFileListBuffer[pReader->iNumFiles].Flags,pReader->pFileBuffer+pReader->pFileListBuffer[pReader->iNumFiles].OffsetInFile,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk,pFile->pData,pFile->uSize,0);
+		pReader->uLastError = lsa_Decompress(pReader->pFileListBuffer[pReader->iNumFiles].Flags,pReader->pFileBuffer,pReader->pFileListBuffer[pReader->iNumFiles].SizeOnDisk,pFile->pData,pFile->uSize,0);
 		if (pReader->uLastError)
 			{
 			SetLastError(ERROR_SUCCESS);
@@ -174,6 +193,10 @@ BOOL lsv_Load(HWND hWnd, WCHAR *pszArchivePath, NODE *pRoot, DWORD dwMode)
 		if (*(DWORD *)pFile->pData == 0x464F534C) pFile->dwType |= LS_TYPE_LSF;
 		if (!wcscmp(szMetaLSF,pFile->pszName)) pFile->dwType |= LS_TYPE_META;
 		if (!wcscmp(szGlobalsLSF,pFile->pszName)) pFile->dwType |= LS_TYPE_GLOBALS;
+
+		//--- Libère les données du fichier
+		HeapFree(App.hHeap,0,pReader->pFileBuffer);
+		pReader->pFileBuffer = NULL;
 		}
 
 	SetLastError(ERROR_SUCCESS);
@@ -186,8 +209,9 @@ Done:	if (GetLastError() != ERROR_SUCCESS && !(dwMode&LS_LOAD_QUIET)) Request_Pr
 	if (pReader)
 		{
 		if (pReader->uLastError && !(dwMode&LS_LOAD_QUIET)) Request_MessageBoxEx(hWnd,Locale_GetText(TEXT_ERR_LSV_LOADEX),NULL,MB_ICONHAND,pszArchiveName,Locale_GetText(pReader->uLastError));
-		if (pReader->pFileListBuffer) HeapFree(App.hHeap,0,pReader->pFileListBuffer);
 		if (pReader->pFileBuffer) HeapFree(App.hHeap,0,pReader->pFileBuffer);
+		if (pReader->pFileListBuffer) HeapFree(App.hHeap,0,pReader->pFileListBuffer);
+		if (pReader->pFileList) HeapFree(App.hHeap,0,pReader->pFileList);
 		if (pReader->hFile != INVALID_HANDLE_VALUE) CloseHandle(pReader->hFile);
 		HeapFree(App.hHeap,0,pReader);
 		}

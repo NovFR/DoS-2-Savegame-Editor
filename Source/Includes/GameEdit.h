@@ -87,6 +87,8 @@ enum {
 	GAME_PAGE_BONUSES,
 	GAME_PAGE_RUNES,
 	GAME_PAGE_SYNCHRONIZE,
+	GAME_PAGE_TEMPLATE,
+	GAME_PAGE_OWNERSHIP,
 	GAME_PAGE_SAVEGAME_PROFILE,
 	GAME_PAGE_SAVEGAME_LIST
 };
@@ -141,6 +143,13 @@ enum {
 	SKILL_OPTION_ISLEARNED = 1,
 	SKILL_OPTION_ISACTIVATED,
 	SKILL_OPTION_ZEROMEMORY,
+};
+
+enum {
+	ITEM_TEMPLATE_ALREADYDEFINED = 0,
+	ITEM_TEMPLATE_OK,
+	ITEM_TEMPLATE_INVALID,
+	ITEM_TEMPLATE_TYPEMISMATCH,
 };
 
 
@@ -327,9 +336,16 @@ typedef struct GAMEEDITITEMCONTEXT {
 	WCHAR*			pszStats;
 	WCHAR*			pszDisplayName;
 	WCHAR*			pszDescription;
+	WCHAR*			pszCurrentTemplate;
+	WCHAR*			pszOriginalTemplate;
+	UINT			uCurrentTemplateType;
+	UINT			uOriginalTemplateType;
+	BOOL			bHasTemplate;
 	BOOL			bIsGenerated;
 	BOOL			bHasRunes;
 	BOOL			bBonuses;
+	BOOL			bTakeOwnership;
+	XML_NODE*		pOriginalOwner;
 	UINT			uSlot;
 	int			iAmount;
 	int			iAmountOld;
@@ -361,7 +377,7 @@ typedef struct GAMEEDITPAGECONTEXT {
 	union {
 		struct {
 			GAMEEDITITEMCONTEXT*	pContext;
-			HWND			hwndCtrl[2];
+			HWND			hwndCtrl[4];
 		} item;
 		struct {
 			GAMEEDITBONUSCONTEXT*	pContext;
@@ -573,5 +589,10 @@ void			Game_SkillsEnsureVisible(HWND,UINT,GAMEDATASKILL *);
 void			Game_SkillsCollapseSelectedGroup(HWND,UINT,GAMEDATASKILL *);
 int			Game_SkillsSetItemGroup(UINT,GAMEDATASKILL *);
 GAMEDATASKILL*		Game_SkillsGetById(WCHAR *,NODE *);
+
+// «»»» Objets ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+
+int			Game_ItemTemplateCheck(DOS2ITEM *,WCHAR *,UINT);
+int			Game_ItemTemplateMsg(HWND,int);
 
 #endif

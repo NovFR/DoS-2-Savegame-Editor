@@ -1007,7 +1007,7 @@ void Game_SaveTopIndex()
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
-// ¤¤¤ Sous-Routines							  ¤¤¤ //
+// ¤¤¤ Sous-Routines: Généralités					  ¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
@@ -1113,6 +1113,12 @@ UINT Game_GetMaxLevel()
 }
 
 
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤ Sous-Routines: Objets						  ¤¤¤ //
+// ¤¤¤									  ¤¤¤ //
+// ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
+
 // «»»» Détermine si un objet est équipé ««««««««««««««««««««««««««««««««»
 
 BOOL Game_IsItemEquipped(DOS2ITEM *pItem)
@@ -1174,4 +1180,67 @@ void Game_ItemDisplayNameRelease(DOS2ITEM *pItem)
 	if (pItem->pszDisplayName) HeapFree(App.hHeap,0,pItem->pszDisplayName);
 	pItem->pszDisplayName = NULL;
 	return;
+}
+
+
+// «»»» Retrouve le propriétaire d'un objet «««««««««««««««««««««««««««««»
+
+//--- Source Node ---
+
+XML_NODE* Game_ItemGetOwner(DOS2ITEM *pItem, WCHAR *pszOwner)
+{
+	return(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,pszOwner));
+}
+
+//--- Character Handle ---
+
+WCHAR* Game_ItemGetOwnerHandle(DOS2ITEM *pItem, WCHAR *pszOwner)
+{
+	return(xml_GetAttrValue(Game_ItemGetOwner(pItem,pszOwner),szXMLvalue));
+}
+
+
+// «»»» Détermine si un objet appartient au personnage qui le détient «««»
+
+BOOL Game_ItemBelongToCharacter(DOS2ITEM *pItem)
+{
+	WCHAR*	pszOriginalOwner;
+	WCHAR*	pszOwner;
+
+	if (!pItem) return(TRUE);
+
+	pszOriginalOwner = Game_ItemGetOwnerHandle(pItem,L"OriginalOwnerCharacter");
+	if (!pszOriginalOwner) return(TRUE);
+
+	pszOwner = Game_ItemGetOwnerHandle(pItem,L"owner");
+	if (pszOwner && pszOriginalOwner && !wcscmp(pszOwner,pszOriginalOwner)) return(TRUE);
+
+	return(FALSE);
+}
+
+
+// «»»» Détermine si un objet appartient à un membre du groupe ««««««««««»
+
+BOOL Game_ItemBelongToParty(DOS2ITEM *pItem)
+{
+	if (!pItem) return(TRUE);
+
+	if (App.Game.Save.nodeXMLRoot.next)
+		{
+		WCHAR*		pszOwner;
+		WCHAR*		pszHandle;
+		XML_NODE*	pParty;
+
+		pszOwner = Game_ItemGetOwnerHandle(pItem,L"OriginalOwnerCharacter");
+		if (!pszOwner) return(TRUE);
+
+		for (pParty = xml_GetNodeFromPathFirstChild((XML_NODE *)App.Game.Save.nodeXMLRoot.next,szPartyManagerPath); pParty != NULL; pParty = (XML_NODE *)pParty->node.next)
+			{
+			pszHandle = xml_GetThisAttrValue(xml_GetXMLValueAttr((XML_NODE *)pParty->children.next,szXMLattribute,szXMLid,szXMLObject));
+			if (!pszHandle) continue;
+			if (!wcscmp(pszOwner,pszHandle)) return(TRUE);
+			}
+		}
+
+	return(FALSE);
 }

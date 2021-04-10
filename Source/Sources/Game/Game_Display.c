@@ -304,6 +304,21 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				rcDraw.left += Size.cx+8;
 				}
 
+			//--- Stolen ? ---
+			if (!Game_ItemBelongToCharacter(pItem) && !Game_ItemBelongToParty(pItem))
+				{
+				WCHAR*		Text;
+				SIZE		Size;
+				COLORREF	crText;
+
+				Text = Locale_GetText(TEXT_OBJ_STOLEN);
+				crText = SetTextColor(pDraw->hDC,RGB(220,0,0));
+				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+				SetTextColor(pDraw->hDC,crText);
+				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
+				rcDraw.left += Size.cx+8;
+				}
+
 			//--- Amount ---
 
 			if (pItem->pxaAmount)

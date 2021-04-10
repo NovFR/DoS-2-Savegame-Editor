@@ -327,9 +327,14 @@ UINT			Game_GetExpFromLevel(UINT);
 UINT			Game_GetNextLevelFromExp(UINT);
 UINT			Game_GetMaxXP(void);
 UINT			Game_GetMaxLevel(void);
+
 BOOL			Game_IsItemEquipped(DOS2ITEM *);
 void			Game_ItemDisplayName(DOS2ITEM *);
 void			Game_ItemDisplayNameRelease(DOS2ITEM *);
+XML_NODE*		Game_ItemGetOwner(DOS2ITEM *,WCHAR *);
+WCHAR*			Game_ItemGetOwnerHandle(DOS2ITEM *,WCHAR *);
+BOOL			Game_ItemBelongToCharacter(DOS2ITEM *);
+BOOL			Game_ItemBelongToParty(DOS2ITEM *);
 
 // «»»» Affichage «««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 

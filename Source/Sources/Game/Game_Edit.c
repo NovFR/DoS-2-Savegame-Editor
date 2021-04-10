@@ -29,6 +29,8 @@ static GAMEEDITPAGE	Pages[] = {
 					{ GAME_PAGE_BONUSES, TEXT_DIALOG_TITLE_BONUSES, TEXT_DIALOG_INFO_BONUSES, 6003 },
 					{ GAME_PAGE_RUNES, TEXT_DIALOG_TITLE_RUNES, TEXT_DIALOG_INFO_RUNES, 6004 },
 					{ GAME_PAGE_SYNCHRONIZE, TEXT_DIALOG_TITLE_SYNCHRONIZE, TEXT_DIALOG_INFO_SYNCHRONIZE, 6005 },
+					{ GAME_PAGE_TEMPLATE, TEXT_DIALOG_TITLE_TEMPLATE, TEXT_DIALOG_INFO_TEMPLATE, 6006 },
+					{ GAME_PAGE_OWNERSHIP, TEXT_DIALOG_TITLE_OWNERSHIP, TEXT_DIALOG_INFO_OWNERSHIP, 6007 },
 					{ 0 }
 				};
 
@@ -44,7 +46,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	PROPSHEETHEADER*	psh;
 	PROPSHEETPAGE*		psp;
 	GAMEEDITITEMCONTEXT*	pItemContext;
-	const WCHAR*		pszStartPage;
+	WCHAR*			pszStartPage;
 	int			iResult;
 	int			iNumPages;
 	int			i;
@@ -97,6 +99,8 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	pItemContext->uNewLevel = 1;
 	pItemContext->iAmount = pItemContext->iAmountOld = pItem->pxaAmount?wcstol(xml_GetThisAttrValue(pItem->pxaAmount),NULL,10):1;
 	pItemContext->uFilter = Game_GetItemFlags(pItemContext->pszStats);
+	pItemContext->bHasTemplate = xml_GetAttrValue(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"CurrentTemplate"),szXMLvalue)?TRUE:FALSE;
+	pItemContext->pOriginalOwner = Game_ItemGetOwner(pItem,L"OriginalOwnerCharacter");
 	if (!pItemContext->uFilter) pItemContext->uFilter = FILTER_ALL;
 	else pItemContext->uFilter |= (FILTER_ALL_TYPES);
 
@@ -142,6 +146,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 		else if (Pages[i].uPageID == GAME_PAGE_BONUSES && !pItemContext->bBonuses) continue;
 		else if (Pages[i].uPageID == GAME_PAGE_RUNES && !pItemContext->bHasRunes) continue;
 		else if (Pages[i].uPageID == GAME_PAGE_SYNCHRONIZE && !pItemContext->uLevel) continue;
+		else if (Pages[i].uPageID == GAME_PAGE_TEMPLATE && !pItemContext->bHasTemplate) continue;
 
 		ctx = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEEDITPAGECONTEXT));
 		if (!ctx)
@@ -162,7 +167,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 		psp[iNumPages].pfnDlgProc = (DLGPROC)Game_EditProc;
 		psp[iNumPages].lParam = (LPARAM)ctx;
 
-		if (uPageID == Pages[i].uPageID) pszStartPage = psp[iNumPages].pszTitle;
+		if (uPageID == Pages[i].uPageID) pszStartPage = (WCHAR *)psp[iNumPages].pszTitle;
 		iNumPages++;
 		}
 
@@ -184,10 +189,12 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 			case GAME_PAGE_BOOSTERS:
 				iResult = Game_EditBoostersCopy(pItemContext,pItem->pxnGeneration);
 				if (iResult == 0 || iResult == -1) goto Done;
+				iResult = -1;
 				break;
 			case GAME_PAGE_BONUSES:
 				iResult = Game_EditBonusCopy(pItemContext,pItem->pxnPermanentBoost);
 				if (iResult == 0 || iResult == -1) goto Done;
+				iResult = -1;
 				break;
 			case GAME_PAGE_RUNES:
 				if (!Game_EditRunesCopy(pItem,pItemContext)) goto Done;
@@ -201,6 +208,21 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 					if (szLevel) pItemContext->uNewLevel = Game_GetLevelFromExp(wcstol(szLevel,NULL,10));
 					}
 				break;
+			case GAME_PAGE_TEMPLATE:
+				if (pItemContext->bHasTemplate)
+					{
+					WCHAR	*pszTemp;
+
+					pszTemp = xml_GetAttrValue(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"CurrentTemplate"),szXMLvalue);
+					if (pszTemp && !(pItemContext->pszCurrentTemplate = Misc_StrCpyAlloc(pszTemp))) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+					pszTemp = xml_GetAttrValue(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"OriginalTemplate"),szXMLvalue);
+					if (pszTemp && !(pItemContext->pszOriginalTemplate = Misc_StrCpyAlloc(pszTemp))) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+					pszTemp = xml_GetAttrValue(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"CurrentTemplateType"),szXMLvalue);
+					if (pszTemp) pItemContext->uCurrentTemplateType = wcstol(pszTemp,NULL,10);
+					pszTemp = xml_GetAttrValue(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"OriginalTemplateType"),szXMLvalue);
+					if (pszTemp) pItemContext->uOriginalTemplateType = wcstol(pszTemp,NULL,10);
+					}
+				break;
 			}
 		}
 
@@ -210,7 +232,7 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 	psh->dwFlags = PSH_PROPSHEETPAGE|PSH_USEICONID|PSH_NOAPPLYNOW|PSH_USEPSTARTPAGE|PSH_NOCONTEXTHELP;
 	psh->hwndParent = App.hWnd;
 	psh->hInstance = App.hInstance;
-	psh->pszIcon = MAKEINTRESOURCE(1);
+	psh->pszIcon = NULL;
 	psh->pszCaption = Locale_GetText(TEXT_DIALOG_EDIT);
 	psh->nPages = iNumPages;
 	psh->pStartPage = pszStartPage?pszStartPage:psp[0].pszTitle;
@@ -269,6 +291,11 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 				case GAME_PAGE_SYNCHRONIZE:
 					if (pItemContext->bSetLevel) Game_Synchronize_Level(pItemContext->uNewLevel,FALSE,pItem->pxaLevel,pItem->pxaIsGenerated,pItem->pxnGeneration,&pItem->pxnLevelOverride);
 					break;
+				case GAME_PAGE_TEMPLATE:
+					break;
+				case GAME_PAGE_OWNERSHIP:
+					if (pItemContext->bTakeOwnership && pItemContext->pOriginalOwner) xml_ReleaseNode(pItemContext->pOriginalOwner);
+					break;
 				}
 			}
 		SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
@@ -277,10 +304,15 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 
 	//--- Terminé ! ---
 
-Done:	if (pItemContext)
+Done:	if (iResult == -1)
+		Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
+
+	if (pItemContext)
 		{
 		if (pItemContext->pszDisplayName) HeapFree(App.hHeap,0,pItemContext->pszDisplayName);
 		if (pItemContext->pszDescription) HeapFree(App.hHeap,0,pItemContext->pszDescription);
+		if (pItemContext->pszCurrentTemplate) HeapFree(App.hHeap,0,pItemContext->pszCurrentTemplate);
+		if (pItemContext->pszOriginalTemplate) HeapFree(App.hHeap,0,pItemContext->pszOriginalTemplate);
 		Locale_Unload(LOCALE_TYPE_MISC,(void **)&pItemContext->pLocale,NULL);
 		Game_BonusReleaseAll(&pItemContext->nodeBonuses);
 		Game_EditBoostersRelease(&pItemContext->nodeBoosters);
@@ -289,14 +321,16 @@ Done:	if (pItemContext)
 		Game_EditRunesRelease(&pItemContext->runes[2]);
 		HeapFree(App.hHeap,0,pItemContext);
 		}
-	if (psh) HeapFree(App.hHeap,0,psh);
+
+	if (psh)
+		HeapFree(App.hHeap,0,psh);
 	if (psp)
 		{
-		for (i = 0; Pages[i].uResID != 0; i++) if (psp[i].lParam) HeapFree(App.hHeap,0,(void *)psp[i].lParam); // That's ok, extra pages lParam is 0
+		// Free all pages, unset page lParam is always 0
+		for (i = 0; Pages[i].uResID != 0; i++) if (psp[i].lParam) HeapFree(App.hHeap,0,(void *)psp[i].lParam);
 		HeapFree(App.hHeap,0,psp);
 		}
 
-	if (iResult == -1) Request_PrintError(App.hWnd,Locale_GetText(TEXT_ERR_DIALOG),NULL,MB_ICONERROR);
 	return;
 }
 
@@ -380,6 +414,27 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				Dialog_OffsetY(hDlg,203,Height);
 				Dialog_OffsetY(hDlg,204,Height);
 				SendDlgItemMessage(hDlg,204,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_SYNCHRO_ENABLE));
+				break;
+			case GAME_PAGE_TEMPLATE:
+				Dialog_OffsetY(hDlg,200,Height);
+				Dialog_OffsetY(hDlg,201,Height);
+				Dialog_OffsetY(hDlg,202,Height);
+				Dialog_OffsetY(hDlg,203,Height);
+				Dialog_OffsetY(hDlg,300,Height);
+				Dialog_OffsetY(hDlg,301,Height);
+				Dialog_OffsetY(hDlg,302,Height);
+				Dialog_OffsetY(hDlg,303,Height);
+				Dialog_OffsetY(hDlg,304,Height);
+				Dialog_OffsetY(hDlg,305,Height);
+				SendDlgItemMessage(hDlg,304,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_COPYTEMPLATE));
+				SendDlgItemMessage(hDlg,305,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_SELECTTEMPLATE));
+				break;
+			case GAME_PAGE_OWNERSHIP:
+				Dialog_OffsetY(hDlg,200,Height);
+				Dialog_OffsetY(hDlg,201,Height);
+				Dialog_OffsetY(hDlg,202,Height);
+				Dialog_OffsetY(hDlg,203,Height);
+				SendDlgItemMessage(hDlg,200,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_OWNERSHIP));
 				break;
 			}
 
@@ -466,10 +521,39 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 					switch(wParam)
 						{
 						case 201:
-							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECTLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECT_LEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 							return(TRUE);
 						case 203:
-							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_SYNCHROLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECT_NEWLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							return(TRUE);
+						}
+					break;
+				case GAME_PAGE_TEMPLATE:
+					switch(wParam)
+						{
+						case 201:
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECT_ORIGINALTEMPLATE),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							return(TRUE);
+						case 301:
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECT_CURRENTTEMPLATE),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							return(TRUE);
+						case 203:
+						case 303:
+							Dialog_DrawLabel(Locale_GetText(TEXT_DIALOG_OBJECT_TEMPLATETYPE),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+							return(TRUE);
+						}
+					break;
+				case GAME_PAGE_OWNERSHIP:
+					switch(wParam)
+						{
+						case 201:
+							Dialog_DrawIconText(App.hShellIcons[APP_SHELLICON_INFO],24,Locale_GetText(TEXT_DIALOG_OBJECT_CHAROWNED),(DRAWITEMSTRUCT *)lParam,NULL);
+							return(TRUE);
+						case 202:
+							Dialog_DrawIconText(App.hShellIcons[APP_SHELLICON_WARNING],24,Locale_GetText(TEXT_DIALOG_OBJECT_MAYBESTOLEN),(DRAWITEMSTRUCT *)lParam,NULL);
+							return(TRUE);
+						case 203:
+							Dialog_DrawIconText(App.hShellIcons[APP_SHELLICON_INFO],24,Locale_GetText(TEXT_DIALOG_OBJECT_PARTYOWNED),(DRAWITEMSTRUCT *)lParam,NULL);
 							return(TRUE);
 						}
 					break;
@@ -556,6 +640,20 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 									EnableWindow(((GAMEEDITPAGECONTEXT *)psp->lParam)->item.hwndCtrl[1],bEnable);
 									EnableWindow(GetDlgItem(hDlg,202),bEnable);
 									} return(TRUE);
+								}
+							break;
+						}
+					break;
+				case GAME_PAGE_TEMPLATE:
+					switch(HIWORD(wParam))
+						{
+						case BN_CLICKED:
+							switch(LOWORD(wParam))
+								{
+								case 304:
+								case 305:
+									Dialog_NotImplemented(hDlg);
+									return(TRUE);
 								}
 							break;
 						}
@@ -701,6 +799,49 @@ BOOL Game_EditInit(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 				}
 			CheckDlgButton(hDlg,204,ctx->item.pContext->bSetLevel?BST_CHECKED:BST_UNCHECKED);
 			} break;
+
+		case GAME_PAGE_TEMPLATE: {
+			SetDlgItemText(hDlg,200,ctx->item.pContext->pszOriginalTemplate);
+			SetDlgItemText(hDlg,300,ctx->item.pContext->pszCurrentTemplate);
+			SetDlgItemInt(hDlg,202,ctx->item.pContext->uOriginalTemplateType,FALSE);
+			SetDlgItemInt(hDlg,302,ctx->item.pContext->uCurrentTemplateType,FALSE);
+			SendDlgItemMessage(hDlg,200,EM_LIMITTEXT,(WPARAM)36,0);
+			SendDlgItemMessage(hDlg,300,EM_LIMITTEXT,(WPARAM)36,0);
+			SendDlgItemMessage(hDlg,202,EM_LIMITTEXT,(WPARAM)3,0);
+			SendDlgItemMessage(hDlg,302,EM_LIMITTEXT,(WPARAM)3,0);
+
+			ctx->item.hwndCtrl[2] = CreateWindowEx(0,UPDOWN_CLASS,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|UDS_ALIGNRIGHT|UDS_ARROWKEYS|UDS_SETBUDDYINT|UDS_NOTHOUSANDS,0,0,0,0,hDlg,NULL,App.hInstance,0);
+			if (ctx->item.hwndCtrl[2])
+				{
+				SendMessage(ctx->item.hwndCtrl[2],UDM_SETBUDDY,(WPARAM)GetDlgItem(hDlg,202),0);
+				SendMessage(ctx->item.hwndCtrl[2],UDM_SETRANGE32,0,255);
+				SendMessage(ctx->item.hwndCtrl[2],UDM_SETPOS32,0,ctx->item.pContext->uOriginalTemplateType);
+				}
+			ctx->item.hwndCtrl[3] = CreateWindowEx(0,UPDOWN_CLASS,NULL,WS_CHILD|WS_VISIBLE|UDS_ALIGNRIGHT|UDS_ARROWKEYS|UDS_SETBUDDYINT|UDS_NOTHOUSANDS,0,0,0,0,hDlg,NULL,App.hInstance,0);
+			if (ctx->item.hwndCtrl[3])
+				{
+				SendMessage(ctx->item.hwndCtrl[3],UDM_SETBUDDY,(WPARAM)GetDlgItem(hDlg,302),0);
+				SendMessage(ctx->item.hwndCtrl[3],UDM_SETRANGE32,0,255);
+				SendMessage(ctx->item.hwndCtrl[3],UDM_SETPOS32,0,ctx->item.pContext->uCurrentTemplateType);
+				}
+			} break;
+
+		case GAME_PAGE_OWNERSHIP: {
+			BOOL bOwnership = Game_ItemBelongToCharacter(ctx->item.pContext->pItem);
+			EnableWindow(GetDlgItem(hDlg,200),!bOwnership);
+			ShowWindow(GetDlgItem(hDlg,201),bOwnership);
+			if (!bOwnership)
+				{
+				bOwnership = Game_ItemBelongToParty(ctx->item.pContext->pItem);
+				ShowWindow(GetDlgItem(hDlg,202),!bOwnership);
+				ShowWindow(GetDlgItem(hDlg,203),bOwnership);
+				}
+			else
+				{
+				ShowWindow(GetDlgItem(hDlg,202),FALSE);
+				ShowWindow(GetDlgItem(hDlg,203),FALSE);
+				}
+			} break;
 		}
 
 	return(ctx->bPageSet);
@@ -767,6 +908,34 @@ int Game_EditApply(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 			if (!ctx->bPageSet) break;
 			ctx->item.pContext->uNewLevel = GetDlgItemInt(hDlg,202,NULL,FALSE);
 			ctx->item.pContext->bSetLevel = (IsDlgButtonChecked(hDlg,204) == BST_CHECKED);
+			break;
+
+		case GAME_PAGE_TEMPLATE:
+			if (ctx->bPageSet)
+				{
+				UINT	uLen;
+
+				if (ctx->item.pContext->pszCurrentTemplate) HeapFree(App.hHeap,0,ctx->item.pContext->pszCurrentTemplate);
+				ctx->item.pContext->pszCurrentTemplate = NULL;
+				uLen = SendDlgItemMessage(hDlg,300,WM_GETTEXTLENGTH,0,0);
+				if (uLen)
+					{
+					ctx->item.pContext->pszCurrentTemplate = HeapAlloc(App.hHeap,0,++uLen*sizeof(WCHAR));
+					if (ctx->item.pContext->pszCurrentTemplate) SendDlgItemMessage(hDlg,300,WM_GETTEXT,(WPARAM)uLen,(LPARAM)ctx->item.pContext->pszCurrentTemplate);
+					}
+				ctx->item.pContext->uCurrentTemplateType = GetDlgItemInt(hDlg,302,NULL,FALSE);
+				if (ctx->item.pContext->uCurrentTemplateType > 255)
+					{
+					Game_ItemTemplateMsg(hDlg,ITEM_TEMPLATE_TYPEMISMATCH);
+					return(0);
+					}
+				return(Game_ItemTemplateMsg(hDlg,Game_ItemTemplateCheck(ctx->item.pContext->pItem,ctx->item.pContext->pszCurrentTemplate,ctx->item.pContext->uCurrentTemplateType)));
+				}
+			break;
+
+		case GAME_PAGE_OWNERSHIP:
+			if (!ctx->bPageSet) break;
+			ctx->item.pContext->bTakeOwnership = IsDlgButtonChecked(hDlg,200) == BST_CHECKED?TRUE:FALSE;
 			break;
 		}
 

@@ -22,6 +22,7 @@
 
 extern APPLICATION		App;
 extern APPICON			AppIcons[];
+extern APPSHELLICON		AppShellIcons[];
 extern SHORTCUT			Shortcuts[];
 extern CUSTOMMENUTEMPLATE	MainMenu;
 
@@ -127,12 +128,12 @@ int Initialise_WindowsClasses()
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
 	wndClass.hInstance = App.hInstance;
-	wndClass.hIcon = LoadImage(App.hInstance,MAKEINTRESOURCE(1),IMAGE_ICON,16,16,0);
+	wndClass.hIcon = App.hIcons[APP_ICON_APP_LARGE];
 	wndClass.hCursor = LoadCursor(NULL,IDC_ARROW);
 	wndClass.hbrBackground = NULL;
 	wndClass.lpszMenuName = NULL;
 	wndClass.lpszClassName = szWindowClass;
-	wndClass.hIconSm = wndClass.hIcon;
+	wndClass.hIconSm = App.hIcons[APP_ICON_APPLICATION];
 	if (!RegisterClassEx(&wndClass))
 		{
 		Request_PrintError(NULL,Locale_GetText(TEXT_ERR_WINDOW_CLASS),NULL,MB_ICONHAND);
@@ -244,18 +245,19 @@ int Initialise_Icons()
 			}
 		#endif
 		App.hIcons[AppIcons[i].id] = LoadImage(App.hInstance,MAKEINTRESOURCE(AppIcons[i].res),IMAGE_ICON,AppIcons[i].width,AppIcons[i].height,LR_DEFAULTCOLOR);
-		if (App.hIcons[AppIcons[i].id]) continue;
-		return(0);
+		if (!App.hIcons[AppIcons[i].id]) return(0);
 		}
 
 	//--- System Icon
-	info.cbSize = sizeof(SHSTOCKICONINFO);
-	info.hIcon = NULL;
-	SHGetStockIconInfo(SIID_INFO,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
-	App.hIconInfo = info.hIcon;
-	info.hIcon = NULL;
-	SHGetStockIconInfo(SIID_ERROR,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
-	App.hIconError = info.hIcon;
+	for (i = 0; i != APP_MAX_SHELLICONS-1; i++)
+		{
+		info.cbSize = sizeof(SHSTOCKICONINFO);
+		info.hIcon = NULL;
+		SHGetStockIconInfo(AppShellIcons[i].siid,SHGSI_ICON|SHGSI_SHELLICONSIZE,&info);
+		if (!info.hIcon) return(0);
+		App.hShellIcons[AppShellIcons[i].id] = info.hIcon;
+		}
+
 	return(1);
 }
 
@@ -271,8 +273,12 @@ void Reset_Icons()
 		DestroyIcon(App.hIcons[AppIcons[i].id]);
 		}
 
-	if (App.hIconInfo) DestroyIcon(App.hIconInfo);
-	if (App.hIconError) DestroyIcon(App.hIconError);
+	for (i = 0; i != APP_MAX_SHELLICONS-1; i++)
+		{
+		if (!App.hShellIcons[AppShellIcons[i].id]) continue;
+		DestroyIcon(App.hShellIcons[AppIcons[i].id]);
+		}
+
 	return;
 }
 

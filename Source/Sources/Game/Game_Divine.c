@@ -124,7 +124,7 @@ void Divine_Select()
 	psh->dwFlags = PSH_PROPSHEETPAGE|PSH_USEICONID|PSH_NOAPPLYNOW|PSH_WIZARD;
 	psh->hwndParent = App.hWnd;
 	psh->hInstance = App.hInstance;
-	psh->pszIcon = MAKEINTRESOURCE(1);
+	psh->pszIcon = NULL;
 	psh->nPages = iNumPages;
 	psh->ppsp = psp;
 
@@ -612,6 +612,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 	WCHAR*			pszPath;
 	WCHAR*			pszSearch;
 	NODE*			pRoot;
+	NODE			nFiles;
 	UINT			uGame;
 	UINT			uLen;
 	LRESULT			lResult;
@@ -641,6 +642,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 			PathAppend(pszPath,Divine_GetGameName(uGame));
 			PathAppend(pszPath,szPlayerProfiles);
 			pRoot = &pContext->Profiles;
+			ZeroMemory(&nFiles,sizeof(NODE));
 			break;
 
 		case DIVINE_SAVEGAMES_LIST:
@@ -667,6 +669,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 			PathAppend(pszPath,szSavegames);
 			PathAppend(pszPath,szStory);
 			pRoot = &pContext->Savegames;
+			ZeroMemory(&nFiles,sizeof(NODE));
 			break;
 
 		default:return(0);
@@ -760,6 +763,62 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 				goto Done;
 				}
 
+			//--- Date de sauvegarde
+			if (uType == DIVINE_SAVEGAMES_LIST)
+				{
+				WCHAR	*pszSavePath;
+
+				pszSavePath = Divine_GetSaveGamePath(uGame,pContext->pszProfile,pItem->name,NULL);
+				if (pszSavePath)
+					{
+					lsv_Release(&nFiles);
+					lsv_Load(hDlg,pszSavePath,&nFiles,LS_LOAD_QUIET|LS_LOAD_META);
+					if (nFiles.next)
+						{
+						SYSTEMTIME	time;
+						XML_NODE*	pxnInfo;
+						WCHAR*		pszDate;
+						BOOL		bDateSet;
+						static WCHAR*	pszValue[6] = { L"Year", L"Month", L"Day", L"Hours", L"Minutes", L"Seconds" };
+						int		i;
+
+						lsf_Unpack(hDlg,(LSFILE *)nFiles.next,LS_LOAD_QUIET);
+						pxnInfo = xml_GetNodeFromPathFirstChild((XML_NODE *)((LSFILE *)nFiles.next)->nodeXMLRoot.next,szInfoMetaDataPath);
+						pxnInfo = xml_GetNodeFromPathFirstChild(pxnInfo,szInfoGameDatePath);
+						if (pxnInfo)
+							{
+							for (bDateSet = FALSE, i = 0; i != 6; i++)
+								{
+								pszDate = xml_GetThisAttrValue(xml_GetXMLValueAttr(pxnInfo,szXMLattribute,szXMLid,pszValue[i]));
+								if (!pszDate) break;
+								switch(i)
+									{
+									case 0:	time.wYear = (WORD)(wcstol(pszDate,NULL,10)+1900);
+										break;
+									case 1:	time.wMonth = (WORD)wcstol(pszDate,NULL,10);
+										break;
+									case 2:	time.wDay = (WORD)wcstol(pszDate,NULL,10);
+										break;
+									case 3:	time.wHour = (WORD)wcstol(pszDate,NULL,10);
+										break;
+									case 4:	time.wMinute = (WORD)wcstol(pszDate,NULL,10);
+										break;
+									case 5:	time.wSecond = (WORD)wcstol(pszDate,NULL,10);
+										bDateSet = TRUE;
+										break;
+									}
+								}
+							if (bDateSet)
+								{
+								time.wMilliseconds = 0;
+								SystemTimeToFileTime(&time,&pItem->time);
+								}
+							}
+						}
+					HeapFree(App.hHeap,0,pszSavePath);
+					}
+				}
+
 			//--- Tente d'insérer le dossier en fonction de la date de création
 			if (SendDlgItemMessage(hDlg,200,LB_GETCOUNT,0,0) > 1)
 				{
@@ -814,6 +873,7 @@ int Divine_SelectCreateList(HWND hDlg, UINT uType, DIVINESGCONTEXT *pContext)
 
 Done:	FindClose(hFile);
 	HeapFree(App.hHeap,0,pszPath);
+	lsv_Release(&nFiles);
 
 	if (iResult) pRoot->type = uGame;
 	else Divine_SelectReleaseList(pRoot);

@@ -52,6 +52,7 @@ extern WCHAR	szBonusMetersFmt[];
 extern WCHAR	szBonusFmt[];
 extern WCHAR	szBonusDamageTypeFmt[];
 extern WCHAR	szBonusColorsFmt[];
+extern WCHAR	szUIDFmt[];
 
 extern WCHAR	szDebugLogFileName[];
 extern WCHAR	szConverterEXE[];
@@ -172,6 +173,8 @@ extern WCHAR*	szInfoGameDatePath[];
 
 extern WCHAR*	szSkillManagerPath[];
 extern WCHAR*	szSkillManagerSkillsPath[];
+
+extern WCHAR*	szPartyManagerPath[];
 
 extern WCHAR*	htmlEntities[];
 

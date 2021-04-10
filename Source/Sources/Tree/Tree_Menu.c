@@ -239,10 +239,10 @@ BOOL Tree_Confirm(HWND hWnd, WCHAR *pszText, WCHAR *pszTitle, BOOL *bDontAskAgai
 	ZeroMemory(&dialog,sizeof(TASKDIALOGCONFIG));
 	dialog.cbSize = sizeof(TASKDIALOGCONFIG);
 	dialog.hwndParent = hWnd;
-	dialog.dwFlags = TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
+	dialog.dwFlags = TDF_USE_HICON_MAIN|TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
 	dialog.dwCommonButtons = TDCBF_YES_BUTTON|TDCBF_NO_BUTTON;
 	dialog.pszWindowTitle = pszTitle;
-	dialog.pszMainIcon = TD_WARNING_ICON;
+	dialog.hMainIcon = App.hShellIcons[APP_SHELLICON_QUESTION];
 	dialog.pszContent = pszText;
 	dialog.nDefaultButton = IDNO;
 	dialog.pszVerificationText = Locale_GetText(TEXT_DONTASKAGAIN);

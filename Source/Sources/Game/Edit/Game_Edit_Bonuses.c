@@ -366,7 +366,7 @@ GAMEEDITBONUS* Game_Bonus(HWND hWnd, GAMEEDITBONUS *pEditBonus, DOS2ITEM *pItem)
 	psh->dwFlags = PSH_PROPSHEETPAGE|PSH_USEICONID|PSH_NOAPPLYNOW|PSH_WIZARD;
 	psh->hwndParent = hWnd;
 	psh->hInstance = App.hInstance;
-	psh->pszIcon = MAKEINTRESOURCE(1);
+	psh->pszIcon = NULL;
 	psh->nPages = iNumPages;
 	psh->ppsp = psp;
 

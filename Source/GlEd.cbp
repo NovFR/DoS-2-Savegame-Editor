@@ -121,6 +121,9 @@
 		<Unit filename="Sources/Game/Edit/Game_Edit_Bonuses.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Sources/Game/Edit/Game_Edit_Items.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Game/Edit/Game_Edit_SetValue.c">
 			<Option compilerVar="CC" />
 		</Unit>

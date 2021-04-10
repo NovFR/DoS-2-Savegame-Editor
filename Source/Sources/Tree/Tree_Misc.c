@@ -112,7 +112,7 @@ BOOL Tree_DisplayError(HWND hWnd, UINT uMsgId, BOOL *pbAbort, ...)
 	dialog.hwndParent = hWnd;
 	dialog.dwFlags = TDF_USE_HICON_MAIN|TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
 	dialog.pszWindowTitle = Locale_GetText(TEXT_TITLE_TREE);
-	dialog.hMainIcon = App.hIconError;
+	dialog.hMainIcon = App.hShellIcons[APP_SHELLICON_ERROR];
 	dialog.pszContent = pszText;
 	if (pbAbort) dialog.pszVerificationText = Locale_GetText(TEXT_DIALOG_TV_ABORTVERIFICATION);
 

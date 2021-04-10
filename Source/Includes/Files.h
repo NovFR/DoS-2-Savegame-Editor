@@ -172,11 +172,12 @@ typedef struct LSFILE {
 
 typedef struct LSVREADER {
 	HANDLE		hFile;
-	DWORD		dwFileSize;
 	DWORD		dwBytes;
+	DWORD		dwSignature;
+	DWORD		dwHeaderSize;
+	LSPKHEADER13	header;
+	BYTE*		pFileList;
 	BYTE*		pFileBuffer;
-	BYTE*		pFileList; // Ref
-	LSPKHEADER13*	pHeader; // Ref
 	FILEENTRY13*	pFileListBuffer;
 	UINT		uLastError;
 	int		iNumFiles;

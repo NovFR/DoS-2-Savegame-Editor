@@ -452,7 +452,7 @@ void Config_ModifyDrawWarning(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 		CopyRect(&rcText,&pDraw->rcItem);
 		rcText.left += 52;
 		DrawThemeBackground(hTheme,pDraw->hDC,TTP_STANDARD,0,&pDraw->rcItem,NULL);
-		DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-32)/2,App.hIconInfo,32,32,0,NULL,DI_NORMAL);
+		DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-32)/2,App.hShellIcons[APP_SHELLICON_WARNING],32,32,0,NULL,DI_NORMAL);
 		DrawThemeText(hTheme,pDraw->hDC,TTP_STANDARD,TTSS_NORMAL,pszText,-1,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER,0,&rcText);
 		CloseThemeData(hTheme);
 		}
@@ -463,7 +463,7 @@ void Config_ModifyDrawWarning(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
 
 		FillRect(pDraw->hDC,&pDraw->rcItem,GetStockObject(WHITE_BRUSH));
 		DrawEdge(pDraw->hDC,&pDraw->rcItem,BDR_SUNKENOUTER,BF_RECT|BF_FLAT);
-		DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-32)/2,App.hIconInfo,32,32,0,NULL,DI_NORMAL);
+		DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-32)/2,App.hShellIcons[APP_SHELLICON_WARNING],32,32,0,NULL,DI_NORMAL);
 
 		crColor = SetTextColor(pDraw->hDC,RGB(0,0,0));
 		iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);

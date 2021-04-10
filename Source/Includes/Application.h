@@ -91,6 +91,15 @@ enum {
 	APP_MAX_ICONS
 };
 
+enum {
+	APP_SHELLICON_INFO = 1,
+	APP_SHELLICON_ERROR,
+	APP_SHELLICON_WARNING,
+	APP_SHELLICON_QUESTION,
+	APP_SHELLICON_FIND,
+	APP_MAX_SHELLICONS
+};
+
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 // ¤¤¤									  ¤¤¤ //
@@ -104,6 +113,11 @@ typedef struct APPICON {
 	UINT				width;
 	UINT				height;
 } APPICON;
+
+typedef struct APPSHELLICON {
+	UINT				id;
+	UINT				siid;
+} APPSHELLICON;
 
 typedef struct SHORTCUT {
 	UINT				acc;
@@ -125,8 +139,7 @@ typedef struct APPLICATION {
 	HTHEME				hThemeButton;
 	HTHEME				hThemeProgress;
 	HICON				hIcons[APP_MAX_ICONS];
-	HICON				hIconInfo;
-	HICON				hIconError;
+	HICON				hShellIcons[APP_MAX_SHELLICONS];
 	FONTINFO			Font;
 	WCHAR*				pszStatusText;
 	WCHAR*				pszWindowTitle;

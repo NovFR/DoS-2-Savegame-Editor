@@ -164,6 +164,7 @@ INT_PTR CALLBACK Tree_SearchDialogProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LP
 
 		//--- Last step ---
 
+		SendMessage(hDlg,WM_SETICON,ICON_SMALL,(LPARAM)App.hShellIcons[APP_SHELLICON_FIND]);
 		EnableWindow(GetDlgItem(hDlg,403),App.xmlTree.search.history.next?TRUE:FALSE);
 		SendMessage(App.xmlTree.search.hwndTab,TCM_SETCURSEL,(WPARAM)App.xmlTree.search.uMode,0);
 		Tree_SearchTabControl(hDlg,TV_SEARCH_TAB_SHOW);

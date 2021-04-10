@@ -54,6 +54,7 @@ WCHAR	szBonusMetersFmt[]		= L"%3%2m %1";
 WCHAR	szBonusFmt[]			= L"%3%2 %1";
 WCHAR	szBonusDamageTypeFmt[]		= L"%1: %2";
 WCHAR	szBonusColorsFmt[]		= L"%1: %2";
+WCHAR	szUIDFmt[]			= L"{%s}";
 
 WCHAR	szDebugLogFileName[]		= L"Log.txt";
 WCHAR	szConverterEXE[]		= L"C\\ConverterApp.exe";
@@ -173,5 +174,7 @@ WCHAR*	szInfoGameDatePath[]		= { L"children",NULL, L"node",L"SaveTime", NULL };
 
 WCHAR*	szSkillManagerPath[]		= { L"children",NULL, L"node",L"SkillManager", NULL };
 WCHAR*	szSkillManagerSkillsPath[]	= { L"children",NULL, L"node",L"SkillManager", L"children",NULL, NULL };
+
+WCHAR*	szPartyManagerPath[]		= { L"save",NULL, L"region",L"PartyManager", L"node",L"PartyManager", L"children",NULL, L"node",L"PartyFormation", L"children",NULL, NULL };
 
 WCHAR*	htmlEntities[]			= { L"&apos;",L"'", L"&amp;",L"&", L"&lt;",L"<", L"&gt;",L">", L"&#xa",L"\n", L"&quot;",L"\"", NULL };

@@ -313,6 +313,32 @@ void Dialog_DrawIconButton(UINT uIconId, DRAWITEMSTRUCT *pDraw)
 }
 
 
+// «»»» Affichage d'un texte avec un icône ««««««««««««««««««««««««««««««»
+
+void Dialog_DrawIconText(HICON hIcon, UINT uIconSize, WCHAR *pszText, DRAWITEMSTRUCT *pDraw, HBRUSH hBckgnd)
+{
+	RECT		rcText;
+	COLORREF	crText;
+	UINT		uHeight;
+	int		iBkMode;
+
+	crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
+	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+	FillRect(pDraw->hDC,&pDraw->rcItem,hBckgnd?hBckgnd:GetSysColorBrush(COLOR_BTNFACE));
+	DrawIconEx(pDraw->hDC,pDraw->rcItem.left+4,pDraw->rcItem.top+(pDraw->rcItem.bottom-pDraw->rcItem.top-uIconSize)/2,hIcon,uIconSize,uIconSize,0,NULL,DI_NORMAL);
+	CopyRect(&rcText,&pDraw->rcItem);
+	rcText.left += uIconSize+14;
+	uHeight = DrawText(pDraw->hDC,pszText,-1,&rcText,DT_CALCRECT|DT_WORD_ELLIPSIS|DT_NOPREFIX|DT_LEFT|DT_WORDBREAK);
+	CopyRect(&rcText,&pDraw->rcItem);
+	rcText.left += uIconSize+14;
+	rcText.top += (rcText.bottom-rcText.top-uHeight)/2;
+	DrawText(pDraw->hDC,pszText,-1,&rcText,DT_WORD_ELLIPSIS|DT_NOPREFIX|DT_LEFT|DT_WORDBREAK);
+	SetBkMode(pDraw->hDC,iBkMode);
+	SetTextColor(pDraw->hDC,crText);
+	return;
+}
+
+
 // «»»» Affichage d'une étiquette «««««««««««««««««««««««««««««««««««««««»
 
 void Dialog_DrawLabel(WCHAR *pszText, DRAWITEMSTRUCT *pDraw, HBRUSH hBckgnd, UINT uFormat)
@@ -342,7 +368,7 @@ void Dialog_DrawInfo(WCHAR *pszInfoText, DRAWITEMSTRUCT *pDraw, UINT uFlags)
 	iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_WINDOW));
 	DrawEdge(pDraw->hDC,&pDraw->rcItem,EDGE_SUNKEN,uFlags);
-	if (App.hIconInfo) DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+12,App.hIconInfo,32,32,0,NULL,DI_NORMAL);
+	DrawIconEx(pDraw->hDC,pDraw->rcItem.left+12,pDraw->rcItem.top+12,App.hShellIcons[APP_SHELLICON_INFO],32,32,0,NULL,DI_NORMAL);
 	CopyRect(&rcText,&pDraw->rcItem);
 	rcText.left += 32+24;
 	rcText.right -= 12;
