@@ -159,6 +159,15 @@ enum {
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+//--- Sélection d'un objet ---
+
+typedef struct GAMEITEMSELECT {
+	HWND			hwndParent;
+	NODE			players;
+	DOS2ITEM*		pItem;
+	DOS2CHARACTER*		pdcCurrent;
+} GAMEITEMSELECT;
+
 //--- Edition d'une valeur ---
 
 typedef struct GAMEEDITVALUE {
@@ -357,6 +366,7 @@ typedef struct GAMEEDITITEMCONTEXT {
 	NODE			nodeBoosters;
 	NODE			nodeBonuses;
 	GAMEEDITRUNE		runes[3];
+	GAMEITEMSELECT		select;
 } GAMEEDITITEMCONTEXT;
 
 typedef struct GAMEEDITBONUSCONTEXT {
@@ -591,6 +601,12 @@ int			Game_SkillsSetItemGroup(UINT,GAMEDATASKILL *);
 GAMEDATASKILL*		Game_SkillsGetById(WCHAR *,NODE *);
 
 // «»»» Objets ««««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
+
+DOS2ITEM*		Game_ItemSelect(HWND);
+INT_PTR CALLBACK	Game_ItemSelectProc(HWND,UINT,WPARAM,LPARAM);
+void			Game_ItemCharacterChanged(HWND,GAMEITEMSELECT *);
+void			Game_ItemChanged(HWND,GAMEITEMSELECT *);
+void			Game_ItemMenu(HWND,HWND,UINT,GAMEITEMSELECT *);
 
 int			Game_ItemTemplateCheck(DOS2ITEM *,WCHAR *,UINT);
 int			Game_ItemTemplateMsg(HWND,int);

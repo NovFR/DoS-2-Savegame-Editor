@@ -1100,7 +1100,7 @@ DWORD WINAPI Divine_LoadThread(DIVINECONTEXT *ctx)
 		{
 		if (xml_LoadFile(NULL,ctx->pszPath,&App.Game.Save.nodeXMLRoot,XML_FLAG_HASHEADER))
 			{
-			Game_BuildPlayers();
+			Game_BuildPlayers(NULL,TRUE);
 			Game_UpdateButtons();
 			Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
 			Misc_SetWindowText(App.hWnd,&App.pszWindowTitle,szTitle,szTitleFmt,szTitle,ctx->pszSaveName);
@@ -1715,7 +1715,7 @@ void Divine_Close()
 {
 	Misc_SetWindowText(App.hWnd,&App.pszWindowTitle,szTitle,NULL);
 
-	Game_ReleasePlayers();
+	Game_ReleasePlayers(NULL,TRUE);
 	xml_ReleaseAll(&App.Game.Save.nodeXMLRoot);
 	lsv_Release(&App.Game.Save.nodeFiles);
 	Divine_Cleanup();

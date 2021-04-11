@@ -369,7 +369,7 @@ void Window_DrawItems(DRAWITEMSTRUCT *pDraw)
 
 	if (pDraw->CtlType == ODT_STATIC)
 		{
-		Game_PaintBag(pDraw);
+		Game_PaintBag(App.Game.pdcCurrent,pDraw);
 		return;
 		}
 
@@ -510,7 +510,7 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					About_Display(hWnd);
 					break;
 				case CTLID_CHARACTERS_LIST:
-					Game_SaveTopIndex();
+					Game_SaveTopIndex(App.Game.pdcCurrent,App.Game.Layout.hwndInventory);
 					Game_CharacterChanged(TRUE);
 					break;
 				case CTLID_ABILITIES:

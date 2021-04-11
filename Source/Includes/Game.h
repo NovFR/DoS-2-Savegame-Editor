@@ -304,6 +304,7 @@ typedef struct GAMEDATAPARSER {
 // «»»» Gestion «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
 
 int			Game_CreateLayout(void);
+int			Game_CreateInventoryGroups(HWND);
 int			Game_CreateButton(HWND,int,int,int,int,WCHAR *,UINT,HWND *,UINT);
 void			Game_Resize(void);
 
@@ -311,15 +312,17 @@ void			Game_InventoryMenu(HWND,UINT);
 int CALLBACK		Game_ItemsListSort(LPARAM,LPARAM,LPARAM);
 
 void			Game_Setup(DOS2CHARACTER *,BOOL,BOOL);
-int			Game_BuildPlayers(void);
-void			Game_ReleasePlayers(void);
+int			Game_BuildPlayers(NODE *,BOOL);
+void			Game_ReleasePlayers(NODE *,BOOL);
 DOS2INVENTORY*		Game_BuildInventory(DOS2ITEM *,XML_ATTR *,NODE *);
 UINT			Game_GetInventoryItemsCount(XML_NODE *,WCHAR *);
 void			Game_ReleaseInventory(DOS2INVENTORY *);
+void			Game_ReleaseItem(DOS2ITEM *);
 void			Game_ReleaseDisplayNames(void);
 void			Game_CharacterChanged(BOOL);
+void			Game_BuildItemsList(DOS2CHARACTER *,HWND);
 void			Game_UpdateButtons(void);
-void			Game_SaveTopIndex(void);
+void			Game_SaveTopIndex(DOS2CHARACTER *,HWND);
 
 void			Game_Lock(DWORD);
 UINT			Game_GetLevelFromExp(UINT);
@@ -352,7 +355,7 @@ int			Game_PaintStat(HDC,HWND,RECT *,UINT,WCHAR *,UINT);
 void			Game_PaintValue(HDC,LONG,HWND,WCHAR *,WCHAR *,UINT);
 
 void			Game_PaintButton(DRAWITEMSTRUCT *);
-void			Game_PaintBag(DRAWITEMSTRUCT *);
+void			Game_PaintBag(DOS2CHARACTER *,DRAWITEMSTRUCT *);
 void			Game_PaintIcon(HDC,WCHAR *,UINT,RECT *,int,BOOL,BOOL);
 
 // «»»» Fenêtre des attributs «««««««««««««««««««««««««««««««««««««««««««»

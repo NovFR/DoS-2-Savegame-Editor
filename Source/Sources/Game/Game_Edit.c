@@ -292,6 +292,51 @@ void Game_Edit(DOS2ITEM *pItem, UINT uPageID)
 					if (pItemContext->bSetLevel) Game_Synchronize_Level(pItemContext->uNewLevel,FALSE,pItem->pxaLevel,pItem->pxaIsGenerated,pItem->pxnGeneration,&pItem->pxnLevelOverride);
 					break;
 				case GAME_PAGE_TEMPLATE:
+					if (pItemContext->pszCurrentTemplate)
+						{
+						XML_NODE*	pxnCurrentTemplate;
+						XML_ATTR*	pxaCurrentTemplate;
+						XML_ATTR*	pxaCurrentType;
+						XML_NODE*	pxnOriginalTemplate;
+						XML_NODE*	pxnOriginalTemplateType;
+						WCHAR*		pszOriginalTemplate;
+						WCHAR*		pszCurrentTemplate;
+						WCHAR*		pszCurrentType;
+
+						pxnCurrentTemplate = xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"CurrentTemplate");
+						pxaCurrentTemplate = xml_GetAttr(pxnCurrentTemplate,szXMLvalue);
+						pxaCurrentType = xml_GetAttr(xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"CurrentTemplateType"),szXMLvalue);
+						if (!pxnCurrentTemplate) break;
+						if (!pxaCurrentTemplate) break;
+						if (!pxaCurrentType) break;
+						pszCurrentTemplate = xml_GetThisAttrValue(pxaCurrentTemplate);
+						pszCurrentType = xml_GetThisAttrValue(pxaCurrentType);
+						if (!pszCurrentTemplate) break;
+						if (!pszCurrentType) break;
+						if (!wcscmp(pszCurrentTemplate,pItemContext->pszCurrentTemplate)) break;
+						pxnOriginalTemplate = xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"OriginalTemplate");
+						if (!pxnOriginalTemplate)
+							{
+							pxnOriginalTemplate = xml_CreateNode(szXMLattribute,pItem->pxnRoot,3,szXMLid,L"OriginalTemplate",szXMLtype,L"31",szXMLvalue,pszCurrentTemplate);
+							if (!pxnOriginalTemplate) break;
+							if (!xml_InsertChildNode(pxnOriginalTemplate,pItem->pxnRoot,szXMLattribute,szXMLid,L"CurrentTemplateType",TRUE)) { xml_ReleaseNode(pxnOriginalTemplate); break; }
+							}
+						pxnOriginalTemplateType = xml_GetNode((XML_NODE *)pItem->pxnRoot->children.next,szXMLattribute,szXMLid,L"OriginalTemplateType");
+						if (!pxnOriginalTemplateType)
+							{
+							pxnOriginalTemplateType = xml_CreateNode(szXMLattribute,pItem->pxnRoot,3,szXMLid,L"OriginalTemplateType",szXMLtype,L"1",szXMLvalue,pszCurrentType);
+							if (!pxnOriginalTemplateType) break;
+							if (!xml_InsertChildNode(pxnOriginalTemplateType,pItem->pxnRoot,szXMLattribute,szXMLid,L"OriginalTemplate",TRUE)) { xml_ReleaseNode(pxnOriginalTemplateType); break; }
+							}
+						xml_SetAttrValue(pxaCurrentTemplate,pItemContext->pszCurrentTemplate);
+						xml_SetAttrValueNumber(pxaCurrentType,pItemContext->uCurrentTemplateType);
+						pszOriginalTemplate = xml_GetAttrValue(pxnOriginalTemplate,szXMLvalue);
+						if (pszOriginalTemplate && !wcscmp(pszOriginalTemplate,pItemContext->pszCurrentTemplate))
+							{
+							xml_ReleaseNode(pxnOriginalTemplate);
+							xml_ReleaseNode(pxnOriginalTemplateType);
+							}
+						}
 					break;
 				case GAME_PAGE_OWNERSHIP:
 					if (pItemContext->bTakeOwnership && pItemContext->pOriginalOwner) xml_ReleaseNode(pItemContext->pOriginalOwner);
@@ -426,8 +471,10 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 				Dialog_OffsetY(hDlg,303,Height);
 				Dialog_OffsetY(hDlg,304,Height);
 				Dialog_OffsetY(hDlg,305,Height);
-				SendDlgItemMessage(hDlg,304,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_COPYTEMPLATE));
-				SendDlgItemMessage(hDlg,305,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_SELECTTEMPLATE));
+				Dialog_OffsetY(hDlg,306,Height);
+				SendDlgItemMessage(hDlg,304,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_RESETTEMPLATE));
+				SendDlgItemMessage(hDlg,305,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_COPYTEMPLATE));
+				SendDlgItemMessage(hDlg,306,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_DIALOG_OBJECT_SELECTTEMPLATE));
 				break;
 			case GAME_PAGE_OWNERSHIP:
 				Dialog_OffsetY(hDlg,200,Height);
@@ -651,7 +698,28 @@ BOOL CALLBACK Game_EditProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lParam
 							switch(LOWORD(wParam))
 								{
 								case 304:
-								case 305:
+									if (((GAMEEDITPAGECONTEXT *)psp->lParam)->item.pContext->pszOriginalTemplate)
+										{
+										SetDlgItemText(hDlg,300,((GAMEEDITPAGECONTEXT *)psp->lParam)->item.pContext->pszOriginalTemplate);
+										SetDlgItemInt(hDlg,302,((GAMEEDITPAGECONTEXT *)psp->lParam)->item.pContext->uOriginalTemplateType,FALSE);
+										}
+									return(TRUE);
+								case 305: {
+									DOS2ITEM*	pItem;
+									WCHAR*		pszItemTemplate;
+									WCHAR*		pszItemTemplateType;
+
+									pItem = Game_ItemSelect(hDlg);
+									if (pItem)
+										{
+										pszItemTemplate = xml_GetAttrValue(xml_GetNode((XML_NODE *)((XML_NODE *)pItem->pxnRoot)->children.next,szXMLattribute,szXMLid,L"CurrentTemplate"),szXMLvalue);
+										pszItemTemplateType = xml_GetAttrValue(xml_GetNode((XML_NODE *)((XML_NODE *)pItem->pxnRoot)->children.next,szXMLattribute,szXMLid,L"CurrentTemplateType"),szXMLvalue);
+										if (pszItemTemplate) SetDlgItemText(hDlg,300,pszItemTemplate);
+										if (pszItemTemplateType) SetDlgItemInt(hDlg,302,wcstol(pszItemTemplateType,NULL,10),FALSE);
+										Game_ReleaseItem(pItem);
+										}
+									} return(TRUE);
+								case 306:
 									Dialog_NotImplemented(hDlg);
 									return(TRUE);
 								}
@@ -824,6 +892,8 @@ BOOL Game_EditInit(HWND hDlg, GAMEEDITPAGECONTEXT *ctx)
 				SendMessage(ctx->item.hwndCtrl[3],UDM_SETRANGE32,0,255);
 				SendMessage(ctx->item.hwndCtrl[3],UDM_SETPOS32,0,ctx->item.pContext->uCurrentTemplateType);
 				}
+
+			if (ctx->item.pContext->pszOriginalTemplate) EnableWindow(GetDlgItem(hDlg,304),TRUE);
 			} break;
 
 		case GAME_PAGE_OWNERSHIP: {

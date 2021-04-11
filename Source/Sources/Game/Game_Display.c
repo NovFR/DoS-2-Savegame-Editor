@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Affichage des personnages
+	Affichage
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -746,20 +746,20 @@ void Game_PaintButton(DRAWITEMSTRUCT *pDraw)
 
 // «»»» Affichage du sac en cours «««««««««««««««««««««««««««««««««««««««»
 
-void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
+void Game_PaintBag(DOS2CHARACTER *pdcCurrent, DRAWITEMSTRUCT *pDraw)
 {
 	FillRect(pDraw->hDC,&pDraw->rcItem,GetSysColorBrush(COLOR_BTNFACE));
 
-	if (App.Game.pdcCurrent)
+	if (pdcCurrent)
 		{
-		if (App.Game.pdcCurrent->pdiInventory)
+		if (pdcCurrent->pdiInventory)
 			{
 			WCHAR*		pszText = NULL;
 
-			if (App.Game.pdcCurrent->pdiInventory->pParentItem)
+			if (pdcCurrent->pdiInventory->pParentItem)
 				{
-				Game_ItemDisplayName(App.Game.pdcCurrent->pdiInventory->pParentItem);
-				pszText = ((DOS2ITEM *)App.Game.pdcCurrent->pdiInventory->pParentItem)->pszDisplayName;
+				Game_ItemDisplayName(pdcCurrent->pdiInventory->pParentItem);
+				pszText = ((DOS2ITEM *)pdcCurrent->pdiInventory->pParentItem)->pszDisplayName;
 				}
 
 			if (pszText)
@@ -774,7 +774,7 @@ void Game_PaintBag(DRAWITEMSTRUCT *pDraw)
 				iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.right = rcDraw.left+GAME_ICON_SIZE;
-				Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(((DOS2ITEM *)App.Game.pdcCurrent->pdiInventory->pParentItem)->pxaStats),APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
+				Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(((DOS2ITEM *)pdcCurrent->pdiInventory->pParentItem)->pxaStats),APP_ICON_BACKPACK,&rcDraw,GAME_ICON_SIZE,FALSE,FALSE);
 				CopyRect(&rcDraw,&pDraw->rcItem);
 				rcDraw.left += GAME_ICON_SIZE;
 				DrawEdge(pDraw->hDC,&rcDraw,BDR_SUNKENOUTER,BF_LEFT);

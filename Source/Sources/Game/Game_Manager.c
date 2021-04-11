@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Affichage des personnages
+	Gestion
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -40,8 +40,6 @@ static DOS2ITEM			ParentItem;
 
 int Game_CreateLayout()
 {
-	LVCOLUMN	lvColumn;
-	LVGROUP		lvGroup;
 	int		X,Y;
 	int		W,H;
 
@@ -78,45 +76,57 @@ int Game_CreateLayout()
 
 	App.Game.Layout.hwndInventory = CreateWindowEx(WS_EX_CLIENTEDGE,WC_LISTVIEW,NULL,WS_CHILD|WS_VISIBLE|WS_DISABLED|WS_VSCROLL|WS_TABSTOP|WS_GROUP|LVS_REPORT|LVS_SINGLESEL|LVS_NOCOLUMNHEADER|LVS_SHOWSELALWAYS|LVS_OWNERDRAWFIXED,X,Y,W,H,App.hWnd,(HMENU)CTLID_INVENTORY,App.hInstance,NULL);
 	if (!App.Game.Layout.hwndInventory) return(0);
-
-	SendMessage(App.Game.Layout.hwndInventory,LVM_SETEXTENDEDLISTVIEWSTYLE,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER);
-
-	lvColumn.mask = LVCF_FMT|LVCF_ORDER|LVCF_TEXT|LVCF_WIDTH;
-	lvColumn.fmt = LVCFMT_LEFT;
-	lvColumn.cx = W-GetSystemMetrics(SM_CXVSCROLL)-GetSystemMetrics(SM_CXEDGE)*2;
-	lvColumn.pszText = NULL;
-	lvColumn.cchTextMax = 0;
-	lvColumn.iOrder = 0;
-	if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn) == -1) return(0);
-
-	lvGroup.cbSize = sizeof(LVGROUP);
-	lvGroup.mask = LVGF_GROUPID|LVGF_HEADER;
-	lvGroup.iGroupId = 0;
-	lvGroup.pszHeader = Locale_GetText(TEXT_INV_NAV);
-	if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
-	lvGroup.iGroupId = 1;
-	lvGroup.pszHeader = Locale_GetText(TEXT_INV_BAGS);
-	if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
-	lvGroup.iGroupId = 2;
-	lvGroup.pszHeader = Locale_GetText(TEXT_INV_EQUIPPED);
-	if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
-	lvGroup.iGroupId = 3;
-	lvGroup.pszHeader = Locale_GetText(TEXT_INV_ITEMS);
-	if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
-
-	SendMessage(App.Game.Layout.hwndInventory,LVM_ENABLEGROUPVIEW,(WPARAM)TRUE,0);
+	if (!Game_CreateInventoryGroups(App.Game.Layout.hwndInventory)) return(0);
 
 	// Bouton du menu
 	if (!Game_CreateButton(NULL,446,-32,200,0,Locale_GetText(TEXT_BUTTON_MENU),CTLID_MENU,&App.Game.Layout.hwndMenuBtn,0)) return(0);
 
 	// Nom de l'inventaire
-	App.Game.Layout.hwndInventoryName = CreateWindowEx(WS_EX_CLIENTEDGE,szStaticClass,NULL,WS_CHILD|WS_VISIBLE|WS_TABSTOP|SS_OWNERDRAW,656,0,332,App.Font.uFontHeight+16,App.hWnd,(HMENU)CTLID_INVENTORYNAME,App.hInstance,NULL);
+	App.Game.Layout.hwndInventoryName = CreateWindowEx(WS_EX_CLIENTEDGE,szStaticClass,NULL,WS_CHILD|WS_VISIBLE|SS_OWNERDRAW,656,0,332,App.Font.uFontHeight+16,App.hWnd,(HMENU)CTLID_INVENTORYNAME,App.hInstance,NULL);
 	if (!App.Game.Layout.hwndInventoryName) return(0);
 
 	//--- Initialisations ---
 
 	Game_Resize();
 	Game_Setup(NULL,FALSE,FALSE);
+	return(1);
+}
+
+//--- Création des groupes pour la liste des objets ---
+
+int Game_CreateInventoryGroups(HWND hwndInventory)
+{
+	LVCOLUMN	lvColumn;
+	LVGROUP		lvGroup;
+	RECT		rcInventory;
+
+	GetWindowRect(hwndInventory,&rcInventory);
+	SendMessage(hwndInventory,LVM_SETEXTENDEDLISTVIEWSTYLE,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER,LVS_EX_FULLROWSELECT|LVS_EX_DOUBLEBUFFER);
+
+	lvColumn.mask = LVCF_FMT|LVCF_ORDER|LVCF_TEXT|LVCF_WIDTH;
+	lvColumn.fmt = LVCFMT_LEFT;
+	lvColumn.cx = rcInventory.right-rcInventory.left-GetSystemMetrics(SM_CXVSCROLL)-GetSystemMetrics(SM_CXEDGE)*2;
+	lvColumn.pszText = NULL;
+	lvColumn.cchTextMax = 0;
+	lvColumn.iOrder = 0;
+	if (SendMessage(hwndInventory,LVM_INSERTCOLUMN,0,(LPARAM)&lvColumn) == -1) return(0);
+
+	lvGroup.cbSize = sizeof(LVGROUP);
+	lvGroup.mask = LVGF_GROUPID|LVGF_HEADER;
+	lvGroup.iGroupId = 0;
+	lvGroup.pszHeader = Locale_GetText(TEXT_INV_NAV);
+	if (SendMessage(hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
+	lvGroup.iGroupId = 1;
+	lvGroup.pszHeader = Locale_GetText(TEXT_INV_BAGS);
+	if (SendMessage(hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
+	lvGroup.iGroupId = 2;
+	lvGroup.pszHeader = Locale_GetText(TEXT_INV_EQUIPPED);
+	if (SendMessage(hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
+	lvGroup.iGroupId = 3;
+	lvGroup.pszHeader = Locale_GetText(TEXT_INV_ITEMS);
+	if (SendMessage(hwndInventory,LVM_INSERTGROUP,(WPARAM)-1,(LPARAM)&lvGroup) == -1) return(0);
+
+	SendMessage(hwndInventory,LVM_ENABLEGROUPVIEW,(WPARAM)TRUE,0);
 	return(1);
 }
 
@@ -361,7 +371,7 @@ void Game_InventoryMenu(HWND hwndCtrl, UINT uMenuId)
 		case IDM_INVBACKPACKOPEN:
 			if (!pItem) break;
 			if (!pItem->bIsBackPack) break;
-			Game_SaveTopIndex();
+			Game_SaveTopIndex(App.Game.pdcCurrent,App.Game.Layout.hwndInventory);
 			pInventory = Game_BuildInventory(pItem,pItem->pxaInventory,&App.Game.pdcCurrent->nodeInventories);
 			if (pInventory)
 				{
@@ -481,7 +491,7 @@ void Game_Setup(DOS2CHARACTER *pdcList, BOOL bStateOnly, BOOL bState)
 
 // «»»» Création de la liste des personnages ««««««««««««««««««««««««««««»
 
-int Game_BuildPlayers()
+int Game_BuildPlayers(NODE *pRoot, BOOL bMain)
 {
 	DOS2CHARACTER*	pdc;
 	DOS2INVENTORY*	pInventory;
@@ -493,6 +503,7 @@ int Game_BuildPlayers()
 	pxnList = xml_GetNodeFromPathFirstChild((XML_NODE *)App.Game.Save.nodeXMLRoot.next,szCharactersPath);
 	if (!pxnList) return(0);
 	if (!pxnList->children.next) return(0);
+	if (!pRoot) pRoot = &App.Game.nodeXMLCharacters;
 
 	for (; pxnList != NULL; pxnList = (XML_NODE *)pxnList->node.next)
 		{
@@ -520,11 +531,11 @@ int Game_BuildPlayers()
 		pdc = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(DOS2CHARACTER));
 		if (!pdc)
 			{
-			Game_ReleasePlayers();
+			Game_ReleasePlayers(pRoot,bMain);
 			return(0);
 			}
 		pdc->pxnRoot = pxnList;
-		List_AddEntry((NODE *)pdc,&App.Game.nodeXMLCharacters);
+		List_AddEntry((NODE *)pdc,pRoot);
 
 		// Identifiant de l'inventaire
 		pdc->pxaInventoryId = xml_GetXMLValueAttr((XML_NODE *)pxnList->children.next,szXMLattribute,szXMLid,L"Inventory");
@@ -597,7 +608,7 @@ int Game_BuildPlayers()
 		pInventory = Game_BuildInventory(NULL,pdc->pxaInventoryId,&pdc->nodeInventories);
 		if (!pInventory)
 			{
-			Game_ReleasePlayers();
+			Game_ReleasePlayers(pRoot,bMain);
 			return(0);
 			}
 		pdc->pdiInventory = pInventory;
@@ -605,39 +616,46 @@ int Game_BuildPlayers()
 
 	if (!App.Game.hIconsList) App.Game.hIconsList = LoadLibraryEx(szIconsPath,NULL,DONT_RESOLVE_DLL_REFERENCES|LOAD_LIBRARY_AS_DATAFILE|LOAD_WITH_ALTERED_SEARCH_PATH);
 	if (!App.Game.hRunesIconsList) App.Game.hRunesIconsList = LoadLibraryEx(szRunesIconsPath,NULL,DONT_RESOLVE_DLL_REFERENCES|LOAD_LIBRARY_AS_DATAFILE|LOAD_WITH_ALTERED_SEARCH_PATH);
-	Game_Setup((DOS2CHARACTER *)App.Game.nodeXMLCharacters.next,FALSE,FALSE);
+	if (bMain) Game_Setup((DOS2CHARACTER *)pRoot->next,FALSE,FALSE);
 	return(1);
 }
 
 
 // «»»» Libération de la liste des personnages ««««««««««««««««««««««««««»
 
-void Game_ReleasePlayers()
+void Game_ReleasePlayers(NODE *pRoot, BOOL bMain)
 {
 	DOS2CHARACTER*	pdc;
 	DOS2INVENTORY*	pInventory;
 
-	Game_Setup(NULL,FALSE,FALSE);
-	Tree_Destroy();
+	if (bMain)
+		{
+		Game_Setup(NULL,FALSE,FALSE);
+		Tree_Destroy();
+		}
+	if (!pRoot) pRoot = &App.Game.nodeXMLCharacters;
 
-	for (pdc = (DOS2CHARACTER *)App.Game.nodeXMLCharacters.next; pdc != NULL; pdc = (DOS2CHARACTER *)pdc->node.next)
+	for (pdc = (DOS2CHARACTER *)pRoot->next; pdc != NULL; pdc = (DOS2CHARACTER *)pdc->node.next)
 		{
 		for (pInventory = (DOS2INVENTORY *)pdc->nodeInventories.next; pInventory != NULL; pInventory = (DOS2INVENTORY *)pdc->nodeInventories.next)
 			Game_ReleaseInventory(pInventory);
 		}
 
-	if (App.Game.hIconsList)
+	if (bMain)
 		{
-		FreeLibrary(App.Game.hIconsList);
-		App.Game.hIconsList = NULL;
-		}
-	if (App.Game.hRunesIconsList)
-		{
-		FreeLibrary(App.Game.hRunesIconsList);
-		App.Game.hRunesIconsList = NULL;
+		if (App.Game.hIconsList)
+			{
+			FreeLibrary(App.Game.hIconsList);
+			App.Game.hIconsList = NULL;
+			}
+		if (App.Game.hRunesIconsList)
+			{
+			FreeLibrary(App.Game.hRunesIconsList);
+			App.Game.hRunesIconsList = NULL;
+			}
 		}
 
-	List_ReleaseMemory(&App.Game.nodeXMLCharacters);
+	List_ReleaseMemory(pRoot);
 	return;
 }
 
@@ -815,14 +833,21 @@ void Game_ReleaseInventory(DOS2INVENTORY *pdiInventory)
 	return;
 }
 
+//--- Libération d'un objet ---
+
+void Game_ReleaseItem(DOS2ITEM *pItem)
+{
+	Game_ItemDisplayNameRelease(pItem);
+	HeapFree(App.hHeap,0,pItem);
+	return;
+}
+
 
 // «»»» Changement de personnage ««««««««««««««««««««««««««««««««««««««««»
 
 void Game_CharacterChanged(BOOL bRefresh)
 {
 	DOS2CHARACTER*	pdc;
-	DOS2ITEM*	pItem;
-	LVITEM		lvItem;
 	int		i;
 
 	i = SendMessage(App.Game.Layout.hwndList,CB_GETCURSEL,0,0);
@@ -834,50 +859,9 @@ void Game_CharacterChanged(BOOL bRefresh)
 	if (pdc == (DOS2CHARACTER *)CB_ERR) return;
 	if (!pdc) return;
 
-	//--- Affichage de l'inventaire ---
+	//--- Création de la liste ---
 
-	SendMessage(App.Game.Layout.hwndInventory,LVM_DELETEALLITEMS,0,0);
-	ShowWindow(App.Game.Layout.hwndInventory,SW_HIDE);
-	lvItem.mask = LVIF_PARAM|LVIF_GROUPID;
-	lvItem.iSubItem = 0;
-	for (lvItem.iItem = 0, pItem = (DOS2ITEM *)pdc->pdiInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next, lvItem.iItem++)
-		{
-		lvItem.iGroupId = 3;
-		if (pItem->bIsBackPack) lvItem.iGroupId = 1;
-		else if (Game_IsItemEquipped(pItem)) lvItem.iGroupId = 2;
-		lvItem.lParam = (LPARAM)pItem;
-		if (SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) break;
-		}
-	SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
-	ShowWindow(App.Game.Layout.hwndInventory,SW_SHOW);
-
-	if (pdc->uInventoryDepth)
-		{
-		RootItem.node.type = pdc->uInventoryDepth > 1?ITEM_TYPE_ROOT:ITEM_TYPE_PARENT;
-		lvItem.iItem = 0;
-		lvItem.iGroupId = 0;
-		lvItem.lParam = (LPARAM)&RootItem;
-		SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem);
-		if (pdc->uInventoryDepth > 1)
-			{
-			ParentItem.node.type = ITEM_TYPE_PARENT;
-			lvItem.iItem = 1;
-			lvItem.lParam = (LPARAM)&ParentItem;
-			SendMessage(App.Game.Layout.hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem);
-			}
-		}
-
-	if (pdc->pdiInventory)
-		{
-		SendMessage(App.Game.Layout.hwndInventory,LVM_SCROLL,0,(LPARAM)pdc->pdiInventory->iTopIndex);
-		if (pdc->pdiInventory->iSelected != -1)
-			{
-			lvItem.mask = LVIF_STATE;
-			lvItem.stateMask = LVIS_SELECTED|LVIS_FOCUSED;
-			lvItem.state = LVIS_SELECTED|LVIS_FOCUSED;
-			SendMessage(App.Game.Layout.hwndInventory,LVM_SETITEMSTATE,(WPARAM)pdc->pdiInventory->iSelected,(LPARAM)&lvItem);
-			}
-		}
+	Game_BuildItemsList(pdc,App.Game.Layout.hwndInventory);
 
 	//--- Stockage du pointeur du personnage ---
 
@@ -889,6 +873,59 @@ void Game_CharacterChanged(BOOL bRefresh)
 	InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
 	Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_TREE);
 	if (bRefresh) InvalidateRect(App.hWnd,NULL,FALSE);
+	return;
+}
+
+//--- Création de la liste des objets ---
+
+void Game_BuildItemsList(DOS2CHARACTER *pdc, HWND hwndInventory)
+{
+	DOS2ITEM*	pItem;
+	LVITEM		lvItem;
+
+	SendMessage(hwndInventory,LVM_DELETEALLITEMS,0,0);
+	ShowWindow(hwndInventory,SW_HIDE);
+	lvItem.mask = LVIF_PARAM|LVIF_GROUPID;
+	lvItem.iSubItem = 0;
+	for (lvItem.iItem = 0, pItem = (DOS2ITEM *)pdc->pdiInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next, lvItem.iItem++)
+		{
+		lvItem.iGroupId = 3;
+		if (pItem->bIsBackPack) lvItem.iGroupId = 1;
+		else if (Game_IsItemEquipped(pItem)) lvItem.iGroupId = 2;
+		lvItem.lParam = (LPARAM)pItem;
+		if (SendMessage(hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) break;
+		}
+	SendMessage(hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
+	ShowWindow(hwndInventory,SW_SHOW);
+
+	if (pdc->uInventoryDepth)
+		{
+		RootItem.node.type = pdc->uInventoryDepth > 1?ITEM_TYPE_ROOT:ITEM_TYPE_PARENT;
+		lvItem.iItem = 0;
+		lvItem.iGroupId = 0;
+		lvItem.lParam = (LPARAM)&RootItem;
+		SendMessage(hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem);
+		if (pdc->uInventoryDepth > 1)
+			{
+			ParentItem.node.type = ITEM_TYPE_PARENT;
+			lvItem.iItem = 1;
+			lvItem.lParam = (LPARAM)&ParentItem;
+			SendMessage(hwndInventory,LVM_INSERTITEM,0,(LPARAM)&lvItem);
+			}
+		}
+
+	if (pdc->pdiInventory)
+		{
+		SendMessage(hwndInventory,LVM_SCROLL,0,(LPARAM)pdc->pdiInventory->iTopIndex);
+		if (pdc->pdiInventory->iSelected != -1)
+			{
+			lvItem.mask = LVIF_STATE;
+			lvItem.stateMask = LVIS_SELECTED|LVIS_FOCUSED;
+			lvItem.state = LVIS_SELECTED|LVIS_FOCUSED;
+			SendMessage(hwndInventory,LVM_SETITEMSTATE,(WPARAM)pdc->pdiInventory->iSelected,(LPARAM)&lvItem);
+			}
+		}
+
 	return;
 }
 
@@ -992,14 +1029,14 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 
 // «»»» Sauvegarde les données de la liste ««««««««««««««««««««««««««««««»
 
-void Game_SaveTopIndex()
+void Game_SaveTopIndex(DOS2CHARACTER *pdc, HWND hwndInventory)
 {
-	if (!App.Game.pdcCurrent) return;
-	if (App.Game.pdcCurrent->pdiInventory)
+	if (!pdc) return;
+	if (pdc->pdiInventory)
 		{
-		App.Game.pdcCurrent->pdiInventory->iTopIndex = GetScrollPos(App.Game.Layout.hwndInventory,SB_VERT);
-		if (!SendMessage(App.Game.Layout.hwndInventory,LVM_GETSELECTEDCOUNT,0,0)) return;
-		App.Game.pdcCurrent->pdiInventory->iSelected = SendMessage(App.Game.Layout.hwndInventory,LVM_GETNEXTITEM,-1,LVNI_SELECTED);
+		pdc->pdiInventory->iTopIndex = GetScrollPos(hwndInventory,SB_VERT);
+		if (!SendMessage(hwndInventory,LVM_GETSELECTEDCOUNT,0,0)) return;
+		pdc->pdiInventory->iSelected = SendMessage(hwndInventory,LVM_GETNEXTITEM,-1,LVNI_SELECTED);
 		}
 	return;
 }
