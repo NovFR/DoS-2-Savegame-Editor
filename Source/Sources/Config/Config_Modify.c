@@ -29,7 +29,7 @@ static UINT			cfgCatLangs[] = { 200, 201, 202, 211, 212, 0 };
 static UINT			cfgCatEdits[] = { 300, 301, 302, 310, 311, 312, 320, 321, 322, 330, 331, 332, 0 };
 static UINT			cfgCatWinds[] = { 400, 401, 402, 410, 411, 412, 0 };
 static UINT			cfgCatTView[] = { 500, 501, 502, 503, 0 };
-static UINT			cfgCatDispl[] = { 600, 601, 602, 0 };
+static UINT			cfgCatDispl[] = { 600, 601, 602, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 0 };
 
 static UINT*			ConfigCategories[] = { cfgCatPaths, cfgCatLangs, cfgCatEdits, cfgCatWinds, cfgCatTView, cfgCatDispl, NULL };
 static UINT			ConfigCategoriesNames[] = { TEXT_CONFIG_PATHS, TEXT_CONFIG_LANG, TEXT_CONFIG_EDITION, TEXT_CONFIG_WINDOWS, TEXT_TITLE_TREE, TEXT_CONFIG_DISPLAY, 0 };
@@ -146,6 +146,15 @@ void Config_Modify()
 		}
 
 	// Display
+	if (App.Config.uListDisplayMode != pContext->pConfig->uListDisplayMode) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	if (App.Config.crListStats != pContext->pConfig->crListStats) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	if (App.Config.lListTopMargin != pContext->pConfig->lListTopMargin) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	if (App.Config.lListSpacing != pContext->pConfig->lListSpacing) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	App.Config.uListDisplayMode = pContext->pConfig->uListDisplayMode;
+	App.Config.crListStats = pContext->pConfig->crListStats;
+	App.Config.lListTopMargin = pContext->pConfig->lListTopMargin;
+	App.Config.lListSpacing = pContext->pConfig->lListSpacing;
+
 	if (App.Config.bItemsDisplayName != pContext->pConfig->bItemsDisplayName || App.Config.bItemsResolve != pContext->pConfig->bItemsResolve)
 		{
 		App.Config.bItemsDisplayName = pContext->pConfig->bItemsDisplayName;
@@ -289,6 +298,14 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 			EndDialog(hDlg,-1);
 			return(FALSE);
 			}
+		SendDlgItemMessage(hDlg,611,CB_ADDSTRING,0,(LPARAM)Locale_GetText(TEXT_CONFIG_LDISPLAY_NAMEONLY));
+		SendDlgItemMessage(hDlg,611,CB_ADDSTRING,0,(LPARAM)Locale_GetText(TEXT_CONFIG_LDISPLAY_STATSONLY));
+		SendDlgItemMessage(hDlg,611,CB_ADDSTRING,0,(LPARAM)Locale_GetText(TEXT_CONFIG_LDISPLAY_ALL));
+		SendDlgItemMessage(hDlg,611,CB_SETCURSEL,(WPARAM)pContext->pConfig->uListDisplayMode,0);
+		SendDlgItemMessage(hDlg,616,UDM_SETRANGE32,0,99);
+		SendDlgItemMessage(hDlg,616,UDM_SETPOS32,0,pContext->pConfig->lListTopMargin);
+		SendDlgItemMessage(hDlg,619,UDM_SETRANGE32,0,99);
+		SendDlgItemMessage(hDlg,619,UDM_SETPOS32,0,pContext->pConfig->lListSpacing);
 
 		//--- Désactive les répertoires si une sauvegarde est en cours
 		ShowWindow(GetDlgItem(hDlg,199),pContext->bIsLimited?SW_SHOW:SW_HIDE);
@@ -402,6 +419,21 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 				case 600:
 					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_DISPLAY),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
+				case 610:
+					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_INVENTORY),(DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
+				case 612:
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_LDISPLAY),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					return(TRUE);
+				case 613:
+					Dialog_DrawColorButton(Locale_GetText(TEXT_CONFIG_LSTATSCOLOR),pContext->pConfig->crListStats,(DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
+				case 614:
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_LTOPMARGIN),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					return(TRUE);
+				case 617:
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_LSPACING),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					return(TRUE);
 				}
 			break;
 
@@ -457,6 +489,9 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 						case 503:
 							Tree_SearchHistoryClear(App.xmlTree.search.hDlg);
 							EnableWindow(GetDlgItem(hDlg,503),PathFileExists(szTVSearchHistoryPath));
+							return(TRUE);
+						case 613:
+							Config_ModifyPickColor(hDlg,613,&pContext->pConfig->crListStats,NULL);
 							return(TRUE);
 						case 777:
 							if (!Config_ModifyApplyChanges(hDlg,pContext)) return(TRUE);
@@ -712,6 +747,9 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	//--- Apply display settings
 	pContext->pConfig->bItemsDisplayName = IsDlgButtonChecked(hDlg,601) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bItemsResolve = IsDlgButtonChecked(hDlg,602) == BST_CHECKED?TRUE:FALSE;
+	pContext->pConfig->uListDisplayMode = SendDlgItemMessage(hDlg,611,CB_GETCURSEL,0,0);
+	pContext->pConfig->lListTopMargin = GetDlgItemInt(hDlg,615,NULL,FALSE);
+	pContext->pConfig->lListSpacing = GetDlgItemInt(hDlg,618,NULL,FALSE);
 
 	//--- Apply view modes
 	if (!Dialog_ViewComboChanged(hDlg,311,0,&pContext->pConfig->uRunesView)) goto Error;
@@ -720,6 +758,9 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	//--- Apply paths
 	if (!Config_ModifyGetPath(hDlg,102,&pContext->pConfig->pszTempPath)) goto Error;
 	if (!Config_ModifyGetPath(hDlg,112,&pContext->pConfig->pszLarianPath)) goto Error;
+
+	//--- Copy customcolors for save
+	CopyMemory(&pContext->pConfig->crCustColors,&App.Config.crCustColors,sizeof(COLORREF)*16);
 	return(1);
 
 Error:	Request_PrintError(hDlg,Locale_GetText(TEXT_ERR_CONFIGCHANGE),NULL,MB_ICONERROR);
@@ -893,5 +934,30 @@ void Config_ModifySelectLocation(HWND hDlg, UINT uCtlId, WCHAR *pszTitle)
 		}
 
 	if (pszPath) HeapFree(App.hHeap,0,pszPath);
+	return;
+}
+
+
+// «»»» Sélection d'une couleur «««««««««««««««««««««««««««««««««««««««««»
+
+void Config_ModifyPickColor(HWND hDlg, UINT uCtlId, COLORREF *pcrColor, LPCCHOOKPROC pfnHook)
+{
+	CHOOSECOLOR	ccColor;
+
+	ZeroMemory(&ccColor,sizeof(CHOOSECOLOR));
+	App.Config.crCustColors[0] = CONFIG_LDS_COLOR;
+	App.Config.crCustColors[1] = *pcrColor;
+	ccColor.lStructSize = sizeof(CHOOSECOLOR);
+	ccColor.hwndOwner = hDlg;
+	ccColor.rgbResult = *pcrColor;
+	ccColor.Flags = CC_ANYCOLOR|CC_FULLOPEN|CC_RGBINIT;
+	ccColor.lpCustColors = App.Config.crCustColors;
+	ccColor.lCustData = 0;
+	ccColor.lpfnHook = pfnHook;
+	if (pfnHook) ccColor.Flags |= CC_ENABLEHOOK;
+	if (!ChooseColor(&ccColor)) return;
+
+	*pcrColor = ccColor.rgbResult;
+	InvalidateRect(GetDlgItem(hDlg,uCtlId),NULL,FALSE);
 	return;
 }

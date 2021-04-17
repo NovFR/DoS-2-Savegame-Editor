@@ -206,8 +206,16 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 			{
 			SIZE		Size;
 			RECT		rcText;
+			WCHAR*		pszStats;
+			WCHAR*		pszName;
 			WCHAR*		pszLevel = NULL;
 			DWORD_PTR	dptrLevel = 0;
+
+			Game_ItemDisplayName(pItem);
+			pszName = pItem->pszDisplayName;
+			pszStats = xml_GetThisAttrValue(pItem->pxaStats);
+			if (!pszName) pszName = Locale_GetText(TEXT_UNKNOWN);
+			if (!pszStats) pszStats = szNULLItem;
 
 			//--- Icon ---
 
@@ -225,10 +233,11 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 					FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,Locale_GetText(TEXT_OBJ_LEVEL),0,0,(WCHAR *)&pszLevel,1,(va_list *)&dptrLevel);
 					}
 				}
+			rcDraw.top += App.Config.lListTopMargin;
 			rcDraw.left += GAME_ICON_SIZE+8;
 			rcDraw.right -= 8;
 
-			//--- DisplayName, Level ---
+			//--- DisplayName or Stats, Level ---
 
 			// Area
 			CopyRect(&rcText,&rcDraw);
@@ -238,9 +247,8 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				rcText.right -= Size.cx+8;
 				}
 			// DisplayName
-			Game_ItemDisplayName(pItem);
-			pszText = pItem->pszDisplayName;
-			if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
+			if (App.Config.uListDisplayMode == CONFIG_LDISPLAY_STATSONLY) pszText = pszStats;
+			else pszText = pszName;
 			GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
 			DrawText(pDraw->hDC,pszText,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 			// Level
@@ -249,7 +257,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				LocalFree(pszLevel);
 				}
-			rcDraw.top += Size.cy+1;
+			rcDraw.top += Size.cy+App.Config.lListSpacing;
 
 			//--- Stats and Quality ---
 
@@ -262,12 +270,13 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				rcText.right -= Size.cx+8;
 				}
 			// Stats
-			pszText = xml_GetThisAttrValue(pItem->pxaStats);
-			if (!pszText) pszText = szNULLItem;
-			SetTextColor(pDraw->hDC,App.Config.crStats);
-			GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
-			DrawText(pDraw->hDC,pszText,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
-			SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
+			if (App.Config.uListDisplayMode == CONFIG_LDISPLAY_ALL)
+				{
+				SetTextColor(pDraw->hDC,App.Config.crListStats);
+				GetTextExtentPoint32(pDraw->hDC,pszStats,wcslen(pszStats),&Size);
+				DrawText(pDraw->hDC,pszStats,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+				SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
+				}
 			// Quality
 			if ((pszText = xml_GetThisAttrValue(pItem->pxaType)))
 				{
@@ -283,7 +292,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 					break;
 					}
 				}
-			rcDraw.top += Size.cy+1;
+			if (App.Config.uListDisplayMode == CONFIG_LDISPLAY_ALL) rcDraw.top += Size.cy+App.Config.lListSpacing;
 
 			//--- Runes ---
 

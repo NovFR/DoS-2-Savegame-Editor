@@ -108,6 +108,10 @@ void Config_Load(CONFIG *pConfig)
 				if (!ReadFile(hFile,&pEntry->window,sizeof(CONFIGWINDOW),&dwRead,NULL)) goto Done;
 				if (dwRead != sizeof(CONFIGWINDOW)) goto Done;
 				break;
+			case CONFIG_TYPE_CUSTCOLORS:
+				if (!ReadFile(hFile,&pEntry->colors,sizeof(COLORREF)*16,&dwRead,NULL)) goto Done;
+				if (dwRead != sizeof(COLORREF)*16) goto Done;
+				break;
 			}
 		}
 
@@ -183,6 +187,24 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_TVSEARCHHISTORY_V1:
 				pData = &pConfig->bTVSearchHistory;
 				break;
+			case CONFIG_IDENT_LOCALENAMELS_V1:
+				pData = &pConfig->pszLocaleNameLS;
+				break;
+			case CONFIG_IDENT_LISTSTATSCOLOR_V1:
+				pData = &pConfig->crListStats;
+				break;
+			case CONFIG_IDENT_LISTDISPLAYMODE_V1:
+				pData = &pConfig->uListDisplayMode;
+				break;
+			case CONFIG_IDENT_LISTTOPMARGIN_V1:
+				pData = &pConfig->lListTopMargin;
+				break;
+			case CONFIG_IDENT_LISTSPACING_V1:
+				pData = &pConfig->lListSpacing;
+				break;
+			case CONFIG_IDENT_CUSTCOLORS_V1:
+				pData = &pConfig->crCustColors;
+				break;
 			default:pData = NULL;
 			}
 
@@ -203,6 +225,9 @@ void Config_Load(CONFIG *pConfig)
 				break;
 			case CONFIG_TYPE_WINDOW:
 				CopyMemory(pData,&pEntry->window,sizeof(CONFIGWINDOW));
+				break;
+			case CONFIG_TYPE_CUSTCOLORS:
+				CopyMemory(pData,&pEntry->colors,sizeof(COLORREF)*16);
 				break;
 			}
 		}
@@ -313,6 +338,12 @@ BOOL Config_Save(BOOL bOnExit, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_TVSEARCHOPACITY_V1,&pConfig->bTVSearchOpacity)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_TVSEARCHALPHA_V1,&pConfig->uTVSearchAlpha)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_TVSEARCHHISTORY_V1,&pConfig->bTVSearchHistory)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_TEXT,CONFIG_IDENT_LOCALENAMELS_V1,&pConfig->pszLocaleNameLS)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTSTATSCOLOR_V1,&pConfig->crListStats)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTDISPLAYMODE_V1,&pConfig->uListDisplayMode)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTTOPMARGIN_V1,&pConfig->lListTopMargin)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTSPACING_V1,&pConfig->lListSpacing)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_CUSTCOLORS,CONFIG_IDENT_CUSTCOLORS_V1,&pConfig->crCustColors)) goto Done;
 	bCompleted = TRUE;
 
 Done:	dwLastError = GetLastError();
@@ -359,6 +390,9 @@ int Config_WriteEntry(HANDLE hFile, UINT uType, UINT uIdent, void *pData)
 			break;
 		case CONFIG_TYPE_WINDOW:
 			if (!WriteFile(hFile,pData,sizeof(CONFIGWINDOW),&dwWrite,NULL)) return(0);
+			break;
+		case CONFIG_TYPE_CUSTCOLORS:
+			if (!WriteFile(hFile,pData,sizeof(COLORREF)*16,&dwWrite,NULL)) return(0);
 			break;
 		}
 

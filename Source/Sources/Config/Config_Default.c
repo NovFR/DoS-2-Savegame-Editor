@@ -105,8 +105,11 @@ int Config_Defaults(CONFIG *pConfig)
 	//--- Affichage ---
 
 	pConfig->bItemsDisplayName = TRUE;
-	pConfig->bItemsResolve = TRUE;
-	pConfig->crStats = RGB(180,180,180);
+	pConfig->bItemsResolve = FALSE;
+	pConfig->crListStats = CONFIG_LDS_COLOR;
+	pConfig->uListDisplayMode = CONFIG_LDISPLAY_NAMEONLY;
+	pConfig->lListTopMargin = 4;
+	pConfig->lListSpacing = 2;
 
 	//--- Recherche (TreeView) ---
 

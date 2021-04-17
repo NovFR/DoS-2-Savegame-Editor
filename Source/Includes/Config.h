@@ -22,17 +22,26 @@
 #define CONFIG_REDRAW_WINDOW	0x00000001
 #define CONFIG_REDRAW_ITEMS	0x00000002
 
+#define CONFIG_LDS_COLOR	RGB(180,180,180)
+
 enum {
 	CONFIG_TYPE_TEXT = 0,
 	CONFIG_TYPE_UINT,
 	CONFIG_TYPE_BOOL,
 	CONFIG_TYPE_WINDOW,
+	CONFIG_TYPE_CUSTCOLORS,
 };
 
 enum {
 	CONFIG_CATEGORY_INIT = 1,
 	CONFIG_CATEGORY_HIDE,
 	CONFIG_CATEGORY_SHOW,
+};
+
+enum {
+	CONFIG_LDISPLAY_NAMEONLY = 0,
+	CONFIG_LDISPLAY_STATSONLY,
+	CONFIG_LDISPLAY_ALL,
 };
 
 enum {
@@ -59,6 +68,11 @@ enum {
 	CONFIG_IDENT_TVSEARCHALPHA_V1,
 	CONFIG_IDENT_TVSEARCHHISTORY_V1,
 	CONFIG_IDENT_LOCALENAMELS_V1,
+	CONFIG_IDENT_LISTSTATSCOLOR_V1,
+	CONFIG_IDENT_LISTDISPLAYMODE_V1,
+	CONFIG_IDENT_LISTTOPMARGIN_V1,
+	CONFIG_IDENT_LISTSPACING_V1,
+	CONFIG_IDENT_CUSTCOLORS_V1,
 };
 
 
@@ -100,7 +114,11 @@ typedef struct CONFIG {
 	//--- Affichage
 	BOOL			bItemsDisplayName;
 	BOOL			bItemsResolve;
-	COLORREF		crStats;
+	COLORREF		crListStats;
+	UINT			uListDisplayMode;
+	LONG			lListTopMargin;
+	LONG			lListSpacing;
+	COLORREF		crCustColors[16];
 	//--- Recherche (TreeView)
 	BOOL			bTVSearchCaseSensitive;
 	BOOL			bTVSearchOpacity;
@@ -134,6 +152,7 @@ typedef struct CONFIGENTRY {
 		UINT		uValue;
 		BOOL		bValue;
 		CONFIGWINDOW	window;
+		COLORREF	colors[16];
 	};
 } CONFIGENTRY;
 
@@ -184,5 +203,6 @@ int			Config_ModifyGetLanguage(HWND,UINT,UINT,CONFIGCONTEXT *);
 int			Config_ModifyGetPath(HWND,UINT,WCHAR **);
 void			Config_ModifyMovePath(WCHAR **,WCHAR **);
 void			Config_ModifySelectLocation(HWND,UINT,WCHAR *);
+void			Config_ModifyPickColor(HWND,UINT,COLORREF *,LPCCHOOKPROC);
 
 #endif

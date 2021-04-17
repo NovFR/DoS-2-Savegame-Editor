@@ -134,6 +134,81 @@ INT_PTR CALLBACK Dialog_Proc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM lPara
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Affichage d'un bouton de sélection de couleur «««««««««««««««««««»
+
+void Dialog_DrawColorButton(WCHAR *pszText, COLORREF crColor, DRAWITEMSTRUCT *pDraw)
+{
+	HBRUSH		hBrush;
+	UINT		uState;
+	RECT		rcDrawArea;
+	RECT		rcColorArea;
+	SIZE		Size;
+	COLORREF	crText;
+	int		iLeft;
+	int		X,Y;
+	int		iBkMode;
+
+	CopyRect(&rcDrawArea,&pDraw->rcItem);
+	hBrush = CreateSolidBrush(crColor);
+	iLeft = 0;
+
+	if (App.hThemeButton)
+		{
+		if (pDraw->itemState&ODS_DISABLED) uState = PBS_DISABLED;
+		else if (pDraw->itemState&ODS_SELECTED) uState = PBS_PRESSED;
+		else if (pDraw->itemState&ODS_HOTLIGHT) uState = PBS_HOT;
+		else if (pDraw->itemState&ODS_FOCUS) uState = PBS_DEFAULTED;
+		else uState = PBS_NORMAL;
+		DrawThemeBackground(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,NULL);
+		GetThemeBackgroundContentRect(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,&pDraw->rcItem,&rcDrawArea);
+		if (hBrush)
+			{
+			CopyRect(&rcColorArea,&rcDrawArea);
+			rcColorArea.left += 2;
+			rcColorArea.top += 2;
+			rcColorArea.right = rcColorArea.left+24;
+			rcColorArea.bottom -= 2;
+			DrawThemeEdge(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,0,&rcColorArea,BDR_SUNKENOUTER,BF_ADJUST|BF_RECT,&rcColorArea);
+			FillRect(pDraw->hDC,&rcColorArea,hBrush);
+			iLeft = 28;
+			}
+		rcDrawArea.left += iLeft;
+		DrawThemeText(App.hThemeButton,pDraw->hDC,BP_PUSHBUTTON,uState,pszText,-1,DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_END_ELLIPSIS,0,&rcDrawArea);
+		rcDrawArea.left -= iLeft;
+		}
+	else
+		{
+		uState = DFCS_ADJUSTRECT;
+		if (pDraw->itemState&ODS_DISABLED) uState |= DFCS_INACTIVE;
+		if (pDraw->itemState&ODS_SELECTED) uState |= DFCS_PUSHED;
+		DrawFrameControl(pDraw->hDC,&rcDrawArea,DFC_BUTTON,DFCS_BUTTONPUSH|uState);
+		if (hBrush)
+			{
+			CopyRect(&rcColorArea,&pDraw->rcItem);
+			rcColorArea.left += 2;
+			rcColorArea.top += 2;
+			rcColorArea.right = rcColorArea.left+24;
+			rcColorArea.bottom -= 2;
+			DrawEdge(pDraw->hDC,&rcColorArea,EDGE_SUNKEN,BF_ADJUST|BF_RECT);
+			FillRect(pDraw->hDC,&rcColorArea,hBrush);
+			iLeft = 28;
+			}
+		crText = SetTextColor(pDraw->hDC,GetSysColor(COLOR_BTNTEXT));
+		iBkMode = SetBkMode(pDraw->hDC,TRANSPARENT);
+		GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+		X = rcDrawArea.left+iLeft;
+		Y = rcDrawArea.top+(rcDrawArea.bottom-rcDrawArea.top-Size.cy)/2;
+		DrawState(pDraw->hDC,NULL,NULL,(LPARAM)pszText,0,X,Y,Size.cx,Size.cy,DST_TEXT|((uState&DFCS_INACTIVE)?DSS_DISABLED:0));
+		SetBkMode(pDraw->hDC,iBkMode);
+		SetTextColor(pDraw->hDC,crText);
+		}
+
+	if (pDraw->itemState&ODS_FOCUS) DrawFocusRect(pDraw->hDC,&rcDrawArea);
+	if (hBrush) DeleteObject(hBrush);
+	return;
+}
+
+
 // «»»» Affichage d'un bouton composé d'un texte ««««««««««««««««««««««««»
 
 void Dialog_DrawTextButton(WCHAR *pszText, DRAWITEMSTRUCT *pDraw)
