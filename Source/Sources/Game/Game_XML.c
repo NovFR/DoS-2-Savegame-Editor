@@ -20,6 +20,7 @@
 #include "Requests.h"
 #include "LastFiles.h"
 #include "Utils.h"
+#include "Debug.h"
 
 extern APPLICATION		App;
 
@@ -81,10 +82,23 @@ int xml_ReadFile(XML_PARSER *pParser)
 
 	if (pParser->dwFlags&XML_FLAG_FROMMEMORY)
 		{
-		pParser->dwFileSize = WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,NULL,0,NULL,NULL);
-		pParser->pFileBuffer = HeapAlloc(App.hHeap,0,pParser->dwFileSize);
-		if (!pParser->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
-		WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,(char *)pParser->pFileBuffer,pParser->dwFileSize,NULL,NULL);
+		if (!pParser->pszFilePath)
+			{
+			SetLastError(ERROR_INVALID_DATA);
+			goto Done;
+			}
+		if (pParser->dwFlags&XML_FLAG_UTF8MEMORY)
+			{
+			pParser->dwFileSize = strlen((char *)pParser->pszFilePath);
+			pParser->pFileBuffer = (BYTE *)pParser->pszFilePath;
+			}
+		else
+			{
+			pParser->dwFileSize = WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,NULL,0,NULL,NULL);
+			pParser->pFileBuffer = HeapAlloc(App.hHeap,0,pParser->dwFileSize);
+			if (!pParser->pFileBuffer) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
+			WideCharToMultiByte(CP_UTF8,0,pParser->pszFilePath,-1,(char *)pParser->pFileBuffer,pParser->dwFileSize,NULL,NULL);
+			}
 		}
 	else
 		{
@@ -1304,13 +1318,33 @@ void xml_SendErrorMsg(HWND hWnd, UINT uLastErrorType, UINT uLastErrorMsg, DWORD 
 	vl = (DWORD_PTR)Locale_GetText(uLastErrorMsg);
 
 	if (uLastErrorType == XML_ERROR_FROM_SYSTEM)
+		{
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,NULL,GetLastError(),LOCALE_USER_DEFAULT,(WCHAR *)&pszMsg,1,NULL);
+		if (pszMsg)
+			{
+			int iLen = wcslen(pszMsg);
+			while (--iLen > 0)
+				{
+				if (pszMsg[iLen] == 0x0A || pszMsg[iLen] == 0x0D)
+					{
+					pszMsg[iLen] = 0;
+					continue;
+					}
+				break;
+				}
+			}
+		}
 	else
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,L"%1",0,0,(WCHAR *)&pszMsg,1,(va_list *)&vl);
 
 	if (pszMsg)
 		{
-		if (dwFlags&XML_FLAG_DISPLAYMSG)
+		if (dwFlags&XML_FLAG_DEBUGMSG)
+			{
+			Debug_Log(DEBUG_LOG_ERROR,pszMsg);
+			LocalFree(pszMsg);
+			}
+		else if (dwFlags&XML_FLAG_DISPLAYMSG)
 			{
 			MessageBox(hWnd,pszMsg,NULL,MB_ICONERROR|MB_OK);
 			LocalFree(pszMsg);

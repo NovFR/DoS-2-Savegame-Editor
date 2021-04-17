@@ -291,6 +291,9 @@ void Game_InventoryMenu(HWND hwndCtrl, UINT uMenuId)
 			EnableMenuItem(hMenu,IDM_INVSYNCHRO,MF_BYCOMMAND|MF_GRAYED);
 			EnableMenuItem(hMenu,IDM_INVNODES,MF_BYCOMMAND|MF_GRAYED);
 			EnableMenuItem(hMenu,IDM_INVBACKPACKOPEN,MF_BYCOMMAND|MF_GRAYED);
+			EnableMenuItem(hMenu,IDM_COPYDISPLAYNAME,MF_BYCOMMAND|MF_GRAYED);
+			EnableMenuItem(hMenu,IDM_COPYSTATSNAME,MF_BYCOMMAND|MF_GRAYED);
+			EnableMenuItem(hMenu,IDM_COPYTEMPLATENAME,MF_BYCOMMAND|MF_GRAYED);
 			}
 
 		EnableMenuItem(hMenu,IDM_INVBACKPACKCLOSE,MF_BYCOMMAND|(App.Game.pdcCurrent->uInventoryDepth?0:MF_GRAYED));
@@ -422,6 +425,12 @@ void Game_InventoryMenu(HWND hwndCtrl, UINT uMenuId)
 		case IDM_INVSYNCHROALL:
 			Game_SynchronizeAll();
 			break;
+		case IDM_COPYDISPLAYNAME:
+		case IDM_COPYSTATSNAME:
+		case IDM_COPYTEMPLATENAME:
+			if (!pItem) break;
+			Game_ItemsCopyToClipboard(pItem,uMenuId);
+			break;
 		}
 
 	return;
@@ -504,6 +513,10 @@ int Game_BuildPlayers(NODE *pRoot, BOOL bMain)
 	if (!pxnList) return(0);
 	if (!pxnList->children.next) return(0);
 	if (!pRoot) pRoot = &App.Game.nodeXMLCharacters;
+
+	if (!App.Game.pTemplates) sqlite3_open_v2(szItemsTemplatesDataBasePath,&App.Game.pTemplates,SQLITE_OPEN_READONLY,NULL);
+	if (!App.Game.pStats) sqlite3_open_v2(szItemsStatsDataBasePath,&App.Game.pStats,SQLITE_OPEN_READONLY,NULL);
+	if (!App.Game.pLocalization) sqlite3_open_v2(szItemsLocalizationDataBasePath,&App.Game.pLocalization,SQLITE_OPEN_READONLY,NULL);
 
 	for (; pxnList != NULL; pxnList = (XML_NODE *)pxnList->node.next)
 		{
@@ -653,6 +666,21 @@ void Game_ReleasePlayers(NODE *pRoot, BOOL bMain)
 			FreeLibrary(App.Game.hRunesIconsList);
 			App.Game.hRunesIconsList = NULL;
 			}
+		if (App.Game.pTemplates)
+			{
+			sqlite3_close(App.Game.pTemplates);
+			App.Game.pTemplates = NULL;
+			}
+		if (App.Game.pStats)
+			{
+			sqlite3_close(App.Game.pStats);
+			App.Game.pStats = NULL;
+			}
+		if (App.Game.pLocalization)
+			{
+			sqlite3_close(App.Game.pLocalization);
+			App.Game.pLocalization = NULL;
+			}
 		}
 
 	List_ReleaseMemory(pRoot);
@@ -769,6 +797,8 @@ DOS2INVENTORY* Game_BuildInventory(DOS2ITEM *pParentItem, XML_ATTR *pxaInventory
 			pItem->pxaType = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"ItemType");
 			pItem->pxaLevel = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"Level");
 			pItem->pxaHasCustomBase = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"CustomBaseStats");
+			pItem->pxaLevelGroupIndex = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"LevelGroupIndex");
+			pItem->pxaNameIndex = xml_GetXMLValueAttr(pxnTemp,szXMLattribute,szXMLid,L"NameIndex");
 			// Runes
 			pxnTemp = xml_GetNode(pxnTemp,L"children",NULL,NULL);
 			if (pxnTemp)
@@ -825,7 +855,9 @@ void Game_ReleaseInventory(DOS2INVENTORY *pdiInventory)
 	DOS2ITEM*	pItem;
 
 	for (pItem = (DOS2ITEM *)pdiInventory->nodeItems.next; pItem != NULL; pItem = (DOS2ITEM *)pItem->node.next)
+		{
 		Game_ItemDisplayNameRelease(pItem);
+		}
 
 	List_ReleaseMemory(&pdiInventory->nodeItems);
 	List_RemEntry((NODE *)pdiInventory);
@@ -1014,12 +1046,14 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 			}
 		}
 
-	// Finally, sort by name
-	Game_ItemDisplayName(pItem1);
-	Game_ItemDisplayName(pItem2);
-	pszItem1Name = pItem1->pszDisplayName?pItem1->pszDisplayName:pItem1->pxaStats->value;
-	pszItem2Name = pItem2->pszDisplayName?pItem2->pszDisplayName:pItem2->pxaStats->value;
-	iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszItem1Name,-1,pszItem2Name,-1,NULL,NULL,0);
+	// TODO: Use Inventory View
+
+	// Finally, sort by stats
+	pszItem1Name = xml_GetThisAttrValue(pItem1->pxaStats);
+	pszItem2Name = xml_GetThisAttrValue(pItem2->pxaStats);
+	if (!pszItem1Name) pszItem1Name = szNULLItem;
+	if (!pszItem2Name) pszItem2Name = szNULLItem;
+	iResult = CompareStringEx(L"en-US",LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszItem1Name,-1,pszItem2Name,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
 
@@ -1048,6 +1082,15 @@ void Game_SaveTopIndex(DOS2CHARACTER *pdc, HWND hwndInventory)
 // ¤¤¤									  ¤¤¤ //
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
 
+// «»»» Gestion du menu des définitions «««««««««««««««««««««««««««««««««»
+
+void Game_SetDefsMenu(HMENU hMenu)
+{
+	if (!PathFileExists(szDefsPath)) RemoveMenu(hMenu,MENU_DEFINITIONS,MF_BYCOMMAND);
+	return;
+}
+
+
 // «»»» Verrouille certaines parties du programme «««««««««««««««««««««««»
 
 void Game_Lock(DWORD uFlags)
@@ -1068,6 +1111,7 @@ void Game_Lock(DWORD uFlags)
 		EnableMenuItem(App.hMenu,IDM_CONFIGSAVE,uEnable);
 		EnableMenuItem(App.hMenu,IDM_CONFIGSAVEONEXIT,uEnable);
 		EnableMenuItem(App.hMenu,IDM_ABOUT,uEnable);
+		EnableMenuItem(App.hMenu,MENU_DEFINITIONS,uEnable);
 		}
 	if (uFlags & GAME_LOCK_FILE)
 		{
@@ -1197,6 +1241,15 @@ void Game_ItemDisplayName(DOS2ITEM *pItem)
 					}
 				}
 			}
+		}
+
+	//--- LocaleName ---
+	pszText = Game_ItemsGetDisplayName(pItem);
+	if (pszText)
+		{
+		if (pItem->pszDisplayName) HeapFree(App.hHeap,0,pItem->pszDisplayName);
+		pItem->pszDisplayName = pszText;
+		return;
 		}
 
 	//--- StatsName ---

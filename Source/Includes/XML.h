@@ -18,12 +18,18 @@
 #define XML_TABS_BUFFER_LEN		128
 #define XML_WRITE_BUFFER_LEN		65535
 
-#define XML_FLAG_HASHEADER		0x00000001
-#define XML_FLAG_HASCONTENT		0x00000002
-#define XML_FLAG_FROMMEMORY		0x00000004
-#define XML_FLAG_DISPLAYMSG		0x00000008
-#define XML_FLAG_NOSTATUSMSG		0x40000000
-#define XML_FLAG_NOPROGRESS		0x80000000
+#define XML_FLAG_HASHEADER		0x00000001		// File content starts with <?xml ...>
+#define XML_FLAG_HASCONTENT		0x00000002		// Stores text inside tags (<tag>text</tag>)
+#define XML_FLAG_FROMMEMORY		0x00000100		// pszFilePath contains the Source Buffer (The buffer is copied and encoded in UTF-8)
+#define XML_FLAG_UTF8MEMORY		0x00000200		// Source Buffer is already UTF-8 encoded (1) (The buffer must be allocated with HeapAlloc(), it is released by the function)
+#define XML_FLAG_DISPLAYMSG		0x10000000		// Use MessageBox() instead of SendMessage() (2) (Mutually exclusive with XML_FLAG_DEBUGMSG)
+#define XML_FLAG_DEBUGMSG		0x20000000		// Use Debug_Log() instead of SendMessage() (2) (Mutually exclusive with XML_FLAG_DISPLAYMSG)
+#define XML_FLAG_NOSTATUSMSG		0x40000000		// Don't display status msg (3)
+#define XML_FLAG_NOPROGRESS		0x80000000		// Don't update progressbar (2)
+
+// (1) Has no effect if XML_FLAG_FROMMEMORY is not set.
+// (2) SendMessage() and ProgressBar can't be used if called from the main thread.
+// (3) Must be set if XML_FLAG_FROMMEMORY is set.
 
 #include "Lists.h"
 

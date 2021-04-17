@@ -97,6 +97,7 @@ enum {
 	APP_SHELLICON_WARNING,
 	APP_SHELLICON_QUESTION,
 	APP_SHELLICON_FIND,
+	APP_SHELLICON_STACK,
 	APP_MAX_SHELLICONS
 };
 
@@ -153,6 +154,9 @@ typedef struct APPLICATION {
 	DWORD				dwProgressionTime;
 	//--- Données du jeu
 	struct {
+		sqlite3*		pTemplates;
+		sqlite3*		pStats;
+		sqlite3*		pLocalization;
 		HINSTANCE		hIconsList;
 		HINSTANCE		hRunesIconsList;
 		NODE			nodeDataItems;
@@ -193,6 +197,7 @@ typedef struct APPLICATION {
 		} Save;
 	} Game;
 	//--- Textes traduits de l'application
+	sqlite3*			pLanguage;
 	LOCALE_TEXT*			pLocaleTexts;
 	WCHAR*				pszLocaleName;
 } APPLICATION;

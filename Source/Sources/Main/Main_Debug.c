@@ -247,3 +247,38 @@ void Debug_Log(UINT uLogType, WCHAR *pszFmt, ...)
 	va_end(vl);
 	return;
 }
+
+//--- Erreur système ---
+
+void Debug_LogSystemError()
+{
+	WCHAR*	pszErrorMsg;
+
+	if (GetLastError() == ERROR_SUCCESS)
+		{
+		Debug_Log(DEBUG_LOG_ERROR,szDebugUnknownError);
+		return;
+		}
+
+	pszErrorMsg = NULL;
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,NULL,GetLastError(),LOCALE_USER_DEFAULT,(WCHAR *)&pszErrorMsg,1,NULL);
+	if (pszErrorMsg)
+		{
+		int iLen = wcslen(pszErrorMsg);
+		while (--iLen > 0)
+			{
+			if (pszErrorMsg[iLen] == 0x0A || pszErrorMsg[iLen] == 0x0D)
+				{
+				pszErrorMsg[iLen] = 0;
+				continue;
+				}
+			break;
+			}
+		Debug_Log(DEBUG_LOG_ERROR,pszErrorMsg);
+		LocalFree(pszErrorMsg);
+		}
+	else
+		Debug_Log(DEBUG_LOG_ERROR,szDebugUnknownError);
+
+	return;
+}

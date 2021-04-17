@@ -16,6 +16,7 @@
 #include "Texts.h"
 #include "Menus.h"
 #include "Game.h"
+#include "GameLocale.h"
 #include "LastFiles.h"
 #include "Requests.h"
 #include "Debug.h"
@@ -48,6 +49,7 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 
 	if (!Config_Defaults(&App.Config)) goto Done;
 	if (!Locale_Load(NULL,szLangPath,App.Config.pszLocaleName,LOCALE_TYPE_APPLICATION,(void **)&App.pLocaleTexts,&App.pszLocaleName)) goto Done;
+	if (!Locale_Load(NULL,szLSLPath,App.Config.pszLocaleNameLS,LOCALE_TYPE_GAME,(void **)&App.pLanguage,NULL)) goto Done;
 	if (!Game_LoadDataFile(NULL,szItemsDataPath,DATA_TYPE_ITEMS,&App.Game.nodeDataItems)) goto Done;
 	if (!Initialise_Accelerators()) goto Done;
 	if (!Initialise_Icons()) goto Done;
@@ -99,6 +101,7 @@ int APIENTRY WinMain(HINSTANCE hWinCInstance, HINSTANCE hWinPInstance, LPSTR Cmd
 Done:	if (App.hShortcuts) DestroyAcceleratorTable(App.hShortcuts);
 	Reset_Icons();
 	Game_UnloadDataFile(DATA_TYPE_ITEMS,&App.Game.nodeDataItems);
+	Locale_Unload(LOCALE_TYPE_GAME,(void **)&App.pLanguage,&App.Config.pszLocaleNameLS);
 	Locale_Unload(LOCALE_TYPE_APPLICATION,(void **)&App.pLocaleTexts,&App.pszLocaleName);
 	LastFiles_ReleaseAll();
 	Config_Release(&App.Config);

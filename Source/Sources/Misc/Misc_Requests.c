@@ -125,3 +125,49 @@ int Request_PrintError(HWND hWnd, WCHAR *pszWindowText, WCHAR *pszWindowTitle, U
 	if (pszErrorMsg) LocalFree(pszErrorMsg);
 	return(iResult);
 }
+
+
+// «»»» Affichage d'une requête ««««««««««««««««««««««««««««««««««»
+
+int Request_TaskDialog(HWND hWnd, WCHAR *pszWindowText, WCHAR *pszWindowTitle, UINT uFlags)
+{
+	TASKDIALOGCONFIG	dialog;
+	int			iResult;
+
+	ZeroMemory(&dialog,sizeof(TASKDIALOGCONFIG));
+	dialog.cbSize = sizeof(TASKDIALOGCONFIG);
+	dialog.hwndParent = hWnd;
+	dialog.dwFlags = TDF_ALLOW_DIALOG_CANCELLATION|TDF_POSITION_RELATIVE_TO_WINDOW|TDF_SIZE_TO_CONTENT;
+	dialog.pszWindowTitle = pszWindowTitle?pszWindowTitle:szTitle;
+	dialog.pszContent = pszWindowText;
+
+	switch(uFlags&0x0000000F)
+		{
+		case MB_YESNOCANCEL:
+			dialog.dwCommonButtons = TDCBF_YES_BUTTON|TDCBF_NO_BUTTON|TDCBF_CANCEL_BUTTON;
+			break;
+		case MB_YESNO:
+			dialog.dwCommonButtons = TDCBF_YES_BUTTON|TDCBF_NO_BUTTON;
+			break;
+		case MB_OKCANCEL:
+			dialog.dwCommonButtons = TDCBF_OK_BUTTON|TDCBF_CANCEL_BUTTON;
+			break;
+		default:dialog.dwCommonButtons = TDCBF_OK_BUTTON;
+		}
+
+	switch(uFlags&0x000000F0)
+		{
+		case MB_ICONINFORMATION:
+		case MB_ICONQUESTION:
+			dialog.pszMainIcon = TD_INFORMATION_ICON;
+			break;
+		case MB_ICONEXCLAMATION:
+			dialog.pszMainIcon = TD_WARNING_ICON;
+			break;
+		default:dialog.pszMainIcon = TD_ERROR_ICON;
+		}
+
+	iResult = 0;
+	TaskDialogIndirect(&dialog,&iResult,NULL,NULL);
+	return(iResult);
+}

@@ -96,7 +96,7 @@ void Font_Destroy(WCHAR *pszFontFile, HFONT hFont)
 	if (hFont)
 		{
 		DeleteObject(hFont);
-		RemoveFontResourceEx(pszFontFile,FR_PRIVATE,NULL);
+		if (pszFontFile) RemoveFontResourceEx(pszFontFile,FR_PRIVATE,NULL);
 		}
 	return;
 }

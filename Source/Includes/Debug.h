@@ -56,5 +56,6 @@ typedef struct DEBUGTYPE {
 LONG WINAPI		Debug_ExceptionHandler(EXCEPTION_POINTERS *);
 int			Debug_Printf(WCHAR *,WCHAR *,DWORD_PTR []);
 void			Debug_Log(UINT,WCHAR *, ...);
+void			Debug_LogSystemError(void);
 
 #endif

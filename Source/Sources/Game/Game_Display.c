@@ -204,54 +204,88 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 		else
 			{
+			SIZE		Size;
+			RECT		rcText;
 			WCHAR*		pszLevel = NULL;
 			DWORD_PTR	dptrLevel = 0;
 
-			//--- Icon, Name and Level ---
+			//--- Icon ---
 
-			//--- Get name or set unknown
-			Game_ItemDisplayName(pItem);
-			pszText = pItem->pszDisplayName;
-			if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
-
-			//--- Draw icon
 			CopyRect(&rcDraw,&rcClient);
 			Game_PaintIcon(pDraw->hDC,xml_GetThisAttrValue(pItem->pxaStats),pItem->bIsBackPack?APP_ICON_BACKPACK:APP_ICON_EMPTY,&rcDraw,GAME_ICON_SIZE,TRUE,TRUE);
 
-			//--- Draw name
+			//--- Display area & Level text ---
+
 			CopyRect(&rcDraw,&rcClient);
 			if (pItem->pxaLevel)
 				{
 				if (pItem->pxaLevel->value)
 					{
 					dptrLevel = wcstol(pItem->pxaLevel->value,NULL,10);
-					if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,Locale_GetText(TEXT_OBJ_LEVEL),0,0,(WCHAR *)&pszLevel,1,(va_list *)&dptrLevel))
-						{
-						SIZE	Size;
-
-						GetTextExtentPoint32(pDraw->hDC,pszLevel,wcslen(pszLevel),&Size);
-						rcDraw.right -= Size.cx+8;
-						}
+					FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,Locale_GetText(TEXT_OBJ_LEVEL),0,0,(WCHAR *)&pszLevel,1,(va_list *)&dptrLevel);
 					}
 				}
 			rcDraw.left += GAME_ICON_SIZE+8;
-			rcDraw.bottom = rcDraw.top+App.Font.uFontHeight+8;
-			DrawText(pDraw->hDC,pszText,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
+			rcDraw.right -= 8;
 
-			//--- Display level & free level text buffer
+			//--- DisplayName, Level ---
+
+			// Area
+			CopyRect(&rcText,&rcDraw);
 			if (pszLevel)
 				{
-				rcDraw.right = rcClient.right-8;
-				DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER);
+				GetTextExtentPoint32(pDraw->hDC,pszLevel,wcslen(pszLevel),&Size);
+				rcText.right -= Size.cx+8;
+				}
+			// DisplayName
+			Game_ItemDisplayName(pItem);
+			pszText = pItem->pszDisplayName;
+			if (!pszText) pszText = Locale_GetText(TEXT_UNKNOWN);
+			GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+			DrawText(pDraw->hDC,pszText,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+			// Level
+			if (pszLevel)
+				{
+				DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				LocalFree(pszLevel);
 				}
+			rcDraw.top += Size.cy+1;
+
+			//--- Stats and Quality ---
+
+			// Area
+			CopyRect(&rcText,&rcDraw);
+			pszText = xml_GetThisAttrValue(pItem->pxaType);
+			if (pszText)
+				{
+				GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+				rcText.right -= Size.cx+8;
+				}
+			// Stats
+			pszText = xml_GetThisAttrValue(pItem->pxaStats);
+			if (!pszText) pszText = szNULLItem;
+			SetTextColor(pDraw->hDC,App.Config.crStats);
+			GetTextExtentPoint32(pDraw->hDC,pszText,wcslen(pszText),&Size);
+			DrawText(pDraw->hDC,pszText,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+			SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
+			// Quality
+			if ((pszText = xml_GetThisAttrValue(pItem->pxaType)))
+				{
+				COLORREF	crText;
+				int		i;
+
+				for (i = 0; Qualities[i].xmlName != NULL; i++)
+					{
+					if (wcscmp(pItem->pxaType->value,Qualities[i].xmlName)) continue;
+					crText = SetTextColor(pDraw->hDC,Qualities[i].crColor);
+					DrawText(pDraw->hDC,Locale_GetText(Qualities[i].uNameId),-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
+					SetTextColor(pDraw->hDC,crText);
+					break;
+					}
+				}
+			rcDraw.top += Size.cy+1;
 
 			//--- Runes ---
-
-			CopyRect(&rcDraw,&rcClient);
-			rcDraw.left += GAME_ICON_SIZE+8;
-			rcDraw.top += App.Font.uFontHeight+8;
-			rcDraw.right -= 8;
 
 			if (pItem->pxaRunes[0] && pItem->pxaRunes[1] && pItem->pxaRunes[2])
 				{
@@ -269,10 +303,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			if (Game_IsItemEquipped(pItem))
 				{
-				WCHAR*	Text;
-				SIZE	Size;
-
-				Text = Locale_GetText(TEXT_OBJ_EQUIPPED);
+				WCHAR *Text = Locale_GetText(TEXT_OBJ_EQUIPPED);
 				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
 				rcDraw.left += Size.cx+8;
@@ -282,10 +313,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			if (xml_IsTrue(pItem->pxaIsGenerated))
 				{
-				WCHAR*	Text;
-				SIZE	Size;
-
-				Text = Locale_GetText(TEXT_OBJ_GENERATED);
+				WCHAR *Text = Locale_GetText(TEXT_OBJ_GENERATED);
 				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
 				rcDraw.left += Size.cx+8;
@@ -295,20 +323,17 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			if (xml_IsTrue(pItem->pxaHasCustomBase))
 				{
-				WCHAR*		Text;
-				SIZE		Size;
-
-				Text = Locale_GetText(TEXT_OBJ_CUSTOM);
+				WCHAR *Text = Locale_GetText(TEXT_OBJ_CUSTOM);
 				DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
 				rcDraw.left += Size.cx+8;
 				}
 
 			//--- Stolen ? ---
+
 			if (!Game_ItemBelongToCharacter(pItem) && !Game_ItemBelongToParty(pItem))
 				{
 				WCHAR*		Text;
-				SIZE		Size;
 				COLORREF	crText;
 
 				Text = Locale_GetText(TEXT_OBJ_STOLEN);
@@ -325,10 +350,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				{
 				if (pItem->pxaAmount->value)
 					{
-					WCHAR*		Text;
-					SIZE		Size;
-
-					Text = Locale_GetText(TEXT_OBJ_AMOUNT);
+					WCHAR *Text = Locale_GetText(TEXT_OBJ_AMOUNT);
 					DrawText(pDraw->hDC,Text,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 					GetTextExtentPoint32(pDraw->hDC,Text,wcslen(Text),&Size);
 					rcDraw.left += Size.cx+2;
@@ -344,7 +366,6 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				{
 				WCHAR*		pszBuffer;
 				WCHAR*		pszText;
-				SIZE		Size;
 
 				pszBuffer = NULL;
 
@@ -367,23 +388,6 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				if (pszBuffer) LocalFree(pszBuffer);
 
 				rcDraw.left += Size.cx+8;
-				}
-
-			//--- Quality ---
-
-			if (pItem->pxaType)
-				{
-				if (pItem->pxaType->value)
-					{
-					int		i;
-
-					for (i = 0; Qualities[i].xmlName != NULL; i++)
-						{
-						if (wcscmp(pItem->pxaType->value,Qualities[i].xmlName)) continue;
-						SetTextColor(pDraw->hDC,Qualities[i].crColor);
-						DrawText(pDraw->hDC,Locale_GetText(Qualities[i].uNameId),-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
-						}
-					}
 				}
 			}
 		}

@@ -39,7 +39,7 @@ void Config_SelectLanguage()
 	NODE	Root;
 	INT_PTR	iResult;
 
-	if (!Locale_Enum(App.hWnd,szLangPath,&Root)) return;
+	if (!Locale_Enum(App.hWnd,szLangPath,&Root,LOCALE_TYPE_APPLICATION)) return;
 
 	iResult = DialogBoxParam(App.hInstance,MAKEINTRESOURCE(1100),App.hWnd,Config_SelectLanguageProc,(LPARAM)&Root);
 	if (!iResult || iResult == -1)
@@ -142,24 +142,36 @@ INT_PTR CALLBACK Config_SelectLanguageProc(HWND hDlg, UINT uMsgId, WPARAM wParam
 BOOL Config_SelectLanguageInit(HWND hDlg, UINT uCtlId, NODE *pRoot, BOOL bSetOK)
 {
 	LOCALE_ENUM*	pEnum;
+	WCHAR*		pszLang;
 	WCHAR*		pszText;
+	WCHAR*		pszIcon;
 	LRESULT		lResult;
 	DWORD_PTR	vl[1];
 
 	for (pEnum = (LOCALE_ENUM *)pRoot->next; pEnum != NULL; pEnum = (LOCALE_ENUM *)pEnum->node.next)
 		{
+		switch (pRoot->type)
+			{
+			case LOCALE_TYPE_GAME:
+				pszIcon = szLSLIcoPath;
+				pszLang = App.Config.pszLocaleNameLS;
+				break;
+			default:pszIcon = szLangIcoPath;
+				pszLang = App.Config.pszLocaleName;
+				break;
+			}
 		//--- Add string
 		lResult = SendDlgItemMessage(hDlg,uCtlId,LB_ADDSTRING,0,(LPARAM)pEnum);
 		if (lResult == LB_ERR || lResult == LB_ERRSPACE) return(FALSE);
 		//--- Load icon
 		vl[0] = (DWORD_PTR)pEnum->szLang;
-		if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,szLangIcoPath,0,0,(WCHAR *)&pszText,1,(va_list *)&vl))
+		if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszIcon,0,0,(WCHAR *)&pszText,1,(va_list *)&vl))
 			{
 			pEnum->hIcon = LoadImage(NULL,pszText,IMAGE_ICON,16,16,LR_LOADFROMFILE|LR_DEFAULTCOLOR);
 			LocalFree(pszText);
 			}
 		//--- Select current language
-		if (!wcscmp(pEnum->szLang,App.Config.pszLocaleName))
+		if (!wcscmp(pEnum->szLang,pszLang))
 			{
 			SendDlgItemMessage(hDlg,uCtlId,LB_SETCURSEL,(WPARAM)lResult,0);
 			if (bSetOK) EnableWindow(GetDlgItem(hDlg,IDOK),TRUE);
@@ -269,6 +281,7 @@ int Config_SetLanguage(HWND hWnd, WCHAR *pszLang)
 				Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_FILE);
 				if (App.Game.pdcCurrent) Game_Lock(GAME_LOCK_ENABLED|GAME_LOCK_TREE);
 				}
+			Game_SetDefsMenu(App.hMenu);
 			Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
 
 			//--- Update the accelerators ---

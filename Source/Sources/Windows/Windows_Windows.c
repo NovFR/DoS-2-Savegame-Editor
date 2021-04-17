@@ -22,6 +22,7 @@
 #include "Requests.h"
 #include "Divine.h"
 #include "GameEdit.h"
+#include "GameLocale.h"
 #include "Utils.h"
 #include "Dialogs.h"
 #include "Taskbar.h"
@@ -98,7 +99,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			//Game_Stats(hWnd);
 			//Game_Skills(hWnd);
 			//Game_SynchronizeAll();
-			Tree_Open(NULL);
+			//Tree_Open(NULL);
 			break;
 		#endif
 
@@ -269,6 +270,7 @@ LRESULT Window_Create(HWND hWnd)
 	if (!Status_CreateWindow()) goto Error_0;
 	if (!Game_CreateLayout()) goto Error_0;
 
+	Game_SetDefsMenu(App.hMenu);
 	Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
 
 	LastFiles_LoadList();
@@ -490,6 +492,21 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case IDM_INVNODES:
 					Game_InventoryMenu(NULL,IDM_INVNODES);
+					break;
+				case IDM_DB_REBUILDICONS:
+					Game_IconsRebuild(hWnd);
+					break;
+				case IDM_DB_REBUILDITEMSROOTS:
+					Game_ItemsRootRebuild(hWnd);
+					break;
+				case IDM_DB_REBUILDITEMSSTATS:
+					Game_ItemsStatsRebuild(hWnd);
+					break;
+				case IDM_DB_REBUILDITEMSLOCALIZATION:
+					Game_ItemsLocalizationRebuild(hWnd);
+					break;
+				case IDM_DB_REBUILDLANGUAGES:
+					Game_LocaleRebuild(hWnd);
 					break;
 				case IDM_CONFIGMODIFY:
 					Config_Modify();

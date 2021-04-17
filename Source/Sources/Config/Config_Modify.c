@@ -14,6 +14,7 @@
 #include "_Global.h"
 #include "Application.h"
 #include "Locale.h"
+#include "GameLocale.h"
 #include "Texts.h"
 #include "Menus.h"
 #include "Requests.h"
@@ -24,13 +25,14 @@
 extern APPLICATION		App;
 
 static UINT			cfgCatPaths[] = { 100, 101, 102, 103, 104, 105, 106, 111, 112, 113, 114, 115, 116, 199, 0 };
-static UINT			cfgCatLangs[] = { 200, 201, 0 };
-static UINT			cfgCatEdits[] = { 300, 301, 302, 303, 304, 310, 311, 312, 320, 321, 322, 330, 331, 332, 0 };
+static UINT			cfgCatLangs[] = { 200, 201, 202, 211, 212, 0 };
+static UINT			cfgCatEdits[] = { 300, 301, 302, 310, 311, 312, 320, 321, 322, 330, 331, 332, 0 };
 static UINT			cfgCatWinds[] = { 400, 401, 402, 410, 411, 412, 0 };
 static UINT			cfgCatTView[] = { 500, 501, 502, 503, 0 };
+static UINT			cfgCatDispl[] = { 600, 601, 602, 0 };
 
-static UINT*			ConfigCategories[] = { cfgCatPaths, cfgCatLangs, cfgCatEdits, cfgCatWinds, cfgCatTView, NULL };
-static UINT			ConfigCategoriesNames[] = { TEXT_CONFIG_PATHS, TEXT_CONFIG_LANG, TEXT_CONFIG_EDITION, TEXT_CONFIG_WINDOWS, TEXT_TITLE_TREE, 0 };
+static UINT*			ConfigCategories[] = { cfgCatPaths, cfgCatLangs, cfgCatEdits, cfgCatWinds, cfgCatTView, cfgCatDispl, NULL };
+static UINT			ConfigCategoriesNames[] = { TEXT_CONFIG_PATHS, TEXT_CONFIG_LANG, TEXT_CONFIG_EDITION, TEXT_CONFIG_WINDOWS, TEXT_TITLE_TREE, TEXT_CONFIG_DISPLAY, 0 };
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -45,6 +47,7 @@ void Config_Modify()
 {
 	CONFIGCONTEXT*	pContext;
 	INT_PTR		iResult;
+	DWORD		dwRedraw;
 
 	//--- Initialisations ---
 
@@ -58,7 +61,7 @@ void Config_Modify()
 
 	pContext->bIsLimited = (App.Game.Save.pszSaveName)?TRUE:FALSE;
 
-	pContext->pConfig = HeapAlloc(App.hHeap,0,sizeof(CONFIG));
+	pContext->pConfig = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(CONFIG));
 	if (!pContext->pConfig)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
@@ -66,7 +69,9 @@ void Config_Modify()
 		goto Done;
 		}
 
-	if (!Locale_Enum(App.hWnd,szLangPath,&pContext->nRoot))
+	if (!Locale_Enum(App.hWnd,szLangPath,&pContext->nRoot,LOCALE_TYPE_APPLICATION))
+		goto Done;
+	if (!Locale_Enum(App.hWnd,szLSLPath,&pContext->nRootLS,LOCALE_TYPE_GAME))
 		goto Done;
 
 	//--- Copie la configuration ---
@@ -74,10 +79,10 @@ void Config_Modify()
 	CopyMemory(pContext->pConfig,&App.Config,sizeof(CONFIG));
 
 	pContext->pConfig->pszLocaleName = Misc_StrCpyAlloc(App.Config.pszLocaleName);
+	pContext->pConfig->pszLocaleNameLS = Misc_StrCpyAlloc(App.Config.pszLocaleNameLS);
 	pContext->pConfig->pszProfile = Misc_StrCpyAlloc(App.Config.pszProfile); // Unused but needed when saving config
 	pContext->pConfig->pszLarianPath = Misc_StrCpyAlloc(App.Config.pszLarianPath);
 	pContext->pConfig->pszTempPath = Misc_StrCpyAlloc(App.Config.pszTempPath);
-	pContext->pConfig->bItemsResolve = FALSE; // Not implemented
 
 	// NOTE: No error check here because NULL ptr is a possibility.
 
@@ -93,6 +98,7 @@ void Config_Modify()
 
 	//--- Application des changements ---
 
+	dwRedraw = 0;
 	App.Config.bSaveOnExit = pContext->pConfig->bSaveOnExit;
 	Menu_SetFlag(App.hMenu,IDM_CONFIGSAVEONEXIT,App.Config.bSaveOnExit);
 
@@ -100,7 +106,7 @@ void Config_Modify()
 	Config_ModifyMovePath(&App.Config.pszLarianPath,&pContext->pConfig->pszLarianPath);
 	Config_ModifyMovePath(&App.Config.pszTempPath,&pContext->pConfig->pszTempPath);
 
-	// Display
+	// Edition
 	App.Config.bShowHiddenTags = pContext->pConfig->bShowHiddenTags;
 	App.Config.bRunesGroups = pContext->pConfig->bRunesGroups;
 	App.Config.uRunesView = pContext->pConfig->uRunesView;
@@ -128,15 +134,37 @@ void Config_Modify()
 	// Locale
 	if (wcscmp(App.Config.pszLocaleName,pContext->pConfig->pszLocaleName)) Config_SetLanguage(App.hWnd,pContext->pConfig->pszLocaleName);
 
-	// Display names
+	if (wcscmp(App.Config.pszLocaleNameLS,pContext->pConfig->pszLocaleNameLS))
+		{
+		Locale_Unload(LOCALE_TYPE_GAME,(void **)&App.pLanguage,&App.Config.pszLocaleNameLS);
+		Locale_Load(App.hWnd,szLSLPath,pContext->pConfig->pszLocaleNameLS,LOCALE_TYPE_GAME,(void **)&App.pLanguage,NULL);
+		App.Config.pszLocaleNameLS = pContext->pConfig->pszLocaleNameLS;
+		pContext->pConfig->pszLocaleNameLS = NULL;
+		Game_ReleaseDisplayNames();
+		dwRedraw |= CONFIG_REDRAW_WINDOW;
+		dwRedraw |= CONFIG_REDRAW_ITEMS;
+		}
+
+	// Display
 	if (App.Config.bItemsDisplayName != pContext->pConfig->bItemsDisplayName || App.Config.bItemsResolve != pContext->pConfig->bItemsResolve)
 		{
 		App.Config.bItemsDisplayName = pContext->pConfig->bItemsDisplayName;
 		App.Config.bItemsResolve = pContext->pConfig->bItemsResolve;
 		Game_ReleaseDisplayNames();
+		dwRedraw |= CONFIG_REDRAW_ITEMS;
+		}
+
+	//--- Mise à jour des affichages ---
+
+	if (dwRedraw&CONFIG_REDRAW_ITEMS)
+		{
 		SendMessage(App.Game.Layout.hwndInventory,LVM_SORTITEMS,(WPARAM)0,(LPARAM)Game_ItemsListSort);
 		InvalidateRect(App.Game.Layout.hwndInventory,NULL,FALSE);
 		InvalidateRect(App.Game.Layout.hwndInventoryName,NULL,FALSE);
+		}
+	if (dwRedraw&CONFIG_REDRAW_WINDOW)
+		{
+		InvalidateRect(App.hWnd,NULL,FALSE);
 		}
 
 	//--- Terminé ---
@@ -149,6 +177,7 @@ Done:	if (pContext)
 			if (pContext->pszLarianPath) HeapFree(App.hHeap,0,pContext->pszLarianPath);
 			Config_Release(pContext->pConfig);
 			Locale_EnumRelease(&pContext->nRoot);
+			Locale_EnumRelease(&pContext->nRootLS);
 			HeapFree(App.hHeap,0,pContext->pConfig);
 			}
 		HeapFree(App.hHeap,0,pContext);
@@ -171,6 +200,11 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 
 		//--- Liste des langues
 		if (!Config_SelectLanguageInit(hDlg,201,&pContext->nRoot,TRUE))
+			{
+			EndDialog(hDlg,-1);
+			return(FALSE);
+			}
+		if (!Config_SelectLanguageInit(hDlg,202,&pContext->nRootLS,TRUE))
 			{
 			EndDialog(hDlg,-1);
 			return(FALSE);
@@ -208,8 +242,6 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		//--- Textes
 		SetDlgItemText(hDlg,301,Locale_GetText(TEXT_CONFIG_OVERRIDE));
 		SetDlgItemText(hDlg,302,Locale_GetText(TEXT_DIALOG_TAG_SHOWHIDDEN));
-		SetDlgItemText(hDlg,303,Locale_GetText(TEXT_CONFIG_ITEMSDISPLAYNAME));
-		SetDlgItemText(hDlg,304,Locale_GetText(TEXT_CONFIG_ITEMSRESOLVE));
 		SetDlgItemText(hDlg,310,Locale_GetText(TEXT_VIEW_GROUPS));
 		SetDlgItemText(hDlg,320,Locale_GetText(TEXT_VIEW_GROUPS));
 		SetDlgItemText(hDlg,330,Locale_GetText(TEXT_VIEW_GROUPS));
@@ -220,14 +252,14 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		SetDlgItemText(hDlg,501,Locale_GetText(TEXT_DIALOG_TV_SEARCH_OPACITY));
 		SetDlgItemText(hDlg,502,Locale_GetText(TEXT_DIALOG_TV_SEARCH_HISTORY));
 		SetDlgItemText(hDlg,503,Locale_GetText(TEXT_DIALOG_TV_SEARCH_HISTORYCLEAR));
+		SetDlgItemText(hDlg,601,Locale_GetText(TEXT_CONFIG_ITEMSDISPLAYNAME));
+		SetDlgItemText(hDlg,602,Locale_GetText(TEXT_CONFIG_ITEMSRESOLVE));
 		SetDlgItemText(hDlg,777,Locale_GetText(TEXT_SAVE));
 		SetDlgItemText(hDlg,778,Locale_GetText(IDM_CONFIGSAVEONEXIT));
 
 		//--- Drapeaux
 		CheckDlgButton(hDlg,301,pContext->pConfig->bCapOverride?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,302,pContext->pConfig->bShowHiddenTags?BST_CHECKED:BST_UNCHECKED);
-		CheckDlgButton(hDlg,303,pContext->pConfig->bItemsDisplayName?BST_CHECKED:BST_UNCHECKED);
-		CheckDlgButton(hDlg,304,pContext->pConfig->bItemsResolve?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,310,pContext->pConfig->bRunesGroups?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,320,pContext->pConfig->bSkillsGroups?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,330,pContext->pConfig->bBoostersGroups?BST_CHECKED:BST_UNCHECKED);
@@ -237,6 +269,8 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		CheckDlgButton(hDlg,412,pContext->pConfig->windowTreeView.usedefault.bSize?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,501,pContext->pConfig->bTVSearchOpacity?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,502,pContext->pConfig->bTVSearchHistory?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,601,pContext->pConfig->bItemsDisplayName?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,602,pContext->pConfig->bItemsResolve?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,778,pContext->pConfig->bSaveOnExit?BST_CHECKED:BST_UNCHECKED);
 
 		//--- Affichage
@@ -292,6 +326,7 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 				{
 				case 999:
 				case 201:
+				case 202:
 					((MEASUREITEMSTRUCT *)lParam)->itemWidth = 0;
 					((MEASUREITEMSTRUCT *)lParam)->itemHeight = App.Font.uFontHeight+4;
 					if (((MEASUREITEMSTRUCT *)lParam)->itemHeight < 24) ((MEASUREITEMSTRUCT *)lParam)->itemHeight = 24;
@@ -329,7 +364,14 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_LANG),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				case 201:
+				case 202:
 					Config_SelectLanguageDrawItem((DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
+				case 211:
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_LANG_INTERFACE),(DRAWITEMSTRUCT *)lParam,NULL,DT_LEFT|DT_VCENTER);
+					return(TRUE);
+				case 212:
+					Dialog_DrawLabel(Locale_GetText(TEXT_CONFIG_LANG_GAME),(DRAWITEMSTRUCT *)lParam,NULL,DT_LEFT|DT_VCENTER);
 					return(TRUE);
 				case 300:
 					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_EDITION),(DRAWITEMSTRUCT *)lParam);
@@ -356,6 +398,9 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 					return(TRUE);
 				case 500:
 					Dialog_DrawTitle(Locale_GetText(TEXT_TITLE_TREE),(DRAWITEMSTRUCT *)lParam);
+					return(TRUE);
+				case 600:
+					Dialog_DrawTitle(Locale_GetText(TEXT_CONFIG_DISPLAY),(DRAWITEMSTRUCT *)lParam);
 					return(TRUE);
 				}
 			break;
@@ -639,7 +684,8 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	LOCALE_TEXT*	pLocale;
 	WCHAR*		pszLocaleName;
 
-	if (!Config_ModifyGetLanguage(hDlg,201,pContext)) goto Error;
+	if (!Config_ModifyGetLanguage(hDlg,201,LOCALE_TYPE_APPLICATION,pContext)) goto Error;
+	Config_ModifyGetLanguage(hDlg,202,LOCALE_TYPE_GAME,pContext);
 
 	//--- Ensure the language db can be loaded
 	if (!Locale_Load(hDlg,szLangPath,pContext->pConfig->pszLocaleName,LOCALE_TYPE_APPLICATION,(void **)&pLocale,&pszLocaleName)) goto Error;
@@ -649,8 +695,6 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	pContext->pConfig->bSaveOnExit = IsDlgButtonChecked(hDlg,778) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bCapOverride = IsDlgButtonChecked(hDlg,301) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bShowHiddenTags = IsDlgButtonChecked(hDlg,302) == BST_CHECKED?TRUE:FALSE;
-	pContext->pConfig->bItemsDisplayName = IsDlgButtonChecked(hDlg,303) == BST_CHECKED?TRUE:FALSE;
-	pContext->pConfig->bItemsResolve = IsDlgButtonChecked(hDlg,304) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bRunesGroups = IsDlgButtonChecked(hDlg,310) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bSkillsGroups = IsDlgButtonChecked(hDlg,320) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bBoostersGroups = IsDlgButtonChecked(hDlg,330) == BST_CHECKED?TRUE:FALSE;
@@ -664,6 +708,10 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	//--- Apply treeview settings
 	pContext->pConfig->bTVSearchOpacity = IsDlgButtonChecked(hDlg,501) == BST_CHECKED?TRUE:FALSE;
 	pContext->pConfig->bTVSearchHistory = IsDlgButtonChecked(hDlg,502) == BST_CHECKED?TRUE:FALSE;
+
+	//--- Apply display settings
+	pContext->pConfig->bItemsDisplayName = IsDlgButtonChecked(hDlg,601) == BST_CHECKED?TRUE:FALSE;
+	pContext->pConfig->bItemsResolve = IsDlgButtonChecked(hDlg,602) == BST_CHECKED?TRUE:FALSE;
 
 	//--- Apply view modes
 	if (!Dialog_ViewComboChanged(hDlg,311,0,&pContext->pConfig->uRunesView)) goto Error;
@@ -706,9 +754,10 @@ void Config_ModifyCopyDlgText(HWND hDlg, UINT uDestId, UINT uSrcId)
 
 // «»»» Modification de la langue «««««««««««««««««««««««««««««««««««««««»
 
-int Config_ModifyGetLanguage(HWND hDlg, UINT uCtlId, CONFIGCONTEXT *pContext)
+int Config_ModifyGetLanguage(HWND hDlg, UINT uCtlId, UINT uType, CONFIGCONTEXT *pContext)
 {
 	LOCALE_ENUM*	pEnum;
+	WCHAR**		pszLocaleName;
 	int		iSelected;
 
 	iSelected = SendDlgItemMessage(hDlg,uCtlId,LB_GETCURSEL,0,0);
@@ -717,15 +766,24 @@ int Config_ModifyGetLanguage(HWND hDlg, UINT uCtlId, CONFIGCONTEXT *pContext)
 	pEnum = (LOCALE_ENUM *)SendDlgItemMessage(hDlg,uCtlId,LB_GETITEMDATA,(WPARAM)iSelected,0);
 	if (pEnum == (LOCALE_ENUM *)LB_ERR) return(0);
 
-	// Language not changed?
-	if (pContext->pConfig->pszLocaleName)
+	switch (uType)
 		{
-		if (!wcscmp(pEnum->szLang,pContext->pConfig->pszLocaleName)) return(1);
-		HeapFree(App.hHeap,0,pContext->pConfig->pszLocaleName);
+		case LOCALE_TYPE_GAME:
+			pszLocaleName = &pContext->pConfig->pszLocaleNameLS;
+			break;
+		default:pszLocaleName = &pContext->pConfig->pszLocaleName;
+			break;
 		}
 
-	pContext->pConfig->pszLocaleName = Misc_StrCpyAlloc(pEnum->szLang);
-	if (!pContext->pConfig->pszLocaleName)
+	// Language not changed?
+	if (*pszLocaleName)
+		{
+		if (!wcscmp(pEnum->szLang,*pszLocaleName)) return(1);
+		HeapFree(App.hHeap,0,*pszLocaleName);
+		}
+
+	*pszLocaleName = Misc_StrCpyAlloc(pEnum->szLang);
+	if (!*pszLocaleName)
 		{
 		SetLastError(ERROR_NOT_ENOUGH_MEMORY);
 		return(0);

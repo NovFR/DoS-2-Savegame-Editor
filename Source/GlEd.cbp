@@ -64,12 +64,14 @@
 		<Unit filename="Includes/Application.h" />
 		<Unit filename="Includes/Config.h" />
 		<Unit filename="Includes/Debug.h" />
+		<Unit filename="Includes/Definitions.h" />
 		<Unit filename="Includes/Dialogs.h" />
 		<Unit filename="Includes/Divine.h" />
 		<Unit filename="Includes/Files.h" />
 		<Unit filename="Includes/Font.h" />
 		<Unit filename="Includes/Game.h" />
 		<Unit filename="Includes/GameEdit.h" />
+		<Unit filename="Includes/GameLocale.h" />
 		<Unit filename="Includes/Infos.h" />
 		<Unit filename="Includes/LastFiles.h" />
 		<Unit filename="Includes/Lists.h" />
@@ -89,6 +91,9 @@
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="Sources/Application.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Config/Config_Default.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Config/Config_Language.c">
@@ -154,7 +159,16 @@
 		<Unit filename="Sources/Game/Game_Edit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Sources/Game/Game_Icons.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Sources/Game/Game_Infos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Items.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Game/Game_Locale.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Game/Game_Manager.c">
@@ -173,6 +187,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Debug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Sources/Main/Main_Definitions.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Sources/Main/Main_Locale.c">

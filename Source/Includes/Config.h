@@ -19,6 +19,9 @@
 
 #define CONFIG_THIS_VERSION	2
 
+#define CONFIG_REDRAW_WINDOW	0x00000001
+#define CONFIG_REDRAW_ITEMS	0x00000002
+
 enum {
 	CONFIG_TYPE_TEXT = 0,
 	CONFIG_TYPE_UINT,
@@ -55,6 +58,7 @@ enum {
 	CONFIG_IDENT_TVSEARCHOPACITY_V1,
 	CONFIG_IDENT_TVSEARCHALPHA_V1,
 	CONFIG_IDENT_TVSEARCHHISTORY_V1,
+	CONFIG_IDENT_LOCALENAMELS_V1,
 };
 
 
@@ -83,6 +87,7 @@ typedef struct CONFIG {
 	BOOL			bSaveOnExit;
 	//--- Locale
 	WCHAR*			pszLocaleName;
+	WCHAR*			pszLocaleNameLS;
 	//--- Jeu
 	WCHAR*			pszTempPath;
 	WCHAR*			pszLarianPath;
@@ -95,6 +100,7 @@ typedef struct CONFIG {
 	//--- Affichage
 	BOOL			bItemsDisplayName;
 	BOOL			bItemsResolve;
+	COLORREF		crStats;
 	//--- Recherche (TreeView)
 	BOOL			bTVSearchCaseSensitive;
 	BOOL			bTVSearchOpacity;
@@ -112,6 +118,7 @@ typedef struct CONFIG {
 
 typedef struct CONFIGCONTEXT {
 	NODE			nRoot;
+	NODE			nRootLS;
 	BOOL			bIsLimited;
 	CONFIG*			pConfig;
 	WCHAR*			pszLarianPath;
@@ -146,6 +153,7 @@ int			Config_WriteEntry(HANDLE,UINT,UINT,void *);
 int			Config_Defaults(CONFIG *);
 BOOL			Config_DefaultTempLocation(WCHAR **,BOOL);
 BOOL			Config_DefaultSaveLocation(WCHAR **,BOOL);
+WCHAR*			Config_DefaultLocaleLS(WCHAR *);
 void			Config_Release(CONFIG *);
 
 // «»»» Langage «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»
@@ -172,7 +180,7 @@ void			Config_ModifyCategoriesDraw(DRAWITEMSTRUCT *);
 
 int			Config_ModifyApplyChanges(HWND,CONFIGCONTEXT *);
 void			Config_ModifyCopyDlgText(HWND,UINT,UINT);
-int			Config_ModifyGetLanguage(HWND,UINT,CONFIGCONTEXT *);
+int			Config_ModifyGetLanguage(HWND,UINT,UINT,CONFIGCONTEXT *);
 int			Config_ModifyGetPath(HWND,UINT,WCHAR **);
 void			Config_ModifyMovePath(WCHAR **,WCHAR **);
 void			Config_ModifySelectLocation(HWND,UINT,WCHAR *);

@@ -13,6 +13,7 @@
 
 #include "_Global.h"
 #include "Application.h"
+#include "GameLocale.h"
 #include "Locale.h"
 #include "Requests.h"
 #include "Texts.h"
@@ -30,7 +31,7 @@ extern WCHAR*		TextsIds[];
 
 // «»»» Énumération des langues disponibles «««««««««««««««««««««««««««««»
 
-int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
+int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot, UINT uType)
 {
 	WIN32_FIND_DATA		Find;
 	HANDLE			hFile;
@@ -41,6 +42,7 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 	DWORD_PTR		vl[1];
 
 	ZeroMemory(pRoot,sizeof(NODE));
+	pRoot->type = uType;
 
 	//--- Création du chemin de recherche ---
 
@@ -56,9 +58,14 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 	hFile = FindFirstFile(pszSearchPath,&Find);
 	if (hFile == INVALID_HANDLE_VALUE)
 		{
-		Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
+		if (GetLastError() != ERROR_PATH_NOT_FOUND)
+			{
+			Request_PrintError(hWnd,Locale_GetText(TEXT_ERR_LOCALE_ENUM),NULL,MB_ICONERROR);
+			LocalFree(pszSearchPath);
+			return(0);
+			}
 		LocalFree(pszSearchPath);
-		return(0);
+		return(1);
 		}
 
 	LocalFree(pszSearchPath);
@@ -79,13 +86,21 @@ int Locale_Enum(HWND hWnd, WCHAR *pszPathFmt, NODE *pRoot)
 			}
 		wcsncpy(pEnum->szLang,Find.cFileName,pszExt-Find.cFileName);
 
-		if (!Locale_Load(hWnd,pszPathFmt,pEnum->szLang,LOCALE_TYPE_MISC,(void **)&pLocale,&pEnum->pszName))
+		switch(uType)
 			{
-			FindClose(hFile);
-			Locale_EnumRelease(pRoot);
-			return(0);
+			case LOCALE_TYPE_APPLICATION:
+				if (!Locale_Load(hWnd,pszPathFmt,pEnum->szLang,LOCALE_TYPE_MISC,(void **)&pLocale,&pEnum->pszName))
+					{
+					FindClose(hFile);
+					Locale_EnumRelease(pRoot);
+					return(0);
+					}
+				Locale_Unload(LOCALE_TYPE_MISC,(void **)&pLocale,NULL);
+				break;
+			case LOCALE_TYPE_GAME:
+				pEnum->pszName = Misc_StrCpyAlloc(Game_LocaleFileToNameLS(pEnum->szLang));
+				break;
 			}
-		Locale_Unload(LOCALE_TYPE_MISC,(void **)&pLocale,NULL);
 		List_AddEntry((NODE *)pEnum,pRoot);
 
 	} while (FindNextFile(hFile,&Find));
@@ -162,9 +177,21 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			break;
 		}
 
-	//--- Création du nom (Path\%1.txt) ---
+	//--- Création du nom (Path\%1.sqlite3) ---
 
 	if (!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,pszPathFmt,0,0,(WCHAR *)&Parser.pszFilePath,1,(va_list *)dwpLangFile)) goto Done;
+
+	//--- Si le fichier n'existe pas, retourne sans erreur pour LOCALE_TYPE_GAME ---
+
+	if (lType == LOCALE_TYPE_GAME)
+		{
+		if (!PathFileExists(Parser.pszFilePath))
+			{
+			Parser.pszLastError = NULL;
+			Parser.iResult = 1;
+			goto Done;
+			}
+		}
 
 	//--- Ouverture de la base de données ---
 
@@ -240,6 +267,9 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 		case LOCALE_TYPE_MISC_WRITE:
 			((LOCALE_MISC *)*pLocalePtr)->db = Parser.db;
 			break;
+		case LOCALE_TYPE_GAME:
+			*pLocalePtr = Parser.db;
+			break;
 		default:sqlite3_close(Parser.db);
 			break;
 		}
@@ -284,14 +314,18 @@ void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 				if (((LOCALE_TEXT *)*pLocalePtr)[uId].pszText) HeapFree(App.hHeap,0,((LOCALE_TEXT *)*pLocalePtr)[uId].pszText);
 				((LOCALE_TEXT *)*pLocalePtr)[uId].pszText = NULL;
 				}
+			HeapFree(App.hHeap,0,*pLocalePtr);
 			break;
 		case LOCALE_TYPE_MISC:
 		case LOCALE_TYPE_MISC_WRITE:
 			sqlite3_close(((LOCALE_MISC *)*pLocalePtr)->db);
+			HeapFree(App.hHeap,0,*pLocalePtr);
+			break;
+		case LOCALE_TYPE_GAME:
+			sqlite3_close((sqlite3 *)*pLocalePtr);
 			break;
 		}
 
-	HeapFree(App.hHeap,0,*pLocalePtr);
 	*pLocalePtr = NULL;
 	return;
 }

@@ -123,7 +123,7 @@ UINT Misc_HtmlSpecialCharsDecode(WCHAR *pszCopy, WCHAR *pszText)
 
 	for (i = 0, j = 0, uLen = 0; pszText[i] != 0; i++)
 		{
-		if (pszText[i] == '&')
+		if (pszText[i] == L'&')
 			{
 			for (k = 0; htmlEntities[k] != NULL; k += 2)
 				{

@@ -17,6 +17,7 @@
 
 #include "XML.h"
 #include "Menus.h"
+#include "Definitions.h"
 
 #define GAME_ICON_SIZE			48
 #define GAME_EQUIPPED_SLOT_MAX		10
@@ -135,6 +136,8 @@ typedef struct DOS2ITEM {
 	XML_ATTR*		pxaInventory;
 	XML_ATTR*		pxaType;
 	XML_ATTR*		pxaLevel;
+	XML_ATTR*		pxaLevelGroupIndex;
+	XML_ATTR*		pxaNameIndex;
 	XML_ATTR*		pxaRunes[3];
 	XML_NODE*		pxnGeneration;
 	XML_NODE*		pxnPermanentBoost;
@@ -324,6 +327,7 @@ void			Game_BuildItemsList(DOS2CHARACTER *,HWND);
 void			Game_UpdateButtons(void);
 void			Game_SaveTopIndex(DOS2CHARACTER *,HWND);
 
+void			Game_SetDefsMenu(HMENU);
 void			Game_Lock(DWORD);
 UINT			Game_GetLevelFromExp(UINT);
 UINT			Game_GetExpFromLevel(UINT);
@@ -401,5 +405,19 @@ WCHAR*			Game_Stats_GetOriginName(WCHAR *);
 void			Game_Stats_SetNumber(HWND,UINT,WCHAR *);
 int			Game_Stats_SetItem(HWND,UINT,int,WCHAR *,WCHAR *,WCHAR *,UINT);
 int			Game_Stats_Sort(LPARAM,LPARAM,LPARAM);
+
+// «»»» Icônes & Objets «««««««««««««««««««««««««««««««««««««««««««««««««»
+
+void			Game_ItemsCopyToClipboard(void *,UINT);
+WCHAR*			Game_ItemsGetDisplayName(DOS2ITEM *);
+
+void			Game_ItemsLocalizationRebuild(HWND);
+DWORD WINAPI		Game_ItemsLocalizationRebuildThread(DEFSCONTEXT *);
+void			Game_IconsRebuild(HWND);
+DWORD WINAPI		Game_IconsRebuildThread(DEFSCONTEXT *);
+void			Game_ItemsStatsRebuild(HWND);
+DWORD WINAPI		Game_ItemsStatsRebuildThread(DEFSCONTEXT *);
+void			Game_ItemsRootRebuild(HWND hWnd);
+DWORD WINAPI		Game_ItemsRootRebuildThread(DEFSCONTEXT *);
 
 #endif

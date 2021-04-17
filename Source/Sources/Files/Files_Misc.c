@@ -58,6 +58,12 @@ UINT lsa_Decompress(BYTE bCompressionFlags, BYTE *pSrc, DWORD dwSrcSize, BYTE *p
 					if (outputFree < 65535)
 						{
 						BYTE* outputTmp = HeapAlloc(App.hHeap,0,outputSize+(65535-outputFree));
+						if (!outputTmp)
+							{
+							if (output) HeapFree(App.hHeap,0,output);
+							LZ4F_freeDecompressionContext(dctx);
+							return(TEXT_ERR_LSA_UNPACK);
+							}
 						if (output)
 							{
 							CopyMemory(outputTmp,output,outputSize);
