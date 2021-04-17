@@ -1,7 +1,7 @@
 
 //<<>-<>>---------------------------------------------------------------------()
 /*
-	Routines de gestion des textes
+	Routines de gestion des définitions
 									      */
 //()-------------------------------------------------------------------<<>-<>>//
 
@@ -454,23 +454,20 @@ int defs_UpdateStats(DEFSQL *pDB, DEFSFILE *pFile)
 	if (!pszFile) return(DEFS_RESULT_OK);
 
 	Debug_Log(DEBUG_LOG_INFO,szDebugStats);
-	sqlite3_exec(pDB->pSql,"BEGIN TRANSACTION",NULL,NULL,NULL);
+	iResult = DEFS_RESULT_OK;
 
 	for (i = 0; pszAllowedFiles[i] != NULL; i++)
 		{
-		if (wcsncmp(pszAllowedFiles[i],pszFile,wcslen(pszAllowedFiles[i])))
+		if (!wcsncmp(pszAllowedFiles[i],pszFile,wcslen(pszAllowedFiles[i])))
 			{
+			sqlite3_exec(pDB->pSql,"BEGIN TRANSACTION",NULL,NULL,NULL);
 			iResult = defs_UpdateStatsTable(pDB,pFile);
+			sqlite3_exec(pDB->pSql,"END TRANSACTION",NULL,NULL,NULL);
 			break;
 			}
 		}
-	if (pszAllowedFiles[i] == NULL)
-		{
-		Debug_Log(DEBUG_LOG_WARNING,szDebugStatsSkip);
-		return(DEFS_RESULT_OK);
-		}
+	if (pszAllowedFiles[i] == NULL) Debug_Log(DEBUG_LOG_WARNING,szDebugStatsSkip);
 
-	sqlite3_exec(pDB->pSql,"END TRANSACTION",NULL,NULL,NULL);
 	return(iResult);
 }
 
@@ -663,6 +660,7 @@ int defs_UpdateStatsTable(DEFSQL *pDB, DEFSFILE *pFile)
 		}
 
 	if (iResult == DEFS_RESULT_OK) iResult = defs_UpdateStatsTableFlush(pDB,0,pszParentEntry,DEFS_FLUSH_ENTRY,&entry);
+	else defs_UpdateStatsTableFlush(NULL,0,pszParentEntry,DEFS_FLUSH_ENTRY,&entry);
 	defs_UpdateStatsTableFlush(NULL,0,NULL,DEFS_FLUSH_GROUP,&group);
 	defs_UpdateStatsTableExplode(NULL,&pParts);
 	if (pszParentGroup) HeapFree(App.hHeap,0,pszParentGroup);
@@ -901,7 +899,7 @@ int defs_UpdateRootTemplates(DEFSQL *pDB, DEFSFILE *pFile)
 		//--- Ignores items when important infos are missing
 		if (!Object.Name) continue;
 		if (!Object.Stats) continue;
-		if (!Object.Type) Debug_Log(DEBUG_LOG_WARNING,szDebugXMLMissing,szXMLType,Object.NameW);
+		if (!Object.Type) { Debug_Log(DEBUG_LOG_WARNING,szDebugXMLMissing,szXMLType,Object.NameW); continue; }
 		if (strcmp(Object.Type,"item")) continue;
 
 		//--- Trigger warnings for missing infos
