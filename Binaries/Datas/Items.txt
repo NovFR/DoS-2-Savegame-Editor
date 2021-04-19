@@ -225,6 +225,7 @@ weapon_sword		WEAPON			|e|Sword_2H
 weapon_sword		WEAPON			|e|Sword2H
 weapon_wand		WEAPON			|e|Wand
 weapon_wand		WEAPON			|e|Wand_Poison
+item			ITEM			|b|Scroll_Skill |c|_Blank_
 
 armor_gloves		ARMOR|GLOVES		|b|ARM_SETS_ |e|Gloves
 armor_gloves		ARMOR|GLOVES		|b|ARM_SETS_ |e|Gloves_Low
