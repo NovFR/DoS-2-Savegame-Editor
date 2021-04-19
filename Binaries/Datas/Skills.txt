@@ -31,270 +31,273 @@
 #		SUMMONING
 #		WARFARE
 #		WATER
+# [7] Name handle
+#	Used to translate the skill using Larian's language files.
+#	If not present, the program will use the interface translation which is more limited.
 #
 
-#- [1] ---------------------------------------- [2] --- [3] --- [4] --- [5] --- [6] -----------
-Cone_CorrosiveSpray				1	2	2	540	EARTH
-Cone_Flamebreath				0	1	0	313	SPECIAL
-Cone_GroundSmash				0	2	1	364	WARFARE
-Cone_Shatter					0	4	1	390	WATER
-Cone_SilencingStare				0	2	1	392	DEATH
-Cone_SteamLance					2	2	2	330	WATER
-Dome_CircleOfProtection				1	1	0	382	SPECIAL
-Jump_CloakAndDagger				0	1	1	112	ROGUES
-Jump_EnemyVoidGlide				0	1	0	106	SPECIAL
-Jump_PhoenixDive				0	1	1	325	WARFARE
-Jump_TacticalRetreat				0	1	1	106	HUNTING
-MultiStrike_BlinkStrike				0	2	1	370	WARFARE
-MultiStrike_Vault				0	1	1	343	ROGUES
-ProjectileStrike_DazingBolt			0	3	1	448	AIR
-ProjectileStrike_HailAttack			3	4	3	172	WATER
-ProjectileStrike_HailStrike			0	3	1	353	WATER
-ProjectileStrike_MeteorShower			3	4	3	578	FIRE
-ProjectileStrike_RainOfArrows			3	3	3	581	HUNTING
-Projectile_AcidSpores				2	3	2	54	EARTH
-Projectile_ArrowSpray				1	3	2	315	HUNTING
-Projectile_BallisticShot			0	2	1	483	HUNTING
-Projectile_BouncingShield			0	2	1	472	WARFARE
-Projectile_ChainHeal				0	2	1	369	WATER
-Projectile_ChainLightning			1	3	2	12	AIR
-Projectile_Chloroform				0	1	1	318	ROGUES
-Projectile_DeployMassTraps			1	3	2	509	FIRE
-Projectile_DimensionalBolt			0	2	1	405	SUMMONING
-Projectile_DustBlast				1	3	2	555	EARTH
-Projectile_FanOfKnives				1	3	2	488	ROGUES
-Projectile_Fireball				0	2	1	355	FIRE
-Projectile_FlamingDaggers			0	2	1	362	FIRE
-Projectile_Flight				0	1	0	419	POLYMORPH
-Projectile_IceFan				0	3	1	452	WATER
-Projectile_InfectiousFlame			2	3	2	579	FIRE
-Projectile_LaunchBomber				0	2	1	458	ROGUES
-Projectile_LaunchExplosiveTrap			0	1	1	510	FIRE
-Projectile_LaunchOilBlob			0	2	1	484	POLYMORPH
-Projectile_LaunchPoisonSlug			0	2	1	67	SUMMONING
-Projectile_LightningBolt			0	2	1	357	AIR
-Projectile_Mark					0	1	1	350	HUNTING
-Projectile_Multishot				0	3	1	95	HUNTING
-Projectile_PiercingShot				0	2	1	317	HUNTING
-Projectile_PinDown				0	3	1	379	HUNTING
-Projectile_PoisonDartStart			0	2	1	64	EARTH
-Projectile_PyroclasticEruption			3	3	3	455	EARTH
-Projectile_PyroclasticRock			0	2	1	312	EARTH
-Projectile_Ricochet				0	2	1	100	HUNTING
-Projectile_SkyShot				0	2	1	482	HUNTING
-Projectile_Snipe				0	3	1	351	HUNTING
-Projectile_StaffOfMagus				0	2	0	147	SPECIAL
-Projectile_Superconductor			0	3	1	447	AIR
-Projectile_ThrowDust				0	2	1	542	EARTH
-Projectile_ThrowingKnife			0	2	1	342	ROGUES
-Quake_Earthquake				0	3	1	55	EARTH
-Rain_Blood					0	2	1	346	DEATH
-Rain_Oil					0	1	1	359	EARTH
-Rain_Water					0	1	1	180	WATER
-Rush_BatteringRam				0	2	1	324	WARFARE
-Rush_BullRush					0	2	0	418	POLYMORPH
-Shout_Adrenaline				0	0	1	110	ROGUES
-Shout_Apotheosis				3	2	3	544	POLYMORPH
-Shout_BarbedCoat				0	0	1	148	WARFARE
-Shout_BlindingRadiance				0	2	1	335	AIR
-Shout_BoneCage					0	1	1	456	DEATH
-Shout_BreakTheShackles				1	0	0	429	SPECIAL
-Shout_BreathingBubble				0	1	1	526	AIR
-Shout_BullHorns					0	0	1	402	POLYMORPH
-Shout_CancelPolymorphism			0	1	0	561	POLYMORPH
-Shout_CauseFear					0	2	1	135	DEATH
-Shout_ChameleonSkin				0	1	1	314	POLYMORPH
-Shout_CloseTheDoor				1	2	2	486	SUMMONING
-Shout_CON00_ActivateSpores			0	1	1	1017	EARTH
-Shout_Contamination				0	1	1	336	EARTH
-Shout_Cryotherapy				0	1	1	531	WATER
-Shout_Deafen					0	2	1	577	SPECIAL
-Shout_DeflectiveBarrier				0	2	1	473	WARFARE
-Shout_DemonicTutelage				0	1	0	552	SUMMONING
-Shout_ElectricFence				2	2	2	334	AIR
-Shout_ElementalTortoise				0	0	1	153	WARFARE
-Shout_EnemyOverthrow				0	2	0	165	SPECIAL
-Shout_EtherealSoles				0	1	1	322	ROGUES
-Shout_EvasiveAura				1	2	2	545	AIR
-Shout_FavourableWind				0	1	1	333	AIR
-Shout_FireBrand					0	1	1	438	FIRE
-Shout_FlamingSkin				1	1	2	496	POLYMORPH
-Shout_FlamingTongues				0	1	1	439	FIRE
-Shout_FleshSacrifice				0	0	0	338	SPECIAL
-Shout_FrostAura					0	1	1	449	WATER
-Shout_GlobalCooling				0	1	1	365	WATER
-Shout_GuardianAngel				0	2	1	394	WARFARE
-Shout_HealingTears				0	1	1	535	WATER
-Shout_IceBreaker				0	1	1	538	WATER
-Shout_IceSkin					1	1	2	534	POLYMORPH
-Shout_Ignition					0	1	1	319	FIRE
-Shout_InnerDemon				1	1	2	560	SUMMONING
-Shout_InspireStart				0	1	0	158	SPECIAL
-Shout_InvisibilitySelfRogue			0	2	2	125	ROGUES
-Shout_Invulnerability				1	6	3	137	DEATH
-Shout_JellyfishSkin				1	1	2	525	POLYMORPH
-Shout_MassBreathingBubbles			1	1	2	527	AIR
-Shout_MassCleanseWounds				1	2	2	536	WATER
-Shout_MassCorpseExplosion			1	1	2	499	FIRE
-Shout_MassCryotherapy				1	2	2	530	WATER
-Shout_MassOilyCarapace				1	2	2	559	EARTH
-Shout_MedusaHead				0	2	1	502	POLYMORPH
-Shout_MendMetal					0	1	1	459	EARTH
-Shout_NecromancerTotems				3	2	3	453	DEATH
-Shout_NullResistanceStart			0	2	1	138	DEATH
-Shout_OilyCarapace				0	1	1	558	EARTH
-Shout_PetrifyingVisage				0	2	0	518	POLYMORPH
-Shout_PlayDead					0	0	0	501	SPECIAL
-Shout_PoisonWave				0	2	1	464	EARTH
-Shout_PoisonousSkin				1	1	2	553	POLYMORPH
-Shout_PolymorphIntoDwarf			0	1	0	408	POLYMORPH
-Shout_PolymorphIntoElf				0	1	0	409	POLYMORPH
-Shout_PolymorphIntoHuman			0	1	0	406	POLYMORPH
-Shout_PolymorphIntoLizard			0	1	0	407	POLYMORPH
-Shout_ReactiveArmor				0	2	1	478	EARTH
-Shout_RecoverArmour				0	2	0	375	SPECIAL
-Shout_ShedSkin					1	1	2	398	POLYMORPH
-Shout_Shout_Toggle_Sprint			0	0	0	1016	SPECIAL
-Shout_SiphonPoison				0	1	1	457	EARTH
-Shout_SmokeCover				0	1	1	548	AIR
-Shout_SparkingSwings				0	1	1	514	FIRE
-Shout_SpiderLegs				0	0	1	515	POLYMORPH
-Shout_SpiritForm_Lucian				0	2	0	1015	SOURCE
-Shout_SpiritVision				0	1	0	1015	SOURCE
-Shout_SteelSkin					0	2	1	401	POLYMORPH
-Shout_Supernova					0	3	1	440	FIRE
-Shout_Taunt					0	2	1	166	WARFARE
-Shout_ThickOfTheFight				1	2	2	395	WARFARE
-Shout_VacuumAura				1	2	2	522	AIR
-Shout_VampiricHungerAura			1	1	2	533	WATER
-Shout_VenomCoating				0	1	1	556	EARTH
-Shout_VenomousAura				1	2	2	557	EARTH
-Shout_Whirlwind					0	2	1	323	WARFARE
-Shout_Wings					0	1	1	397	POLYMORPH
-Storm_Blood					3	4	3	507	DEATH
-Storm_Ethereal					3	4	3	466	SUMMONING
-Storm_Lightning					3	4	3	582	AIR
-Summon_ArtilleryPlant				1	2	2	352	EARTH
-Summon_BonePile					0	2	1	476	DEATH
-Summon_BloodHeart				0	2	0	356	SPECIAL
-Summon_Cat					0	2	1	383	SUMMONING
-Summon_Condor					0	2	1	524	SUMMONING
-Summon_FireSlug					1	1	2	460	FIRE
-Summon_Incarnate				0	2	1	417	SUMMONING
-Summon_PlanarGateway				2	0	2	467	SUMMONING
-Summon_Quest_SummonNewt				0	2	2	584	SUMMONING
-Summon_SoulWolf					1	3	0	431	SPECIAL
-Summon_TotemFromSurface				0	2	1	414	SUMMONING
-Target_AcidInfusion				2	1	2	495	SUMMONING
-Target_Apportation				0	1	1	461	AIR
-Target_ArcaneStitch				1	3	2	465	WATER
-Target_BanishSummon				0	2	1	126	SUMMONING
-Target_BlackShroud				1	1	2	454	DEATH
-Target_Bless					1	1	1	368	SOURCE
-Target_BlessedSmokeCloud			2	1	2	547	AIR
-Target_BloatedCorpse				0	1	1	468	DEATH
-Target_BloodBubble				0	1	1	345	DEATH
-Target_BloodInfusion				0	1	1	422	SUMMONING
-Target_BurnMyEyes				0	1	1	354	FIRE
-Target_Cannibalize				0	1	1	337	SUMMONING
-Target_Challenge				0	0	1	471	WARFARE
-Target_Charm					0	3	1	583	SUMMONING
-Target_ChickenTouch				0	2	1	399	POLYMORPH
-Target_CleanseWounds				0	2	1	537	WATER
-Target_Condense					0	1	1	360	EARTH
-Target_CorpseExplosion				0	1	1	498	FIRE
-Target_CorrosiveTouch				0	1	1	539	EARTH
-Target_CorruptedBlade				0	3	1	469	ROGUES
-Target_CripplingBlow				0	2	1	149	WARFARE
-Target_CryogenicStasis				0	2	1	393	WATER
-Target_Curse					0	1	1	366	SOURCE
-Target_CursedBloodInfusion			2	1	2	2000	SUMMONING
-Target_CursedElectricInfusion			2	1	2	529	SUMMONING
-Target_CursedOilInfusion			2	1	2	2001	SUMMONING
-Target_DaggersDrawn				2	4	2	114	ROGUES
-Target_DeathWish				0	2	1	445	DEATH
-Target_DeathsDoor				0	3	1	554	DEATH
-Target_DecayingTouch				0	2	1	347	DEATH
-Target_DemonicBargain				2	1	2	550	POLYMORPH
-Target_DemonicStare				1	2	0	400	SPECIAL
-Target_DualWieldingAttack			0	2	0	603	SPECIAL
-Target_ElectricInfusion				0	1	1	420	SUMMONING
-Target_ElementalArrowheads			0	1	1	485	HUNTING
-Target_EnemyBless_Alexandar			1	0	0	368	SOURCE
-Target_Enrage					0	2	1	340	WARFARE
-Target_Equalize					0	2	1	549	POLYMORPH
-Target_EvasiveManeuver				0	1	1	546	AIR
-Target_Farsight					1	1	2	505	HUNTING
-Target_Fatality					3	2	3	580	ROGUES
-Target_FireInfusion				0	1	1	424	SUMMONING
-Target_FireWhip					0	3	1	436	FIRE
-Target_Fireblood				0	1	1	361	FIRE
-Target_FirstAid					0	1	1	93	HUNTING
-Target_FlamingCrescendo				0	1	1	450	FIRE
-Target_Flurry					2	4	2	513	WARFARE
-Target_Fortify					0	1	1	358	EARTH
-Target_FrostyShell				0	1	1	326	WATER
-Target_GagOrder					0	2	1	506	ROGUES
-Target_GraspOfTheStarved			2	2	2	446	DEATH
-Target_Harmony					0	2	1	413	SUMMONING
-Target_Haste					0	1	1	79	FIRE
-Target_HeavyAttack				0	3	0	376	SPECIAL
-Target_IceInfusion				2	1	2	508	SUMMONING
-Target_Infect					0	3	1	348	DEATH
-Target_InvisibilityTarget			1	2	1	18	AIR
-Target_Item_ReplenishSource			0	1	0	586	SOURCE
-Target_KneeBreaker				0	2	1	396	ROGUES
-Target_MaddeningSong				1	1	0	433	SPECIAL
-Target_MassSabotage				1	2	2	511	FIRE
-Target_MasterOfSparks				1	1	2	497	FIRE
-Target_MosquitoSwarm				0	2	1	344	DEATH
-Target_NecrofireInfusion			2	1	2	500	SUMMONING
-Target_OilInfusion				0	1	1	427	SUMMONING
-Target_Overpower				3	2	3	339	WARFARE
-Target_PetrifyingTouch				0	1	0	332	SPECIAL
-Target_PoisonInfusion				0	1	1	421	SUMMONING
-Target_PowerInfusion				0	1	1	415	SUMMONING
-Target_PressureSpike				0	1	1	462	AIR
-Target_RangedInfusion				0	1	1	416	SUMMONING
-Target_ReactionShot				0	2	1	481	HUNTING
-Target_Restoration				0	1	1	184	WATER
-Target_RockSpikes				0	2	1	327	EARTH
-Target_Sabotage					0	1	1	512	FIRE
-Target_SerratedEdge				0	2	1	320	ROGUES
-Target_ShacklesOfPain				0	1	1	349	DEATH
-Target_ShadowInfusion				0	1	1	475	SUMMONING
-Target_ShockingTouch				0	2	1	23	AIR
-Target_SingleHandedAttack			0	1	0	377	SPECIAL
-Target_Silence					0	2	1	140	SPECIAL
-Target_SleepingArms				0	2	1	380	ROGUES
-Target_SoulMate					0	1	1	470	SUMMONING
-Target_SourceDisruption				0	1	0	367	SOURCE
-Target_SourceVampirism				0	1	0	367	SOURCE
-Target_SpontaneousCombustion			0	2	1	363	FIRE
-Target_Squall					1	2	0	434	SPECIAL
-Target_StripResistance				0	2	1	516	POLYMORPH
-Target_Supercharge				0	1	1	412	SUMMONING
-Target_TentacleLash				0	2	1	403	POLYMORPH
-Target_Terrify					0	2	0	551	SUMMONING
-Target_TerrifyingCruelty			0	3	1	487	ROGUES
-Target_TimeWarp					1	2	0	435	SPECIAL
-Target_UnlockMagic				0	1	0	108	SPECIAL
-Target_VacuumTouch				0	1	1	528	AIR
-Target_VampiricHunger				0	1	1	532	WATER
-Target_Vaporize					0	1	1	1003	AIR
-Target_VoidwokenCharm				0	3	1	583	SUMMONING
-Target_Vulture_ConsumeCorpse			0	2	0	1018	DEATH
-Target_WarpInfusion				0	1	1	474	SUMMONING
-Target_WaterInfusion				0	1	1	423	SUMMONING
-Target_Windwalker				0	1	1	310	AIR
-Target_WinterBlast				0	2	1	331	WATER
-Target_WormTremor				0	3	1	479	EARTH
-Teleportation_ForcePush				0	2	1	308	SPECIAL
-Teleportation_FreeFall				0	2	1	309	AIR
-Teleportation_LastRites				0	3	1	391	DEATH
-Teleportation_Netherswap			0	1	1	20	AIR
-Teleportation_ResurrectScroll			0	6	0	139	DEATH
-Teleportation_SwapGround			0	1	1	564	POLYMORPH
-Tornado_Air					0	2	1	27	AIR
-Wall_LivingWall					0	2	1	477	EARTH
-Zone_LaserRay					0	3	1	437	FIRE
+#- [1] ---------------------------------------- [2] --- [3] --- [4] --- [5] --- [6] ----------- [7] ---------------------------------
+Cone_CorrosiveSpray				1	2	2	540	EARTH		h8bcfac9ag2b80g4da7ga6cegff96d1df7326
+Cone_Flamebreath				0	1	0	313	SPECIAL		hc40d3a76g4a8cg4ec4g8d57g8b93d9355e54
+Cone_GroundSmash				0	2	1	364	WARFARE		h9ea49742g92acg4258g837cgbfc3908e1010
+Cone_Shatter					0	4	1	390	WATER		h9a4e53afg66e6g455dg8817g1e7d0033390d
+Cone_SilencingStare				0	2	1	392	DEATH		h20a030e6gf873g465eg8f1egafdf01a1d63a
+Cone_SteamLance					2	2	2	330	WATER		he65f0ec6gb585g484fgb03ag1a2b971cf20b
+Dome_CircleOfProtection				1	1	0	382	SPECIAL		hfba132ddg551fg4d3ag9d76gdd48234189bc
+Jump_CloakAndDagger				0	1	1	112	ROGUES		h636c352bg62e2g4151g9aa6g2ef47bf6704b
+Jump_EnemyVoidGlide				0	1	0	106	SPECIAL		h62142715g4bf6g4c6agb262g842b00116fef
+Jump_PhoenixDive				0	1	1	325	WARFARE		h7c79aadfg6803g42d9ga5abg98e4c1492f88
+Jump_TacticalRetreat				0	1	1	106	HUNTING		h8d271361g5152g48ecg9d2cgbfc132632843
+MultiStrike_BlinkStrike				0	2	1	370	WARFARE		hbc8e8facgae80g4194ga362g008a88cba21c
+MultiStrike_Vault				0	1	1	343	ROGUES		h6e6e7e8cg7a4dg483egb884gb3c7e6cdc8b0
+ProjectileStrike_DazingBolt			0	3	1	448	AIR		h394ce8b0g6523g471eg8893gb5dc55a0bddd
+ProjectileStrike_HailAttack			3	4	3	172	WATER		hd380f4a6gb7fbg437egaf99g7a7e02fc5ed2
+ProjectileStrike_HailStrike			0	3	1	353	WATER		h3fe700fcg1c94g4a42gb1e3g59575dac52ac
+ProjectileStrike_MeteorShower			3	4	3	578	FIRE		h6f1c29fdgee8ag4f8agb5c4g2a752a6b437e
+ProjectileStrike_RainOfArrows			3	3	3	581	HUNTING		h31ac27bag46ceg4050gb684g8b2e4b8ee669
+Projectile_AcidSpores				2	3	2	54	EARTH		h5485315fg89f6g4ec0ga048g5f367d3a5570
+Projectile_ArrowSpray				1	3	2	315	HUNTING		h571ca44eg4aacg47e4gb981gccd3b9ac2bf8
+Projectile_BallisticShot			0	2	1	483	HUNTING		h4a055045g5d9dg4c1dg89e5g3875cdc6df58
+Projectile_BouncingShield			0	2	1	472	WARFARE		h3339c702gde94g4341ga524gaf7ba3a54dcd
+Projectile_ChainHeal				0	2	1	369	WATER		h240a8355g1fc1g4644gbfbfgeaa41bc4574d
+Projectile_ChainLightning			1	3	2	12	AIR		h6cc9a73dg9419g40c4gbae1gd3fb3b1b2594
+Projectile_Chloroform				0	1	1	318	ROGUES		h8046e832g9ccag4138gacb3g04c7636fd32e
+Projectile_DeployMassTraps			1	3	2	509	FIRE		h10e1a9eagf081g46deg9b1bg8db125725703
+Projectile_DimensionalBolt			0	2	1	405	SUMMONING	h1213f5adg0d19g4640g8669ga44ac1c52f91
+Projectile_DustBlast				1	3	2	555	EARTH		h1906e186g424dg40c9g8dbeg10edbeebb163
+Projectile_FanOfKnives				1	3	2	488	ROGUES		h66e37831g24d5g4adagb981g284f24d2bd04
+Projectile_Fireball				0	2	1	355	FIRE		h36b017dfgfde5g4ad4g95bdgdd647ef6f11e
+Projectile_FlamingDaggers			0	2	1	362	FIRE		h54be7169ge100g4079gbba0g81cc3f789c06
+Projectile_Flight				0	1	0	419	POLYMORPH	h6a6588f4g8409g4596g8e3cg66dcd1f91cd2
+Projectile_IceFan				0	3	1	452	WATER		hf0a81a6cgcdefg4e4bgad73g2466aeeb79a0
+Projectile_InfectiousFlame			2	3	2	579	FIRE		h4737111dg4481g4daegaa10g9fe9b7128245
+Projectile_LaunchBomber				0	2	1	458	ROGUES		h7682f878gf5a3g425eg8707g98b0bf808148
+Projectile_LaunchExplosiveTrap			0	1	1	510	FIRE		h51e84fefgedebg4b22g97b6g8a338b95f2d7
+Projectile_LaunchOilBlob			0	2	1	484	POLYMORPH	ha1c79e99gfa58g4588g9b31gb19d006f6f48
+Projectile_LaunchPoisonSlug			0	2	1	67	SUMMONING	ha2699482gc2c2g4256g91c5g8fff7776dcb0
+Projectile_LightningBolt			0	2	1	357	AIR		h688f74ddgfff9g4665g9ee8gb6973af2a48d
+Projectile_Mark					0	1	1	350	HUNTING		ha19a623ag13c0g42ecgb6afg259cd1ba3707
+Projectile_Multishot				0	3	1	95	HUNTING		h24e2cfe6g3770g46a7g9f5dgb2b65c378a04
+Projectile_PiercingShot				0	2	1	317	HUNTING		h8112210fg5067g4810g838bgfe1c7d2fff95
+Projectile_PinDown				0	3	1	379	HUNTING		haa03381fg164cg48f3g9810gcbc1ee32faf2
+Projectile_PoisonDartStart			0	2	1	64	EARTH		h29058625gd935g4563g8d61gd4e160c6d29c
+Projectile_PyroclasticEruption			3	3	3	455	EARTH		h0e6978efgda20g49d5g849ag507205ca3d43
+Projectile_PyroclasticRock			0	2	1	312	EARTH		h42fa2475ge0c7g472dg8431gd18db846fb29
+Projectile_Ricochet				0	2	1	100	HUNTING		h1b7dcea6ge053g40e9ga77cg6edab3fd0ca3
+Projectile_SkyShot				0	2	1	482	HUNTING		ha9197c03g44f9g42caga1d6g5c29cb9c11fd
+Projectile_Snipe				0	3	1	351	HUNTING		h685a7ae0gc427g44c1gafbbgac2b0581bc3e
+Projectile_StaffOfMagus				0	2	0	147	SPECIAL		he25884ffg6f6bg4120g893bg975d17c37e97
+Projectile_Superconductor			0	3	1	447	AIR		h1276d0bbg8532g4b28ga464g351faaebc29e
+Projectile_ThrowDust				0	2	1	542	EARTH		hff61a065g8496g4651g9d46gcee50116fbf8
+Projectile_ThrowingKnife			0	2	1	342	ROGUES		hcc3d523eg8f13g4d7bg9437gf8d402c03353
+Quake_Earthquake				0	3	1	55	EARTH		h4afad445g8799g424dgbe0agc9b2828a05c7
+Rain_Blood					0	2	1	346	DEATH		h3d1eb5c0g4bceg4ffcg9ab3g3de5f03acb95
+Rain_Oil					0	1	1	359	EARTH		ha5a7e8e6g0bccg466dg8717gc8e8227ef161
+Rain_Water					0	1	1	180	WATER		hf5b00d66g1636g4a2cg87a2g1656ea5c44b7
+Rush_BatteringRam				0	2	1	324	WARFARE		hac6b2670gd5b5g4951gb077g493a0c47479d
+Rush_BullRush					0	2	0	418	POLYMORPH	hb0e12b08g48c5g420bga619gc799519b63dd
+Shout_Adrenaline				0	0	1	110	ROGUES		h5e4aac74gc2b9g4cdfgb054g2ccf7d8a0143
+Shout_Apotheosis				3	2	3	544	POLYMORPH	h79480543g903cg4806gb9cbgd406d04e2cb3
+Shout_BarbedCoat				0	0	1	148	WARFARE		h65375515g9908g4a88ga862g8aa687014670
+Shout_BlindingRadiance				0	2	1	335	AIR		h8e39c701g1e58g4a37g8911g1602e2a40a68
+Shout_BoneCage					0	1	1	456	DEATH		h421ea4e4g65d1g46dagb94fg66bd0a375426
+Shout_BreakTheShackles				1	0	0	429	SPECIAL		h5eb0b6c7g78eag4d7dga724g78990319e6ff
+Shout_BreathingBubble				0	1	1	526	AIR		h8ce6d815g89abg4525g93cfgffc81647fc98
+Shout_BullHorns					0	0	1	402	POLYMORPH	hf16ff17cgcb0ag4312g9bdeg3c701c25aa86
+Shout_CancelPolymorphism			0	1	0	561	POLYMORPH	h57b62437g71e4g47b8gbfe0g40f4777576dc
+Shout_CauseFear					0	2	1	135	DEATH		hefe24b15gba5dg4d91g8e51g3b20b3b39818
+Shout_ChameleonSkin				0	1	1	314	POLYMORPH	h12946df4g7177g4a3cg8086gc50bac3ed6b2
+Shout_CloseTheDoor				1	2	2	486	SUMMONING	h0636562dg88a9g4b59g8346g897699937e6f
+Shout_CON00_ActivateSpores			0	1	1	1017	EARTH		hb83436c1g641bg42e5gb4b1g33bec7698244
+Shout_Contamination				0	1	1	336	EARTH		ha43419f0gde18g4133g8beeg267604eeaf54
+Shout_Cryotherapy				0	1	1	531	WATER		hce36d656gcb21g41a4gaa7egdd90c77d7578
+Shout_Deafen					0	2	1	577	SPECIAL		h28bf8eb3gfed9g42bbga3edg33b5c43e9842
+Shout_DeflectiveBarrier				0	2	1	473	WARFARE		h618780ecg31eag46e7gad72g4ae3f00d9c18
+Shout_DemonicTutelage				0	1	0	552	SUMMONING	hdb393889ge8f4g4bf8ga8dfg86598164681d
+Shout_ElectricFence				2	2	2	334	AIR		h417a3654g98e6g4139g9f60g9f0ae8e62d99
+Shout_ElementalTortoise				0	0	1	153	WARFARE		hf435242cg839cg4bc5g87f2g0e404cf0cb14
+Shout_EnemyOverthrow				0	2	0	165	SPECIAL		h1768d776g7849g4912g95e9ga87e48112d8a
+Shout_EtherealSoles				0	1	1	322	ROGUES		hb804ea9agef59g4acbg9db2g5cd16f654365
+Shout_EvasiveAura				1	2	2	545	AIR		h0aa70629g1f92g486fg9ed4ge13bf9325c05
+Shout_FavourableWind				0	1	1	333	AIR		hf280f619g406fg4eddgb774ga57c559f325d
+Shout_FireBrand					0	1	1	438	FIRE		h95a4f3cegde60g479bgbb20g46e9bf06742a
+Shout_FlamingSkin				1	1	2	496	POLYMORPH	hc537f5cdgc446g440bgbc0cga9f7733ceaa4
+Shout_FlamingTongues				0	1	1	439	FIRE		h4aff2b7dg3182g438bga873g56f72365a259
+Shout_FleshSacrifice				0	0	0	338	SPECIAL		hf20bb821g24ecg4e53g9dbbg59d7983512a5
+Shout_FrostAura					0	1	1	449	WATER		hb4f99a57gc7d6g4ff4ga109gd97eb0a2d570
+Shout_GlobalCooling				0	1	1	365	WATER		hb205e681gdff5g47d0gbebbg6c2b6860e18b
+Shout_GuardianAngel				0	2	1	394	WARFARE		h38c514c0g5ad7g4223ga0edg24a06fb0d7c5
+Shout_HealingTears				0	1	1	535	WATER		hbde4148cg63c5g411aga69ageb4a334ab2fb
+Shout_IceBreaker				0	1	1	538	WATER		h89ef60ebg2b89g4d16ga5a2gf0078161b0c1
+Shout_IceSkin					1	1	2	534	POLYMORPH	h03869e5eg3187g456eg99c7gf1f24cca5662
+Shout_Ignition					0	1	1	319	FIRE		h79ad557fg7983g4b95gae00gf2fbdf6c3a19
+Shout_InnerDemon				1	1	2	560	SUMMONING	hd56d7b56g11a4g442cga208g340065168233
+Shout_InspireStart				0	1	0	158	SPECIAL		hf981bdf7g8c63g433egb70fg649202f1aba6
+Shout_InvisibilitySelfRogue			0	2	2	125	ROGUES		h3afdb65dg8624g4fdag8098gf67645a20a14
+Shout_Invulnerability				1	6	3	137	DEATH		h1889cf51gd0a8g4a53gbaa5g6e78d3ed6eab
+Shout_JellyfishSkin				1	1	2	525	POLYMORPH	h653ebbd7gf593g4d2eg896fg208b1439b713
+Shout_MassBreathingBubbles			1	1	2	527	AIR		h97594260g52abg4df8g8370g5d6d3d2fac49
+Shout_MassCleanseWounds				1	2	2	536	WATER		h9f54fdd9g104cg4bd2g8c17g72312bbddc94
+Shout_MassCorpseExplosion			1	1	2	499	FIRE		h07afc4a0gf0b7g4b84gb5b2gee1ae402ced3
+Shout_MassCryotherapy				1	2	2	530	WATER		h963b27b4g89dcg4accg8b8fg0489b5c37de5
+Shout_MassOilyCarapace				1	2	2	559	EARTH		h3deac692g6790g44d4g85c3g160941a0a2a6
+Shout_MedusaHead				0	2	1	502	POLYMORPH	h55e9ea62g1928g4355gbc0dgab60ce735802
+Shout_MendMetal					0	1	1	459	EARTH		h229d26a7ge4c3g4bf3gadcbg6a4dfcbf33ef
+Shout_NecromancerTotems				3	2	3	453	DEATH		hef3d6b76g132bg4af3g8df8gfc34ac926565
+Shout_NullResistanceStart			0	2	1	138	DEATH		hbfe9cf32ga95bg4a7dg98d3g7c850ceb7287
+Shout_OilyCarapace				0	1	1	558	EARTH		ha2ac13f8g90fbg49f0g9421g90a78de88806
+Shout_PetrifyingVisage				0	2	0	518	POLYMORPH	h25fafbd6gf879g4353gaf74g3d475b0212cb
+Shout_PlayDead					0	0	0	501	SPECIAL		h85db007egc85fg4352g9e4cg7bae7475abfe
+Shout_PoisonWave				0	2	1	464	EARTH		h11f79a2dg4145g4db4g9798g8fe2438c4c9a
+Shout_PoisonousSkin				1	1	2	553	POLYMORPH	h7f84798bga3b3g4b1dg9631g0fe74f9c5a89
+Shout_PolymorphIntoDwarf			0	1	0	408	POLYMORPH	hdc0ca677ge927g4643g95bag368004377e28
+Shout_PolymorphIntoElf				0	1	0	409	POLYMORPH	hd2cbb0c3ge411g4f10gba13gc0994bf23ce5
+Shout_PolymorphIntoHuman			0	1	0	406	POLYMORPH	hf1840bf7gafa6g45bbg8d59gc2dd5139c9d7
+Shout_PolymorphIntoLizard			0	1	0	407	POLYMORPH	hc6f9ee67gf6f1g4605g91edge07aefca267a
+Shout_ReactiveArmor				0	2	1	478	EARTH		hdd329d2fg1902g4e64gab88g6b88a04e4180
+Shout_RecoverArmour				0	2	0	375	SPECIAL		hbfed00e3g4833g4873gad23g7d1398799e4e
+Shout_ShedSkin					1	1	2	398	POLYMORPH	h1dac8bbfg474fg48fdg824dg1824373397cf
+Shout_Shout_Toggle_Sprint			0	0	0	1016	SPECIAL		hc084df82ga94dg479eg9958ge8b6116910b4
+Shout_SiphonPoison				0	1	1	457	EARTH		h2a7c2647g8df4g4894gbd32g9d3c6a32680b
+Shout_SmokeCover				0	1	1	548	AIR		h649158f4ge99cg4e30g8a3cg80e416e02cc6
+Shout_SparkingSwings				0	1	1	514	FIRE		h48e2ba37ge871g4f32gbae5g54e9f3bdcded
+Shout_SpiderLegs				0	0	1	515	POLYMORPH	h9d74d106gc5c2g4758g9646g0b6dc0ed2d14
+Shout_SpiritForm_Lucian				0	2	0	1015	SOURCE		h7c06ecb7g81a4g4d0dg81e1g03d312fc3906
+Shout_SpiritVision				0	1	0	1015	SOURCE		h2248d291g0f1ag4301gba79g3671a73e134f
+Shout_SteelSkin					0	2	1	401	POLYMORPH	h2544d56cg60aeg4888g9a8fg0f8804152d3d
+Shout_Supernova					0	3	1	440	FIRE		h4605b08bgb11fg4894g97c0g6ebf9c22a2fd
+Shout_Taunt					0	2	1	166	WARFARE		hc61714abg339cg4039g9564g6046c5d73235
+Shout_ThickOfTheFight				1	2	2	395	WARFARE		hc847388dg5b2eg47ceg9771g8b8ade7c82fa
+Shout_VacuumAura				1	2	2	522	AIR		he72efc5fg2dddg459dgb224gd0f0f97fdd0a
+Shout_VampiricHungerAura			1	1	2	533	WATER		hdb3c4babg7bf9g4315g848eg55341cc9b59b
+Shout_VenomCoating				0	1	1	556	EARTH		hd5bc7764g646ag4cc7g8eccg20c904bd90bb
+Shout_VenomousAura				1	2	2	557	EARTH		h030c4ecfge67fg439eg8bb9g1d2c619c90cf
+Shout_Whirlwind					0	2	1	323	WARFARE		h78ee948fg2c2eg41c4g9a6dg0d7e9bd494c2
+Shout_Wings					0	1	1	397	POLYMORPH	h6d0b7f30g71d8g4479g86c9g5ceed7c7cda1
+Storm_Blood					3	4	3	507	DEATH		ha3d78f63g28fag4de8gbbe7g2c54a4302cbf
+Storm_Ethereal					3	4	3	466	SUMMONING	hdf47e8a7g624eg4cfagaa8ege0b4abc6479d
+Storm_Lightning					3	4	3	582	AIR		hd0730460g3992g4a0bgacdcgc7ee875101d5
+Summon_ArtilleryPlant				1	2	2	352	EARTH		h96853d93g2bb9g4adega3cega860d70d0fc5
+Summon_BonePile					0	2	1	476	DEATH		hd96ea2e3gd6dcg4c94g9ea5g9bf55a0f5c63
+Summon_BloodHeart				0	2	0	356	SPECIAL		he8e359aagbcc8g4c3bga47cg910c46b8a75c
+Summon_Cat					0	2	1	383	SUMMONING	h4e1b611fgea20g4684g8b76g997bd678101c
+Summon_Condor					0	2	1	524	SUMMONING	h2904914dg6767g4495g9666gd18c516046ce
+Summon_FireSlug					1	1	2	460	FIRE		h69c1e66ag8ef6g4d53gb79bg04c2c144fd29
+Summon_Incarnate				0	2	1	417	SUMMONING	hd60aed0cgd7e4g4bf6g9f60g2bf717bea550
+Summon_PlanarGateway				2	0	2	467	SUMMONING	h0299d4c0g414bg49e1gb80bg397dbe8ce67a
+Summon_Quest_SummonNewt				0	2	2	584	SUMMONING	hce71bbd1g2313g4e0dg9d10gcbfbdd958365
+Summon_SoulWolf					1	3	0	431	SPECIAL		he269210dg8d16g4f1dg93e4g82940cfd66a9
+Summon_TotemFromSurface				0	2	1	414	SUMMONING	h3177e1a0ge6b4g4a6fg8b0cgf2418c42f9fb
+Target_AcidInfusion				2	1	2	495	SUMMONING	h68f36734gb0beg4434gae5ega99781f18680
+Target_Apportation				0	1	1	461	AIR		hcaf56589g0a7cg4874g896dg2c9e5088cca4
+Target_ArcaneStitch				1	3	2	465	WATER		hafdbcddcg794fg480eg91e5g714e33768ddc
+Target_BanishSummon				0	2	1	126	SUMMONING	h9bf05c24g26f8g4792gac55g51f9dd50f1e2
+Target_BlackShroud				1	1	2	454	DEATH		h6f6d2134gfd44g4096gbfa9gae8bdc4fcba1
+Target_Bless					1	1	1	368	SOURCE		h75561f8bg681bg460egb7e5g72c50ef09c30
+Target_BlessedSmokeCloud			2	1	2	547	AIR		h32c1352cg6172g4f6bga5abgeaabc5872ee1
+Target_BloatedCorpse				0	1	1	468	DEATH		habb90745gdd7bg4eebg8c22g5bd99e5dc3ab
+Target_BloodBubble				0	1	1	345	DEATH		h5648cd05g6993g4e8cg9ef7gdb5f3a06bbfd
+Target_BloodInfusion				0	1	1	422	SUMMONING	hacc1b8f2g1711g4ea2gbcf0g029479b59b17
+Target_BurnMyEyes				0	1	1	354	FIRE		h7bee5b4ag7e17g4e33gab79ge7766e4b05cf
+Target_Cannibalize				0	1	1	337	SUMMONING	h8796d218g7218g44a6ga28cgf23d5df931ea
+Target_Challenge				0	0	1	471	WARFARE		h49b0d23fg57cfg428cg9ec5g1c7370d8d875
+Target_Charm					0	3	1	583	SUMMONING	h14434711gdcb8g4f6ag8067g110d15624c81
+Target_ChickenTouch				0	2	1	399	POLYMORPH	he2bada74g7766g486bg9da2g97d8236151d2
+Target_CleanseWounds				0	2	1	537	WATER		h24c27912g58a5g446cgac55g00ca4d1b63f6
+Target_Condense					0	1	1	360	EARTH		h78ee5ba7g6cceg4b8egb190g6158b9dee813
+Target_CorpseExplosion				0	1	1	498	FIRE		h92a2b6feg0fdcg4d03g9879g913a8f45e272
+Target_CorrosiveTouch				0	1	1	539	EARTH		hbe08bb9dg867bg4d16g8fa5gb69f8257c1ca
+Target_CorruptedBlade				0	3	1	469	ROGUES		h2cd9c4begf245g43b7ga541g3cf8a587c57b
+Target_CripplingBlow				0	2	1	149	WARFARE		hed2cddfcg1f73g444bgaa9cg505e8a39ebea
+Target_CryogenicStasis				0	2	1	393	WATER		h3029d5a7g1efcg4f84ga709g576df68880ba
+Target_Curse					0	1	1	366	SOURCE		hce416745g6d6bg4c0dg9f50g1c435b135f77
+Target_CursedBloodInfusion			2	1	2	2000	SUMMONING	ha96de384ge107g4f89g99e2gbba4411e9cba
+Target_CursedElectricInfusion			2	1	2	529	SUMMONING	h6179b69age878g4919g84f1g81aabd6111f5
+Target_CursedOilInfusion			2	1	2	2001	SUMMONING	h707a7227g43a5g44begb77ag5ff1b00d16f2
+Target_DaggersDrawn				2	4	2	114	ROGUES		h64eca388g177eg4336gb0c3g35600ab13663
+Target_DeathWish				0	2	1	445	DEATH		hb797c510gf092g42cdg87efgdafce33fe91e
+Target_DeathsDoor				0	3	1	554	DEATH		h5c8a08a1g4961g4b0agb50cgae9c033a4067
+Target_DecayingTouch				0	2	1	347	DEATH		h0fe92926g2b0dg411dgb286g4a34e9cd5b3c
+Target_DemonicBargain				2	1	2	550	POLYMORPH	h946b8e88ge166g4f20gaeeag1cdeebc3f771
+Target_DemonicStare				1	2	0	400	SPECIAL		h689b5814gb262g46bdg9047gc3dc4c77617e
+Target_DualWieldingAttack			0	2	0	603	SPECIAL		h5355e587gf26ag4e09g993fgbe9b8e8bff6f
+Target_ElectricInfusion				0	1	1	420	SUMMONING	h347dcf60g3fafg4639g9a2dg2c5cb6b43829
+Target_ElementalArrowheads			0	1	1	485	HUNTING		hbce8b81ag1259g4a30g99f9g1f99e9b74583
+Target_EnemyBless_Alexandar			1	0	0	368	SOURCE		h5b7656a6g1f7bg41b8gb647ge6452d12fbcf
+Target_Enrage					0	2	1	340	WARFARE		h9664b64fge3fdg443cgaaf6gb775e9d398c8
+Target_Equalize					0	2	1	549	POLYMORPH	h8cf6372dg6a57g4dc6g9cf5gaf9de66e0939
+Target_EvasiveManeuver				0	1	1	546	AIR		h619592dcg0418g4750ga6ccg09dda23f1bcb
+Target_Farsight					1	1	2	505	HUNTING		hcfb65642g97f6g46b5g9d2bg359144ae1012
+Target_Fatality					3	2	3	580	ROGUES		h2a919e86g2510g49d2g9565g57fd2894f5c3
+Target_FireInfusion				0	1	1	424	SUMMONING	h1af3569bg8ce9g4c12gacb2g1525bcb6ae4e
+Target_FireWhip					0	3	1	436	FIRE		h2a4639cegcebag4061ga6c6gf66f5e6b0a64
+Target_Fireblood				0	1	1	361	FIRE		h665aa545gf123g495dg8be3gcb83edb816a2
+Target_FirstAid					0	1	1	93	HUNTING		hbae39d4fg8f06g403dg8738g17e397419071
+Target_FlamingCrescendo				0	1	1	450	FIRE		hfb4d0b82g310ag47d6g8378g933a1cd1264b
+Target_Flurry					2	4	2	513	WARFARE		h0e95fc48g9627g470egbd92g1365cd198411
+Target_Fortify					0	1	1	358	EARTH		h153869b3ge0a3g4f24g9a7agc47ce3abea94
+Target_FrostyShell				0	1	1	326	WATER		h57a53bcegd08bg4f5cg80e9g6579c5d70b13
+Target_GagOrder					0	2	1	506	ROGUES		h50eff5d3g63d2g49c6gb5fdg07146a32a022
+Target_GraspOfTheStarved			2	2	2	446	DEATH		h9e2072b0gf4f6g46c5g8bf1g6a4d849c1dea
+Target_Harmony					0	2	1	413	SUMMONING	haaac9639g2defg408eg8038gcbc2630db02e
+Target_Haste					0	1	1	79	FIRE		he869d154g325eg440fg8670gcbf5383d1ecc
+Target_HeavyAttack				0	3	0	376	SPECIAL		hc30b6060gf6c0g4675g919fgb015fdd77df8
+Target_IceInfusion				2	1	2	508	SUMMONING	h9ced1049g63c5g41c8gb6e7g2e9f1cfec823
+Target_Infect					0	3	1	348	DEATH		hf00d5258ga946g4c66gabd6g4e3aab98008b
+Target_InvisibilityTarget			1	2	1	18	AIR		h6bc6ace0gd482g4bb9g96b7g67e6053b90f6
+Target_Item_ReplenishSource			0	1	0	586	SOURCE		h878eb249g9cceg4f8fgaad1gceda8d1e8300
+Target_KneeBreaker				0	2	1	396	ROGUES		h7971ad29gd990g47c7gb113gf801d0c56321
+Target_MaddeningSong				1	1	0	433	SPECIAL		h4f18d65dg7d82g452eg813fg27ac18d1c0c5
+Target_MassSabotage				1	2	2	511	FIRE		h61e74c07g2235g49ceg8e4dge9a2c8090092
+Target_MasterOfSparks				1	1	2	497	FIRE		hc31befe0g61fag4bcega9ecg7d8fc7a64fac
+Target_MosquitoSwarm				0	2	1	344	DEATH		hbeb47534gec4ag4917g9ef1gea70cf41da7c
+Target_NecrofireInfusion			2	1	2	500	SUMMONING	hf03da4c9g552eg4636g94b0gf219a42c1deb
+Target_OilInfusion				0	1	1	427	SUMMONING	h593e9e0eg2e6eg4c85ga998gfe467bab340a
+Target_Overpower				3	2	3	339	WARFARE		h2f593b71gb937g4fcegb85fg783297f2b34b
+Target_PetrifyingTouch				0	1	0	332	SPECIAL		h63690dd6gd819g4959gac23g47ed3ba9b44c
+Target_PoisonInfusion				0	1	1	421	SUMMONING	h6b88c248g225dg4363gada9gc5c40e04e22f
+Target_PowerInfusion				0	1	1	415	SUMMONING	hb902c0aag75eag4659g9df6g22b947646b29
+Target_PressureSpike				0	1	1	462	AIR		h9bd51c0dgc4d2g41ecg8f35g19ee1014ce44
+Target_RangedInfusion				0	1	1	416	SUMMONING	h8b33cb59g162bg4d99ga73bg10d32415b0bf
+Target_ReactionShot				0	2	1	481	HUNTING		hbd7dbb40gd1e1g42dbg84bag5581fd31c28b
+Target_Restoration				0	1	1	184	WATER		h1e729f05gb054g412fg84e9g1d5ed6308dfa
+Target_RockSpikes				0	2	1	327	EARTH		hfc05d81ag92ebg4ad5gb8beg19c2a1a5771a
+Target_Sabotage					0	1	1	512	FIRE		ha290f90cg06cdg420eg9335gd21976d31f1e
+Target_SerratedEdge				0	2	1	320	ROGUES		h57f12f21g6749g49bdg8013g7446fa45e31f
+Target_ShacklesOfPain				0	1	1	349	DEATH		hd5551babge481g41f2gb8e4g16761d19b39d
+Target_ShadowInfusion				0	1	1	475	SUMMONING	h8be1b359g80b8g4078g80b3g228b9432963b
+Target_ShockingTouch				0	2	1	23	AIR		h3efd1febg9f72g4468ga1e6g0cf863539998
+Target_SingleHandedAttack			0	1	0	377	SPECIAL		h4bb72a03gf8c7g48e1ga49dg302a0a24cf2d
+Target_Silence					0	2	1	140	SPECIAL		h80f889f6g0fe5g455bg9549gccd4a964f1f7
+Target_SleepingArms				0	2	1	380	ROGUES		h0fc276c4gad72g4684gacf7g2512abf0313c
+Target_SoulMate					0	1	1	470	SUMMONING	h9bc330b3gb22bg4837ga82egb3078e0019aa
+Target_SourceDisruption				0	1	0	367	SOURCE		he783680agb67eg469dga265gfe87777b5694
+Target_SourceVampirism				0	1	0	367	SOURCE		he9ea09a6g7fd8g4115g975bgc9eba2e67eb7
+Target_SpontaneousCombustion			0	2	1	363	FIRE		h5ba8da32gfbe8g415dgbbabg3c7b90b11053
+Target_Squall					1	2	0	434	SPECIAL		hefc77723g4e17g42f1ga1bdgf7971609212c
+Target_StripResistance				0	2	1	516	POLYMORPH	hf7647a1ag16ebg4388g9b06ga5c294afcb46
+Target_Supercharge				0	1	1	412	SUMMONING	h9abb087egd05ag40cdg99ddg72027df434ea
+Target_TentacleLash				0	2	1	403	POLYMORPH	hc288b3c4gf2a2g4635g9343gcf5f93e97286
+Target_Terrify					0	2	0	551	SUMMONING	h9c881d7eg09b3g4ad8g9603gde2b6c66d3a6
+Target_TerrifyingCruelty			0	3	1	487	ROGUES		h9c881d7eg09b3g4ad8g9603gde2b6c66d3a6
+Target_TimeWarp					1	2	0	435	SPECIAL		h0f0ad191g878eg46d8g9907gd19a704fc325
+Target_UnlockMagic				0	1	0	108	SPECIAL		h4856a4ffgf89eg41dbga791g5ce91d0df81c
+Target_VacuumTouch				0	1	1	528	AIR		h1caadc0ag81f2g4d11ga949g5477e48ef4b7
+Target_VampiricHunger				0	1	1	532	WATER		h77233edag664ag4b24ga198g870c96c0c37a
+Target_Vaporize					0	1	1	1003	AIR		hb26be1a9g824eg437bg8327gc8fe430a8240
+Target_VoidwokenCharm				0	3	1	583	SUMMONING	h003fafceg8622g4cd8gab52g15eac89d7320
+Target_Vulture_ConsumeCorpse			0	2	0	1018	DEATH		h17c8b78age740g4f2bg8adag9967dad0dbb5
+Target_WarpInfusion				0	1	1	474	SUMMONING	he0b18d7fgc5deg4774g855ag0c40d16e099e
+Target_WaterInfusion				0	1	1	423	SUMMONING	ha38f9590g9f3eg40bbg8827g6b6e1e199924
+Target_Windwalker				0	1	1	310	AIR		hadf8b468g70c3g4dddg8809g15ff47c1c013
+Target_WinterBlast				0	2	1	331	WATER		h2059aa3cg41afg4aaagb2efg82312ba371c6
+Target_WormTremor				0	3	1	479	EARTH		h96045193g2708g4216g8b8ag9e5414923241
+Teleportation_ForcePush				0	2	1	308	SPECIAL		h43e8b06ag80d7g4132g83d3g143b27eb38e3
+Teleportation_FreeFall				0	2	1	309	AIR		h8e4757c6g556ag4d63gb18fg098bb7c17fd3
+Teleportation_LastRites				0	3	1	391	DEATH		hc8734d99g680cg4f26g8c62g4807236fa88a
+Teleportation_Netherswap			0	1	1	20	AIR		h538e4222gcc45g41b8g84bfgbed0ff2322a5
+Teleportation_ResurrectScroll			0	6	0	139	DEATH		h329ab34dg4047g4895gb94eg262fb399aa9c
+Teleportation_SwapGround			0	1	1	564	POLYMORPH	hde9240cfg74dcg48c6ga556g0a7ad3030b71
+Tornado_Air					0	2	1	27	AIR		hab245a83gfecbg426agb12ag30ed80b1b03b
+Wall_LivingWall					0	2	1	477	EARTH		h6fb425fcg68f3g452dga890g1c299062c7cf
+Zone_LaserRay					0	3	1	437	FIRE		hf86d974egd5dag4b41g9d5dga81b6717b45a
