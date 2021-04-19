@@ -142,6 +142,7 @@ typedef struct APPLICATION {
 	HICON				hIcons[APP_MAX_ICONS];
 	HICON				hShellIcons[APP_MAX_SHELLICONS];
 	FONTINFO			Font;
+	FONTINFO			GameFont;
 	WCHAR*				pszStatusText;
 	WCHAR*				pszWindowTitle;
 	CRITICAL_SECTION		CriticalSection;
@@ -149,6 +150,7 @@ typedef struct APPLICATION {
 	NODE				nodeLastFiles;
 	UINT				WM_TASKBARBUTTONCREATED;
 	ITaskbarList3*			pTaskbar;
+	FARPROC				DrawShadowText;
 	//--- Données d'affichage
 	UINT				uProgression;
 	DWORD				dwProgressionTime;

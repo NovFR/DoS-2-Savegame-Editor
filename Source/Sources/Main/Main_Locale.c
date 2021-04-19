@@ -19,8 +19,9 @@
 #include "Texts.h"
 #include "Utils.h"
 
-extern APPLICATION	App;
-extern WCHAR*		TextsIds[];
+extern APPLICATION		App;
+extern WCHAR*			TextsIds[];
+extern LOCALE_GAMEUITEXT	UIDisplayNames[];
 
 
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ //
@@ -269,6 +270,7 @@ int Locale_Load(HWND hWnd, WCHAR *pszPathFmt, WCHAR *pszLang, LONG lType, void *
 			break;
 		case LOCALE_TYPE_GAME:
 			*pLocalePtr = Parser.db;
+			App.Config.pszLocaleSortLS = Game_LocaleSortLanguage(pszLang);
 			break;
 		default:sqlite3_close(Parser.db);
 			break;
@@ -323,6 +325,13 @@ void Locale_Unload(LONG lType, void **pLocalePtr, WCHAR **pLocaleNamePtr)
 			break;
 		case LOCALE_TYPE_GAME:
 			sqlite3_close((sqlite3 *)*pLocalePtr);
+			for (uId = 0; UIDisplayNames[uId].uLocaleID != 0; uId++)
+				{
+				if (!UIDisplayNames[uId].pszText) continue;
+				HeapFree(App.hHeap,0,UIDisplayNames[uId].pszText);
+				UIDisplayNames[uId].pszText = NULL;
+				}
+			App.Config.pszLocaleSortLS = NULL;
 			break;
 		}
 

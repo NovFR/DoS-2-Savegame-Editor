@@ -13,6 +13,7 @@
 
 #include "Application.h"
 #include "Game.h"
+#include "GameLocale.h"
 #include "Definitions.h"
 #include "Locale.h"
 #include "Requests.h"
@@ -145,22 +146,9 @@ Stats:			if (sqlite3_prepare_v2(App.Game.pLocalization,"SELECT handle FROM Trans
 			}
 
 		//--- GET DisplayName FROM handle (DB)
-		if (pszHandle)
-			{
-			if (sqlite3_prepare_v2(App.pLanguage,"SELECT text FROM contentList WHERE contentuid=? LIMIT 1",-1,&stmt,NULL) != SQLITE_OK) goto Done;
-			sqlite3_bind_text(stmt,1,pszHandle,strlen(pszHandle),NULL);
-			if (sqlite3_step(stmt) != SQLITE_ROW) { sqlite3_finalize(stmt); goto Done; }
-			pszDisplayName = Misc_UTF8ToWideChar((char *)sqlite3_column_text(stmt,0));
-			sqlite3_finalize(stmt);
-			}
+		pszDisplayName = Game_LocaleNameFromHandleA(pszHandle);
 
-Done:		if (pszDisplayName && !wcslen(pszDisplayName))
-			{
-			HeapFree(App.hHeap,0,pszDisplayName);
-			pszDisplayName = NULL;
-			}
-
-		if (pszHandle) HeapFree(App.hHeap,0,pszHandle);
+Done:		if (pszHandle) HeapFree(App.hHeap,0,pszHandle);
 		if (pszName) HeapFree(App.hHeap,0,pszName);
 		if (pszItemGroup) HeapFree(App.hHeap,0,pszItemGroup);
 		if (pszStats) HeapFree(App.hHeap,0,pszStats);

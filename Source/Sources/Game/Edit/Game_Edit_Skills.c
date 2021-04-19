@@ -1653,7 +1653,7 @@ int Game_SkillsSortCmp(GAMEDATASKILL *pFirstSkill, GAMEDATASKILL *pSecondSkill, 
 		case DATA_SORT_TEXT:
 			pszText1 = pFirstSkill->pszName?pFirstSkill->pszName:pFirstSkill->pszId;
 			pszText2 = pSecondSkill->pszName?pSecondSkill->pszName:pSecondSkill->pszId;
-			iResult = CompareStringEx(App.Config.pszLocaleName,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
+			iResult = CompareStringEx(App.Config.pszLocaleSortLS,LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszText1,-1,pszText2,-1,NULL,NULL,0);
 			if (iResult == CSTR_LESS_THAN) return(-1);
 			if (iResult == CSTR_GREATER_THAN) return(1);
 			break;

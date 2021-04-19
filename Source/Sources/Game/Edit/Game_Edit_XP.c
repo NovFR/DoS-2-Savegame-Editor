@@ -13,6 +13,7 @@
 
 #include "Application.h"
 #include "GameEdit.h"
+#include "GameLocale.h"
 #include "Dialogs.h"
 #include "Utils.h"
 #include "Requests.h"
@@ -129,7 +130,7 @@ INT_PTR CALLBACK Game_EditXPProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM l
 		SendDlgItemMessage(hDlg,IDOK,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_OK));
 		SendDlgItemMessage(hDlg,IDCANCEL,WM_SETTEXT,0,(LPARAM)Locale_GetText(TEXT_CANCEL));
 
-		SetWindowText(hDlg,Locale_GetText(TEXT_CHR_EXP));
+		SetWindowText(hDlg,Game_LocaleNameFromLocaleID(TEXT_CHR_EXP));
 		Dialog_CenterWindow(hDlg,pXP->hwndParent);
 		pXP->bInitialized = TRUE;
 		return(FALSE);
@@ -146,13 +147,13 @@ INT_PTR CALLBACK Game_EditXPProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM l
 					Dialog_DrawInfo(pXP->pszInfo,(DRAWITEMSTRUCT *)lParam,BF_BOTTOM);
 					return(TRUE);
 				case 201:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_LEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					Dialog_DrawLabel(Game_LocaleNameFromLocaleID(TEXT_CHR_LEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 211:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_EXP),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					Dialog_DrawLabel(Game_LocaleNameFromLocaleID(TEXT_CHR_EXP),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				case 221:
-					Dialog_DrawLabel(Locale_GetText(TEXT_CHR_NEXTLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
+					Dialog_DrawLabel(Game_LocaleNameFromLocaleID(TEXT_CHR_NEXTLEVEL),(DRAWITEMSTRUCT *)lParam,NULL,DT_RIGHT);
 					return(TRUE);
 				}
 			break;

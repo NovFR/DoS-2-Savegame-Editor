@@ -13,6 +13,7 @@
 
 #include "_Global.h"
 #include "Application.h"
+#include "GameLocale.h"
 #include "Requests.h"
 #include "Utils.h"
 #include "Texts.h"
@@ -79,7 +80,8 @@ int Config_Defaults(CONFIG *pConfig)
 
 	//--- LS default locale ---
 
-	pConfig->pszLocaleNameLS = Config_DefaultLocaleLS(pConfig->pszLocaleName);
+	pConfig->pszLocaleNameLS = Game_LocaleDefaultLS(pConfig->pszLocaleName);
+	pConfig->pszLocaleSortLS = Game_LocaleSortLanguage(pConfig->pszLocaleNameLS);
 
 	//--- Jeu ---
 
@@ -110,6 +112,7 @@ int Config_Defaults(CONFIG *pConfig)
 	pConfig->uListDisplayMode = CONFIG_LDISPLAY_NAMEONLY;
 	pConfig->lListTopMargin = 4;
 	pConfig->lListSpacing = 2;
+	pConfig->bListAmount = TRUE;
 
 	//--- Recherche (TreeView) ---
 
@@ -192,81 +195,4 @@ BOOL Config_DefaultSaveLocation(WCHAR **pszPath, BOOL bQuiet)
 	PathAppend(*pszPath,szLarianStudios);
 	CoTaskMemFree(pszTemp);
 	return(TRUE);
-}
-
-
-// «»»» Fichier de langues par défaut (LarianStudios) «««««««««««««««««««»
-
-WCHAR* Config_DefaultLocaleLS(WCHAR *pszLocaleName)
-{
-	static WCHAR* defaults[] = {	L"amlatspanish", 	L"es-AR", // Spanish (Argentina)
-								L"es-BO", // Spanish (Bolivia)
-								L"es-CL", // Spanish (Chile)
-								L"es-CO", // Spanish (Colombia)
-								L"es-CR", // Spanish (Costa Rica)
-								L"es-DO", // Spanish (Dominican Republic)
-								L"es-EC", // Spanish (Ecuador)
-								L"es-GT", // Spanish (Guatemala)
-								L"es-HN", // Spanish (Honduras)
-								L"es-MX", // Spanish (Mexico)
-								L"es-NI", // Spanish (Nicaragua)
-								L"es-PA", // Spanish (Panama)
-								L"es-PE", // Spanish (Peru)
-								L"es-PR", // Spanish (Puerto Rico)
-								L"es-PY", // Spanish (Paraguay)
-								L"es-SV", // Spanish (El Salvador)
-								L"es-UY", // Spanish (Uruguay)
-								L"es-VE", // Spanish (Venezuela)
-								NULL,
-					L"chinese", 		L"zh-*",
-								L"zh",
-								NULL,
-					L"czech",		L"cs-*",
-								L"cs",
-								NULL,
-					L"french",		L"fr-*",
-								L"fr",
-								NULL,
-					L"german",		L"de-*",
-								L"de",
-								NULL,
-					L"italian",		L"it-*",
-								L"it",
-								NULL,
-					L"japonese",		L"ja-*",
-								L"ja",
-								NULL,
-					L"korean",		L"ko-*",
-								L"ko",
-								NULL,
-					L"polish",		L"pl-*",
-								L"pl",
-								NULL,
-					L"russian",		L"ru-*",
-								L"ru",
-								NULL,
-					L"spanish",		L"es-*",
-								L"es",
-								NULL,
-					NULL };
-
-	WCHAR*	pszLSName;
-	int	i = 0;
-
-	while (defaults[i] != NULL)
-		{
-		pszLSName = defaults[i++];
-		while (defaults[i] != NULL)
-			{
-			if (wcschr(defaults[i],L'*'))
-				{
-				if (!wcsncmp(pszLocaleName,defaults[i],3)) return(Misc_StrCpyAlloc(pszLSName));
-				}
-			else if (!wcscmp(pszLocaleName,defaults[i])) return(Misc_StrCpyAlloc(pszLSName));
-			i++;
-			}
-		i++;
-		}
-
-	return(Misc_StrCpyAlloc(szLangDefaultLS));
 }

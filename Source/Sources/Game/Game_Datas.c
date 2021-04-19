@@ -14,6 +14,7 @@
 #include "Application.h"
 #include "Game.h"
 #include "GameEdit.h"
+#include "GameLocale.h"
 #include "Requests.h"
 #include "Utils.h"
 #include "Texts.h"
@@ -257,7 +258,6 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 			//--- Skills ---
 			case DATA_TYPE_SKILLS:
 				Parser.bSuccess = FALSE;
-				Parser.pszResults[0] = NULL;
 				//--- Alloue la structure
 				Parser.pSkill = HeapAlloc(App.hHeap,HEAP_ZERO_MEMORY,sizeof(GAMEDATASKILL));
 				if (!Parser.pSkill) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
@@ -270,9 +270,6 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
 				Parser.pSkill->pszId = Misc_UTF8ToWideChar((char *)Parser.pLineBegin);
 				if (!Parser.pSkill->pszId) { SetLastError(ERROR_NOT_ENOUGH_MEMORY); goto Done; }
-				//--- Traduction de la compétence (optionnelle)
-				Locale_QueryID(Parser.pLocale->db,szDataBaseSkills,Parser.pSkill->pszId,L"text",Parser.pszResults,1);
-				Parser.pSkill->pszName = Parser.pszResults[0];
 				Parser.bSuccess = TRUE;
 				SetLastError(ERROR_SUCCESS);
 				//--- Récupère le coût en source
@@ -306,6 +303,17 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 					Parser.pSkill->infos.uSchoolLocaleID = GameDataSchools[i].uLocaleId;
 					break;
 					}
+				//--- Récupère l'handle de traduction
+				Parser.pLineBegin = Game_LoadLeadingSpaces(Parser.pLinePtr,Parser.pLinePtr,strlen((char *)Parser.pLinePtr));
+				if (!Parser.pLineBegin) break;
+				Parser.pLinePtr = Game_LoadSplitWord(Parser.pLineBegin);
+				Parser.pszTemp = Game_LocaleNameFromHandleA((char *)Parser.pLineBegin);
+				if (Parser.pszTemp)
+					{
+					if (Parser.pSkill->pszName) HeapFree(App.hHeap,0,Parser.pSkill->pszName);
+					Parser.pSkill->pszName = Parser.pszTemp;
+					}
+				SetLastError(ERROR_SUCCESS);
 				break;
 
 			//--- Insertions (TreeView) ---
@@ -340,6 +348,17 @@ BOOL Game_LoadDataFile(HWND hWnd, WCHAR *pszName, UINT uType, NODE *pRoot)
 						}
 					}
 				Parser.bSuccess = TRUE;
+				SetLastError(ERROR_SUCCESS);
+				break;
+			}
+		switch(uType)
+			{
+			case DATA_TYPE_SKILLS:
+				if (!Parser.bSuccess) break;
+				if (Parser.pSkill->pszName) break;
+				Parser.pszResults[0] = NULL;
+				Locale_QueryID(Parser.pLocale->db,szDataBaseSkills,Parser.pSkill->pszId,L"text",Parser.pszResults,1);
+				Parser.pSkill->pszName = Parser.pszResults[0];
 				SetLastError(ERROR_SUCCESS);
 				break;
 			}

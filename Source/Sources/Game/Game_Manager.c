@@ -21,6 +21,7 @@
 #include "Files.h"
 #include "XMLTree.h"
 #include "Requests.h"
+#include "Debug.h"
 
 extern APPLICATION		App;
 extern CUSTOMMENUTEMPLATE	InvMenu[];
@@ -708,6 +709,8 @@ void Game_ReleaseDisplayNames()
 
 DOS2INVENTORY* Game_BuildInventory(DOS2ITEM *pParentItem, XML_ATTR *pxaInventoryId, NODE *pInventoriesRoot)
 {
+	XML_NODE*	pxnFactory;
+	XML_NODE*	pxnCreator;
 	XML_NODE*	pxnItemsList;
 	XML_NODE*	pxnItem;
 	XML_NODE*	pxnTemp;
@@ -726,14 +729,19 @@ DOS2INVENTORY* Game_BuildInventory(DOS2ITEM *pParentItem, XML_ATTR *pxaInventory
 
 	//--- Recherche l'inventaire ---
 
-	pxnItemsList = xml_GetNodeFromPathFirstChild((XML_NODE *)App.Game.Save.nodeXMLRoot.next,szItemsPath);
-	if (!pxnItemsList) return(pInventory);
 	if (!pxaInventoryId) return(pInventory);
 	if (!pxaInventoryId->value) return(pInventory);
 
+	pxnFactory = xml_GetNodeFromPathFirstChild((XML_NODE *)App.Game.Save.nodeXMLRoot.next,szItemsFactoryPath);
+	if (!pxnFactory) return(pInventory);
+	pxnItemsList = xml_GetNodeFromPathFirstChild(pxnFactory,szItemsPath);
+	if (!pxnItemsList) return(pInventory);
+	pxnCreator = xml_GetNodeFromPathFirstChild(pxnFactory,szCreatorsPath);
+	if (!pxnCreator) return(pInventory);
+
 	//--- Ajout des objets ---
 
-	for (pRoot = &pInventory->nodeItems, pxnItem = pxnItemsList; pxnItem != NULL; pxnItem = (XML_NODE *)pxnItem->node.next)
+	for (pRoot = &pInventory->nodeItems, pxnItem = pxnItemsList; pxnItem != NULL && pxnCreator != NULL; pxnItem = (XML_NODE *)pxnItem->node.next, pxnCreator = (XML_NODE *)pxnCreator->node.next)
 		{
 		// Ignore les objets vides (ne devrait pas se produire)
 		if (!pxnItem->children.next) continue;
@@ -758,6 +766,9 @@ DOS2INVENTORY* Game_BuildInventory(DOS2ITEM *pParentItem, XML_ATTR *pxaInventory
 		pItem->pxnRoot = pxnItem;
 		List_AddEntry((NODE *)pItem,pRoot);
 		pRoot = (NODE *)pItem;
+
+		// Handle
+		pItem->pxaHandle = xml_GetXMLValueAttr((XML_NODE *)pxnCreator->children.next,szXMLattribute,szXMLid,L"Handle");
 
 		// Attributs généraux
 		pItem->pxaStats = xml_GetXMLValueAttr((XML_NODE *)pxnItem->children.next,szXMLattribute,szXMLid,L"Stats");
@@ -1046,8 +1057,6 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 			}
 		}
 
-	// TODO: Use Inventory View
-
 	// Finally, sort by stats
 	pszItem1Name = xml_GetThisAttrValue(pItem1->pxaStats);
 	pszItem2Name = xml_GetThisAttrValue(pItem2->pxaStats);
@@ -1056,7 +1065,6 @@ int CALLBACK Game_ItemsListSort(LPARAM lParam1, LPARAM lParam2, LPARAM Unused)
 	iResult = CompareStringEx(L"en-US",LINGUISTIC_IGNORECASE|SORT_DIGITSASNUMBERS,pszItem1Name,-1,pszItem2Name,-1,NULL,NULL,0);
 	if (iResult == CSTR_LESS_THAN) return(-1);
 	if (iResult == CSTR_GREATER_THAN) return(1);
-
 	return(0);
 }
 

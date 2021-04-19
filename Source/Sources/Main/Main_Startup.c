@@ -124,6 +124,7 @@ int Initialise_WindowsClasses()
 {
 	INITCOMMONCONTROLSEX	Controls;
 	WNDCLASSEX		wndClass;
+	HMODULE			hModule;
 
 	wndClass.cbSize = sizeof(wndClass);
 	wndClass.style = CS_DBLCLKS;
@@ -168,6 +169,9 @@ int Initialise_WindowsClasses()
 		Request_PrintError(NULL,Locale_GetText(TEXT_ERR_COMCTRL),NULL,MB_ICONHAND);
 		return(0);
 		}
+
+	hModule = GetModuleHandle(L"comctl32.dll");
+	if (hModule) App.DrawShadowText = GetProcAddress(hModule,"DrawShadowText");
 	return(1);
 }
 

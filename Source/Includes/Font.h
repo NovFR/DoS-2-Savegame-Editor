@@ -31,7 +31,7 @@ typedef struct FONTINFO {
 
 int			Font_GetInfo(HWND,FONTINFO *);
 int			Font_CreateCopy(HWND,FONTINFO *,FONTINFO *,LONG,LONG);
-HFONT			Font_Create(WCHAR *,WCHAR *,LONG);
+HFONT			Font_Create(HWND,WCHAR *,WCHAR *,LONG);
 void			Font_Destroy(WCHAR *,HFONT);
 
 #endif

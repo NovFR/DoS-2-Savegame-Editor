@@ -15,6 +15,7 @@
 #include "Locale.h"
 #include "Texts.h"
 #include "Game.h"
+#include "GameLocale.h"
 #include "Utils.h"
 #include "Dialogs.h"
 
@@ -204,6 +205,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 		else
 			{
+			HFONT		hFont;
 			SIZE		Size;
 			RECT		rcText;
 			WCHAR*		pszStats;
@@ -212,6 +214,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 			DWORD_PTR	dptrLevel = 0;
 
 			Game_ItemDisplayName(pItem);
+			hFont = NULL;
 			pszName = pItem->pszDisplayName;
 			pszStats = xml_GetThisAttrValue(pItem->pxaStats);
 			if (!pszName) pszName = Locale_GetText(TEXT_UNKNOWN);
@@ -241,6 +244,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 
 			// Area
 			CopyRect(&rcText,&rcDraw);
+			if (App.Config.bListGameFont) hFont = SelectObject(pDraw->hDC,App.GameFont.hFont);
 			if (pszLevel)
 				{
 				GetTextExtentPoint32(pDraw->hDC,pszLevel,wcslen(pszLevel),&Size);
@@ -257,6 +261,7 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 				DrawText(pDraw->hDC,pszLevel,-1,&rcDraw,DT_END_ELLIPSIS|DT_RIGHT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 				LocalFree(pszLevel);
 				}
+			if (App.Config.bListGameFont) SelectObject(pDraw->hDC,hFont);
 			rcDraw.top += Size.cy+App.Config.lListSpacing;
 
 			//--- Stats and Quality ---
@@ -272,10 +277,10 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 			// Stats
 			if (App.Config.uListDisplayMode == CONFIG_LDISPLAY_ALL)
 				{
-				SetTextColor(pDraw->hDC,App.Config.crListStats);
+				COLORREF crText = SetTextColor(pDraw->hDC,App.Config.crListStats);
 				GetTextExtentPoint32(pDraw->hDC,pszStats,wcslen(pszStats),&Size);
 				DrawText(pDraw->hDC,pszStats,-1,&rcText,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
-				SetTextColor(pDraw->hDC,GetSysColor(COLOR_WINDOWTEXT));
+				SetTextColor(pDraw->hDC,crText);
 				}
 			// Quality
 			if ((pszText = xml_GetThisAttrValue(pItem->pxaType)))
@@ -366,6 +371,18 @@ void Game_DrawInventory(DRAWITEMSTRUCT *pDraw)
 					DrawText(pDraw->hDC,pItem->pxaAmount->value,-1,&rcDraw,DT_END_ELLIPSIS|DT_LEFT|DT_NOPREFIX|DT_SINGLELINE|DT_TOP);
 					GetTextExtentPoint32(pDraw->hDC,pItem->pxaAmount->value,wcslen(pItem->pxaAmount->value),&Size);
 					rcDraw.left += Size.cx+8;
+					if (App.Config.bListAmount && App.DrawShadowText && wcstol(pItem->pxaAmount->value,NULL,10) > 1)
+						{
+						RECT	rcAmount;
+						HFONT	hFont;
+
+						hFont = SelectObject(pDraw->hDC,App.GameFont.hFont);
+						CopyRect(&rcAmount,&pDraw->rcItem);
+						rcAmount.right = rcAmount.left+GAME_ICON_SIZE;
+						rcAmount.bottom = rcAmount.top+GAME_ICON_SIZE;
+						App.DrawShadowText(pDraw->hDC,pItem->pxaAmount->value,wcslen(pItem->pxaAmount->value),&rcAmount,DT_SINGLELINE|DT_RIGHT|DT_BOTTOM|DT_NOPREFIX,RGB(255,255,255),RGB(0,0,0),1,1);
+						SelectObject(pDraw->hDC,hFont);
+						}
 					}
 				}
 
@@ -517,7 +534,7 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 		GetTextExtentPoint32(hDC,ctx.pszClass,wcslen(ctx.pszClass),&ctx.level.sizeClass);
 		GetTextExtentPoint32(hDC,szClassSpace,wcslen(szClassSpace),&ctx.level.sizeClassSpace);
 		}
-	GetTextExtentPoint32(hDC,Locale_GetText(TEXT_CHR_LEVEL),wcslen(Locale_GetText(TEXT_CHR_LEVEL)),&ctx.level.sizeLabel);
+	GetTextExtentPoint32(hDC,Game_LocaleNameFromLocaleID(TEXT_CHR_LEVEL),wcslen(Game_LocaleNameFromLocaleID(TEXT_CHR_LEVEL)),&ctx.level.sizeLabel);
 	GetTextExtentPoint32(hDC,szSpace,wcslen(szSpace),&ctx.level.sizeSpace);
 	GetTextExtentPoint32(hDC,ctx.level.pszText,wcslen(ctx.level.pszText),&ctx.level.sizeLevel);
 	ctx.rcText.left = ctx.rcText.left+((ctx.rcText.right-ctx.rcText.left)-(ctx.level.sizeClass.cx+ctx.level.sizeClassSpace.cx+ctx.level.sizeLabel.cx+ctx.level.sizeSpace.cx+ctx.level.sizeLevel.cx))/2;
@@ -528,7 +545,7 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 		DrawText(hDC,szClassSpace,-1,&ctx.rcText,DT_LEFT|DT_NOPREFIX|DT_SINGLELINE);
 		ctx.rcText.left += ctx.level.sizeClassSpace.cx;
 		}
-	DrawText(hDC,Locale_GetText(TEXT_CHR_LEVEL),-1,&ctx.rcText,DT_LEFT|DT_NOPREFIX|DT_SINGLELINE);
+	DrawText(hDC,Game_LocaleNameFromLocaleID(TEXT_CHR_LEVEL),-1,&ctx.rcText,DT_LEFT|DT_NOPREFIX|DT_SINGLELINE);
 	ctx.rcText.left += ctx.level.sizeLabel.cx;
 	DrawText(hDC,szSpace,-1,&ctx.rcText,DT_LEFT|DT_NOPREFIX|DT_SINGLELINE);
 	ctx.rcText.left += ctx.level.sizeSpace.cx;
@@ -693,7 +710,7 @@ void Game_PaintAttributes(HWND hWnd, HDC hDC, RECT *rcClient)
 int Game_PaintStat(HDC hDC, HWND hwndButton, RECT *rcDrawArea, UINT uLocaleLabelId, WCHAR *pszValue, UINT uIconId)
 {
 	SetWindowPos(hwndButton,NULL,rcDrawArea->right-MAIN_ATTR_BTN_WIDTH-MAIN_ATTR_RIGHTMARGIN,rcDrawArea->top,0,0,SWP_NOACTIVATE|SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
-	Game_PaintValue(hDC,rcDrawArea->left+24,hwndButton,Locale_GetText(uLocaleLabelId),pszValue,uIconId);
+	Game_PaintValue(hDC,rcDrawArea->left+24,hwndButton,Game_LocaleNameFromLocaleID(uLocaleLabelId),pszValue,uIconId);
 	return(rcDrawArea->top+App.Font.uFontHeight+20);
 }
 

@@ -13,6 +13,7 @@
 
 #include "Application.h"
 #include "GameEdit.h"
+#include "GameLocale.h"
 #include "Locale.h"
 #include "Dialogs.h"
 #include "Menus.h"
@@ -223,7 +224,7 @@ void Game_AbilitiesDraw(DRAWITEMSTRUCT *ItemStruct, GAMEABILITY *Abilities)
 		COLORREF	crStartColor;
 		COLORREF	crEndColor;
 
-		DrawText(ItemStruct->hDC,Locale_GetText(Abilities[uIndex].uLocaleID),-1,&ItemStruct->rcItem,DT_END_ELLIPSIS|DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX);
+		DrawText(ItemStruct->hDC,Game_LocaleNameFromLocaleID(Abilities[uIndex].uLocaleID),-1,&ItemStruct->rcItem,DT_END_ELLIPSIS|DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX);
 		crStartColor = GetSysColor(COLOR_BTNTEXT);
 		crEndColor = GetSysColor(COLOR_BTNFACE);
 		Gradient[0].x = ItemStruct->rcItem.left;
@@ -246,7 +247,7 @@ void Game_AbilitiesDraw(DRAWITEMSTRUCT *ItemStruct, GAMEABILITY *Abilities)
 		{
 		HPEN	hPen;
 
-		DrawText(ItemStruct->hDC,Locale_GetText(Abilities[uIndex].uLocaleID),-1,&ItemStruct->rcItem,DT_END_ELLIPSIS|DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX);
+		DrawText(ItemStruct->hDC,Game_LocaleNameFromLocaleID(Abilities[uIndex].uLocaleID),-1,&ItemStruct->rcItem,DT_END_ELLIPSIS|DT_LEFT|DT_SINGLELINE|DT_VCENTER|DT_NOPREFIX);
 		hPen = CreatePen(PS_DOT,1,GetSysColor(COLOR_BTNSHADOW));
 		if (hPen)
 			{

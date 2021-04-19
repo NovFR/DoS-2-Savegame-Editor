@@ -213,6 +213,7 @@ LRESULT Window_ProcessMessages(HWND hWnd, UINT uMsgId, WPARAM wParam, LPARAM lPa
 			ShowWindow(hWnd,SW_HIDE);
 			SetMenu(hWnd,NULL);
 			Menu_Release(App.hMenu,&MainMenu);
+			Font_Destroy(szGameFont,App.GameFont.hFont);
 			Taskbar_Reset();
 			CloseThemeData(App.hThemeButton);
 			CloseThemeData(App.hThemeProgress);
@@ -266,6 +267,8 @@ LRESULT Window_Create(HWND hWnd)
 
 	if (!App.Font.hFont) goto Error_0;
 	if (!Font_GetInfo(hWnd,&App.Font)) goto Error_0;
+	if (!(App.GameFont.hFont = Font_Create(hWnd,szGameFont,szGameFontName,10))) goto Error_0;
+	if (!Font_GetInfo(hWnd,&App.GameFont)) goto Error_0;
 	if (!Taskbar_Prepare()) goto Error_0;
 	if (!Status_CreateWindow()) goto Error_0;
 	if (!Game_CreateLayout()) goto Error_0;
@@ -550,15 +553,15 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 					break;
 				case CTLID_LIFE:
 					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitalityMax)) break;
-					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_LIFE),App.Game.pdcCurrent->pxaVitality,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitalityMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					if (Game_EditSetValue(hWnd,Game_LocaleNameFromLocaleID(TEXT_CHR_LIFE),App.Game.pdcCurrent->pxaVitality,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaVitalityMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
 					break;
 				case CTLID_PHYSICAL:
 					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmorMax)) break;
-					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_PHYSICAL),App.Game.pdcCurrent->pxaArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					if (Game_EditSetValue(hWnd,Game_LocaleNameFromLocaleID(TEXT_CHR_PHYSICAL),App.Game.pdcCurrent->pxaArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
 					break;
 				case CTLID_MAGICAL:
 					if (!xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmorMax)) break;
-					if (Game_EditSetValue(hWnd,Locale_GetText(TEXT_CHR_MAGICAL),App.Game.pdcCurrent->pxaMagicArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
+					if (Game_EditSetValue(hWnd,Game_LocaleNameFromLocaleID(TEXT_CHR_MAGICAL),App.Game.pdcCurrent->pxaMagicArmor,0,wcstol(xml_GetThisAttrValue(App.Game.pdcCurrent->pxaMagicArmorMax),NULL,10))) InvalidateRect(App.hWnd,NULL,FALSE);
 					break;
 				case CTLID_EXPERIENCE:
 				case CTLID_NEXTLEVEL:
@@ -573,12 +576,12 @@ void Window_Command(HWND hWnd, UINT uCode, UINT idCtrl, HWND hwndCtrl)
 							if (MessageBox(hWnd,Locale_GetText(TEXT_OVERRIDE_ATTRIBUTE),Locale_GetText(TEXT_TITLE_REQUEST),MB_YESNO|MB_ICONQUESTION) == IDYES)
 								App.Config.bCapOverride = TRUE;
 							}
-						if (Game_EditSetValue(hWnd,Locale_GetText(TextsAttr[idCtrl-CTLID_ATTRIBUTES]),App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES],GAME_ATTRIBUTE_MIN,App.Config.bCapOverride?GAME_ATTRIBUTE_OVERRIDE:GAME_ATTRIBUTE_MAX))
+						if (Game_EditSetValue(hWnd,Game_LocaleNameFromLocaleID(TextsAttr[idCtrl-CTLID_ATTRIBUTES]),App.Game.pdcCurrent->pxaAttributes[idCtrl-CTLID_ATTRIBUTES],GAME_ATTRIBUTE_MIN,App.Config.bCapOverride?GAME_ATTRIBUTE_OVERRIDE:GAME_ATTRIBUTE_MAX))
 							InvalidateRect(App.hWnd,NULL,FALSE);
 						}
 					else if (idCtrl >= CTLID_POINTS && idCtrl <= CTLID_POINTS+4)
 						{
-						if (Game_EditSetValue(hWnd,Locale_GetText(TextsPts[idCtrl-CTLID_POINTS]),App.Game.pdcCurrent->pxaPoints[idCtrl-CTLID_POINTS],GAME_POINTS_MIN,GAME_POINTS_MAX))
+						if (Game_EditSetValue(hWnd,Game_LocaleNameFromLocaleID(TextsPts[idCtrl-CTLID_POINTS]),App.Game.pdcCurrent->pxaPoints[idCtrl-CTLID_POINTS],GAME_POINTS_MIN,GAME_POINTS_MAX))
 							InvalidateRect(App.hWnd,NULL,FALSE);
 						}
 					break;

@@ -73,6 +73,8 @@ enum {
 	CONFIG_IDENT_LISTTOPMARGIN_V1,
 	CONFIG_IDENT_LISTSPACING_V1,
 	CONFIG_IDENT_CUSTCOLORS_V1,
+	CONFIG_IDENT_LISTAMOUNT_V1,
+	CONFIG_IDENT_LISTGAMEFONT_V1,
 };
 
 
@@ -102,6 +104,7 @@ typedef struct CONFIG {
 	//--- Locale
 	WCHAR*			pszLocaleName;
 	WCHAR*			pszLocaleNameLS;
+	WCHAR*			pszLocaleSortLS; // *Ref Only*
 	//--- Jeu
 	WCHAR*			pszTempPath;
 	WCHAR*			pszLarianPath;
@@ -118,6 +121,8 @@ typedef struct CONFIG {
 	UINT			uListDisplayMode;
 	LONG			lListTopMargin;
 	LONG			lListSpacing;
+	BOOL			bListAmount;
+	BOOL			bListGameFont;
 	COLORREF		crCustColors[16];
 	//--- Recherche (TreeView)
 	BOOL			bTVSearchCaseSensitive;
@@ -172,7 +177,6 @@ int			Config_WriteEntry(HANDLE,UINT,UINT,void *);
 int			Config_Defaults(CONFIG *);
 BOOL			Config_DefaultTempLocation(WCHAR **,BOOL);
 BOOL			Config_DefaultSaveLocation(WCHAR **,BOOL);
-WCHAR*			Config_DefaultLocaleLS(WCHAR *);
 void			Config_Release(CONFIG *);
 
 // «»»» Langage «««««««««««««««««««««««««««««««««««««««««««««««««««««««««»

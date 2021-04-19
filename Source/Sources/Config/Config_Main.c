@@ -205,6 +205,12 @@ void Config_Load(CONFIG *pConfig)
 			case CONFIG_IDENT_CUSTCOLORS_V1:
 				pData = &pConfig->crCustColors;
 				break;
+			case CONFIG_IDENT_LISTAMOUNT_V1:
+				pData = &pConfig->bListAmount;
+				break;
+			case CONFIG_IDENT_LISTGAMEFONT_V1:
+				pData = &pConfig->bListGameFont;
+				break;
 			default:pData = NULL;
 			}
 
@@ -344,6 +350,8 @@ BOOL Config_Save(BOOL bOnExit, CONFIG *pConfig)
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTTOPMARGIN_V1,&pConfig->lListTopMargin)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_UINT,CONFIG_IDENT_LISTSPACING_V1,&pConfig->lListSpacing)) goto Done;
 	if (!Config_WriteEntry(hFile,CONFIG_TYPE_CUSTCOLORS,CONFIG_IDENT_CUSTCOLORS_V1,&pConfig->crCustColors)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_LISTAMOUNT_V1,&pConfig->bListAmount)) goto Done;
+	if (!Config_WriteEntry(hFile,CONFIG_TYPE_BOOL,CONFIG_IDENT_LISTGAMEFONT_V1,&pConfig->bListGameFont)) goto Done;
 	bCompleted = TRUE;
 
 Done:	dwLastError = GetLastError();

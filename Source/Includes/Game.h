@@ -126,6 +126,7 @@ typedef struct DOS2ITEM {
 	WCHAR*			pszDisplayName;
 	//--- References
 	XML_NODE*		pxnRoot;
+	XML_ATTR*		pxaHandle;
 	XML_ATTR*		pxaStats;
 	XML_ATTR*		pxaDisplayName;
 	XML_ATTR*		pxaDescription;
@@ -288,6 +289,7 @@ typedef struct GAMEDATAPARSER {
 	BYTE*			pLineBegin;
 	BYTE*			pLineEnd;
 	LOCALE_MISC*		pLocale;
+	WCHAR*			pszTemp;
 	WCHAR*			pszResults[4];
 	union {
 		GAMEDATAITEM*	pItem;

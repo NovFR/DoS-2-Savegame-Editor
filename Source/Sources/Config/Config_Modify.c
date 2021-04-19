@@ -29,7 +29,7 @@ static UINT			cfgCatLangs[] = { 200, 201, 202, 211, 212, 0 };
 static UINT			cfgCatEdits[] = { 300, 301, 302, 310, 311, 312, 320, 321, 322, 330, 331, 332, 0 };
 static UINT			cfgCatWinds[] = { 400, 401, 402, 410, 411, 412, 0 };
 static UINT			cfgCatTView[] = { 500, 501, 502, 503, 0 };
-static UINT			cfgCatDispl[] = { 600, 601, 602, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 0 };
+static UINT			cfgCatDispl[] = { 600, 601, 602, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 0 };
 
 static UINT*			ConfigCategories[] = { cfgCatPaths, cfgCatLangs, cfgCatEdits, cfgCatWinds, cfgCatTView, cfgCatDispl, NULL };
 static UINT			ConfigCategoriesNames[] = { TEXT_CONFIG_PATHS, TEXT_CONFIG_LANG, TEXT_CONFIG_EDITION, TEXT_CONFIG_WINDOWS, TEXT_TITLE_TREE, TEXT_CONFIG_DISPLAY, 0 };
@@ -150,10 +150,14 @@ void Config_Modify()
 	if (App.Config.crListStats != pContext->pConfig->crListStats) dwRedraw |= CONFIG_REDRAW_ITEMS;
 	if (App.Config.lListTopMargin != pContext->pConfig->lListTopMargin) dwRedraw |= CONFIG_REDRAW_ITEMS;
 	if (App.Config.lListSpacing != pContext->pConfig->lListSpacing) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	if (App.Config.bListAmount != pContext->pConfig->bListAmount) dwRedraw |= CONFIG_REDRAW_ITEMS;
+	if (App.Config.bListGameFont != pContext->pConfig->bListGameFont) dwRedraw |= CONFIG_REDRAW_ITEMS;
 	App.Config.uListDisplayMode = pContext->pConfig->uListDisplayMode;
 	App.Config.crListStats = pContext->pConfig->crListStats;
 	App.Config.lListTopMargin = pContext->pConfig->lListTopMargin;
 	App.Config.lListSpacing = pContext->pConfig->lListSpacing;
+	App.Config.bListAmount = pContext->pConfig->bListAmount;
+	App.Config.bListGameFont = pContext->pConfig->bListGameFont;
 
 	if (App.Config.bItemsDisplayName != pContext->pConfig->bItemsDisplayName || App.Config.bItemsResolve != pContext->pConfig->bItemsResolve)
 		{
@@ -263,6 +267,8 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		SetDlgItemText(hDlg,503,Locale_GetText(TEXT_DIALOG_TV_SEARCH_HISTORYCLEAR));
 		SetDlgItemText(hDlg,601,Locale_GetText(TEXT_CONFIG_ITEMSDISPLAYNAME));
 		SetDlgItemText(hDlg,602,Locale_GetText(TEXT_CONFIG_ITEMSRESOLVE));
+		SetDlgItemText(hDlg,620,Locale_GetText(TEXT_CONFIG_LAMOUNT));
+		SetDlgItemText(hDlg,621,Locale_GetText(TEXT_CONFIG_LGAMEFONT));
 		SetDlgItemText(hDlg,777,Locale_GetText(TEXT_SAVE));
 		SetDlgItemText(hDlg,778,Locale_GetText(IDM_CONFIGSAVEONEXIT));
 
@@ -280,6 +286,8 @@ INT_PTR CALLBACK Config_ModifyProc(HWND hDlg, UINT uMsgId, WPARAM wParam, LPARAM
 		CheckDlgButton(hDlg,502,pContext->pConfig->bTVSearchHistory?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,601,pContext->pConfig->bItemsDisplayName?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,602,pContext->pConfig->bItemsResolve?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,620,pContext->pConfig->bListAmount?BST_CHECKED:BST_UNCHECKED);
+		CheckDlgButton(hDlg,621,pContext->pConfig->bListGameFont?BST_CHECKED:BST_UNCHECKED);
 		CheckDlgButton(hDlg,778,pContext->pConfig->bSaveOnExit?BST_CHECKED:BST_UNCHECKED);
 
 		//--- Affichage
@@ -750,6 +758,8 @@ int Config_ModifyApplyChanges(HWND hDlg, CONFIGCONTEXT *pContext)
 	pContext->pConfig->uListDisplayMode = SendDlgItemMessage(hDlg,611,CB_GETCURSEL,0,0);
 	pContext->pConfig->lListTopMargin = GetDlgItemInt(hDlg,615,NULL,FALSE);
 	pContext->pConfig->lListSpacing = GetDlgItemInt(hDlg,618,NULL,FALSE);
+	pContext->pConfig->bListAmount = IsDlgButtonChecked(hDlg,620) == BST_CHECKED?TRUE:FALSE;
+	pContext->pConfig->bListGameFont = IsDlgButtonChecked(hDlg,621) == BST_CHECKED?TRUE:FALSE;
 
 	//--- Apply view modes
 	if (!Dialog_ViewComboChanged(hDlg,311,0,&pContext->pConfig->uRunesView)) goto Error;

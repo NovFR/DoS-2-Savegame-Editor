@@ -66,9 +66,18 @@ int Font_CreateCopy(HWND hWnd, FONTINFO *pfiFromFont, FONTINFO *pfiToFont, LONG 
 
 // «»»» Jeu de caractères du jeu ««««««««««««««««««««««««««««««««««««««««»
 
-HFONT Font_Create(WCHAR *pszFontFile, WCHAR *pszFontName, LONG lHeight)
+HFONT Font_Create(HWND hWnd, WCHAR *pszFontFile, WCHAR *pszFontName, LONG lHeight)
 {
-	LOGFONT	lf;
+	HDC		hDC;
+	LOGFONT		lf;
+
+	hDC = GetDC(hWnd);
+	if (hDC)
+		{
+		lHeight = -MulDiv(lHeight,GetDeviceCaps(hDC,LOGPIXELSY),72);
+		ReleaseDC(hWnd,hDC);
+		}
+	else return(NULL);
 
 	if (!AddFontResourceEx(pszFontFile,FR_PRIVATE,NULL)) return(NULL);
 	lf.lfHeight = lHeight;
