@@ -14,6 +14,7 @@
 #include "Application.h"
 #include "Game.h"
 #include "GameEdit.h"
+#include "GameLocale.h"
 #include "Menus.h"
 #include "Texts.h"
 #include "Lists.h"
@@ -249,7 +250,7 @@ BOOL Game_SkillsInsertItem(HWND hDlg, UINT uCtlID, int i, UINT uSort, GAMEDATASK
 	if (SendDlgItemMessage(hDlg,uCtlID,LVM_INSERTITEM,0,(LPARAM)&lvItem) == -1) return(FALSE);
 	//--- School
 	lvItem.iSubItem = 1;
-	lvItem.pszText = Locale_GetText(pSkill->infos.uSchoolLocaleID);
+	lvItem.pszText = Game_LocaleNameFromLocaleID(pSkill->infos.uSchoolLocaleID);
 	if (SendDlgItemMessage(hDlg,uCtlID,LVM_SETITEMTEXT,(WPARAM)lvItem.iItem,(LPARAM)&lvItem) == 0)
 		{
 		SendDlgItemMessage(hDlg,uCtlID,LVM_DELETEITEM,(WPARAM)lvItem.iItem,0);
