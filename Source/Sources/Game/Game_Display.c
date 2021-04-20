@@ -497,7 +497,7 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 			if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,szClassFmt,0,0,(WCHAR *)&pszBuffer,1,(va_list *)vl))
 				{
 				CharUpper(pszBuffer);
-				ctx.pszClass = Locale_GetText(Locale_GetTextUID(App.pLocaleTexts,pszBuffer));
+				ctx.pszClass = Game_LocaleNameFromLocaleID(Locale_GetTextUID(App.pLocaleTexts,pszBuffer));
 				LocalFree(pszBuffer);
 				}
 			else ctx.pszClass = NULL;
@@ -520,7 +520,7 @@ void Game_Paint(HWND hWnd, HDC hDC, RECT *rcClient)
 	ctx.crColor = SetTextColor(hDC,GetSysColor(COLOR_BTNTEXT));
 	ctx.iBack = SetBkMode(hDC,TRANSPARENT);
 
-	//--- Niveau
+	//--- Classe et Niveau
 
 	ctx.rcWork.left += 10;
 	ctx.rcWork.right -= 10;
