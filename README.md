@@ -7,7 +7,7 @@ It is technically, more a front end for [Norbyte's LSlib](https://github.com/Nor
 
 ## Language
 
-Only _English_ and _French_ languages are available.
+_English_, _French_, and _Simplified Chinese_ languages are available.
 
 You can create more translations by adding new databases in the **Locales** folder.
 
